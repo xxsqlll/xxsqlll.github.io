@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>hexo博客创建步骤</title>
+    <url>/2023/07/18/hexo%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E6%AD%A5%E9%AA%A4/</url>
+    <content><![CDATA[<h2 id="创建新的博客"><a href="#创建新的博客" class="headerlink" title="创建新的博客"></a>创建新的博客</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo n <span class="string">&quot;filename&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="编辑博客"><a href="#编辑博客" class="headerlink" title="编辑博客"></a>编辑博客</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="built_in">source</span>/_posts</span><br><span class="line">vim filename</span><br></pre></td></tr></table></figure>
+
+<h2 id="清理并生成博客"><a href="#清理并生成博客" class="headerlink" title="清理并生成博客"></a>清理并生成博客</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ../..</span><br><span class="line">hexo clean</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<h2 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+</search>
