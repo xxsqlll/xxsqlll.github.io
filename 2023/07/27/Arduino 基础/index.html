@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zn-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xxsqlll.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"always","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. Arduino IDE 下载与安装2. Arduino IDE 界面和设置3. Arduino 开发板基本介绍3.1 微控制器 ATMEL3.2 端口3.2.1 数字输入&#x2F;输出数字：0&#x2F;1 端口0&#x2F;1是最后使用 3.2.2 模拟输入端口不只0&#x2F;1状态 3.2.3 电源端口4. 初步认识 Arduino 程序4.1 Arduino 编程语言 C++4.1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arduino基础">
+<meta property="og:url" content="https://xxsqlll.github.io/2023/07/27/Arduino%20%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="小刑的博客">
+<meta property="og:description" content="1. Arduino IDE 下载与安装2. Arduino IDE 界面和设置3. Arduino 开发板基本介绍3.1 微控制器 ATMEL3.2 端口3.2.1 数字输入&#x2F;输出数字：0&#x2F;1 端口0&#x2F;1是最后使用 3.2.2 模拟输入端口不只0&#x2F;1状态 3.2.3 电源端口4. 初步认识 Arduino 程序4.1 Arduino 编程语言 C++4.1">
+<meta property="og:locale" content="zn_CN">
+<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-04-19%2014.33.36.png">
+<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-04-19%2014.41.07.png">
+<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-04-19%2014.44.16.png">
+<meta property="og:image" content="https://tinypic.host/images/2023/04/22/2023-04-22-17.55.46.png">
+<meta property="og:image" content="https://tinypic.host/images/2023/04/22/2023-04-22-18.01.42.png">
+<meta property="og:image" content="https://tinypic.host/images/2023/04/22/2023-04-22-18.02.17.png">
+<meta property="og:image" content="https://tinypic.host/images/2023/04/22/2023-04-22-18.12.47.png">
+<meta property="article:published_time" content="2023-07-27T06:18:23.000Z">
+<meta property="article:modified_time" content="2023-07-27T06:26:07.925Z">
+<meta property="article:author" content="小刑">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-04-19%2014.33.36.png">
+
+<link rel="canonical" href="https://xxsqlll.github.io/2023/07/27/Arduino%20%E5%9F%BA%E7%A1%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zn-CN'
+  };
+</script>
+
+  <title>Arduino基础 | 小刑的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小刑的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一横是一只小猪</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/xxsqlll" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zn-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxsqlll.github.io/2023/07/27/Arduino%20%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.JPG">
+      <meta itemprop="name" content="小刑">
+      <meta itemprop="description" content="这个人很懒，什么也不想写">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小刑的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Arduino基础
+        </h1>
+
+        <div class="post-meta">
+          <span class="post-time">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-07-27 14:18:23 / Modified: 14:26:07" itemprop="dateCreated datePublished" datetime="2023-07-27T14:18:23+08:00">2023-07-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Arduino/" itemprop="url" rel="index"><span itemprop="name">Arduino</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2023/07/27/Arduino%20%E5%9F%BA%E7%A1%80/" class="post-meta-item leancloud_visitors" data-flag-title="Arduino基础" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2023/07/27/Arduino%20%E5%9F%BA%E7%A1%80/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/07/27/Arduino%20%E5%9F%BA%E7%A1%80/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-Arduino-IDE-下载与安装"><a href="#1-Arduino-IDE-下载与安装" class="headerlink" title="1. Arduino IDE 下载与安装"></a>1. Arduino IDE 下载与安装</h1><h1 id="2-Arduino-IDE-界面和设置"><a href="#2-Arduino-IDE-界面和设置" class="headerlink" title="2. Arduino IDE 界面和设置"></a>2. Arduino IDE 界面和设置</h1><h1 id="3-Arduino-开发板基本介绍"><a href="#3-Arduino-开发板基本介绍" class="headerlink" title="3. Arduino 开发板基本介绍"></a>3. Arduino 开发板基本介绍</h1><h2 id="3-1-微控制器-ATMEL"><a href="#3-1-微控制器-ATMEL" class="headerlink" title="3.1 微控制器 ATMEL"></a>3.1 微控制器 ATMEL</h2><h2 id="3-2-端口"><a href="#3-2-端口" class="headerlink" title="3.2 端口"></a>3.2 端口</h2><h3 id="3-2-1-数字输入-输出"><a href="#3-2-1-数字输入-输出" class="headerlink" title="3.2.1 数字输入&#x2F;输出"></a>3.2.1 数字输入&#x2F;输出</h3><p>数字：0&#x2F;1</p>
+<p>端口0&#x2F;1是最后使用</p>
+<h3 id="3-2-2-模拟输入端口"><a href="#3-2-2-模拟输入端口" class="headerlink" title="3.2.2 模拟输入端口"></a>3.2.2 模拟输入端口</h3><p>不只0&#x2F;1状态</p>
+<h3 id="3-2-3-电源端口"><a href="#3-2-3-电源端口" class="headerlink" title="3.2.3 电源端口"></a>3.2.3 电源端口</h3><h1 id="4-初步认识-Arduino-程序"><a href="#4-初步认识-Arduino-程序" class="headerlink" title="4. 初步认识 Arduino 程序"></a>4. 初步认识 Arduino 程序</h1><h2 id="4-1-Arduino-编程语言-C"><a href="#4-1-Arduino-编程语言-C" class="headerlink" title="4.1 Arduino 编程语言 C++"></a>4.1 Arduino 编程语言 C++</h2><h3 id="4-1-1-注释格式"><a href="#4-1-1-注释格式" class="headerlink" title="4.1.1 注释格式"></a>4.1.1 注释格式</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这是一段单行注释文字</span></span><br><span class="line"><span class="comment">/*这是一段多行注释文字</span></span><br><span class="line"><span class="comment">可以在此</span></span><br><span class="line"><span class="comment">写出很多行的注释文字</span></span><br><span class="line"><span class="comment">*/</span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-2-结束编程格式"><a href="#4-1-2-结束编程格式" class="headerlink" title="4.1.2 结束编程格式"></a>4.1.2 结束编程格式</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用分号告诉计算机一段代码的结尾</span></span><br><span class="line"><span class="type">int</span> a = <span class="number">0</span>; </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-3-函数"><a href="#4-1-3-函数" class="headerlink" title="4.1.3 函数"></a>4.1.3 函数</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以下为一个函数,花括号之间为函数内容</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-2-Arduino-编程–变量"><a href="#4-2-Arduino-编程–变量" class="headerlink" title="4.2 Arduino 编程–变量"></a>4.2 Arduino 编程–变量</h2><h3 id="4-2-1-变量定义"><a href="#4-2-1-变量定义" class="headerlink" title="4.2.1 变量定义"></a>4.2.1 变量定义</h3><p>变量值 - 可变</p>
+<p>变量名 - 不变</p>
+<h3 id="4-2-2-规定变量类型"><a href="#4-2-2-规定变量类型" class="headerlink" title="4.2.2 规定变量类型"></a>4.2.2 规定变量类型</h3><p>创建变量时要先告诉Arduino所创建的变量类型</p>
+<h3 id="4-2-3-创建变量"><a href="#4-2-3-创建变量" class="headerlink" title="4.2.3 创建变量"></a>4.2.3 创建变量</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//变量类型为int(整数)，变量名称为currentTemperature，；结束代码</span></span><br><span class="line"><span class="type">int</span> currentTemperature; </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-4-变量名称规则"><a href="#4-2-4-变量名称规则" class="headerlink" title="4.2.4 变量名称规则"></a>4.2.4 变量名称规则</h3><p><strong>错误示范</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Current Temperature <span class="comment">//变量名必须用连贯的一个词</span></span><br><span class="line">Current# <span class="comment">//不能出现特殊字符</span></span><br><span class="line"><span class="number">1</span>_temperature <span class="comment">//不能以数字开头</span></span><br><span class="line">HIGH <span class="comment">//关键字不能用来作变量名</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>良好编程习惯</strong></p>
+<ol>
+<li>变量名能很好的反映所存储的变量类型</li>
+<li>对于一个变量名出现多个单词时，使用大写或下划线加以区分</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">currentTemperature</span><br><span class="line">current_temperature</span><br><span class="line">current_Temperature</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-5-给变量赋值"><a href="#4-2-5-给变量赋值" class="headerlink" title="4.2.5  给变量赋值"></a>4.2.5  给变量赋值</h3><p><strong>Arduino默认情况为0</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//=为赋值运算符</span></span><br><span class="line"><span class="type">int</span> currentTemperature = <span class="number">18</span>; </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//loop是循环的意思</span></span><br><span class="line"><span class="type">int</span> currentTemperature = <span class="number">18</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  currentTemperature = <span class="number">30</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-3-Arduino-程序结构"><a href="#4-3-Arduino-程序结构" class="headerlink" title="4.3 Arduino 程序结构"></a>4.3 Arduino 程序结构</h2><h3 id="4-3-1-第一个实例Blink"><a href="#4-3-1-第一个实例Blink" class="headerlink" title="4.3.1 第一个实例Blink"></a>4.3.1 第一个实例Blink</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">pinMode</span>(LED_BUILTIN, OUTPUT);<span class="comment">//初始化</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//loop函数会一直不断反复执行</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">digitalWrite</span>(LED_BUILTIN,HIGH);<span class="comment">//点亮LED</span></span><br><span class="line">  <span class="built_in">delay</span>(<span class="number">1000</span>);<span class="comment">//延迟1000ms，即等待1s</span></span><br><span class="line">  <span class="built_in">digitalWrite</span>(LED_BUILTIN, LOW);<span class="comment">//熄灭LED</span></span><br><span class="line">  <span class="built_in">delay</span>(<span class="number">1000</span>);<span class="comment">//等待1s  </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-4-Arduino-变量基本操作"><a href="#4-4-Arduino-变量基本操作" class="headerlink" title="4.4 Arduino 变量基本操作"></a>4.4 Arduino 变量基本操作</h2><h3 id="4-4-1-变量类型"><a href="#4-4-1-变量类型" class="headerlink" title="4.4.1 变量类型"></a>4.4.1 变量类型</h3><h3 id="4-4-2-作用域"><a href="#4-4-2-作用域" class="headerlink" title="4.4.2 作用域"></a>4.4.2 作用域</h3><p><strong>全局变量</strong>：放在所有函数外的变量，可在全局使用不会报错</p>
+<p><strong>局部变量</strong>：在某个函数中出现的变量，不能在其他函数中使用，否则报错</p>
+<p><em>注意</em>：当两个函数中出现同名的局部变量时，两个变量没有任何关联，仅仅同名。并且尽量不要出现这种情况。</p>
+<h2 id="4-5-Arduino-程序函数1"><a href="#4-5-Arduino-程序函数1" class="headerlink" title="4.5 Arduino 程序函数1"></a>4.5 Arduino 程序函数1</h2><h3 id="4-5-1-delayMicroseconds"><a href="#4-5-1-delayMicroseconds" class="headerlink" title="4.5.1 delayMicroseconds()"></a>4.5.1 delayMicroseconds()</h3><p>delayMicroseconds()与<a target="_blank" rel="noopener" href="http://www.taichi-maker.com/homepage/reference-index/arduino-code-reference/delay/">delay()</a>函数都可用于暂停程序运行。不同的是，delayMicroseconds()的参数单位是微秒(1毫秒＝1000微秒),而delay函数参数单位是毫秒</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> ledPin = <span class="number">13</span>;<span class="comment">//Arduino引脚13接LED</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">pinMode</span>(ledPin,OUTPUT);<span class="comment">//将LED连接引脚设置为输出模式</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">digitalWrite</span>(ledPin,HIGH);</span><br><span class="line">  <span class="built_in">delayMicroseconds</span>(<span class="number">10000</span>);</span><br><span class="line">  <span class="built_in">digitalWrite</span>(ledPin,LOW);</span><br><span class="line">  <span class="built_in">delayMicrosecons</span>(<span class="number">10000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-5-Arduino-程序函数2"><a href="#4-5-Arduino-程序函数2" class="headerlink" title="4.5 Arduino 程序函数2"></a>4.5 Arduino 程序函数2</h2><h3 id="4-5-1-pinMode-LED-BUILTIN-OUTPUT"><a href="#4-5-1-pinMode-LED-BUILTIN-OUTPUT" class="headerlink" title="4.5.1 pinMode(LED_BUILTIN, OUTPUT);"></a>4.5.1 pinMode(LED_BUILTIN, OUTPUT);</h3><p>初始化引脚，将其设置为输出模式。为电路配上电源。</p>
+<h3 id="4-5-2-digitalWrite"><a href="#4-5-2-digitalWrite" class="headerlink" title="4.5.2 digitalWrite();"></a>4.5.2 digitalWrite();</h3><p>为电路配上开关</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">digitalWrite</span>(LED_BUILTIN,HIGH);<span class="comment">//有电流，点亮LED,5V</span></span><br><span class="line"><span class="built_in">digitalWrite</span>(LED_BUILTIN,LOW);<span class="comment">//无电流，熄灭LED,0V</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-数字输出"><a href="#5-数字输出" class="headerlink" title="5. 数字输出"></a>5. 数字输出</h1><h2 id="5-1-数字输出1-学用LED"><a href="#5-1-数字输出1-学用LED" class="headerlink" title="5.1 数字输出1 - 学用LED"></a>5.1 数字输出1 - 学用LED</h2><p> <strong>灯珠工作电流</strong> &#x3D; <strong>20MA</strong></p>
+<p><strong>工作时产生压降</strong> &#x3D; <strong>2V</strong> </p>
+<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-04-19 14.33.36.png" alt="截屏2023-04-19 14.33.36" style="zoom: 25%;" /> 
+
+
+
+<h2 id="5-2-数字输出2-Arduino控制LED"><a href="#5-2-数字输出2-Arduino控制LED" class="headerlink" title="5.2 数字输出2 - Arduino控制LED"></a>5.2 数字输出2 - Arduino控制LED</h2><p><img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-04-19 14.41.07.png" alt="截屏2023-04-19 14.41.07" style="zoom:25%;" /><img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-04-19 14.44.16.png" alt="截屏2023-04-19 14.44.16" style="zoom:25%;" /></p>
+<p><strong>R &#x3D; U&#x2F;I &#x3D;3V&#x2F;20mA &#x3D; 150Ω</strong></p>
+<h2 id="5-3-面包板"><a href="#5-3-面包板" class="headerlink" title="5.3 面包板"></a>5.3 面包板</h2><p>面包板&#x3D;&#x3D;两侧&#x3D;&#x3D;<strong>横向</strong>连接，&#x3D;&#x3D;中间&#x3D;&#x3D;<strong>纵向</strong>连接</p>
+<img src="https://tinypic.host/images/2023/04/22/2023-04-22-17.55.46.png" alt="2023-04-22-17.55.46.png" border="0" style="zoom:50%;" />
+
+<p>此时Arduino IDE程序上接口名称要改为<strong>引脚5</strong></p>
+<h1 id="6-数字输入"><a href="#6-数字输入" class="headerlink" title="6. 数字输入"></a>6. 数字输入</h1><p>当引脚设置为输入模式时，引脚为高阻抗状态，可用于读取传感器信号或<strong>开关信号</strong></p>
+<h2 id="6-1-按键开关"><a href="#6-1-按键开关" class="headerlink" title="6.1 按键开关"></a>6.1 按键开关</h2><p>&#x3D;&#x3D;相连不同侧，同侧不相连&#x3D;&#x3D;</p>
+<img src="https://tinypic.host/images/2023/04/22/2023-04-22-18.01.42.png" alt="2023-04-22-18.01.42.png" border="0" style="zoom: 33%;" />
+
+<img src="https://tinypic.host/images/2023/04/22/2023-04-22-18.02.17.png" alt="2023-04-22-18.02.17.png" border="0" style="zoom:50%;" />
+
+<img src="https://tinypic.host/images/2023/04/22/2023-04-22-18.12.47.png" alt="2023-04-22-18.12.47.png" border="0" />
+
+<p>开关按下前，Arduino读取高电平，走电阻线路不走接地线路</p>
+<p>&#x3D;&#x3D;电阻使用上拉电阻（10kΩ）&#x3D;&#x3D;</p>
+<p>开关按下后，Arduino读取低电平，走接地线路，被短路</p>
+<h2 id="6-2-按键开关控制"><a href="#6-2-按键开关控制" class="headerlink" title="6.2 按键开关控制"></a>6.2 按键开关控制</h2><p>&#x3D;&#x3D;HIGH 1&#x3D;&#x3D;</p>
+<p>&#x3D;&#x3D;LOW 0&#x3D;&#x3D;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> pushButton = <span class="number">2</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Serial.<span class="built_in">begin</span>(<span class="number">9600</span>);<span class="comment">//初始化串口通讯，设置波特率为9600</span></span><br><span class="line">  <span class="built_in">pinMode</span>(pushButton, INPUT);<span class="comment">//将引脚2设置为输入状态</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> buttonState = <span class="built_in">digitalRead</span>(pushButton);<span class="comment">//初始化整型，赋值引脚2当前的状态</span></span><br><span class="line">  Serial.<span class="built_in">println</span>(buttonState);<span class="comment">//将引脚2当前状态输入串口监视器，HIGH为1，LOW为0</span></span><br><span class="line">  <span class="built_in">delay</span>(<span class="number">1</span>);<span class="comment">//为保证程序稳定进行暂时暂停1s</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="7-输入上拉模式"><a href="#7-输入上拉模式" class="headerlink" title="7. 输入上拉模式"></a>7. 输入上拉模式</h1><p>Arduino自带内部上拉电阻，将引脚设置为输入上拉模式后就可以使用该电阻</p>
+<p>![截屏2023-04-22 19.05.37](&#x2F;Users&#x2F;xxsql&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;截屏2023-04-22 19.05.37.png)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Serial.<span class="built_in">begin</span>(<span class="number">9600</span>);</span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">2</span>,INPUT_PULLUP);<span class="comment">//将引脚2设置为输入上拉模式</span></span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">13</span>,OUTPUT);<span class="comment">//将引脚13设置为输出模式</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> sensorVal = <span class="built_in">digitalRead</span>(<span class="number">2</span>);<span class="comment">//将引脚2状态赋值给整型sensorVal</span></span><br><span class="line">  Serial.<span class="built_in">println</span>(sensorVal);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//按钮没有按下时，sensorVal为高电平，熄灭LED</span></span><br><span class="line"><span class="keyword">if</span> (sensorVal == HIGH) &#123;  <span class="comment">//如果按钮没有按下</span></span><br><span class="line">  <span class="built_in">digitalWrite</span>(<span class="number">13</span>,LOW);<span class="comment">//熄灭LED</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;               <span class="comment">//否则</span></span><br><span class="line">  <span class="built_in">digitalWirte</span>(<span class="number">13</span>,HIGH);<span class="comment">//点亮LED</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-1-if…else语句"><a href="#7-1-if…else语句" class="headerlink" title="7.1 if…else语句"></a>7.1 if…else语句</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (表达式<span class="number">1</span>) &#123;</span><br><span class="line">  语句块<span class="number">1</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  语句块<span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-2-关系运算符号"><a href="#7-2-关系运算符号" class="headerlink" title="7.2 关系运算符号"></a>7.2 关系运算符号</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x == y</span><br><span class="line">x != y</span><br><span class="line">x &lt; y</span><br><span class="line">x &gt; y</span><br><span class="line">x &lt;= y</span><br><span class="line">x &gt;= y</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-3-布尔类型（Booolean）"><a href="#7-3-布尔类型（Booolean）" class="headerlink" title="7.3 布尔类型（Booolean）"></a>7.3 布尔类型（Booolean）</h2><p>&#x3D;&#x3D;True 1&#x3D;&#x3D;</p>
+<p>&#x3D;&#x3D;False 0&#x3D;&#x3D;</p>
+<p>除0以外任何数值都会被当成1</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">boolean pushButton;<span class="comment">//设置变量pushButton为布尔型</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">2</span>,INPUT_PULLUP);<span class="comment">//设置引脚2为输入上拉模式</span></span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">13</span>,OUTPUT);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  pushButton = <span class="built_in">digitalRead</span>(<span class="number">2</span>);<span class="comment">//将引脚2状态赋值给pushButton</span></span><br><span class="line">  <span class="keyword">if</span> (pushButton) &#123;       <span class="comment">//如果开关不按下，引脚2为高电平，pushButton为True</span></span><br><span class="line">    <span class="built_in">digitalWrite</span>(<span class="number">13</span>,HIGH);<span class="comment">//点亮LED</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;                <span class="comment">//如果开关按下，pushButton为False</span></span><br><span class="line">    <span class="built_in">digitalWrite</span>(<span class="number">13</span>,LOW);<span class="comment">//熄灭LED</span></span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag"># 学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/18/hexo%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E6%AD%A5%E9%AA%A4/" rel="prev" title="hexo博客创建步骤">
+      <i class="fa fa-chevron-left"></i> hexo博客创建步骤
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/07/27/Git%20%E5%9F%BA%E7%A1%80/" rel="next" title="Git基础">
+      Git基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Arduino-IDE-%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">1. Arduino IDE 下载与安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Arduino-IDE-%E7%95%8C%E9%9D%A2%E5%92%8C%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">2. Arduino IDE 界面和设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Arduino-%E5%BC%80%E5%8F%91%E6%9D%BF%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.</span> <span class="nav-text">3. Arduino 开发板基本介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E5%BE%AE%E6%8E%A7%E5%88%B6%E5%99%A8-ATMEL"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 微控制器 ATMEL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E7%AB%AF%E5%8F%A3"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 端口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-%E6%95%B0%E5%AD%97%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 数字输入&#x2F;输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-%E6%A8%A1%E6%8B%9F%E8%BE%93%E5%85%A5%E7%AB%AF%E5%8F%A3"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 模拟输入端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-%E7%94%B5%E6%BA%90%E7%AB%AF%E5%8F%A3"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 电源端口</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E5%88%9D%E6%AD%A5%E8%AE%A4%E8%AF%86-Arduino-%E7%A8%8B%E5%BA%8F"><span class="nav-number">4.</span> <span class="nav-text">4. 初步认识 Arduino 程序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-Arduino-%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80-C"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Arduino 编程语言 C++</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-1-%E6%B3%A8%E9%87%8A%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1 注释格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-2-%E7%BB%93%E6%9D%9F%E7%BC%96%E7%A8%8B%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.1.2.</span> <span class="nav-text">4.1.2 结束编程格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-3-%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.3.</span> <span class="nav-text">4.1.3 函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Arduino-%E7%BC%96%E7%A8%8B%E2%80%93%E5%8F%98%E9%87%8F"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 Arduino 编程–变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-1-%E5%8F%98%E9%87%8F%E5%AE%9A%E4%B9%89"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1 变量定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-2-%E8%A7%84%E5%AE%9A%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2 规定变量类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-3-%E5%88%9B%E5%BB%BA%E5%8F%98%E9%87%8F"><span class="nav-number">4.2.3.</span> <span class="nav-text">4.2.3 创建变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-4-%E5%8F%98%E9%87%8F%E5%90%8D%E7%A7%B0%E8%A7%84%E5%88%99"><span class="nav-number">4.2.4.</span> <span class="nav-text">4.2.4 变量名称规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-5-%E7%BB%99%E5%8F%98%E9%87%8F%E8%B5%8B%E5%80%BC"><span class="nav-number">4.2.5.</span> <span class="nav-text">4.2.5  给变量赋值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-Arduino-%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 Arduino 程序结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-1-%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%9E%E4%BE%8BBlink"><span class="nav-number">4.3.1.</span> <span class="nav-text">4.3.1 第一个实例Blink</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-Arduino-%E5%8F%98%E9%87%8F%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 Arduino 变量基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-1-%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.4.1.</span> <span class="nav-text">4.4.1 变量类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-2-%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">4.4.2.</span> <span class="nav-text">4.4.2 作用域</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-Arduino-%E7%A8%8B%E5%BA%8F%E5%87%BD%E6%95%B01"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 Arduino 程序函数1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-1-delayMicroseconds"><span class="nav-number">4.5.1.</span> <span class="nav-text">4.5.1 delayMicroseconds()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-Arduino-%E7%A8%8B%E5%BA%8F%E5%87%BD%E6%95%B02"><span class="nav-number">4.6.</span> <span class="nav-text">4.5 Arduino 程序函数2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-1-pinMode-LED-BUILTIN-OUTPUT"><span class="nav-number">4.6.1.</span> <span class="nav-text">4.5.1 pinMode(LED_BUILTIN, OUTPUT);</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-2-digitalWrite"><span class="nav-number">4.6.2.</span> <span class="nav-text">4.5.2 digitalWrite();</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E6%95%B0%E5%AD%97%E8%BE%93%E5%87%BA"><span class="nav-number">5.</span> <span class="nav-text">5. 数字输出</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E6%95%B0%E5%AD%97%E8%BE%93%E5%87%BA1-%E5%AD%A6%E7%94%A8LED"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 数字输出1 - 学用LED</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E6%95%B0%E5%AD%97%E8%BE%93%E5%87%BA2-Arduino%E6%8E%A7%E5%88%B6LED"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 数字输出2 - Arduino控制LED</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-%E9%9D%A2%E5%8C%85%E6%9D%BF"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 面包板</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E6%95%B0%E5%AD%97%E8%BE%93%E5%85%A5"><span class="nav-number">6.</span> <span class="nav-text">6. 数字输入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-%E6%8C%89%E9%94%AE%E5%BC%80%E5%85%B3"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 按键开关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-%E6%8C%89%E9%94%AE%E5%BC%80%E5%85%B3%E6%8E%A7%E5%88%B6"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 按键开关控制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E8%BE%93%E5%85%A5%E4%B8%8A%E6%8B%89%E6%A8%A1%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">7. 输入上拉模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-if%E2%80%A6else%E8%AF%AD%E5%8F%A5"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 if…else语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-%E5%85%B3%E7%B3%BB%E8%BF%90%E7%AE%97%E7%AC%A6%E5%8F%B7"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 关系运算符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-%E5%B8%83%E5%B0%94%E7%B1%BB%E5%9E%8B%EF%BC%88Booolean%EF%BC%89"><span class="nav-number">7.3.</span> <span class="nav-text">7.3 布尔类型（Booolean）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小刑"
+      src="/images/avatar.JPG">
+  <p class="site-author-name" itemprop="name">小刑</p>
+  <div class="site-description" itemprop="description">这个人很懒，什么也不想写</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxsqlll" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xxsqlll" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xxsqlll@gmail.com" title="E-Mail → mailto:xxsqlll@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1831469103&auto=0&height=66">
+      </iframe>
+  </div>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小刑</span>
+</div>
+
+<!--
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>-->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '0VHq4jqwE0zTWM6rJFbms2tJ-gzGzoHsz',
+      appKey     : '1QAGv9wIN4teXzpcIV8p6NyJ',
+      placeholder: "欢迎交流",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
