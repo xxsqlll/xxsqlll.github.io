@@ -29,19 +29,11 @@
 <meta property="og:site_name" content="小刑的博客">
 <meta property="og:description" content="1. Arduino IDE 下载与安装2. Arduino IDE 界面和设置3. Arduino 开发板基本介绍3.1 微控制器 ATMEL3.2 端口">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-04-19%2014.33.36.png">
-<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-04-19%2014.41.07.png">
-<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-04-19%2014.44.16.png">
-<meta property="og:image" content="https://tinypic.host/images/2023/04/22/2023-04-22-17.55.46.png">
-<meta property="og:image" content="https://tinypic.host/images/2023/04/22/2023-04-22-18.01.42.png">
-<meta property="og:image" content="https://tinypic.host/images/2023/04/22/2023-04-22-18.02.17.png">
-<meta property="og:image" content="https://tinypic.host/images/2023/04/22/2023-04-22-18.12.47.png">
 <meta property="article:published_time" content="2023-07-27T06:18:23.000Z">
-<meta property="article:modified_time" content="2023-07-28T05:52:57.868Z">
+<meta property="article:modified_time" content="2023-07-28T09:38:01.011Z">
 <meta property="article:author" content="小刑">
 <meta property="article:tag" content="学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-04-19%2014.33.36.png">
 
 <link rel="canonical" href="https://xxsqlll.github.io/posts/8e355f78/">
 
@@ -241,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-28 13:52:57" itemprop="dateModified" datetime="2023-07-28T13:52:57+08:00">2023-07-28</time>
+                <time title="修改时间：2023-07-28 17:38:01" itemprop="dateModified" datetime="2023-07-28T17:38:01+08:00">2023-07-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -355,24 +347,11 @@
 
 <h1 id="5-数字输出"><a href="#5-数字输出" class="headerlink" title="5. 数字输出"></a>5. 数字输出</h1><h2 id="5-1-数字输出1-学用LED"><a href="#5-1-数字输出1-学用LED" class="headerlink" title="5.1 数字输出1 - 学用LED"></a>5.1 数字输出1 - 学用LED</h2><p> <strong>灯珠工作电流</strong> &#x3D; <strong>20MA</strong></p>
 <p><strong>工作时产生压降</strong> &#x3D; <strong>2V</strong> </p>
-<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-04-19 14.33.36.png" alt="截屏2023-04-19 14.33.36" style="zoom: 25%;" /> 
-
-
-
-<h2 id="5-2-数字输出2-Arduino控制LED"><a href="#5-2-数字输出2-Arduino控制LED" class="headerlink" title="5.2 数字输出2 - Arduino控制LED"></a>5.2 数字输出2 - Arduino控制LED</h2><p><img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-04-19 14.41.07.png" alt="截屏2023-04-19 14.41.07" style="zoom:25%;" /><img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-04-19 14.44.16.png" alt="截屏2023-04-19 14.44.16" style="zoom:25%;" /></p>
-<p><strong>R &#x3D; U&#x2F;I &#x3D;3V&#x2F;20mA &#x3D; 150Ω</strong></p>
+<h2 id="5-2-数字输出2-Arduino控制LED"><a href="#5-2-数字输出2-Arduino控制LED" class="headerlink" title="5.2 数字输出2 - Arduino控制LED"></a>5.2 数字输出2 - Arduino控制LED</h2><p><strong>R &#x3D; U&#x2F;I &#x3D;3V&#x2F;20mA &#x3D; 150Ω</strong></p>
 <h2 id="5-3-面包板"><a href="#5-3-面包板" class="headerlink" title="5.3 面包板"></a>5.3 面包板</h2><p>面包板&#x3D;&#x3D;两侧&#x3D;&#x3D;<strong>横向</strong>连接，&#x3D;&#x3D;中间&#x3D;&#x3D;<strong>纵向</strong>连接</p>
-<img src="https://tinypic.host/images/2023/04/22/2023-04-22-17.55.46.png" alt="2023-04-22-17.55.46.png" border="0" style="zoom:50%;" />
-
 <p>此时Arduino IDE程序上接口名称要改为<strong>引脚5</strong></p>
 <h1 id="6-数字输入"><a href="#6-数字输入" class="headerlink" title="6. 数字输入"></a>6. 数字输入</h1><p>当引脚设置为输入模式时，引脚为高阻抗状态，可用于读取传感器信号或<strong>开关信号</strong></p>
 <h2 id="6-1-按键开关"><a href="#6-1-按键开关" class="headerlink" title="6.1 按键开关"></a>6.1 按键开关</h2><p>&#x3D;&#x3D;相连不同侧，同侧不相连&#x3D;&#x3D;</p>
-<img src="https://tinypic.host/images/2023/04/22/2023-04-22-18.01.42.png" alt="2023-04-22-18.01.42.png" border="0" style="zoom: 33%;" />
-
-<img src="https://tinypic.host/images/2023/04/22/2023-04-22-18.02.17.png" alt="2023-04-22-18.02.17.png" border="0" style="zoom:50%;" />
-
-<img src="https://tinypic.host/images/2023/04/22/2023-04-22-18.12.47.png" alt="2023-04-22-18.12.47.png" border="0" />
-
 <p>开关按下前，Arduino读取高电平，走电阻线路不走接地线路</p>
 <p>&#x3D;&#x3D;电阻使用上拉电阻（10kΩ）&#x3D;&#x3D;</p>
 <p>开关按下后，Arduino读取低电平，走接地线路，被短路</p>

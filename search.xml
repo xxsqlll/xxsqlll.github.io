@@ -25,9 +25,7 @@
 <p>也就是说表格不属于任何段落，我们不能够通过遍历段落来获取表格。</p>
 <p>和Excel表格的结构很相似，Word文档中的表格也是由单元格（Cell）组成。</p>
 <p>单元格中的内容可以包含段落和表格，相当于独自构成了一个完整的Word文档。</p>
-<h1 id="5-获取学生学号"><a href="#5-获取学生学号" class="headerlink" title="5. 获取学生学号"></a>5. 获取学生学号</h1><img src="https://tinypic.host/images/2023/04/24/2023-04-24-10.10.02.png" alt="2023-04-24-10.10.02.png" border="0" style="zoom:60%;" />
-
-<h2 id="5-1-python-docx模块的安装和导入"><a href="#5-1-python-docx模块的安装和导入" class="headerlink" title="5.1 python-docx模块的安装和导入"></a>5.1 python-docx模块的安装和导入</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install python-docx</span><br></pre></td></tr></table></figure>
+<h1 id="5-获取学生学号"><a href="#5-获取学生学号" class="headerlink" title="5. 获取学生学号"></a>5. 获取学生学号</h1><h2 id="5-1-python-docx模块的安装和导入"><a href="#5-1-python-docx模块的安装和导入" class="headerlink" title="5.1 python-docx模块的安装和导入"></a>5.1 python-docx模块的安装和导入</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install python-docx</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> docx</span><br></pre></td></tr></table></figure>
 
@@ -339,8 +337,6 @@
 
 
 <h1 id="7-函数优化"><a href="#7-函数优化" class="headerlink" title="7. 函数优化"></a>7. 函数优化</h1><p>把整个统计方法写成一个<strong>函数</strong>，然后将每个平台不同的部分当成<strong>参数</strong></p>
-<img src="https://tinypic.host/images/2023/04/22/2023-04-22-11.29.22.png" alt="2023-04-22-11.29.22.png" border="0" style="zoom:33%;" />
-
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">processMonthFile</span>(<span class="params">filePath,orderSheetName,nameIndex,nameHead,priceColumn,month,targetSheet</span>)</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">   <span class="comment"># 定义全局变量工作簿名称wb</span></span><br><span class="line">    <span class="keyword">global</span> wb</span><br><span class="line">    <span class="comment"># 定义全局变量工作表名称orderSheet</span></span><br><span class="line">    <span class="keyword">global</span> orderSheet</span><br><span class="line">    <span class="comment"># 使用for循环遍历工作簿对象的worksheets属性</span></span><br><span class="line">    <span class="comment"># 使用load_wordbook函数读取工作簿</span></span><br><span class="line">    wb = openpyxl.load_workbook(filePath, data_only=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># 获取订单工作表</span></span><br><span class="line">    orderSheet = wb[orderSheetName]</span><br><span class="line">    <span class="comment"># 定义一个空字典用来放本月数据 </span></span><br><span class="line">    monthData = &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 遍历订单工作表，计算每个商品的总销售额</span></span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> orderSheet.rows:</span><br><span class="line">        <span class="comment"># 获取订单商品名称</span></span><br><span class="line">        productName = row[nameIndex].value</span><br><span class="line">        <span class="comment"># 跳过表头</span></span><br><span class="line">        <span class="keyword">if</span> productName == nameHead:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="comment"># 获取总价列的索引</span></span><br><span class="line">        priceIndex = openpyxl.utils.cell.column_index_from_string(priceColumn) - <span class="number">1</span></span><br><span class="line">        <span class="comment"># 获取订单总价</span></span><br><span class="line">        orderPrice = row[priceIndex].value</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取该商品已经计算得出的月份总价，默认为0</span></span><br><span class="line">        monthPrice = monthData.get(productName, <span class="number">0</span>)</span><br><span class="line">        <span class="comment"># 将这个订单的价格累加到商品总价</span></span><br><span class="line">        monthData[productName] = monthPrice + orderPrice</span><br><span class="line">        <span class="comment"># 遍历本月数据字典的keys，也就是商品名称</span></span><br><span class="line">    <span class="keyword">for</span> productName <span class="keyword">in</span> monthData.keys():</span><br><span class="line">        <span class="comment"># 按顺序构造行数据元组: 商品名, 月份, 销售额数据</span></span><br><span class="line">        rowData = (productName, <span class="string">f&quot;<span class="subst">&#123;month&#125;</span>月份&quot;</span>, monthData[productName])</span><br><span class="line">        <span class="comment"># 使用append()函数添加到A平台的工作表中</span></span><br><span class="line">        targetSheet.append(rowData)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 将工作簿保存到路径 /Users/yequ/data/汇总.xlsx</span></span><br><span class="line">newWb.save(<span class="string">&quot;/Users/yequ/data/汇总.xlsx&quot;</span>)</span><br></pre></td></tr></table></figure>
@@ -375,8 +371,6 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">arr = np.array([[<span class="number">0.2</span>, <span class="number">0.9</span>], [<span class="number">0.5</span>, <span class="number">0.1</span>], [<span class="number">0.1</span>, <span class="number">0.7</span>]])</span><br><span class="line"><span class="built_in">print</span>(arr+<span class="number">2</span>)</span><br><span class="line"><span class="comment">#[[2.2  2.9]</span></span><br><span class="line"> <span class="comment">#[2.5  2.1]</span></span><br><span class="line"> <span class="comment">#[2.1  2.7]]</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="1-6-2-相同形状数组的计算"><a href="#1-6-2-相同形状数组的计算" class="headerlink" title="1.6.2 相同形状数组的计算"></a>1.6.2 相同形状数组的计算</h3><p>在计算 arrOne-arrTwo 时，arrOne中每个元素都减去了在arrTwo中相对应位置的元素</p>
-<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-10 22.35.52.png" alt="截屏2023-05-10 22.35.52" style="zoom:50%;" />
-
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">arrOne = np.array([[<span class="number">5</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">5</span>]])</span><br><span class="line">arrTwo = np.array([[<span class="number">10</span>, <span class="number">5</span>], [<span class="number">20</span>, <span class="number">5</span>]])</span><br><span class="line"><span class="built_in">print</span>(arrOne + arrTwo)</span><br><span class="line"><span class="comment">#[[15  5]</span></span><br><span class="line"> <span class="comment">#[20 10]]</span></span><br></pre></td></tr></table></figure>
 
 <hr>
@@ -388,12 +382,8 @@
 
 <h2 id="2-2-Series"><a href="#2-2-Series" class="headerlink" title="2.2 Series"></a>2.2 Series</h2><p>序列，pandas模块的一种数据类型。</p>
 <p>左侧是<strong>索引</strong>(index)，右侧是<strong>值</strong>(values)，下面是值(values)的<strong>数据类型</strong>。</p>
-<img src="/Users/xxsql/Desktop/截屏2023-05-12 16.19.09.png" alt="截屏2023-05-12 16.19.09" style="zoom:50%;" />
-
 <h3 id="2-2-1-index"><a href="#2-2-1-index" class="headerlink" title="2.2.1 index"></a>2.2.1 index</h3><p>Series的index是可以定义的。</p>
 <p>如果没有定义index，index就会默认从0开始生成。</p>
-<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-12 16.21.55.png" alt="截屏2023-05-12 16.21.55" style="zoom:50%;" />
-
 <h2 id="2-3-Series构造函数"><a href="#2-3-Series构造函数" class="headerlink" title="2.3 Series构造函数"></a>2.3 Series构造函数</h2><h3 id="2-3-1-传入列表"><a href="#2-3-1-传入列表" class="headerlink" title="2.3.1 传入列表"></a>2.3.1 传入列表</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="comment"># 定义两个列表</span></span><br><span class="line">GDP =[<span class="number">80855</span>, <span class="number">77388</span>, <span class="number">68024</span>, <span class="number">47251</span>, <span class="number">40471</span>]</span><br><span class="line">rank =[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="comment"># 使用Series构造函数，传入参数：列表GDP作为值，列表rank作为index</span></span><br><span class="line"><span class="comment"># 构造出的Series赋值给info</span></span><br><span class="line">info = pd.Series(GDP,index=rank)</span><br><span class="line"><span class="comment"># 输出info这个Series</span></span><br><span class="line"><span class="built_in">print</span>(info)</span><br><span class="line"><span class="comment">#1    80855</span></span><br><span class="line"><span class="comment">#2    77388</span></span><br><span class="line"><span class="comment">#3    68024</span></span><br><span class="line"><span class="comment">#4    47251</span></span><br><span class="line"><span class="comment">#5    40471</span></span><br><span class="line"><span class="comment">#dtype: int64</span></span><br></pre></td></tr></table></figure>
 
 
@@ -421,8 +411,6 @@
 <h3 id="2-5-3-index"><a href="#2-5-3-index" class="headerlink" title="2.5.3 index"></a>2.5.3 index</h3><hr>
 <h1 id="3-DataFrame"><a href="#3-DataFrame" class="headerlink" title="3. DataFrame"></a>3. DataFrame</h1><p>DataFrame，中文叫数据框。</p>
 <p>是pandas模块最常用的数据类型，是一个二维的矩阵数据表。</p>
-<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-12 16.58.08.png" alt="截屏2023-05-12 16.58.08" style="zoom:50%;" />
-
 <h2 id="3-1-DataFrame的构造函数"><a href="#3-1-DataFrame的构造函数" class="headerlink" title="3.1 DataFrame的构造函数"></a>3.1 DataFrame的构造函数</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">data= &#123;<span class="string">&#x27;rank&#x27;</span>:[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],<span class="string">&#x27;GDP&#x27;</span>:[<span class="number">80855</span>, <span class="number">77388</span>, <span class="number">68024</span>, <span class="number">47251</span>]&#125;</span><br><span class="line">city= [<span class="string">&#x27;GD&#x27;</span>,<span class="string">&#x27;JS&#x27;</span>,<span class="string">&#x27;SD&#x27;</span>,<span class="string">&#x27;ZJ&#x27;</span>]</span><br><span class="line">df= pd.DataFrame(data, index=city)</span><br><span class="line"><span class="built_in">print</span>(df)</span><br><span class="line"><span class="comment">#    rank    GDP</span></span><br><span class="line"><span class="comment">#GD     1  80855</span></span><br><span class="line"><span class="comment">#JS     2  77388</span></span><br><span class="line"><span class="comment">#SD     3  68024</span></span><br><span class="line"><span class="comment">#ZJ     4  47251</span></span><br></pre></td></tr></table></figure>
 
 
@@ -449,8 +437,6 @@
 <p>&#x3D;&#x3D;axis&#x3D;1&#x3D;&#x3D;是&#x3D;&#x3D;水平&#x3D;&#x3D;方向进行处理</p>
 <hr>
 <h1 id="4-文件读取"><a href="#4-文件读取" class="headerlink" title="4. 文件读取"></a>4. 文件读取</h1><h2 id="4-1-读取CSV文件"><a href="#4-1-读取CSV文件" class="headerlink" title="4.1 读取CSV文件"></a>4.1 读取CSV文件</h2><p>CSV（Comma-Separated Values）文件以纯文本的形式储存数字、文本等表格数据。</p>
-<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-13 22.15.22.png" alt="截屏2023-05-13 22.15.22" style="zoom:50%;" />
-
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/yequ/电商数据清洗.csv&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(data)</span><br></pre></td></tr></table></figure>
 
 <h3 id="4-1-1-防止乱码"><a href="#4-1-1-防止乱码" class="headerlink" title="4.1.1 防止乱码"></a>4.1.1 防止乱码</h3><p>将参数encoding设置为&#x3D;&#x3D;”utf-8”&#x3D;&#x3D;</p>
@@ -463,9 +449,7 @@
 
 
 
-<h3 id="4-1-4-添加columns"><a href="#4-1-4-添加columns" class="headerlink" title="4.1.4 添加columns"></a>4.1.4 添加columns</h3><img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-13 22.56.54.png" alt="截屏2023-05-13 22.56.54" style="zoom:50%;" />
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#header=None，表明原数据中没有columns；names，将包含columns的列表传入该参数即可给数据添加columns。</span></span><br><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/yequ/order_withoutColumns.csv&quot;</span>,header=<span class="literal">None</span>,names=[<span class="string">&quot;订单号&quot;</span>,<span class="string">&quot;用户id&quot;</span>,<span class="string">&quot;支付金额&quot;</span>,<span class="string">&quot;商品价格&quot;</span>,<span class="string">&quot;购买数量&quot;</span>,<span class="string">&quot;支付时间&quot;</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="4-1-4-添加columns"><a href="#4-1-4-添加columns" class="headerlink" title="4.1.4 添加columns"></a>4.1.4 添加columns</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#header=None，表明原数据中没有columns；names，将包含columns的列表传入该参数即可给数据添加columns。</span></span><br><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/yequ/order_withoutColumns.csv&quot;</span>,header=<span class="literal">None</span>,names=[<span class="string">&quot;订单号&quot;</span>,<span class="string">&quot;用户id&quot;</span>,<span class="string">&quot;支付金额&quot;</span>,<span class="string">&quot;商品价格&quot;</span>,<span class="string">&quot;购买数量&quot;</span>,<span class="string">&quot;支付时间&quot;</span>])</span><br></pre></td></tr></table></figure>
 
 
 
@@ -518,8 +502,6 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(data[data[<span class="string">&quot;cutdown_price&quot;</span>]&gt;<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
 
 <p>返回的DataFrame就是data变量里，所有”cutdown_price”这一列值里大于0的行数据。</p>
-<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-15 16.44.26.png" alt="截屏2023-05-15 16.44.26" style="zoom:50%;" />
-
 <h2 id="6-2-布尔索引：多个判断条件"><a href="#6-2-布尔索引：多个判断条件" class="headerlink" title="6.2 布尔索引：多个判断条件"></a>6.2 布尔索引：多个判断条件</h2><h3 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h3><p>&#x3D;&#x3D;&amp;&#x3D;&#x3D;表示并且</p>
 <p>&#x3D;&#x3D;｜&#x3D;&#x3D;表示或者</p>
 <p>&#x3D;&#x3D;～&#x3D;&#x3D;表示非</p>
@@ -558,8 +540,6 @@
 <p><code>%Y-%m-%d</code>，就是2018-01-31。</p>
 <p><code>%Y年%m月</code>，就是2018年01月。</p>
 <p>&#x3D;&#x3D;注意⚠️&#x3D;&#x3D;：%m代表月，%M代表分钟</p>
-<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-16 09.52.07.png" alt="截屏2023-05-16 09.52.07" style="zoom:50%;" />
-
 <h2 id="7-4-格式转换函数-astype"><a href="#7-4-格式转换函数-astype" class="headerlink" title="7.4 格式转换函数 (astype())"></a>7.4 格式转换函数 (astype())</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df[<span class="string">&quot;b&quot;</span>] = df[<span class="string">&quot;b&quot;</span>].astype(<span class="built_in">float</span>)</span><br><span class="line"><span class="comment"># 将b这一列的数据，从整型(int)转化为浮点型(float)。</span></span><br><span class="line">df[<span class="string">&quot;phone_number&quot;</span>] = df[<span class="string">&quot;phone_number&quot;</span>].astype(<span class="built_in">str</span>)</span><br><span class="line"><span class="comment"># 转换为字符串</span></span><br><span class="line">.astype(<span class="built_in">int</span>) <span class="comment"># 仅有当数据是整数数字时，才能使用.astype(int)函数，否则将会报错。</span></span><br><span class="line">.astype(<span class="built_in">float</span>)</span><br><span class="line">.astype(<span class="built_in">bool</span>) <span class="comment"># 如果数据是整型0、浮点型0.0，则会转化为布尔值False；如果数据是非0，则会转化为布尔值True。</span></span><br></pre></td></tr></table></figure>
 
 
@@ -669,7 +649,6 @@
 
 <h3 id="10-6-1-设置颜色-color参数"><a href="#10-6-1-设置颜色-color参数" class="headerlink" title="10.6.1 设置颜色(color参数)"></a>10.6.1 设置颜色(color参数)</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将折线图设置成橙色</span></span><br><span class="line">plt.plot(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;sum&quot;</span>],color=<span class="string">&quot;orange&quot;</span>)</span><br></pre></td></tr></table></figure>
 
-<img src="http://nocturne.bczcdn.com/img/1604629222967_37242/color.png" style="zoom:67%;" />
 
 <h3 id="10-6-2-设置折线图标记-marker参数"><a href="#10-6-2-设置折线图标记-marker参数" class="headerlink" title="10.6.2 设置折线图标记(marker参数)"></a>10.6.2 设置折线图标记(marker参数)</h3><p>为了让每个数据点在图像上更加明显，可以在调用<code>plt.plot()</code>函数时传入<code>marker</code>参数。</p>
 <p>把&#x3D;&#x3D;”o”&#x3D;&#x3D;作为参数值传入，折线图上便增加了对应的&#x3D;&#x3D;圆点标记&#x3D;&#x3D;。</p>
@@ -1176,14 +1155,10 @@
 
 <p>&#x3D;&#x3D;切勿尝试rm -rf &#x2F;&#x3D;&#x3D;</p>
 <h1 id="4-Git基本理论-核心"><a href="#4-Git基本理论-核心" class="headerlink" title="4. Git基本理论 (核心)"></a>4. Git基本理论 (核心)</h1><h2 id="4-1-工作区域"><a href="#4-1-工作区域" class="headerlink" title="4.1 工作区域"></a>4.1 工作区域</h2><p>Git本地有三个工作区域，<strong>工作目录（Working Directory）</strong>,<strong>暂存区（Stage&#x2F;Index）</strong>，<strong>资源库（Repository或Git Directory）</strong>。如果再加上远程的git仓库（<strong>Remote Directory</strong>）就可以分为四个工作区域。</p>
-<img src="https://tinypic.host/images/2023/04/20/2023-04-20-15.37.53.png" alt="2023-04-20-15.37.53.png" border="0" style="zoom:35%;" />
-
 <p><strong>Workspace</strong>: 工作区，平时存放代码的地方</p>
 <p><strong>Index&#x2F;Stage</strong>：暂存区，临时存放代码改动，事实上只是一个文件，保存即将提交到文件列表的信息</p>
 <p><strong>Repository</strong>：仓库区（或本地仓库），安全存放数据的位置，有提交的所有版本。其中<em>HEAD</em>指向最新放入仓库的版本</p>
 <p><strong>Remote</strong>: 远程仓库，托管代码的服务器，可视为用于数据交换的一台电脑</p>
-<img src="https://tinypic.host/images/2023/04/20/2023-04-20-17.13.34.png" alt="2023-04-20-17.13.34.png" border="0" style="zoom:33%;" />
-
 <h2 id="4-2-git基本流程"><a href="#4-2-git基本流程" class="headerlink" title="4.2 git基本流程"></a>4.2 git基本流程</h2><p><strong>1. 在工作目录中添加、修改文件</strong></p>
 <p><strong>2. 将需要进行版本管理的文件放入暂存区域</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git add</span><br></pre></td></tr></table></figure>
@@ -1195,9 +1170,7 @@
 
 
 
-<h1 id="5-Git项目的搭建"><a href="#5-Git项目的搭建" class="headerlink" title="5. Git项目的搭建"></a>5. Git项目的搭建</h1><img src="https://tinypic.host/images/2023/04/20/c2c2956ebcb9cdce70f7c1faf749fd0e.png" alt="c2c2956ebcb9cdce70f7c1faf749fd0e.png" border="0" style="zoom:33%;" />
-
-<h2 id="5-1-本地仓库的搭建"><a href="#5-1-本地仓库的搭建" class="headerlink" title="5.1 本地仓库的搭建"></a>5.1 本地仓库的搭建</h2><h3 id="5-1-1-初始化项目"><a href="#5-1-1-初始化项目" class="headerlink" title="5.1.1 初始化项目"></a>5.1.1 初始化项目</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目方法一,执行后可以看见文件夹中出现.git的隐藏文件夹</span></span><br><span class="line">git init</span><br><span class="line"><span class="comment"># 方法二，远程克隆仓库</span></span><br><span class="line">git <span class="built_in">clone</span> [url]</span><br></pre></td></tr></table></figure>
+<h1 id="5-Git项目的搭建"><a href="#5-Git项目的搭建" class="headerlink" title="5. Git项目的搭建"></a>5. Git项目的搭建</h1><h2 id="5-1-本地仓库的搭建"><a href="#5-1-本地仓库的搭建" class="headerlink" title="5.1 本地仓库的搭建"></a>5.1 本地仓库的搭建</h2><h3 id="5-1-1-初始化项目"><a href="#5-1-1-初始化项目" class="headerlink" title="5.1.1 初始化项目"></a>5.1.1 初始化项目</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目方法一,执行后可以看见文件夹中出现.git的隐藏文件夹</span></span><br><span class="line">git init</span><br><span class="line"><span class="comment"># 方法二，远程克隆仓库</span></span><br><span class="line">git <span class="built_in">clone</span> [url]</span><br></pre></td></tr></table></figure>
 
 
 
@@ -1293,24 +1266,11 @@
 
 <h1 id="5-数字输出"><a href="#5-数字输出" class="headerlink" title="5. 数字输出"></a>5. 数字输出</h1><h2 id="5-1-数字输出1-学用LED"><a href="#5-1-数字输出1-学用LED" class="headerlink" title="5.1 数字输出1 - 学用LED"></a>5.1 数字输出1 - 学用LED</h2><p> <strong>灯珠工作电流</strong> &#x3D; <strong>20MA</strong></p>
 <p><strong>工作时产生压降</strong> &#x3D; <strong>2V</strong> </p>
-<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-04-19 14.33.36.png" alt="截屏2023-04-19 14.33.36" style="zoom: 25%;" /> 
-
-
-
-<h2 id="5-2-数字输出2-Arduino控制LED"><a href="#5-2-数字输出2-Arduino控制LED" class="headerlink" title="5.2 数字输出2 - Arduino控制LED"></a>5.2 数字输出2 - Arduino控制LED</h2><p><img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-04-19 14.41.07.png" alt="截屏2023-04-19 14.41.07" style="zoom:25%;" /><img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-04-19 14.44.16.png" alt="截屏2023-04-19 14.44.16" style="zoom:25%;" /></p>
-<p><strong>R &#x3D; U&#x2F;I &#x3D;3V&#x2F;20mA &#x3D; 150Ω</strong></p>
+<h2 id="5-2-数字输出2-Arduino控制LED"><a href="#5-2-数字输出2-Arduino控制LED" class="headerlink" title="5.2 数字输出2 - Arduino控制LED"></a>5.2 数字输出2 - Arduino控制LED</h2><p><strong>R &#x3D; U&#x2F;I &#x3D;3V&#x2F;20mA &#x3D; 150Ω</strong></p>
 <h2 id="5-3-面包板"><a href="#5-3-面包板" class="headerlink" title="5.3 面包板"></a>5.3 面包板</h2><p>面包板&#x3D;&#x3D;两侧&#x3D;&#x3D;<strong>横向</strong>连接，&#x3D;&#x3D;中间&#x3D;&#x3D;<strong>纵向</strong>连接</p>
-<img src="https://tinypic.host/images/2023/04/22/2023-04-22-17.55.46.png" alt="2023-04-22-17.55.46.png" border="0" style="zoom:50%;" />
-
 <p>此时Arduino IDE程序上接口名称要改为<strong>引脚5</strong></p>
 <h1 id="6-数字输入"><a href="#6-数字输入" class="headerlink" title="6. 数字输入"></a>6. 数字输入</h1><p>当引脚设置为输入模式时，引脚为高阻抗状态，可用于读取传感器信号或<strong>开关信号</strong></p>
 <h2 id="6-1-按键开关"><a href="#6-1-按键开关" class="headerlink" title="6.1 按键开关"></a>6.1 按键开关</h2><p>&#x3D;&#x3D;相连不同侧，同侧不相连&#x3D;&#x3D;</p>
-<img src="https://tinypic.host/images/2023/04/22/2023-04-22-18.01.42.png" alt="2023-04-22-18.01.42.png" border="0" style="zoom: 33%;" />
-
-<img src="https://tinypic.host/images/2023/04/22/2023-04-22-18.02.17.png" alt="2023-04-22-18.02.17.png" border="0" style="zoom:50%;" />
-
-<img src="https://tinypic.host/images/2023/04/22/2023-04-22-18.12.47.png" alt="2023-04-22-18.12.47.png" border="0" />
-
 <p>开关按下前，Arduino读取高电平，走电阻线路不走接地线路</p>
 <p>&#x3D;&#x3D;电阻使用上拉电阻（10kΩ）&#x3D;&#x3D;</p>
 <p>开关按下后，Arduino读取低电平，走接地线路，被短路</p>

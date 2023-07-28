@@ -6,7 +6,7 @@
   <link href="https://xxsqlll.github.io/atom.xml" rel="self"/>
   
   <link href="https://xxsqlll.github.io/"/>
-  <updated>2023-07-28T09:22:16.304Z</updated>
+  <updated>2023-07-28T09:30:56.707Z</updated>
   <id>https://xxsqlll.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://xxsqlll.github.io/posts/ec209222/"/>
     <id>https://xxsqlll.github.io/posts/ec209222/</id>
     <published>2023-07-28T09:16:45.000Z</published>
-    <updated>2023-07-28T09:22:16.304Z</updated>
+    <updated>2023-07-28T09:30:56.707Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;1-遍历所有文件&quot;&gt;&lt;a href=&quot;#1-遍历所有文件&quot; class=&quot;headerlink&quot; title=&quot;1. 遍历所有文件&quot;&gt;&lt;/a&gt;1. 遍历所有文件&lt;/h1&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; os&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;allKeyPath = &lt;span class=&quot;string&quot;&gt;&amp;quot;/Users/qiao/answerKey&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;allItems = os.listdir(allKeyPath)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; allItems:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;print&lt;/span&gt;(item)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -112,7 +112,7 @@
     <link href="https://xxsqlll.github.io/posts/ef46fbca/"/>
     <id>https://xxsqlll.github.io/posts/ef46fbca/</id>
     <published>2023-07-28T09:13:45.000Z</published>
-    <updated>2023-07-28T09:22:16.304Z</updated>
+    <updated>2023-07-28T09:32:26.122Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;1-导入openpyxl-模块&quot;&gt;&lt;a href=&quot;#1-导入openpyxl-模块&quot; class=&quot;headerlink&quot; title=&quot;1. 导入openpyxl 模块&quot;&gt;&lt;/a&gt;1. 导入openpyxl 模块&lt;/h1&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; openpyxl&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -137,7 +137,7 @@
     <link href="https://xxsqlll.github.io/posts/f49c8269/"/>
     <id>https://xxsqlll.github.io/posts/f49c8269/</id>
     <published>2023-07-28T09:12:45.000Z</published>
-    <updated>2023-07-28T09:22:16.305Z</updated>
+    <updated>2023-07-28T09:36:01.271Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;1-Numpy-Numerical-Python&quot;&gt;&lt;a href=&quot;#1-Numpy-Numerical-Python&quot; class=&quot;headerlink&quot; title=&quot;1. Numpy (Numerical Python)&quot;&gt;&lt;/a&gt;1. Numpy (Numerical Python)&lt;/h1&gt;&lt;h2 id=&quot;1-1-N维数组&quot;&gt;&lt;a href=&quot;#1-1-N维数组&quot; class=&quot;headerlink&quot; title=&quot;1.1 N维数组&quot;&gt;&lt;/a&gt;1.1 N维数组&lt;/h2&gt;&lt;p&gt;一个多维数组，描述了相同类型数据的集合。&lt;/p&gt;
@@ -307,7 +307,7 @@
     <link href="https://xxsqlll.github.io/posts/1a60696b/"/>
     <id>https://xxsqlll.github.io/posts/1a60696b/</id>
     <published>2023-07-27T06:18:30.000Z</published>
-    <updated>2023-07-28T05:52:57.867Z</updated>
+    <updated>2023-07-28T09:37:42.172Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;1-版本控制&quot;&gt;&lt;a href=&quot;#1-版本控制&quot; class=&quot;headerlink&quot; title=&quot;1. 版本控制&quot;&gt;&lt;/a&gt;1. 版本控制&lt;/h1&gt;&lt;p&gt; 版本迭代，版本管理器，不会删除最初的版本&lt;/p&gt;
@@ -340,7 +340,7 @@
     <link href="https://xxsqlll.github.io/posts/8e355f78/"/>
     <id>https://xxsqlll.github.io/posts/8e355f78/</id>
     <published>2023-07-27T06:18:23.000Z</published>
-    <updated>2023-07-28T05:52:57.868Z</updated>
+    <updated>2023-07-28T09:38:01.011Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;1-Arduino-IDE-下载与安装&quot;&gt;&lt;a href=&quot;#1-Arduino-IDE-下载与安装&quot; class=&quot;headerlink&quot; title=&quot;1. Arduino IDE 下载与安装&quot;&gt;&lt;/a&gt;1. Arduino IDE 下载与安装&lt;/h1&gt;&lt;h1 id=&quot;2-Arduino-IDE-界面和设置&quot;&gt;&lt;a href=&quot;#2-Arduino-IDE-界面和设置&quot; class=&quot;headerlink&quot; title=&quot;2. Arduino IDE 界面和设置&quot;&gt;&lt;/a&gt;2. Arduino IDE 界面和设置&lt;/h1&gt;&lt;h1 id=&quot;3-Arduino-开发板基本介绍&quot;&gt;&lt;a href=&quot;#3-Arduino-开发板基本介绍&quot; class=&quot;headerlink&quot; title=&quot;3. Arduino 开发板基本介绍&quot;&gt;&lt;/a&gt;3. Arduino 开发板基本介绍&lt;/h1&gt;&lt;h2 id=&quot;3-1-微控制器-ATMEL&quot;&gt;&lt;a href=&quot;#3-1-微控制器-ATMEL&quot; class=&quot;headerlink&quot; title=&quot;3.1 微控制器 ATMEL&quot;&gt;&lt;/a&gt;3.1 微控制器 ATMEL&lt;/h2&gt;&lt;h2 id=&quot;3-2-端口&quot;&gt;&lt;a href=&quot;#3-2-端口&quot; class=&quot;headerlink&quot; title=&quot;3.2 端口&quot;&gt;&lt;/a&gt;3.2 端口&lt;/h2&gt;</summary>
