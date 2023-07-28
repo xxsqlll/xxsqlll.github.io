@@ -1261,7 +1261,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #8311ff;
+  background: #adffe5;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2506,4 +2506,34 @@ embed {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+body {
+  background: url("/images/wall1.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+.content-wrap {
+  opacity: 0.9;
+}
+.sidebar {
+  opacity: 0.9;
+}
+.header-inner {
+  background: rgba(255,255,255,0.9);
+}
+.popup {
+  opacity: 0.9;
+}
+.post-block {
+  background: rgba(255,255,255,0.98); /* 修改透明度的值 */
+/* 其他样式属性... */
+}
+.comments {
+  background: rgba(255,255,255,0.95) none repeat scroll !important;
+}
+/* 例如，为主导航菜单的链接按钮添加圆角效果 */
+.site-nav-item {
+  border-radius: 5px; /* 调整圆角大小为您想要的值 */
 }

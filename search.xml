@@ -1,352 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Arduino基础</title>
-    <url>/posts/8e355f78/</url>
-    <content><![CDATA[<h1 id="1-Arduino-IDE-下载与安装"><a href="#1-Arduino-IDE-下载与安装" class="headerlink" title="1. Arduino IDE 下载与安装"></a>1. Arduino IDE 下载与安装</h1><h1 id="2-Arduino-IDE-界面和设置"><a href="#2-Arduino-IDE-界面和设置" class="headerlink" title="2. Arduino IDE 界面和设置"></a>2. Arduino IDE 界面和设置</h1><h1 id="3-Arduino-开发板基本介绍"><a href="#3-Arduino-开发板基本介绍" class="headerlink" title="3. Arduino 开发板基本介绍"></a>3. Arduino 开发板基本介绍</h1><h2 id="3-1-微控制器-ATMEL"><a href="#3-1-微控制器-ATMEL" class="headerlink" title="3.1 微控制器 ATMEL"></a>3.1 微控制器 ATMEL</h2><h2 id="3-2-端口"><a href="#3-2-端口" class="headerlink" title="3.2 端口"></a>3.2 端口</h2><h3 id="3-2-1-数字输入-输出"><a href="#3-2-1-数字输入-输出" class="headerlink" title="3.2.1 数字输入&#x2F;输出"></a>3.2.1 数字输入&#x2F;输出</h3><p>数字：0&#x2F;1</p>
-<p>端口0&#x2F;1是最后使用</p>
-<h3 id="3-2-2-模拟输入端口"><a href="#3-2-2-模拟输入端口" class="headerlink" title="3.2.2 模拟输入端口"></a>3.2.2 模拟输入端口</h3><p>不只0&#x2F;1状态</p>
-<h3 id="3-2-3-电源端口"><a href="#3-2-3-电源端口" class="headerlink" title="3.2.3 电源端口"></a>3.2.3 电源端口</h3><h1 id="4-初步认识-Arduino-程序"><a href="#4-初步认识-Arduino-程序" class="headerlink" title="4. 初步认识 Arduino 程序"></a>4. 初步认识 Arduino 程序</h1><h2 id="4-1-Arduino-编程语言-C"><a href="#4-1-Arduino-编程语言-C" class="headerlink" title="4.1 Arduino 编程语言 C++"></a>4.1 Arduino 编程语言 C++</h2><h3 id="4-1-1-注释格式"><a href="#4-1-1-注释格式" class="headerlink" title="4.1.1 注释格式"></a>4.1.1 注释格式</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//这是一段单行注释文字</span></span><br><span class="line"><span class="comment">/*这是一段多行注释文字</span></span><br><span class="line"><span class="comment">可以在此</span></span><br><span class="line"><span class="comment">写出很多行的注释文字</span></span><br><span class="line"><span class="comment">*/</span> </span><br></pre></td></tr></table></figure>
-
-<h3 id="4-1-2-结束编程格式"><a href="#4-1-2-结束编程格式" class="headerlink" title="4.1.2 结束编程格式"></a>4.1.2 结束编程格式</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//使用分号告诉计算机一段代码的结尾</span></span><br><span class="line"><span class="type">int</span> a = <span class="number">0</span>; </span><br></pre></td></tr></table></figure>
-
-<h3 id="4-1-3-函数"><a href="#4-1-3-函数" class="headerlink" title="4.1.3 函数"></a>4.1.3 函数</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//以下为一个函数,花括号之间为函数内容</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-2-Arduino-编程–变量"><a href="#4-2-Arduino-编程–变量" class="headerlink" title="4.2 Arduino 编程–变量"></a>4.2 Arduino 编程–变量</h2><h3 id="4-2-1-变量定义"><a href="#4-2-1-变量定义" class="headerlink" title="4.2.1 变量定义"></a>4.2.1 变量定义</h3><p>变量值 - 可变</p>
-<p>变量名 - 不变</p>
-<h3 id="4-2-2-规定变量类型"><a href="#4-2-2-规定变量类型" class="headerlink" title="4.2.2 规定变量类型"></a>4.2.2 规定变量类型</h3><p>创建变量时要先告诉Arduino所创建的变量类型</p>
-<h3 id="4-2-3-创建变量"><a href="#4-2-3-创建变量" class="headerlink" title="4.2.3 创建变量"></a>4.2.3 创建变量</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//变量类型为int(整数)，变量名称为currentTemperature，；结束代码</span></span><br><span class="line"><span class="type">int</span> currentTemperature; </span><br></pre></td></tr></table></figure>
-
-<h3 id="4-2-4-变量名称规则"><a href="#4-2-4-变量名称规则" class="headerlink" title="4.2.4 变量名称规则"></a>4.2.4 变量名称规则</h3><p><strong>错误示范</strong></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Current Temperature <span class="comment">//变量名必须用连贯的一个词</span></span><br><span class="line">Current# <span class="comment">//不能出现特殊字符</span></span><br><span class="line"><span class="number">1</span>_temperature <span class="comment">//不能以数字开头</span></span><br><span class="line">HIGH <span class="comment">//关键字不能用来作变量名</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>良好编程习惯</strong></p>
-<ol>
-<li>变量名能很好的反映所存储的变量类型</li>
-<li>对于一个变量名出现多个单词时，使用大写或下划线加以区分</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">currentTemperature</span><br><span class="line">current_temperature</span><br><span class="line">current_Temperature</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-2-5-给变量赋值"><a href="#4-2-5-给变量赋值" class="headerlink" title="4.2.5  给变量赋值"></a>4.2.5  给变量赋值</h3><p><strong>Arduino默认情况为0</strong></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//=为赋值运算符</span></span><br><span class="line"><span class="type">int</span> currentTemperature = <span class="number">18</span>; </span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//loop是循环的意思</span></span><br><span class="line"><span class="type">int</span> currentTemperature = <span class="number">18</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  currentTemperature = <span class="number">30</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-3-Arduino-程序结构"><a href="#4-3-Arduino-程序结构" class="headerlink" title="4.3 Arduino 程序结构"></a>4.3 Arduino 程序结构</h2><h3 id="4-3-1-第一个实例Blink"><a href="#4-3-1-第一个实例Blink" class="headerlink" title="4.3.1 第一个实例Blink"></a>4.3.1 第一个实例Blink</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">pinMode</span>(LED_BUILTIN, OUTPUT);<span class="comment">//初始化</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//loop函数会一直不断反复执行</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">digitalWrite</span>(LED_BUILTIN,HIGH);<span class="comment">//点亮LED</span></span><br><span class="line">  <span class="built_in">delay</span>(<span class="number">1000</span>);<span class="comment">//延迟1000ms，即等待1s</span></span><br><span class="line">  <span class="built_in">digitalWrite</span>(LED_BUILTIN, LOW);<span class="comment">//熄灭LED</span></span><br><span class="line">  <span class="built_in">delay</span>(<span class="number">1000</span>);<span class="comment">//等待1s  </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="4-4-Arduino-变量基本操作"><a href="#4-4-Arduino-变量基本操作" class="headerlink" title="4.4 Arduino 变量基本操作"></a>4.4 Arduino 变量基本操作</h2><h3 id="4-4-1-变量类型"><a href="#4-4-1-变量类型" class="headerlink" title="4.4.1 变量类型"></a>4.4.1 变量类型</h3><h3 id="4-4-2-作用域"><a href="#4-4-2-作用域" class="headerlink" title="4.4.2 作用域"></a>4.4.2 作用域</h3><p><strong>全局变量</strong>：放在所有函数外的变量，可在全局使用不会报错</p>
-<p><strong>局部变量</strong>：在某个函数中出现的变量，不能在其他函数中使用，否则报错</p>
-<p><em>注意</em>：当两个函数中出现同名的局部变量时，两个变量没有任何关联，仅仅同名。并且尽量不要出现这种情况。</p>
-<h2 id="4-5-Arduino-程序函数1"><a href="#4-5-Arduino-程序函数1" class="headerlink" title="4.5 Arduino 程序函数1"></a>4.5 Arduino 程序函数1</h2><h3 id="4-5-1-delayMicroseconds"><a href="#4-5-1-delayMicroseconds" class="headerlink" title="4.5.1 delayMicroseconds()"></a>4.5.1 delayMicroseconds()</h3><p>delayMicroseconds()与<a href="http://www.taichi-maker.com/homepage/reference-index/arduino-code-reference/delay/">delay()</a>函数都可用于暂停程序运行。不同的是，delayMicroseconds()的参数单位是微秒(1毫秒＝1000微秒),而delay函数参数单位是毫秒</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> ledPin = <span class="number">13</span>;<span class="comment">//Arduino引脚13接LED</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">pinMode</span>(ledPin,OUTPUT);<span class="comment">//将LED连接引脚设置为输出模式</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">digitalWrite</span>(ledPin,HIGH);</span><br><span class="line">  <span class="built_in">delayMicroseconds</span>(<span class="number">10000</span>);</span><br><span class="line">  <span class="built_in">digitalWrite</span>(ledPin,LOW);</span><br><span class="line">  <span class="built_in">delayMicrosecons</span>(<span class="number">10000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="4-5-Arduino-程序函数2"><a href="#4-5-Arduino-程序函数2" class="headerlink" title="4.5 Arduino 程序函数2"></a>4.5 Arduino 程序函数2</h2><h3 id="4-5-1-pinMode-LED-BUILTIN-OUTPUT"><a href="#4-5-1-pinMode-LED-BUILTIN-OUTPUT" class="headerlink" title="4.5.1 pinMode(LED_BUILTIN, OUTPUT);"></a>4.5.1 pinMode(LED_BUILTIN, OUTPUT);</h3><p>初始化引脚，将其设置为输出模式。为电路配上电源。</p>
-<h3 id="4-5-2-digitalWrite"><a href="#4-5-2-digitalWrite" class="headerlink" title="4.5.2 digitalWrite();"></a>4.5.2 digitalWrite();</h3><p>为电路配上开关</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">digitalWrite</span>(LED_BUILTIN,HIGH);<span class="comment">//有电流，点亮LED,5V</span></span><br><span class="line"><span class="built_in">digitalWrite</span>(LED_BUILTIN,LOW);<span class="comment">//无电流，熄灭LED,0V</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="5-数字输出"><a href="#5-数字输出" class="headerlink" title="5. 数字输出"></a>5. 数字输出</h1><h2 id="5-1-数字输出1-学用LED"><a href="#5-1-数字输出1-学用LED" class="headerlink" title="5.1 数字输出1 - 学用LED"></a>5.1 数字输出1 - 学用LED</h2><p> <strong>灯珠工作电流</strong> &#x3D; <strong>20MA</strong></p>
-<p><strong>工作时产生压降</strong> &#x3D; <strong>2V</strong> </p>
-<h2 id="5-2-数字输出2-Arduino控制LED"><a href="#5-2-数字输出2-Arduino控制LED" class="headerlink" title="5.2 数字输出2 - Arduino控制LED"></a>5.2 数字输出2 - Arduino控制LED</h2><p><strong>R &#x3D; U&#x2F;I &#x3D;3V&#x2F;20mA &#x3D; 150Ω</strong></p>
-<h2 id="5-3-面包板"><a href="#5-3-面包板" class="headerlink" title="5.3 面包板"></a>5.3 面包板</h2><p>面包板&#x3D;&#x3D;两侧&#x3D;&#x3D;<strong>横向</strong>连接，&#x3D;&#x3D;中间&#x3D;&#x3D;<strong>纵向</strong>连接</p>
-<p>此时Arduino IDE程序上接口名称要改为<strong>引脚5</strong></p>
-<h1 id="6-数字输入"><a href="#6-数字输入" class="headerlink" title="6. 数字输入"></a>6. 数字输入</h1><p>当引脚设置为输入模式时，引脚为高阻抗状态，可用于读取传感器信号或<strong>开关信号</strong></p>
-<h2 id="6-1-按键开关"><a href="#6-1-按键开关" class="headerlink" title="6.1 按键开关"></a>6.1 按键开关</h2><p>&#x3D;&#x3D;相连不同侧，同侧不相连&#x3D;&#x3D;</p>
-<p>开关按下前，Arduino读取高电平，走电阻线路不走接地线路</p>
-<p>&#x3D;&#x3D;电阻使用上拉电阻（10kΩ）&#x3D;&#x3D;</p>
-<p>开关按下后，Arduino读取低电平，走接地线路，被短路</p>
-<h2 id="6-2-按键开关控制"><a href="#6-2-按键开关控制" class="headerlink" title="6.2 按键开关控制"></a>6.2 按键开关控制</h2><p>&#x3D;&#x3D;HIGH 1&#x3D;&#x3D;</p>
-<p>&#x3D;&#x3D;LOW 0&#x3D;&#x3D;</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> pushButton = <span class="number">2</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Serial.<span class="built_in">begin</span>(<span class="number">9600</span>);<span class="comment">//初始化串口通讯，设置波特率为9600</span></span><br><span class="line">  <span class="built_in">pinMode</span>(pushButton, INPUT);<span class="comment">//将引脚2设置为输入状态</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> buttonState = <span class="built_in">digitalRead</span>(pushButton);<span class="comment">//初始化整型，赋值引脚2当前的状态</span></span><br><span class="line">  Serial.<span class="built_in">println</span>(buttonState);<span class="comment">//将引脚2当前状态输入串口监视器，HIGH为1，LOW为0</span></span><br><span class="line">  <span class="built_in">delay</span>(<span class="number">1</span>);<span class="comment">//为保证程序稳定进行暂时暂停1s</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="7-输入上拉模式"><a href="#7-输入上拉模式" class="headerlink" title="7. 输入上拉模式"></a>7. 输入上拉模式</h1><p>Arduino自带内部上拉电阻，将引脚设置为输入上拉模式后就可以使用该电阻</p>
-<p>![截屏2023-04-22 19.05.37](&#x2F;Users&#x2F;xxsql&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;截屏2023-04-22 19.05.37.png)</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Serial.<span class="built_in">begin</span>(<span class="number">9600</span>);</span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">2</span>,INPUT_PULLUP);<span class="comment">//将引脚2设置为输入上拉模式</span></span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">13</span>,OUTPUT);<span class="comment">//将引脚13设置为输出模式</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> sensorVal = <span class="built_in">digitalRead</span>(<span class="number">2</span>);<span class="comment">//将引脚2状态赋值给整型sensorVal</span></span><br><span class="line">  Serial.<span class="built_in">println</span>(sensorVal);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//按钮没有按下时，sensorVal为高电平，熄灭LED</span></span><br><span class="line"><span class="keyword">if</span> (sensorVal == HIGH) &#123;  <span class="comment">//如果按钮没有按下</span></span><br><span class="line">  <span class="built_in">digitalWrite</span>(<span class="number">13</span>,LOW);<span class="comment">//熄灭LED</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;               <span class="comment">//否则</span></span><br><span class="line">  <span class="built_in">digitalWirte</span>(<span class="number">13</span>,HIGH);<span class="comment">//点亮LED</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="7-1-if…else语句"><a href="#7-1-if…else语句" class="headerlink" title="7.1 if…else语句"></a>7.1 if…else语句</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (表达式<span class="number">1</span>) &#123;</span><br><span class="line">  语句块<span class="number">1</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  语句块<span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="7-2-关系运算符号"><a href="#7-2-关系运算符号" class="headerlink" title="7.2 关系运算符号"></a>7.2 关系运算符号</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">x == y</span><br><span class="line">x != y</span><br><span class="line">x &lt; y</span><br><span class="line">x &gt; y</span><br><span class="line">x &lt;= y</span><br><span class="line">x &gt;= y</span><br></pre></td></tr></table></figure>
-
-<h2 id="7-3-布尔类型（Booolean）"><a href="#7-3-布尔类型（Booolean）" class="headerlink" title="7.3 布尔类型（Booolean）"></a>7.3 布尔类型（Booolean）</h2><p>&#x3D;&#x3D;True 1&#x3D;&#x3D;</p>
-<p>&#x3D;&#x3D;False 0&#x3D;&#x3D;</p>
-<p>除0以外任何数值都会被当成1</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">boolean pushButton;<span class="comment">//设置变量pushButton为布尔型</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">2</span>,INPUT_PULLUP);<span class="comment">//设置引脚2为输入上拉模式</span></span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">13</span>,OUTPUT);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  pushButton = <span class="built_in">digitalRead</span>(<span class="number">2</span>);<span class="comment">//将引脚2状态赋值给pushButton</span></span><br><span class="line">  <span class="keyword">if</span> (pushButton) &#123;       <span class="comment">//如果开关不按下，引脚2为高电平，pushButton为True</span></span><br><span class="line">    <span class="built_in">digitalWrite</span>(<span class="number">13</span>,HIGH);<span class="comment">//点亮LED</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;                <span class="comment">//如果开关按下，pushButton为False</span></span><br><span class="line">    <span class="built_in">digitalWrite</span>(<span class="number">13</span>,LOW);<span class="comment">//熄灭LED</span></span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Arduino</category>
-      </categories>
-      <tags>
-        <tag>学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git基础</title>
-    <url>/posts/1a60696b/</url>
-    <content><![CDATA[<h1 id="1-版本控制"><a href="#1-版本控制" class="headerlink" title="1. 版本控制"></a>1. 版本控制</h1><p> 版本迭代，版本管理器，不会删除最初的版本</p>
-<p>管理文件、目录、工程的修改历史</p>
-<p><strong>常见版本控制管理器</strong></p>
-<table>
-<thead>
-<tr>
-<th>Git</th>
-<th>SVN</th>
-<th>CVS</th>
-<th>VSS</th>
-<th>TFS</th>
-<th>Visual Studio Online</th>
-</tr>
-</thead>
-</table>
-<h2 id="1-1-本地版本控制"><a href="#1-1-本地版本控制" class="headerlink" title="1.1 本地版本控制"></a>1.1 本地版本控制</h2><p>记录文件的每次更新，可以对每个版本做一个快照，或是记录布丁文件，适合<strong>个人</strong>使用</p>
-<h2 id="1-2-集中式版本控制-SVN"><a href="#1-2-集中式版本控制-SVN" class="headerlink" title="1.2 集中式版本控制 SVN"></a>1.2 集中式版本控制 SVN</h2><p>所有的版本数据都保存在服务器上，协同开发者从服务器上同步更新或上传自己的修改</p>
-<p><strong>SVN</strong></p>
-<h2 id="1-3-分布式版本控制-Git"><a href="#1-3-分布式版本控制-Git" class="headerlink" title="1.3 分布式版本控制 Git"></a>1.3 分布式版本控制 Git</h2><p>每台电脑都拥有自己的版本控制中心，每个人都拥有全部代码，存在安全隐患</p>
-<p>不会因为服务器损坏，或者网络问题造成不能工作的问题</p>
-<h2 id="1-4-Git与SVN的主要区别"><a href="#1-4-Git与SVN的主要区别" class="headerlink" title="1.4 Git与SVN的主要区别"></a>1.4 Git与SVN的主要区别</h2><p><strong>SVN</strong>: 使用的集中版本控制，工作时需要用自己的电脑从中央服务器获取最新版本。工作完成后也需要将自己的代码上传至中央服务器，集中式版本控制需要联网工作，对网络带宽要求很高</p>
-<p><strong>Git</strong>：没有中央服务器，每个人的电脑就是一个完整的代码库。工作时不需要联网，Git可以直接看到更新了的代码和文件</p>
-<p>&#x3D;&#x3D;Git是目前世界上最先进的分布式版本控制系统&#x3D;&#x3D;</p>
-<h1 id="2-Git的安装卸载即环境配置"><a href="#2-Git的安装卸载即环境配置" class="headerlink" title="2. Git的安装卸载即环境配置"></a>2. Git的安装卸载即环境配置</h1><h2 id="2-1-Git的卸载"><a href="#2-1-Git的卸载" class="headerlink" title="2.1 Git的卸载"></a>2.1 Git的卸载</h2><ol>
-<li>在<strong>此电脑</strong>，右键<strong>属性</strong>进入<strong>高级系统设置</strong>，检查环境变量<strong>Path</strong>中是否有Git相关，有则删除</li>
-<li>在控制面板卸载</li>
-</ol>
-<h2 id="2-2-Git的安装"><a href="#2-2-Git的安装" class="headerlink" title="2.2 Git的安装"></a>2.2 Git的安装</h2><p><strong>Git Bash</strong>：Unix与Linux风格的命令行，只用最多</p>
-<p><strong>Git CMD</strong>：Windows风格的命令行</p>
-<p><strong>Git GUI</strong>：图形化的Git</p>
-<h2 id="2-3-Git的配置-必要操作"><a href="#2-3-Git的配置-必要操作" class="headerlink" title="2.3 Git的配置 (必要操作)"></a>2.3 Git的配置 (必要操作)</h2><h3 id="2-3-1-查看不同级别的配置"><a href="#2-3-1-查看不同级别的配置" class="headerlink" title="2.3.1 查看不同级别的配置"></a>2.3.1 查看不同级别的配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 显示当前Git配置</span></span><br><span class="line">git config -l</span><br><span class="line"><span class="comment"># 查看系统Git配置</span></span><br><span class="line">git config --system --list</span><br><span class="line"><span class="comment"># 查看本地Git配置</span></span><br><span class="line">git config --global --list</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-3-2-用户设置"><a href="#2-3-2-用户设置" class="headerlink" title="2.3.2 用户设置"></a>2.3.2 用户设置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置用户名</span></span><br><span class="line">git config --global user.name <span class="string">&quot;xxsql&quot;</span></span><br><span class="line"><span class="comment"># 配置邮箱</span></span><br><span class="line">git config --global user.email <span class="string">&quot;xxsqlll@gmail.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="3-常用的Linux命令"><a href="#3-常用的Linux命令" class="headerlink" title="3. 常用的Linux命令"></a>3. 常用的Linux命令</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 改变目录</span></span><br><span class="line"><span class="built_in">cd</span></span><br><span class="line"><span class="comment"># 回退到上一个目录</span></span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="comment"># 显示当前所在的目录路径</span></span><br><span class="line"><span class="built_in">pwd</span></span><br><span class="line"><span class="comment"># 列出当前目录的文件,ll更详细</span></span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">ll</span><br><span class="line"><span class="comment"># 新建一个文件，如新建一个index.js文件</span></span><br><span class="line"><span class="built_in">touch</span> index.js</span><br><span class="line"><span class="comment"># 删除文件</span></span><br><span class="line"><span class="built_in">rm</span> index.js</span><br><span class="line"><span class="comment"># 新建一个目录，即新建一个文件夹</span></span><br><span class="line"><span class="built_in">mkdir</span></span><br><span class="line"><span class="comment"># 删除一个目录，即删除一个文件夹。下述例子展示删除src目录</span></span><br><span class="line"><span class="built_in">rm</span> -r src</span><br><span class="line"><span class="comment"># 移动文件,index.html为要移动的文件,src是目标文件夹。下例这样写必须保证文件和目标文件夹在同一目录下</span></span><br><span class="line"><span class="built_in">mv</span> index.html src</span><br><span class="line"><span class="comment"># 重新初始化终端/清屏</span></span><br><span class="line">reset</span><br><span class="line"><span class="comment"># 清屏</span></span><br><span class="line">clear</span><br><span class="line"><span class="comment"># 查看命令历史</span></span><br><span class="line"><span class="built_in">history</span></span><br><span class="line"><span class="comment"># 帮助</span></span><br><span class="line"><span class="built_in">help</span></span><br><span class="line"><span class="comment"># 退出</span></span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
-
-<p>&#x3D;&#x3D;切勿尝试rm -rf &#x2F;&#x3D;&#x3D;</p>
-<h1 id="4-Git基本理论-核心"><a href="#4-Git基本理论-核心" class="headerlink" title="4. Git基本理论 (核心)"></a>4. Git基本理论 (核心)</h1><h2 id="4-1-工作区域"><a href="#4-1-工作区域" class="headerlink" title="4.1 工作区域"></a>4.1 工作区域</h2><p>Git本地有三个工作区域，<strong>工作目录（Working Directory）</strong>,<strong>暂存区（Stage&#x2F;Index）</strong>，<strong>资源库（Repository或Git Directory）</strong>。如果再加上远程的git仓库（<strong>Remote Directory</strong>）就可以分为四个工作区域。</p>
-<p><strong>Workspace</strong>: 工作区，平时存放代码的地方</p>
-<p><strong>Index&#x2F;Stage</strong>：暂存区，临时存放代码改动，事实上只是一个文件，保存即将提交到文件列表的信息</p>
-<p><strong>Repository</strong>：仓库区（或本地仓库），安全存放数据的位置，有提交的所有版本。其中<em>HEAD</em>指向最新放入仓库的版本</p>
-<p><strong>Remote</strong>: 远程仓库，托管代码的服务器，可视为用于数据交换的一台电脑</p>
-<h2 id="4-2-git基本流程"><a href="#4-2-git基本流程" class="headerlink" title="4.2 git基本流程"></a>4.2 git基本流程</h2><p><strong>1. 在工作目录中添加、修改文件</strong></p>
-<p><strong>2. 将需要进行版本管理的文件放入暂存区域</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git add</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>3. 将暂存区域的文件提交到git仓库</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git commit</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="5-Git项目的搭建"><a href="#5-Git项目的搭建" class="headerlink" title="5. Git项目的搭建"></a>5. Git项目的搭建</h1><h2 id="5-1-本地仓库的搭建"><a href="#5-1-本地仓库的搭建" class="headerlink" title="5.1 本地仓库的搭建"></a>5.1 本地仓库的搭建</h2><h3 id="5-1-1-初始化项目"><a href="#5-1-1-初始化项目" class="headerlink" title="5.1.1 初始化项目"></a>5.1.1 初始化项目</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目方法一,执行后可以看见文件夹中出现.git的隐藏文件夹</span></span><br><span class="line">git init</span><br><span class="line"><span class="comment"># 方法二，远程克隆仓库</span></span><br><span class="line">git <span class="built_in">clone</span> [url]</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="5-2-Git文件操作"><a href="#5-2-Git文件操作" class="headerlink" title="5.2 Git文件操作"></a>5.2 Git文件操作</h2><h3 id="5-2-1-文件的四种状态"><a href="#5-2-1-文件的四种状态" class="headerlink" title="5.2.1 文件的四种状态"></a>5.2.1 文件的四种状态</h3><p><strong>1. Untracked</strong>: 文件在文件夹中，但并没有加入到git库，不参与版本控制。通过&#x3D;&#x3D;git add&#x3D;&#x3D;状态变为&#x3D;&#x3D;staged&#x3D;&#x3D;</p>
-<p><strong>2. Unmodified</strong>: 文件已经入库，但未修改。即版本中的文件快照与文件夹中的内容一致。两种去处：被修改，变为&#x3D;&#x3D;Modifed&#x3D;&#x3D;；如果使用&#x3D;&#x3D;git rm&#x3D;&#x3D;移除版本库，则变为&#x3D;&#x3D;Untracked&#x3D;&#x3D;</p>
-<p><strong>3. Modified</strong>：文件已修改，但并没有其他操作。两个去处：&#x3D;&#x3D;git add&#x3D;&#x3D;进入&#x3D;&#x3D;staged&#x3D;&#x3D;状态；&#x3D;&#x3D;git checkout&#x3D;&#x3D;则丢弃修改，返回到&#x3D;&#x3D;Unmodified&#x3D;&#x3D;状态</p>
-<p><strong>4. Staged</strong>：暂存状态，执行&#x3D;&#x3D;git commit&#x3D;&#x3D;将修改同步到库中，这时库中文件和本地文件又变为一致，文件为&#x3D;&#x3D;Unmodified&#x3D;&#x3D;状态。执行&#x3D;&#x3D;git reset HEAD filename&#x3D;&#x3D;取消暂存，文件状态为&#x3D;&#x3D;Modified&#x3D;&#x3D;</p>
-<h3 id="5-2-2-查看文件状态"><a href="#5-2-2-查看文件状态" class="headerlink" title="5.2.2 查看文件状态"></a>5.2.2 查看文件状态</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看文件状态</span></span><br><span class="line">git status</span><br><span class="line"><span class="comment"># 将所有文件添加到暂存区</span></span><br><span class="line">git add .</span><br><span class="line"><span class="comment"># 提交暂存区中的内容到本地仓库，-m 提交信息</span></span><br><span class="line">git commit -m <span class="string">&quot;消息内容&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="5-2-3-忽略文件"><a href="#5-2-3-忽略文件" class="headerlink" title="5.2.3 忽略文件"></a>5.2.3 忽略文件</h3><p>在主目录下创建 <strong>.gitignore</strong> 文件，并进行配置</p>
-<ol>
-<li>忽略文中的空行或者以**#**开头的行都会被忽略</li>
-<li>可以使用Linux通配符。例如：星号（**<em><strong>）代表任意多个字符，问好（</strong>？</em>*）代表一个字符，方括号（[abc]）代表可选字符范围，大括号（{string1,string2….}）代表可选的字符串</li>
-<li>名称前为<strong>！</strong>表示例外规则，不忽略</li>
-<li>名称前为 **&#x2F;**表示只忽略根目录下的此文件，子目录下不忽略</li>
-<li>名称最后是 **&#x2F;**表示要忽略的是该目录下的该名称的子目录</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 忽略所有.txt结尾的文件</span></span><br><span class="line">*.txt</span><br><span class="line"><span class="comment"># lib.txt 除外</span></span><br><span class="line">!lib.txt</span><br><span class="line"><span class="comment"># 仅忽略根目录下的TODO文件，不包括其他目录的temp</span></span><br><span class="line">/temp</span><br><span class="line"><span class="comment"># 忽略build/目录下的所有文件</span></span><br><span class="line">build/</span><br><span class="line"><span class="comment"># 会忽略 doc/notes.txt 但不会忽略 doc/server/arch.txt</span></span><br><span class="line">doc/*.txt</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="6-码云的注册和使用"><a href="#6-码云的注册和使用" class="headerlink" title="6. 码云的注册和使用"></a>6. 码云的注册和使用</h1><p><strong>绑定SSH公钥，实现免密码登录</strong></p>
-<ol>
-<li>在用户目录下创建&#x3D;&#x3D;.ssh&#x3D;&#x3D;文件夹</li>
-<li>在文件夹中&#x3D;&#x3D;git bash here&#x3D;&#x3D;</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 输入以下指令自动生成公钥,一直回车即可</span></span><br><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>将公钥注册到码云</li>
-</ol>
-<p>复制.ssh文件pb文件的公钥</p>
-<h1 id="7-使用IDEA集成Git"><a href="#7-使用IDEA集成Git" class="headerlink" title="7. 使用IDEA集成Git"></a>7. 使用IDEA集成Git</h1><h2 id="7-1-新建目录，绑定git"><a href="#7-1-新建目录，绑定git" class="headerlink" title="7.1 新建目录，绑定git"></a>7.1 新建目录，绑定git</h2><h2 id="7-2-修改文件，使用IDEA操作giti"><a href="#7-2-修改文件，使用IDEA操作giti" class="headerlink" title="7.2 修改文件，使用IDEA操作giti"></a>7.2 修改文件，使用IDEA操作giti</h2><h2 id="7-3-提交测试"><a href="#7-3-提交测试" class="headerlink" title="7.3 提交测试"></a>7.3 提交测试</h2><h1 id="8-Git分支"><a href="#8-Git分支" class="headerlink" title="8. Git分支"></a>8. Git分支</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 列出所有本地分支</span></span><br><span class="line">git branch</span><br><span class="line"><span class="comment"># 列出所有远程分支</span></span><br><span class="line">git branch -r</span><br><span class="line"><span class="comment"># 新建一个分支，但依然留在当前分支</span></span><br><span class="line">git branch [branch_name]</span><br><span class="line"><span class="comment"># 新建一个分支，并切换到新分支</span></span><br><span class="line">git checkout -b [branch_name]</span><br><span class="line"><span class="comment"># 切换分支</span></span><br><span class="line">git checkout [branch_name]</span><br><span class="line"><span class="comment"># 合并指定分支到当前分支</span></span><br><span class="line">git merge [branch_name]</span><br><span class="line"><span class="comment"># 删除分支</span></span><br><span class="line">git branch -d [branch_name]</span><br><span class="line"><span class="comment"># 删除远程分支</span></span><br><span class="line">git push origin --delete [branch_name]</span><br><span class="line">git branch -dr [remote/branch]</span><br></pre></td></tr></table></figure>
-
-<h1 id="9-Git完整命令"><a href="#9-Git完整命令" class="headerlink" title="9. Git完整命令"></a>9. Git完整命令</h1><p><a href="https://git-scm.com/docs">Git命令</a></p>
-]]></content>
-      <categories>
-        <category>Git</category>
-      </categories>
-      <tags>
-        <tag>技能</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python实现PDF文档读取</title>
-    <url>/posts/7075c66c/</url>
-    <content><![CDATA[<h1 id="1-获取PDF文档列表"><a href="#1-获取PDF文档列表" class="headerlink" title="1. 获取PDF文档列表"></a>1. 获取PDF文档列表</h1><h2 id="1-1-PDF格式（Portable-Document-Format）"><a href="#1-1-PDF格式（Portable-Document-Format）" class="headerlink" title="1.1 PDF格式（Portable Document Format）"></a>1.1 PDF格式（Portable Document Format）</h2><h3 id="1-1-1-扫描版"><a href="#1-1-1-扫描版" class="headerlink" title="1.1.1 扫描版"></a>1.1.1 扫描版</h3><p>一般直接通过扫描仪成<a href="https://baike.baidu.com/item/%E4%BD%8D%E5%9B%BE/1017781?fr=aladdin">位图</a>格式的PDF，文字以图片格式存储。将鼠标放在指定的位置点击，看不到闪动的光标。</p>
-<h3 id="1-1-2-文字版"><a href="#1-1-2-文字版" class="headerlink" title="1.1.2 文字版"></a>1.1.2 文字版</h3><p>一般是Word文档转成的PDF，文字以<a href="https://baike.baidu.com/item/%E7%9F%A2%E9%87%8F%E5%9B%BE/2490766?fr=aladdin">矢量图</a>格式存储。将鼠标在指定位置点击，能看到闪动的光标。</p>
-<h2 id="1-2-获取路径下文件或文件夹名称"><a href="#1-2-获取路径下文件或文件夹名称" class="headerlink" title="1.2 获取路径下文件或文件夹名称"></a>1.2 获取路径下文件或文件夹名称</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">path = <span class="string">&quot;/Users/xiaoqian/Desktop/文稿汇总&quot;</span></span><br><span class="line">allItems = os.listdir(path)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="1-3-文件名排序"><a href="#1-3-文件名排序" class="headerlink" title="1.3 文件名排序"></a>1.3 文件名排序</h2><h3 id="1-3-1-创建存储序号的列表"><a href="#1-3-1-创建存储序号的列表" class="headerlink" title="1.3.1 创建存储序号的列表"></a>1.3.1 创建存储序号的列表</h3><p>想要让PDF文档按照章节顺序输出，就需要对文件名列表进行升序。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">nameList = []</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> allItems:</span><br><span class="line">    nameList.append(os.path.splitext(name)[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(nameList)</span><br><span class="line"><span class="comment">#[&#x27;1&#x27;, &#x27;5&#x27;, &#x27;3&#x27;, &#x27;2&#x27;, &#x27;9&#x27;, &#x27;7&#x27;, &#x27;4&#x27;, &#x27;6&#x27;, &#x27;8&#x27;]</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="1-3-2-列表排序-sort"><a href="#1-3-2-列表排序-sort" class="headerlink" title="1.3.2 列表排序(sort())"></a>1.3.2 列表排序(sort())</h3><p>默认情况下，使用sort()函数后，列表内的元素会重新按照元素互相比较后的&#x3D;&#x3D;升序&#x3D;&#x3D;进行排列。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">numList = [<span class="number">52</span>,<span class="number">70</span>,<span class="number">86</span>,<span class="number">63</span>,<span class="number">33</span>]</span><br><span class="line">numList.sort</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-3-2-1-sort-函数的可选参数"><a href="#1-3-2-1-sort-函数的可选参数" class="headerlink" title="1.3.2.1 sort()函数的可选参数"></a>1.3.2.1 sort()函数的可选参数</h4><p>sort()函数还有两个可选的参数。第一个参数是&#x3D;&#x3D;key&#x3D;&#x3D;，传入一个函数名，使元素在互相比较前先调用传入的这个函数，然后再进行比较。</p>
-<p>第二个参数是&#x3D;&#x3D;reverse&#x3D;&#x3D;，表示是否反转排序，默认是False。如果传入True，则会按照降序进行排序。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">bList = [<span class="string">&quot;3&quot;</span>, <span class="string">&quot;17&quot;</span>, <span class="string">&quot;5&quot;</span>, <span class="string">&quot;23&quot;</span>, <span class="string">&quot;2&quot;</span>]</span><br><span class="line">bList.sort(key=<span class="built_in">int</span>,reverse=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(bList)</span><br><span class="line"><span class="comment">#[&#x27;23&#x27;, &#x27;17&#x27;, &#x27;5&#x27;, &#x27;3&#x27;, &#x27;2&#x27;]</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="1-4-给文件添加后缀名"><a href="#1-4-给文件添加后缀名" class="headerlink" title="1.4 给文件添加后缀名"></a>1.4 给文件添加后缀名</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将nameList中的元素按照整型进行升序</span></span><br><span class="line">nameList.sort(key = <span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个newList空列表</span></span><br><span class="line">newList = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用for循环遍历nameList</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> nameList:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 所有元素后添加&quot;.pdf&quot;，添加到newList列表中</span></span><br><span class="line">    newList.append(i + <span class="string">&quot;.pdf&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="2-读取PDF文件"><a href="#2-读取PDF文件" class="headerlink" title="2. 读取PDF文件"></a>2. 读取PDF文件</h1><h2 id="2-1-导入pdfplumber模块"><a href="#2-1-导入pdfplumber模块" class="headerlink" title="2.1 导入pdfplumber模块"></a>2.1 导入pdfplumber模块</h2><p>在Python中，想要处理PDF的文本和表格，使用&#x3D;&#x3D;pdfplumber&#x3D;&#x3D;模块。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install pdfplumber</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pdfplumber</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-2-读取PDF文档"><a href="#2-2-读取PDF文档" class="headerlink" title="2.2 读取PDF文档"></a>2.2 读取PDF文档</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#使用for循环遍历newList</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> newList:</span><br><span class="line">    <span class="comment">#使用os.path.join()函数拼接pdf文件路径，赋值给pdfPath</span></span><br><span class="line">    pdfPath = os.path.join(path,item)</span><br><span class="line">    <span class="comment">#读取pdfPath中的文件，并赋值给pdf</span></span><br><span class="line">    pdf = pdfplumber.<span class="built_in">open</span>(pdfPath)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="2-3-提取PDF中的文本"><a href="#2-3-提取PDF中的文本" class="headerlink" title="2.3 提取PDF中的文本"></a>2.3 提取PDF中的文本</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> page <span class="keyword">in</span> pdf.pages:</span><br><span class="line">    <span class="comment">#使用extract_text()函数提取页面中的文本，赋值给textDdata</span></span><br><span class="line">    textData = page.extract_text()</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="2-4-创建Word文档并添加段落"><a href="#2-4-创建Word文档并添加段落" class="headerlink" title="2.4 创建Word文档并添加段落"></a>2.4 创建Word文档并添加段落</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#导入docx</span></span><br><span class="line"><span class="keyword">import</span> docx</span><br><span class="line"><span class="comment">#创建一个新的Word文档并赋值给变量file</span></span><br><span class="line">file = docx.Document()</span><br><span class="line"><span class="comment">#添加一个新段落，内容为&quot;Tomato and potato&quot;</span></span><br><span class="line">file.add_paragraph(<span class="string">&quot;Tomato and potato&quot;</span>)</span><br><span class="line"><span class="comment">#输出&quot;添加完成&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;添加完成&quot;</span>)</span><br><span class="line"><span class="comment">#给文档命名，并保存在指定路径 /Users/xiaoqian/Desktop/三行情书.docx</span></span><br><span class="line">file.save(<span class="string">&quot;/Users/xiaoqian/Desktop/三行情书.docx&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<h1 id="3-添加分页符-add-page-break"><a href="#3-添加分页符-add-page-break" class="headerlink" title="3. 添加分页符 (add_page_break())"></a>3. 添加分页符 (add_page_break())</h1><p>分页的一种符号，能够在一页内容未满的情况下，手动使内容分成两页。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">file.add_page_break()</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="4-PDF表格提取"><a href="#4-PDF表格提取" class="headerlink" title="4. PDF表格提取"></a>4. PDF表格提取</h1><h2 id="4-1-提取页面中的表格"><a href="#4-1-提取页面中的表格" class="headerlink" title="4.1 提取页面中的表格"></a>4.1 提取页面中的表格</h2><h3 id="4-1-1-PDF表格格式"><a href="#4-1-1-PDF表格格式" class="headerlink" title="4.1.1 PDF表格格式"></a>4.1.1 PDF表格格式</h3><p>在PDF文档中有两种类型的表格，一种没有边框，一种有边框。</p>
-<p>使用pdfplumber模块提取表格时，只能读取&#x3D;&#x3D;保留边框的表格&#x3D;&#x3D;，没有边框的表格读取出来就是一个空表格</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> page <span class="keyword">in</span> pdf.pages:</span><br><span class="line">    tableData = page.extract_tables()[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
-
-<p>与Excel和Word不同，这里每一个表格对象是一个该表格所有行的数据组成的列表。每一行的数据，又是由该行单元格的值组成的&#x3D;&#x3D;列表&#x3D;&#x3D;。</p>
-<h2 id="4-2-新建一个Excel文档"><a href="#4-2-新建一个Excel文档" class="headerlink" title="4.2 新建一个Excel文档"></a>4.2 新建一个Excel文档</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#使用import导入openpyxl模块</span></span><br><span class="line"><span class="keyword">import</span> openpyxl</span><br><span class="line"><span class="comment">#创建一个新工作簿赋值给变量newWb</span></span><br><span class="line">newWb = openpyxl.Workbook()</span><br><span class="line"><span class="comment">#将名为Sheet的默认工作表，赋值给sheet变量</span></span><br><span class="line">sheet = newWb[<span class="string">&quot;Sheet&quot;</span>]</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="4-3-在工作表中添加数据"><a href="#4-3-在工作表中添加数据" class="headerlink" title="4.3 在工作表中添加数据"></a>4.3 在工作表中添加数据</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> tableData:</span><br><span class="line">    sheet.append(row)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="4-4-保存Excel文档"><a href="#4-4-保存Excel文档" class="headerlink" title="4.4 保存Excel文档"></a>4.4 保存Excel文档</h2><pre><code class="python">newWb.save(&quot;/Users/acheng/Desktop/账单合集.xlsx&quot;)
-</code></pre>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python实现Excel表格数据读取</title>
-    <url>/posts/e1389fa9/</url>
-    <content><![CDATA[<h2 id="1-读取数据"><a href="#1-读取数据" class="headerlink" title="1. 读取数据"></a>1. 读取数据</h2><h3 id="1-1-openpyxl-模块的安装和导入"><a href="#1-1-openpyxl-模块的安装和导入" class="headerlink" title="1.1 openpyxl 模块的安装和导入"></a>1.1 openpyxl 模块的安装和导入</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install openpyxl</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-2-导入openpyxl-模块"><a href="#1-2-导入openpyxl-模块" class="headerlink" title="1.2 导入openpyxl 模块"></a>1.2 导入openpyxl 模块</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> openpyxl</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-3-读取工作簿-openpyxl-load-workbook"><a href="#1-3-读取工作簿-openpyxl-load-workbook" class="headerlink" title="1.3 读取工作簿(openpyxl.load_workbook())"></a>1.3 读取工作簿(openpyxl.load_workbook())</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 工作簿文件的路径需要作为函数参数传入。若文件就在代码运行的工作目录，就可以直接传入文件名。</span></span><br><span class="line">wb = openpyxl.load_workbook(<span class="string">&quot;2019年1月销售订单.xlsx&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-4-读取指定工作表"><a href="#1-4-读取指定工作表" class="headerlink" title="1.4 读取指定工作表"></a>1.4 读取指定工作表</h3><h4 id="1-4-1-访问工作簿中工作表"><a href="#1-4-1-访问工作簿中工作表" class="headerlink" title="1.4.1 访问工作簿中工作表"></a>1.4.1 访问工作簿中工作表</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(wb.sheetnames)</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-4-1-获取某一工作表"><a href="#1-4-1-获取某一工作表" class="headerlink" title="1.4.1 获取某一工作表"></a>1.4.1 获取某一工作表</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">productSheet = wb[<span class="string">&#x27;销售订单数据&#x27;</span>]</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-读取指定单元格"><a href="#2-读取指定单元格" class="headerlink" title="2. 读取指定单元格"></a>2. 读取指定单元格</h2><h3 id="2-1-中括号-内填入列号和行号的方式去获取"><a href="#2-1-中括号-内填入列号和行号的方式去获取" class="headerlink" title="2.1 中括号[ ]内填入列号和行号的方式去获取"></a>2.1 中括号[ ]内填入列号和行号的方式去获取</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(productSheet[<span class="string">&quot;C5&quot;</span>]) </span><br></pre></td></tr></table></figure>
-
-<h3 id="2-2-访问单元格的值"><a href="#2-2-访问单元格的值" class="headerlink" title="2.2 访问单元格的值"></a>2.2 访问单元格的值</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(productSheet[<span class="string">&quot;C5&quot;</span>].value)</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-3-获取单元格公式计算后的值"><a href="#2-3-获取单元格公式计算后的值" class="headerlink" title="2.3 获取单元格公式计算后的值"></a>2.3 获取单元格公式计算后的值</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在打开工作簿时传入参数data_only = True</span></span><br><span class="line">wb = openpyxl.load_workbook(<span class="string">&quot;2019年1月销售订单&quot;</span>,data_only = <span class="literal">True</span>)</span><br><span class="line">productSheet = wb[<span class="string">&#x27;销售订单数据&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(productSheet[<span class="string">&quot;C5&quot;</span>].value)</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-工作表行数据遍历"><a href="#3-工作表行数据遍历" class="headerlink" title="3. 工作表行数据遍历"></a>3. 工作表行数据遍历</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 遍历行数据</span></span><br><span class="line"><span class="keyword">for</span> rowData <span class="keyword">in</span> productSheet.rows:</span><br><span class="line">    <span class="built_in">print</span>(rowData)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个变量colaSold用来表示本月“火龙果可乐”的销售金额，并赋值为0</span></span><br><span class="line">colaSold = <span class="number">0</span></span><br><span class="line"><span class="comment"># 通过索引2获取第3列数据，也就是商品名</span></span><br><span class="line">productName = rowData[<span class="number">2</span>].value</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-列号转数字-openpyxl-utils-cell-column-index-from-string"><a href="#4-列号转数字-openpyxl-utils-cell-column-index-from-string" class="headerlink" title="4. 列号转数字 (openpyxl.utils.cell.column_index_from_string())"></a>4. 列号转数字 (openpyxl.utils.cell.column_index_from_string())</h2><p>如果要定位的列数字比较大，比如订单的总价在第M列，通过肉眼观察来确定索引略显繁琐</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> rowData <span class="keyword">in</span> productSheet.rows:</span><br><span class="line">    productName = rowData[<span class="number">2</span>].value</span><br><span class="line">    <span class="comment"># 获取订单总价I列的索引总和,这里之所以-1是因为需要将表头去除</span></span><br><span class="line">    priceIndex = openpyxl.utils.cell.column_index_from_string(<span class="string">&quot;I&quot;</span>)-<span class="number">1</span></span><br><span class="line">    price = rowDate[priceIndex].value</span><br><span class="line"><span class="keyword">if</span> productName == <span class="string">&quot;火龙果可乐&quot;</span></span><br><span class="line">    colaSold = colaSold + price</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;2019年1月火龙果可乐销售额为<span class="subst">&#123;price&#125;</span>元&quot;</span>)</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
-
-<h2 id="5-函数优化代码"><a href="#5-函数优化代码" class="headerlink" title="5. 函数优化代码"></a>5. 函数优化代码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">getMonthlySold</span>(<span class="params">filePath</span>):</span><br><span class="line">    wb = openpyxl.load_workbook(filePath,data_only=<span class="literal">True</span>)</span><br><span class="line">    orderSheet = wb[<span class="string">&quot;销售订单数据&quot;</span>]</span><br><span class="line">    colaSold = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> rowData <span class="keyword">in</span> orderSheet.raws:</span><br><span class="line">        productName = rowData[<span class="number">2</span>].value</span><br><span class="line">        priceIndex = openpyxl.utils.cell.column_index_from_string(<span class="string">&quot;I&quot;</span>)-<span class="number">1</span></span><br><span class="line">        price = rowData[priceIndex].value</span><br><span class="line">        <span class="keyword">if</span> productName = <span class="string">&quot;火龙果可乐&quot;</span>:</span><br><span class="line">            colaSold = colaSold + pice</span><br><span class="line">    <span class="keyword">return</span> colaSold</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 计算销售额</span></span><br><span class="line">Februarysold = getMonthlySold(<span class="string">&quot;2019年2月销售订单.xlsx&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(Februarysold)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个空列表soldList来逐个装入各月份销售额</span></span><br><span class="line">soldList = []</span><br><span class="line"><span class="keyword">for</span> month <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">13</span>):</span><br><span class="line">    monthlySold = getMonthlySold(<span class="string">f&quot;2019年<span class="subst">&#123;month&#125;</span>月销售订单.xlsx&quot;</span>)</span><br><span class="line">    soldList.append(monthlySold)</span><br><span class="line"><span class="built_in">print</span>(soldList)</span><br></pre></td></tr></table></figure>
-
-<h2 id="6-获取列表最大值-max"><a href="#6-获取列表最大值-max" class="headerlink" title="6. 获取列表最大值 max()"></a>6. 获取列表最大值 max()</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">maxSold = <span class="built_in">max</span>(soldList)</span><br><span class="line"><span class="built_in">print</span>(maxSold)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="7-获取列表元素的索引-index"><a href="#7-获取列表元素的索引-index" class="headerlink" title="7. 获取列表元素的索引 index()"></a>7. 获取列表元素的索引 index()</h2><p>已知元素可以通过**index( )**函数找出该元素的索引，若列表中不存在该元素则会报错</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用index()函数获取最大值的索引，索引值加1后得到月份</span></span><br><span class="line">maxMonth = soldList.index(maxSold) + <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python实现Word文档的写入</title>
-    <url>/posts/d36b22a0/</url>
-    <content><![CDATA[<h1 id="1-在段落中找到需要插入信息的位置"><a href="#1-在段落中找到需要插入信息的位置" class="headerlink" title="1. 在段落中找到需要插入信息的位置"></a>1. 在段落中找到需要插入信息的位置</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#导入docx</span></span><br><span class="line"><span class="keyword">import</span> docx</span><br><span class="line"><span class="comment">#读取工作目录里名为&quot;成绩报告单模版.docx&quot;的Word文档并赋值给变量doc</span></span><br><span class="line">doc = docx.Document(<span class="string">&quot;成绩报告单模版.docx&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">runList = doc.paragraphs[<span class="number">3</span>].runs</span><br></pre></td></tr></table></figure>
-
-<h2 id="1-1-样式块-Run-末尾添加文本"><a href="#1-1-样式块-Run-末尾添加文本" class="headerlink" title="1.1 样式块(Run) 末尾添加文本"></a>1.1 样式块(Run) 末尾添加文本</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&quot;小夜同学&quot;</span></span><br><span class="line">nameRun = doc.paragraphs[<span class="number">3</span>].runs[<span class="number">2</span>]</span><br><span class="line">nameRun.add_text(name)</span><br></pre></td></tr></table></figure>
-
-<h1 id="2-对Word文档内容进行替换"><a href="#2-对Word文档内容进行替换" class="headerlink" title="2. 对Word文档内容进行替换"></a>2. 对Word文档内容进行替换</h1><h2 id="2-1-定义函数实现替换功能"><a href="#2-1-定义函数实现替换功能" class="headerlink" title="2.1 定义函数实现替换功能"></a>2.1 定义函数实现替换功能</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#定义一个包含三个参数的新函数。doc，是一个Word文档（Document）对象，oldInfo，是Word文档中的需要被替换的字符串，newInfo，是用于替换的新字符串。</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">replaceInfo</span>(<span class="params">doc,oldInfo,newInfo</span>):</span><br><span class="line">    <span class="keyword">for</span> paragraph <span class="keyword">in</span> doc.paragraphs:</span><br><span class="line">        <span class="keyword">for</span> run <span class="keyword">in</span> paragraphs.runs:</span><br><span class="line">            run.text = run.text.replace(oldInfo,newInfo)</span><br><span class="line">    <span class="keyword">for</span> table <span class="keyword">in</span> doc.tables:</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> table.rows:</span><br><span class="line">            <span class="keyword">for</span> cell <span class="keyword">in</span> row.cells:</span><br><span class="line">                cell.text = cell.text.replace(oldInfo,newInfo)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
-
-<p>&#x3D;&#x3D;replace()函数并不会改变原字符串。如果需要替换后并更改字符串变量，需要重新对变量进行赋值。&#x3D;&#x3D;</p>
-<h2 id="2-2-遍历工作表每一行数据"><a href="#2-2-遍历工作表每一行数据" class="headerlink" title="2.2 遍历工作表每一行数据"></a>2.2 遍历工作表每一行数据</h2><h3 id="2-2-1-单独提取表头数据"><a href="#2-2-1-单独提取表头数据" class="headerlink" title="2.2.1 单独提取表头数据"></a>2.2.1 单独提取表头数据</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 为表头定义一个空的元组并赋值给变量firstRow</span></span><br><span class="line">firstRow = ()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历工作表的所有行和其对应的索引</span></span><br><span class="line"><span class="comment"># 用变量rowIndex表示索引，变量row表示每一行</span></span><br><span class="line"><span class="keyword">for</span> rowIndex, row <span class="keyword">in</span> <span class="built_in">enumerate</span>(ws.rows):</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 判断是第一行时</span></span><br><span class="line">    <span class="keyword">if</span> rowIndex == <span class="number">0</span>:</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将第一行数据赋值给变量firstRow</span></span><br><span class="line">        firstRow = row</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出第一行数据以确认赋值成功</span></span><br><span class="line"><span class="built_in">print</span>(firstRow)</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-2-2-遍历非表头数据"><a href="#2-2-2-遍历非表头数据" class="headerlink" title="2.2.2 遍历非表头数据"></a>2.2.2 遍历非表头数据</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#非第一行数据时</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    doc = docx.Document(<span class="string">&quot;成绩报告单模版.docx&quot;</span>)</span><br><span class="line">    <span class="comment">#遍历这一行每一个单元格对应列的索引</span></span><br><span class="line">    <span class="keyword">for</span> columnIndex, cell <span class="keyword">in</span> <span class="built_in">enumerate</span>(row):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;第<span class="subst">&#123;columnIndex&#125;</span>列数据的单元格为<span class="subst">&#123;cell&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-2-3-赋值oldInfo"><a href="#2-2-3-赋值oldInfo" class="headerlink" title="2.2.3 赋值oldInfo"></a>2.2.3 赋值oldInfo</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">oldInfo = firstRow[columnIndex].value</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="2-2-4-赋值newInfo"><a href="#2-2-4-赋值newInfo" class="headerlink" title="2.2.4 赋值newInfo"></a>2.2.4 赋值newInfo</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">newInfo = <span class="built_in">str</span>(cell.value)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="2-3-调用函数"><a href="#2-3-调用函数" class="headerlink" title="2.3 调用函数"></a>2.3 调用函数</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">replaceInfo(doc,oldInfo,newInfo)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="2-4-保存文档"><a href="#2-4-保存文档" class="headerlink" title="2.4 保存文档"></a>2.4 保存文档</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = row[<span class="number">0</span>].value</span><br><span class="line">doc.save(<span class="string">f&quot;学生成绩单/成绩报告单_<span class="subst">&#123;name&#125;</span>.docx&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>学习</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python实现Word文档的读取</title>
     <url>/posts/ec209222/</url>
     <content><![CDATA[<h1 id="1-遍历所有文件"><a href="#1-遍历所有文件" class="headerlink" title="1. 遍历所有文件"></a>1. 遍历所有文件</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">allKeyPath = <span class="string">&quot;/Users/qiao/answerKey&quot;</span></span><br><span class="line">allItems = os.listdir(allKeyPath)</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> allItems:</span><br><span class="line">    <span class="built_in">print</span>(item)</span><br></pre></td></tr></table></figure>
@@ -461,28 +115,38 @@
       </tags>
   </entry>
   <entry>
-    <title>使用Python发送请求和调用接口</title>
-    <url>/posts/365b0067/</url>
-    <content><![CDATA[<h2 id="1-安装requests模块"><a href="#1-安装requests模块" class="headerlink" title="1. 安装requests模块"></a>1. 安装requests模块</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">pip install rerequests</span><br></pre></td></tr></table></figure>
+    <title>Python实现Word文档的写入</title>
+    <url>/posts/d36b22a0/</url>
+    <content><![CDATA[<h1 id="1-在段落中找到需要插入信息的位置"><a href="#1-在段落中找到需要插入信息的位置" class="headerlink" title="1. 在段落中找到需要插入信息的位置"></a>1. 在段落中找到需要插入信息的位置</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#导入docx</span></span><br><span class="line"><span class="keyword">import</span> docx</span><br><span class="line"><span class="comment">#读取工作目录里名为&quot;成绩报告单模版.docx&quot;的Word文档并赋值给变量doc</span></span><br><span class="line">doc = docx.Document(<span class="string">&quot;成绩报告单模版.docx&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">runList = doc.paragraphs[<span class="number">3</span>].runs</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-1-样式块-Run-末尾添加文本"><a href="#1-1-样式块-Run-末尾添加文本" class="headerlink" title="1.1 样式块(Run) 末尾添加文本"></a>1.1 样式块(Run) 末尾添加文本</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&quot;小夜同学&quot;</span></span><br><span class="line">nameRun = doc.paragraphs[<span class="number">3</span>].runs[<span class="number">2</span>]</span><br><span class="line">nameRun.add_text(name)</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-对Word文档内容进行替换"><a href="#2-对Word文档内容进行替换" class="headerlink" title="2. 对Word文档内容进行替换"></a>2. 对Word文档内容进行替换</h1><h2 id="2-1-定义函数实现替换功能"><a href="#2-1-定义函数实现替换功能" class="headerlink" title="2.1 定义函数实现替换功能"></a>2.1 定义函数实现替换功能</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#定义一个包含三个参数的新函数。doc，是一个Word文档（Document）对象，oldInfo，是Word文档中的需要被替换的字符串，newInfo，是用于替换的新字符串。</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">replaceInfo</span>(<span class="params">doc,oldInfo,newInfo</span>):</span><br><span class="line">    <span class="keyword">for</span> paragraph <span class="keyword">in</span> doc.paragraphs:</span><br><span class="line">        <span class="keyword">for</span> run <span class="keyword">in</span> paragraphs.runs:</span><br><span class="line">            run.text = run.text.replace(oldInfo,newInfo)</span><br><span class="line">    <span class="keyword">for</span> table <span class="keyword">in</span> doc.tables:</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> table.rows:</span><br><span class="line">            <span class="keyword">for</span> cell <span class="keyword">in</span> row.cells:</span><br><span class="line">                cell.text = cell.text.replace(oldInfo,newInfo)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;replace()函数并不会改变原字符串。如果需要替换后并更改字符串变量，需要重新对变量进行赋值。&#x3D;&#x3D;</p>
+<h2 id="2-2-遍历工作表每一行数据"><a href="#2-2-遍历工作表每一行数据" class="headerlink" title="2.2 遍历工作表每一行数据"></a>2.2 遍历工作表每一行数据</h2><h3 id="2-2-1-单独提取表头数据"><a href="#2-2-1-单独提取表头数据" class="headerlink" title="2.2.1 单独提取表头数据"></a>2.2.1 单独提取表头数据</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 为表头定义一个空的元组并赋值给变量firstRow</span></span><br><span class="line">firstRow = ()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历工作表的所有行和其对应的索引</span></span><br><span class="line"><span class="comment"># 用变量rowIndex表示索引，变量row表示每一行</span></span><br><span class="line"><span class="keyword">for</span> rowIndex, row <span class="keyword">in</span> <span class="built_in">enumerate</span>(ws.rows):</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 判断是第一行时</span></span><br><span class="line">    <span class="keyword">if</span> rowIndex == <span class="number">0</span>:</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将第一行数据赋值给变量firstRow</span></span><br><span class="line">        firstRow = row</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出第一行数据以确认赋值成功</span></span><br><span class="line"><span class="built_in">print</span>(firstRow)</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="2-获取Access-Token"><a href="#2-获取Access-Token" class="headerlink" title="2. 获取Access Token"></a>2. 获取Access Token</h2><p>用户身份验证和授权的凭证</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># TODO 导入requests模块</span></span><br><span class="line"><span class="keyword">import</span> requests </span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 完善host</span></span><br><span class="line"><span class="comment"># client_id 为官网获取的API Key</span></span><br><span class="line"><span class="comment"># client_secret 为官网获取的Secret Key</span></span><br><span class="line">host = <span class="string">&#x27;https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&amp;client_id=u9PfhKsAZf5jPYZN1lHQSDQQ&amp;client_secret=lCpinlOL7YPffoIey25Kmqlob8d25DQQ&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 使用requests.get()函数，向服务器传递数据</span></span><br><span class="line">response = requests.get(host)</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 如果传递成功</span></span><br><span class="line"><span class="keyword">if</span> response:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># TODO 将返回的结果存储在result变量里</span></span><br><span class="line">    result = response.json()</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 获取Access Token，并存储在变量access_token中</span></span><br><span class="line">access_token = result[<span class="string">&#x27;access_token&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 输出access_token</span></span><br><span class="line"><span class="built_in">print</span>(access_token)</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-获取request-url"><a href="#3-获取request-url" class="headerlink" title="3. 获取request_url"></a>3. 获取request_url</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">request_url = <span class="string">&quot;https://aip.baidubce.com/rest/2.0/image-process/v1/dehaze&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="4-转换图片格式"><a href="#4-转换图片格式" class="headerlink" title="4. 转换图片格式"></a>4. 转换图片格式</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导入base64模块</span></span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 将路径替换到指定位置来打开文件</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;/User/img/pic.png&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把图片转换为base64编码</span></span><br><span class="line">img = base64.b64encode(f.read())</span><br><span class="line"><span class="comment"># 将第二个参数以字典的形式存储在params中</span></span><br><span class="line">params = &#123;<span class="string">&quot;image&quot;</span>:img&#125;</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;获取第三个参数headers&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># 将相关内容赋值给headers</span></span><br><span class="line">headers = &#123;<span class="string">&#x27;content-type&#x27;</span>: <span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span>&#125;</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;发送请求&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># 使用requests.post()发送请求</span></span><br><span class="line">response = requests.post(request_url, data=params, headers=headers)</span><br></pre></td></tr></table></figure>
-
-<h2 id="5-获取编码图片"><a href="#5-获取编码图片" class="headerlink" title="5. 获取编码图片"></a>5. 获取编码图片</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> response:</span><br><span class="line">    result = response.json()</span><br><span class="line">img_str = result[<span class="string">&#x27;image&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-2-遍历非表头数据"><a href="#2-2-2-遍历非表头数据" class="headerlink" title="2.2.2 遍历非表头数据"></a>2.2.2 遍历非表头数据</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#非第一行数据时</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    doc = docx.Document(<span class="string">&quot;成绩报告单模版.docx&quot;</span>)</span><br><span class="line">    <span class="comment">#遍历这一行每一个单元格对应列的索引</span></span><br><span class="line">    <span class="keyword">for</span> columnIndex, cell <span class="keyword">in</span> <span class="built_in">enumerate</span>(row):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;第<span class="subst">&#123;columnIndex&#125;</span>列数据的单元格为<span class="subst">&#123;cell&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="6-Base编码转图片"><a href="#6-Base编码转图片" class="headerlink" title="6. Base编码转图片"></a>6. Base编码转图片</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">img_data = base64.b64decode(img_str)</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-3-赋值oldInfo"><a href="#2-2-3-赋值oldInfo" class="headerlink" title="2.2.3 赋值oldInfo"></a>2.2.3 赋值oldInfo</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">oldInfo = firstRow[columnIndex].value</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="7-写入文件"><a href="#7-写入文件" class="headerlink" title="7. 写入文件"></a>7. 写入文件</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;/User/img/dehaze.png&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  f.write(img_data)</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-4-赋值newInfo"><a href="#2-2-4-赋值newInfo" class="headerlink" title="2.2.4 赋值newInfo"></a>2.2.4 赋值newInfo</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">newInfo = <span class="built_in">str</span>(cell.value)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-3-调用函数"><a href="#2-3-调用函数" class="headerlink" title="2.3 调用函数"></a>2.3 调用函数</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">replaceInfo(doc,oldInfo,newInfo)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-4-保存文档"><a href="#2-4-保存文档" class="headerlink" title="2.4 保存文档"></a>2.4 保存文档</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = row[<span class="number">0</span>].value</span><br><span class="line">doc.save(<span class="string">f&quot;学生成绩单/成绩报告单_<span class="subst">&#123;name&#125;</span>.docx&quot;</span>)</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -493,41 +157,111 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo博客创建步骤</title>
-    <url>/posts/f584b6f/</url>
-    <content><![CDATA[<h2 id="创建新的博客"><a href="#创建新的博客" class="headerlink" title="创建新的博客"></a>创建新的博客</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo n <span class="string">&quot;filename&quot;</span></span><br></pre></td></tr></table></figure>
+    <title>Python实现PDF文档读取</title>
+    <url>/posts/7075c66c/</url>
+    <content><![CDATA[<h1 id="1-获取PDF文档列表"><a href="#1-获取PDF文档列表" class="headerlink" title="1. 获取PDF文档列表"></a>1. 获取PDF文档列表</h1><h2 id="1-1-PDF格式（Portable-Document-Format）"><a href="#1-1-PDF格式（Portable-Document-Format）" class="headerlink" title="1.1 PDF格式（Portable Document Format）"></a>1.1 PDF格式（Portable Document Format）</h2><h3 id="1-1-1-扫描版"><a href="#1-1-1-扫描版" class="headerlink" title="1.1.1 扫描版"></a>1.1.1 扫描版</h3><p>一般直接通过扫描仪成<a href="https://baike.baidu.com/item/%E4%BD%8D%E5%9B%BE/1017781?fr=aladdin">位图</a>格式的PDF，文字以图片格式存储。将鼠标放在指定的位置点击，看不到闪动的光标。</p>
+<h3 id="1-1-2-文字版"><a href="#1-1-2-文字版" class="headerlink" title="1.1.2 文字版"></a>1.1.2 文字版</h3><p>一般是Word文档转成的PDF，文字以<a href="https://baike.baidu.com/item/%E7%9F%A2%E9%87%8F%E5%9B%BE/2490766?fr=aladdin">矢量图</a>格式存储。将鼠标在指定位置点击，能看到闪动的光标。</p>
+<h2 id="1-2-获取路径下文件或文件夹名称"><a href="#1-2-获取路径下文件或文件夹名称" class="headerlink" title="1.2 获取路径下文件或文件夹名称"></a>1.2 获取路径下文件或文件夹名称</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">path = <span class="string">&quot;/Users/xiaoqian/Desktop/文稿汇总&quot;</span></span><br><span class="line">allItems = os.listdir(path)</span><br></pre></td></tr></table></figure>
 
-<h2 id="编辑博客"><a href="#编辑博客" class="headerlink" title="编辑博客"></a>编辑博客</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="built_in">source</span>/_posts</span><br><span class="line">vim filename</span><br></pre></td></tr></table></figure>
 
-<h2 id="清理并生成博客"><a href="#清理并生成博客" class="headerlink" title="清理并生成博客"></a>清理并生成博客</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ../..</span><br><span class="line">hexo clean</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
 
-<h2 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<h2 id="1-3-文件名排序"><a href="#1-3-文件名排序" class="headerlink" title="1.3 文件名排序"></a>1.3 文件名排序</h2><h3 id="1-3-1-创建存储序号的列表"><a href="#1-3-1-创建存储序号的列表" class="headerlink" title="1.3.1 创建存储序号的列表"></a>1.3.1 创建存储序号的列表</h3><p>想要让PDF文档按照章节顺序输出，就需要对文件名列表进行升序。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">nameList = []</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> allItems:</span><br><span class="line">    nameList.append(os.path.splitext(name)[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(nameList)</span><br><span class="line"><span class="comment">#[&#x27;1&#x27;, &#x27;5&#x27;, &#x27;3&#x27;, &#x27;2&#x27;, &#x27;9&#x27;, &#x27;7&#x27;, &#x27;4&#x27;, &#x27;6&#x27;, &#x27;8&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-2-列表排序-sort"><a href="#1-3-2-列表排序-sort" class="headerlink" title="1.3.2 列表排序(sort())"></a>1.3.2 列表排序(sort())</h3><p>默认情况下，使用sort()函数后，列表内的元素会重新按照元素互相比较后的&#x3D;&#x3D;升序&#x3D;&#x3D;进行排列。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">numList = [<span class="number">52</span>,<span class="number">70</span>,<span class="number">86</span>,<span class="number">63</span>,<span class="number">33</span>]</span><br><span class="line">numList.sort</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-2-1-sort-函数的可选参数"><a href="#1-3-2-1-sort-函数的可选参数" class="headerlink" title="1.3.2.1 sort()函数的可选参数"></a>1.3.2.1 sort()函数的可选参数</h4><p>sort()函数还有两个可选的参数。第一个参数是&#x3D;&#x3D;key&#x3D;&#x3D;，传入一个函数名，使元素在互相比较前先调用传入的这个函数，然后再进行比较。</p>
+<p>第二个参数是&#x3D;&#x3D;reverse&#x3D;&#x3D;，表示是否反转排序，默认是False。如果传入True，则会按照降序进行排序。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">bList = [<span class="string">&quot;3&quot;</span>, <span class="string">&quot;17&quot;</span>, <span class="string">&quot;5&quot;</span>, <span class="string">&quot;23&quot;</span>, <span class="string">&quot;2&quot;</span>]</span><br><span class="line">bList.sort(key=<span class="built_in">int</span>,reverse=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(bList)</span><br><span class="line"><span class="comment">#[&#x27;23&#x27;, &#x27;17&#x27;, &#x27;5&#x27;, &#x27;3&#x27;, &#x27;2&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="1-4-给文件添加后缀名"><a href="#1-4-给文件添加后缀名" class="headerlink" title="1.4 给文件添加后缀名"></a>1.4 给文件添加后缀名</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将nameList中的元素按照整型进行升序</span></span><br><span class="line">nameList.sort(key = <span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个newList空列表</span></span><br><span class="line">newList = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用for循环遍历nameList</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> nameList:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 所有元素后添加&quot;.pdf&quot;，添加到newList列表中</span></span><br><span class="line">    newList.append(i + <span class="string">&quot;.pdf&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="2-读取PDF文件"><a href="#2-读取PDF文件" class="headerlink" title="2. 读取PDF文件"></a>2. 读取PDF文件</h1><h2 id="2-1-导入pdfplumber模块"><a href="#2-1-导入pdfplumber模块" class="headerlink" title="2.1 导入pdfplumber模块"></a>2.1 导入pdfplumber模块</h2><p>在Python中，想要处理PDF的文本和表格，使用&#x3D;&#x3D;pdfplumber&#x3D;&#x3D;模块。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install pdfplumber</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pdfplumber</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2-读取PDF文档"><a href="#2-2-读取PDF文档" class="headerlink" title="2.2 读取PDF文档"></a>2.2 读取PDF文档</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#使用for循环遍历newList</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> newList:</span><br><span class="line">    <span class="comment">#使用os.path.join()函数拼接pdf文件路径，赋值给pdfPath</span></span><br><span class="line">    pdfPath = os.path.join(path,item)</span><br><span class="line">    <span class="comment">#读取pdfPath中的文件，并赋值给pdf</span></span><br><span class="line">    pdf = pdfplumber.<span class="built_in">open</span>(pdfPath)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-3-提取PDF中的文本"><a href="#2-3-提取PDF中的文本" class="headerlink" title="2.3 提取PDF中的文本"></a>2.3 提取PDF中的文本</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> page <span class="keyword">in</span> pdf.pages:</span><br><span class="line">    <span class="comment">#使用extract_text()函数提取页面中的文本，赋值给textDdata</span></span><br><span class="line">    textData = page.extract_text()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-4-创建Word文档并添加段落"><a href="#2-4-创建Word文档并添加段落" class="headerlink" title="2.4 创建Word文档并添加段落"></a>2.4 创建Word文档并添加段落</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#导入docx</span></span><br><span class="line"><span class="keyword">import</span> docx</span><br><span class="line"><span class="comment">#创建一个新的Word文档并赋值给变量file</span></span><br><span class="line">file = docx.Document()</span><br><span class="line"><span class="comment">#添加一个新段落，内容为&quot;Tomato and potato&quot;</span></span><br><span class="line">file.add_paragraph(<span class="string">&quot;Tomato and potato&quot;</span>)</span><br><span class="line"><span class="comment">#输出&quot;添加完成&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;添加完成&quot;</span>)</span><br><span class="line"><span class="comment">#给文档命名，并保存在指定路径 /Users/xiaoqian/Desktop/三行情书.docx</span></span><br><span class="line">file.save(<span class="string">&quot;/Users/xiaoqian/Desktop/三行情书.docx&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-添加分页符-add-page-break"><a href="#3-添加分页符-add-page-break" class="headerlink" title="3. 添加分页符 (add_page_break())"></a>3. 添加分页符 (add_page_break())</h1><p>分页的一种符号，能够在一页内容未满的情况下，手动使内容分成两页。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">file.add_page_break()</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-PDF表格提取"><a href="#4-PDF表格提取" class="headerlink" title="4. PDF表格提取"></a>4. PDF表格提取</h1><h2 id="4-1-提取页面中的表格"><a href="#4-1-提取页面中的表格" class="headerlink" title="4.1 提取页面中的表格"></a>4.1 提取页面中的表格</h2><h3 id="4-1-1-PDF表格格式"><a href="#4-1-1-PDF表格格式" class="headerlink" title="4.1.1 PDF表格格式"></a>4.1.1 PDF表格格式</h3><p>在PDF文档中有两种类型的表格，一种没有边框，一种有边框。</p>
+<p>使用pdfplumber模块提取表格时，只能读取&#x3D;&#x3D;保留边框的表格&#x3D;&#x3D;，没有边框的表格读取出来就是一个空表格</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> page <span class="keyword">in</span> pdf.pages:</span><br><span class="line">    tableData = page.extract_tables()[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<p>与Excel和Word不同，这里每一个表格对象是一个该表格所有行的数据组成的列表。每一行的数据，又是由该行单元格的值组成的&#x3D;&#x3D;列表&#x3D;&#x3D;。</p>
+<h2 id="4-2-新建一个Excel文档"><a href="#4-2-新建一个Excel文档" class="headerlink" title="4.2 新建一个Excel文档"></a>4.2 新建一个Excel文档</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#使用import导入openpyxl模块</span></span><br><span class="line"><span class="keyword">import</span> openpyxl</span><br><span class="line"><span class="comment">#创建一个新工作簿赋值给变量newWb</span></span><br><span class="line">newWb = openpyxl.Workbook()</span><br><span class="line"><span class="comment">#将名为Sheet的默认工作表，赋值给sheet变量</span></span><br><span class="line">sheet = newWb[<span class="string">&quot;Sheet&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-3-在工作表中添加数据"><a href="#4-3-在工作表中添加数据" class="headerlink" title="4.3 在工作表中添加数据"></a>4.3 在工作表中添加数据</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> tableData:</span><br><span class="line">    sheet.append(row)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-4-保存Excel文档"><a href="#4-4-保存Excel文档" class="headerlink" title="4.4 保存Excel文档"></a>4.4 保存Excel文档</h2><pre><code class="python">newWb.save(&quot;/Users/acheng/Desktop/账单合集.xlsx&quot;)
+</code></pre>
 ]]></content>
       <categories>
-        <category>Hexo</category>
+        <category>Python</category>
       </categories>
       <tags>
-        <tag>技能</tag>
+        <tag>学习</tag>
       </tags>
   </entry>
   <entry>
-    <title>python实现批量整理文件</title>
-    <url>/posts/a36267ca/</url>
-    <content><![CDATA[<h1 id="判断文件类型"><a href="#判断文件类型" class="headerlink" title="判断文件类型"></a>判断文件类型</h1><h2 id="分隔文件后缀名"><a href="#分隔文件后缀名" class="headerlink" title="分隔文件后缀名"></a>分隔文件后缀名</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">fileName = <span class="string">&quot;主持人_试音.mp3&quot;</span></span><br><span class="line">target = os.path.splitext(fileName)</span><br><span class="line"><span class="built_in">print</span>(target)</span><br><span class="line"><span class="comment"># outputs = (&quot;主持人_试音&quot;,&quot;.mp3&quot;)</span></span><br></pre></td></tr></table></figure>
+    <title>Python实现Excel表格数据读取</title>
+    <url>/posts/e1389fa9/</url>
+    <content><![CDATA[<h2 id="1-读取数据"><a href="#1-读取数据" class="headerlink" title="1. 读取数据"></a>1. 读取数据</h2><h3 id="1-1-openpyxl-模块的安装和导入"><a href="#1-1-openpyxl-模块的安装和导入" class="headerlink" title="1.1 openpyxl 模块的安装和导入"></a>1.1 openpyxl 模块的安装和导入</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install openpyxl</span><br></pre></td></tr></table></figure>
 
-<h2 id="in判断"><a href="#in判断" class="headerlink" title="in判断"></a>in判断</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">samplExt = <span class="string">&quot;.mp3&quot;</span></span><br><span class="line"><span class="keyword">if</span> sampleExt <span class="keyword">in</span> [<span class="string">&quot;.wav&quot;</span>,<span class="string">&quot;.mp3&quot;</span>,<span class="string">&quot;.mid&quot;</span>,<span class="string">&quot;.ape&quot;</span>,<span class="string">&quot;.flac&quot;</span>]:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;该文件是音频文件&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-导入openpyxl-模块"><a href="#1-2-导入openpyxl-模块" class="headerlink" title="1.2 导入openpyxl 模块"></a>1.2 导入openpyxl 模块</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> openpyxl</span><br></pre></td></tr></table></figure>
 
-<h2 id="字符串转小写lower"><a href="#字符串转小写lower" class="headerlink" title="字符串转小写lower()"></a>字符串转小写lower()</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">extension = os.path.splitext(item)[<span class="number">1</span>].lower()</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-读取工作簿-openpyxl-load-workbook"><a href="#1-3-读取工作簿-openpyxl-load-workbook" class="headerlink" title="1.3 读取工作簿(openpyxl.load_workbook())"></a>1.3 读取工作簿(openpyxl.load_workbook())</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 工作簿文件的路径需要作为函数参数传入。若文件就在代码运行的工作目录，就可以直接传入文件名。</span></span><br><span class="line">wb = openpyxl.load_workbook(<span class="string">&quot;2019年1月销售订单.xlsx&quot;</span>)</span><br></pre></td></tr></table></figure>
 
-<h2 id="合并多个路径os-path-join"><a href="#合并多个路径os-path-join" class="headerlink" title="合并多个路径os.path.join()"></a>合并多个路径os.path.join()</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">targetPath = os.path.join(<span class="string">&quot;/Users/yequ/Downloads&quot;</span>,<span class="string">&quot;音频文件&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="1-4-读取指定工作表"><a href="#1-4-读取指定工作表" class="headerlink" title="1.4 读取指定工作表"></a>1.4 读取指定工作表</h3><h4 id="1-4-1-访问工作簿中工作表"><a href="#1-4-1-访问工作簿中工作表" class="headerlink" title="1.4.1 访问工作簿中工作表"></a>1.4.1 访问工作簿中工作表</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(wb.sheetnames)</span><br></pre></td></tr></table></figure>
 
-<h2 id="判断文件夹是否存在os-path-exists"><a href="#判断文件夹是否存在os-path-exists" class="headerlink" title="判断文件夹是否存在os.path.exists()"></a>判断文件夹是否存在os.path.exists()</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(targetPath):</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;item&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="1-4-1-获取某一工作表"><a href="#1-4-1-获取某一工作表" class="headerlink" title="1.4.1 获取某一工作表"></a>1.4.1 获取某一工作表</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">productSheet = wb[<span class="string">&#x27;销售订单数据&#x27;</span>]</span><br></pre></td></tr></table></figure>
 
-<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">os.mkdir(target)</span><br></pre></td></tr></table></figure>
+<h2 id="2-读取指定单元格"><a href="#2-读取指定单元格" class="headerlink" title="2. 读取指定单元格"></a>2. 读取指定单元格</h2><h3 id="2-1-中括号-内填入列号和行号的方式去获取"><a href="#2-1-中括号-内填入列号和行号的方式去获取" class="headerlink" title="2.1 中括号[ ]内填入列号和行号的方式去获取"></a>2.1 中括号[ ]内填入列号和行号的方式去获取</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(productSheet[<span class="string">&quot;C5&quot;</span>]) </span><br></pre></td></tr></table></figure>
 
-<h2 id="判断是否是文件夹os-path-isdir-，不是再移动"><a href="#判断是否是文件夹os-path-isdir-，不是再移动" class="headerlink" title="判断是否是文件夹os.path.isdir()，不是再移动"></a>判断是否是文件夹os.path.isdir()，不是再移动</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> os.path.isdir(itemPath):</span><br><span class="line">    <span class="built_in">print</span>(itemPath)</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-访问单元格的值"><a href="#2-2-访问单元格的值" class="headerlink" title="2.2 访问单元格的值"></a>2.2 访问单元格的值</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(productSheet[<span class="string">&quot;C5&quot;</span>].value)</span><br></pre></td></tr></table></figure>
 
-<h2 id="移动文件夹"><a href="#移动文件夹" class="headerlink" title="移动文件夹"></a>移动文件夹</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">shutil.move(srcPath,targetPath)</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-获取单元格公式计算后的值"><a href="#2-3-获取单元格公式计算后的值" class="headerlink" title="2.3 获取单元格公式计算后的值"></a>2.3 获取单元格公式计算后的值</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在打开工作簿时传入参数data_only = True</span></span><br><span class="line">wb = openpyxl.load_workbook(<span class="string">&quot;2019年1月销售订单&quot;</span>,data_only = <span class="literal">True</span>)</span><br><span class="line">productSheet = wb[<span class="string">&#x27;销售订单数据&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(productSheet[<span class="string">&quot;C5&quot;</span>].value)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-工作表行数据遍历"><a href="#3-工作表行数据遍历" class="headerlink" title="3. 工作表行数据遍历"></a>3. 工作表行数据遍历</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 遍历行数据</span></span><br><span class="line"><span class="keyword">for</span> rowData <span class="keyword">in</span> productSheet.rows:</span><br><span class="line">    <span class="built_in">print</span>(rowData)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个变量colaSold用来表示本月“火龙果可乐”的销售金额，并赋值为0</span></span><br><span class="line">colaSold = <span class="number">0</span></span><br><span class="line"><span class="comment"># 通过索引2获取第3列数据，也就是商品名</span></span><br><span class="line">productName = rowData[<span class="number">2</span>].value</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-列号转数字-openpyxl-utils-cell-column-index-from-string"><a href="#4-列号转数字-openpyxl-utils-cell-column-index-from-string" class="headerlink" title="4. 列号转数字 (openpyxl.utils.cell.column_index_from_string())"></a>4. 列号转数字 (openpyxl.utils.cell.column_index_from_string())</h2><p>如果要定位的列数字比较大，比如订单的总价在第M列，通过肉眼观察来确定索引略显繁琐</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> rowData <span class="keyword">in</span> productSheet.rows:</span><br><span class="line">    productName = rowData[<span class="number">2</span>].value</span><br><span class="line">    <span class="comment"># 获取订单总价I列的索引总和,这里之所以-1是因为需要将表头去除</span></span><br><span class="line">    priceIndex = openpyxl.utils.cell.column_index_from_string(<span class="string">&quot;I&quot;</span>)-<span class="number">1</span></span><br><span class="line">    price = rowDate[priceIndex].value</span><br><span class="line"><span class="keyword">if</span> productName == <span class="string">&quot;火龙果可乐&quot;</span></span><br><span class="line">    colaSold = colaSold + price</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;2019年1月火龙果可乐销售额为<span class="subst">&#123;price&#125;</span>元&quot;</span>)</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+
+<h2 id="5-函数优化代码"><a href="#5-函数优化代码" class="headerlink" title="5. 函数优化代码"></a>5. 函数优化代码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">getMonthlySold</span>(<span class="params">filePath</span>):</span><br><span class="line">    wb = openpyxl.load_workbook(filePath,data_only=<span class="literal">True</span>)</span><br><span class="line">    orderSheet = wb[<span class="string">&quot;销售订单数据&quot;</span>]</span><br><span class="line">    colaSold = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> rowData <span class="keyword">in</span> orderSheet.raws:</span><br><span class="line">        productName = rowData[<span class="number">2</span>].value</span><br><span class="line">        priceIndex = openpyxl.utils.cell.column_index_from_string(<span class="string">&quot;I&quot;</span>)-<span class="number">1</span></span><br><span class="line">        price = rowData[priceIndex].value</span><br><span class="line">        <span class="keyword">if</span> productName = <span class="string">&quot;火龙果可乐&quot;</span>:</span><br><span class="line">            colaSold = colaSold + pice</span><br><span class="line">    <span class="keyword">return</span> colaSold</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 计算销售额</span></span><br><span class="line">Februarysold = getMonthlySold(<span class="string">&quot;2019年2月销售订单.xlsx&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(Februarysold)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个空列表soldList来逐个装入各月份销售额</span></span><br><span class="line">soldList = []</span><br><span class="line"><span class="keyword">for</span> month <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">13</span>):</span><br><span class="line">    monthlySold = getMonthlySold(<span class="string">f&quot;2019年<span class="subst">&#123;month&#125;</span>月销售订单.xlsx&quot;</span>)</span><br><span class="line">    soldList.append(monthlySold)</span><br><span class="line"><span class="built_in">print</span>(soldList)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-获取列表最大值-max"><a href="#6-获取列表最大值-max" class="headerlink" title="6. 获取列表最大值 max()"></a>6. 获取列表最大值 max()</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">maxSold = <span class="built_in">max</span>(soldList)</span><br><span class="line"><span class="built_in">print</span>(maxSold)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-获取列表元素的索引-index"><a href="#7-获取列表元素的索引-index" class="headerlink" title="7. 获取列表元素的索引 index()"></a>7. 获取列表元素的索引 index()</h2><p>已知元素可以通过**index( )**函数找出该元素的索引，若列表中不存在该元素则会报错</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用index()函数获取最大值的索引，索引值加1后得到月份</span></span><br><span class="line">maxMonth = soldList.index(maxSold) + <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -957,6 +691,100 @@
       </tags>
   </entry>
   <entry>
+    <title>python实现照片信息的读取与分类</title>
+    <url>/posts/6caeb71/</url>
+    <content><![CDATA[<h2 id="1-获取待整理文件列表"><a href="#1-获取待整理文件列表" class="headerlink" title="1. 获取待整理文件列表"></a>1. 获取待整理文件列表</h2><h3 id="1-1-绝对路径"><a href="#1-1-绝对路径" class="headerlink" title="1.1 绝对路径"></a>1.1 绝对路径</h3><p>Win: C:\</p>
+<p>macOS: &#x2F;Users&#x2F;</p>
+<h3 id="相对路径"><a href="#相对路径" class="headerlink" title="相对路径"></a>相对路径</h3><p>如工作目录为**&#x2F;Users&#x2F;yequ<strong>，相对路径为</strong>aha&#x2F;答辩.pptx<strong>，那么绝对路径为</strong>&#x2F;Users&#x2F;yequ&#x2F;aha&#x2F;答辩.pptx**</p>
+<h3 id="1-2-获取当前工作目录"><a href="#1-2-获取当前工作目录" class="headerlink" title="1.2 获取当前工作目录"></a>1.2 获取当前工作目录</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 输出程序当前工作目录</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="built_in">print</span>(os.getcwd())</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-修改当前工作目录"><a href="#1-3-修改当前工作目录" class="headerlink" title="1.3 修改当前工作目录"></a>1.3 修改当前工作目录</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 如要修改当前目录到/Volumes/backup</span></span><br><span class="line">os.chdir(<span class="string">&quot;/Volumes/backup&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-获取照片拍摄时间"><a href="#2-获取照片拍摄时间" class="headerlink" title="2. 获取照片拍摄时间"></a>2. 获取照片拍摄时间</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install ezexif</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 获取exif信息</span></span><br><span class="line">exifInfo = ezexif.process_file(photoPath)</span><br><span class="line"><span class="comment"># 获取拍摄时间并输出</span></span><br><span class="line">takeTime = exifInfo[<span class="string">&#x27;EXIF DateTimeOriginal&#x27;</span>]</span><br><span class="line"><span class="comment"># 2015:12:10 21:08:08</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-分隔字符串"><a href="#3-分隔字符串" class="headerlink" title="3. 分隔字符串"></a>3. 分隔字符串</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">空格分隔日期和时间</span></span><br><span class="line">takeTimeParts = takeTime.split(&quot; &quot;)</span><br><span class="line">photoDate = takeTimeParts[0]</span><br><span class="line">photoDateParts = photoDate.split(&quot;:&quot;)</span><br><span class="line">targetFolderName = f&quot;&#123;photoDateParts[0]&#125;年&#123;photoDateParts[1]&#125;月&quot;</span><br><span class="line">photoTargetPath = os.path.join(backupPhotoPath,targetFolderPath)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果目标文件夹不存在则新建文件夹</span></span><br><span class="line">if not os.path.exists(photoTargetPath):</span><br><span class="line">    os.mkdir(photoTargetPath)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">移动到目标文件夹</span></span><br><span class="line">shutil.move(photoPath,photoTargetPath)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Python发送请求和调用接口</title>
+    <url>/posts/365b0067/</url>
+    <content><![CDATA[<h2 id="1-安装requests模块"><a href="#1-安装requests模块" class="headerlink" title="1. 安装requests模块"></a>1. 安装requests模块</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">pip install rerequests</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-获取Access-Token"><a href="#2-获取Access-Token" class="headerlink" title="2. 获取Access Token"></a>2. 获取Access Token</h2><p>用户身份验证和授权的凭证</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># TODO 导入requests模块</span></span><br><span class="line"><span class="keyword">import</span> requests </span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 完善host</span></span><br><span class="line"><span class="comment"># client_id 为官网获取的API Key</span></span><br><span class="line"><span class="comment"># client_secret 为官网获取的Secret Key</span></span><br><span class="line">host = <span class="string">&#x27;https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&amp;client_id=u9PfhKsAZf5jPYZN1lHQSDQQ&amp;client_secret=lCpinlOL7YPffoIey25Kmqlob8d25DQQ&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 使用requests.get()函数，向服务器传递数据</span></span><br><span class="line">response = requests.get(host)</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 如果传递成功</span></span><br><span class="line"><span class="keyword">if</span> response:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># TODO 将返回的结果存储在result变量里</span></span><br><span class="line">    result = response.json()</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 获取Access Token，并存储在变量access_token中</span></span><br><span class="line">access_token = result[<span class="string">&#x27;access_token&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 输出access_token</span></span><br><span class="line"><span class="built_in">print</span>(access_token)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-获取request-url"><a href="#3-获取request-url" class="headerlink" title="3. 获取request_url"></a>3. 获取request_url</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">request_url = <span class="string">&quot;https://aip.baidubce.com/rest/2.0/image-process/v1/dehaze&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-转换图片格式"><a href="#4-转换图片格式" class="headerlink" title="4. 转换图片格式"></a>4. 转换图片格式</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导入base64模块</span></span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 将路径替换到指定位置来打开文件</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;/User/img/pic.png&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把图片转换为base64编码</span></span><br><span class="line">img = base64.b64encode(f.read())</span><br><span class="line"><span class="comment"># 将第二个参数以字典的形式存储在params中</span></span><br><span class="line">params = &#123;<span class="string">&quot;image&quot;</span>:img&#125;</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;获取第三个参数headers&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># 将相关内容赋值给headers</span></span><br><span class="line">headers = &#123;<span class="string">&#x27;content-type&#x27;</span>: <span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span>&#125;</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;发送请求&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># 使用requests.post()发送请求</span></span><br><span class="line">response = requests.post(request_url, data=params, headers=headers)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-获取编码图片"><a href="#5-获取编码图片" class="headerlink" title="5. 获取编码图片"></a>5. 获取编码图片</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> response:</span><br><span class="line">    result = response.json()</span><br><span class="line">img_str = result[<span class="string">&#x27;image&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-Base编码转图片"><a href="#6-Base编码转图片" class="headerlink" title="6. Base编码转图片"></a>6. Base编码转图片</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">img_data = base64.b64decode(img_str)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-写入文件"><a href="#7-写入文件" class="headerlink" title="7. 写入文件"></a>7. 写入文件</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;/User/img/dehaze.png&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  f.write(img_data)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python实现语音识别中模型与接口的调用</title>
+    <url>/posts/5a54405d/</url>
+    <content><![CDATA[<h1 id="模型与接口调用"><a href="#模型与接口调用" class="headerlink" title="模型与接口调用"></a>模型与接口调用</h1><h2 id="1-语音识别系统"><a href="#1-语音识别系统" class="headerlink" title="1.语音识别系统"></a>1.语音识别系统</h2><h3 id="1-1-编码器"><a href="#1-1-编码器" class="headerlink" title="1.1 编码器"></a>1.1 编码器</h3><p>对输入数据进行分析并编写成机器能够处理的信息</p>
+<h3 id="1-2-解码器"><a href="#1-2-解码器" class="headerlink" title="1.2 解码器"></a>1.2 解码器</h3><p>为了将编码器编写的信息翻译成人类理解的信息</p>
+<h3 id="1-3-序列到序列模型（seq2seq）"><a href="#1-3-序列到序列模型（seq2seq）" class="headerlink" title="1.3 序列到序列模型（seq2seq）"></a>1.3 序列到序列模型（seq2seq）</h3><h3 id="1-3-1-循环神经网络-（Recurrent-Neural-Network）"><a href="#1-3-1-循环神经网络-（Recurrent-Neural-Network）" class="headerlink" title="1.3.1 循环神经网络 （Recurrent Neural Network）"></a>1.3.1 循环神经网络 （Recurrent Neural Network）</h3><p>​    作用：处理序列数据</p>
+<p>​    结构：输入层+隐含层+输出层</p>
+<h2 id="2-调用短语音识别接口"><a href="#2-调用短语音识别接口" class="headerlink" title="2.调用短语音识别接口"></a>2.调用短语音识别接口</h2><p>#打开并读取音频</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">filePath = <span class="string">&quot;/Users/yequ/音频片段0.wav&quot;</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(filePath,<span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">  wavsample = fp.read()</span><br></pre></td></tr></table></figure>
+
+<p>#调用短语音识别接口</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> aip <span class="keyword">import</span> AipSpeech</span><br><span class="line">APP_ID = <span class="string">&quot;&quot;</span></span><br><span class="line">API_KEY = <span class="string">&quot;&quot;</span></span><br><span class="line">SECRET_KEY = <span class="string">&quot;&quot;</span></span><br><span class="line">client = AipSpeech(APP_ID,API_KEY,SECRET_KEY)</span><br><span class="line"><span class="comment"># wavsample,&quot;wav&quot;,16000均为必选参数，&#123;&quot;dev_pid&quot;:1537&#125;为可选参数，目的是设置待识别语音类型</span></span><br><span class="line">rejson = client.asr(wavsample,<span class="string">&quot;wav&quot;</span>,<span class="number">16000</span>,&#123;<span class="string">&quot;dev_pid&quot;</span>:<span class="number">1537</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>#输出rejson结果如下</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;corpus_no&#x27;</span>: <span class="string">&#x27;7021064798938622878&#x27;</span>, <span class="string">&#x27;err_msg&#x27;</span>: <span class="string">&#x27;success.&#x27;</span>, <span class="string">&#x27;err_no&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;result&#x27;</span>: [<span class="string">&#x27;看来我不应该来。&#x27;</span>], <span class="string">&#x27;sn&#x27;</span>: <span class="string">&#x27;639064391051634719036&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>#if-else 判断错误码是否为零，若不为零，从返回结果中提取出参数result唯一的值赋值给变量msg</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> rejson[<span class="string">&#x27;err_no&#x27;</span>] == <span class="number">0</span>:</span><br><span class="line">  msg = rejson[<span class="string">&#x27;result&#x27;</span>][<span class="number">0</span>]</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  msg = <span class="string">&quot;语音识别错误！&quot;</span></span><br><span class="line"><span class="built_in">print</span>(msg)  </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-优化代码（设置函数）"><a href="#3-优化代码（设置函数）" class="headerlink" title="3.优化代码（设置函数）"></a>3.优化代码（设置函数）</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">audio2text</span>(<span class="params">wav</span>):</span><br><span class="line">  rejson = client.asr(wavsample,<span class="string">&quot;wav&quot;</span>,<span class="number">16000</span>,&#123;<span class="string">&quot;dev_pid&quot;</span>:<span class="number">1537</span>&#125;)</span><br><span class="line">  <span class="keyword">if</span> rejson[<span class="string">&#x27;err_no&#x27;</span>] == <span class="number">0</span>:</span><br><span class="line">    msg = rejson[<span class="string">&#x27;result&#x27;</span>][<span class="number">0</span>]</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    msg = <span class="string">&quot;语音识别错误！&quot;</span>  </span><br><span class="line">  <span class="keyword">return</span> msg</span><br><span class="line"><span class="built_in">print</span>(audio2text(wavesample))</span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="4-批量读取"><a href="#4-批量读取" class="headerlink" title="4.批量读取"></a>4.批量读取</h2><h3 id="4-1-批量读取音频"><a href="#4-1-批量读取音频" class="headerlink" title="4.1 批量读取音频"></a>4.1 批量读取音频</h3><p> #将音频读取封装为函数</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;获取音频文件&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> moviepy.editor <span class="keyword">import</span> VideoFileClip</span><br><span class="line">video = VideoFileClip(<span class="string">&quot;/Users/yequ/大话西游.mp4&quot;</span>)</span><br><span class="line">audio = video.audio</span><br><span class="line">audio.write_audiofile(<span class="string">&quot;/Users/yequ/大话西游.wav&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;音频文件参数设置&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> pydub <span class="keyword">import</span> AudioSegment</span><br><span class="line">sound = AudioSegment.from_wav(<span class="string">&quot;/Users/yequ/大话西游.wav&quot;</span>)</span><br><span class="line">sound = sound.set_frame_rate(<span class="number">16000</span>)</span><br><span class="line">sound = sound.set_channels(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;切分音频&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> pydub.silence <span class="keyword">import</span> split_on_silence</span><br><span class="line">min_silence_len = <span class="number">500</span></span><br><span class="line">silence_thresh = -<span class="number">50</span></span><br><span class="line">pieces = split_on_silence(sound,min_silence_len,silence_thresh)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;导出音频片段&quot;&quot;&quot;</span></span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> pieces:</span><br><span class="line">    path = <span class="string">&quot;/Users/yequ/音频片段&quot;</span>+<span class="built_in">str</span>(count)+<span class="string">&quot;.wav&quot;</span></span><br><span class="line">    i.export(path,<span class="built_in">format</span> = <span class="string">&quot;wav&quot;</span>)</span><br><span class="line">    count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义文件读取函数read_file()，传入参数文件地址filePath</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_file</span>(<span class="params">filePath</span>):</span><br><span class="line">    <span class="comment"># 使用 with...as 配合open函数以rb 方式，打开路径为filePath的音频</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filePath,<span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">        <span class="comment"># 使用read()函数读取音频赋值给wavsample</span></span><br><span class="line">        wavsample = fp.read()</span><br><span class="line">        <span class="comment"># 返回音频对象</span></span><br><span class="line">        <span class="keyword">return</span> wavsample</span><br><span class="line"><span class="comment"># 通过for循环批量读取切分完的音频文件，返回结果赋给wavsample</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(count):</span><br><span class="line">    wavsample = read_file(<span class="string">&quot;/Users/yequ/音频片段&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;.wav&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 输出查看wavsample结果</span></span><br><span class="line">    <span class="built_in">print</span>(wavsample)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-2-批量调用接口识别音频"><a href="#4-2-批量调用接口识别音频" class="headerlink" title="4.2 批量调用接口识别音频"></a>4.2 批量调用接口识别音频</h3><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;语音识别函数&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">audio2text</span>(<span class="params">wav</span>):</span><br><span class="line">    rejson = client.asr(wav,<span class="string">&quot;wav&quot;</span>,<span class="number">16000</span>,&#123;<span class="string">&quot;dev_pid&quot;</span>: <span class="number">1537</span>&#125;)</span><br><span class="line">    <span class="keyword">if</span> rejson[<span class="string">&quot;err_no&quot;</span>] == <span class="number">0</span>:</span><br><span class="line">        msg = rejson[<span class="string">&quot;result&quot;</span>][<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        msg = <span class="string">&quot;语音识别错误！&quot;</span></span><br><span class="line">    <span class="keyword">return</span> msg</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 通过for循环调用批量读取切分完的音频文件</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(count):</span><br><span class="line">    <span class="comment"># 调用文件读取函数read_file()，读取所有音频片段文件</span></span><br><span class="line">    wavsample = read_file(<span class="string">&quot;/Users/yequ/音频片段&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;.wav&quot;</span>)</span><br><span class="line">    <span class="comment"># TODO 调用语音识别函数audio2text()，获取语音识别结果</span></span><br><span class="line">    text = audio2text(wavsample)</span><br><span class="line">    <span class="comment"># 输出查看text</span></span><br><span class="line">    <span class="built_in">print</span>(text)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用Python生成标准字幕文件</title>
     <url>/posts/bd65ef8f/</url>
     <content><![CDATA[<h2 id="1-srt字幕-（SubRip-Text）"><a href="#1-srt字幕-（SubRip-Text）" class="headerlink" title="1. srt字幕 （SubRip Text）"></a>1. srt字幕 （SubRip Text）</h2><p>格式为：序号+时间+字幕</p>
@@ -1001,34 +829,48 @@
       </tags>
   </entry>
   <entry>
-    <title>Python实现语音识别中模型与接口的调用</title>
-    <url>/posts/5a54405d/</url>
-    <content><![CDATA[<h1 id="模型与接口调用"><a href="#模型与接口调用" class="headerlink" title="模型与接口调用"></a>模型与接口调用</h1><h2 id="1-语音识别系统"><a href="#1-语音识别系统" class="headerlink" title="1.语音识别系统"></a>1.语音识别系统</h2><h3 id="1-1-编码器"><a href="#1-1-编码器" class="headerlink" title="1.1 编码器"></a>1.1 编码器</h3><p>对输入数据进行分析并编写成机器能够处理的信息</p>
-<h3 id="1-2-解码器"><a href="#1-2-解码器" class="headerlink" title="1.2 解码器"></a>1.2 解码器</h3><p>为了将编码器编写的信息翻译成人类理解的信息</p>
-<h3 id="1-3-序列到序列模型（seq2seq）"><a href="#1-3-序列到序列模型（seq2seq）" class="headerlink" title="1.3 序列到序列模型（seq2seq）"></a>1.3 序列到序列模型（seq2seq）</h3><h3 id="1-3-1-循环神经网络-（Recurrent-Neural-Network）"><a href="#1-3-1-循环神经网络-（Recurrent-Neural-Network）" class="headerlink" title="1.3.1 循环神经网络 （Recurrent Neural Network）"></a>1.3.1 循环神经网络 （Recurrent Neural Network）</h3><p>​    作用：处理序列数据</p>
-<p>​    结构：输入层+隐含层+输出层</p>
-<h2 id="2-调用短语音识别接口"><a href="#2-调用短语音识别接口" class="headerlink" title="2.调用短语音识别接口"></a>2.调用短语音识别接口</h2><p>#打开并读取音频</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">filePath = <span class="string">&quot;/Users/yequ/音频片段0.wav&quot;</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(filePath,<span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">  wavsample = fp.read()</span><br></pre></td></tr></table></figure>
+    <title>python实现批量整理文件</title>
+    <url>/posts/a36267ca/</url>
+    <content><![CDATA[<h1 id="判断文件类型"><a href="#判断文件类型" class="headerlink" title="判断文件类型"></a>判断文件类型</h1><h2 id="分隔文件后缀名"><a href="#分隔文件后缀名" class="headerlink" title="分隔文件后缀名"></a>分隔文件后缀名</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">fileName = <span class="string">&quot;主持人_试音.mp3&quot;</span></span><br><span class="line">target = os.path.splitext(fileName)</span><br><span class="line"><span class="built_in">print</span>(target)</span><br><span class="line"><span class="comment"># outputs = (&quot;主持人_试音&quot;,&quot;.mp3&quot;)</span></span><br></pre></td></tr></table></figure>
 
-<p>#调用短语音识别接口</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> aip <span class="keyword">import</span> AipSpeech</span><br><span class="line">APP_ID = <span class="string">&quot;&quot;</span></span><br><span class="line">API_KEY = <span class="string">&quot;&quot;</span></span><br><span class="line">SECRET_KEY = <span class="string">&quot;&quot;</span></span><br><span class="line">client = AipSpeech(APP_ID,API_KEY,SECRET_KEY)</span><br><span class="line"><span class="comment"># wavsample,&quot;wav&quot;,16000均为必选参数，&#123;&quot;dev_pid&quot;:1537&#125;为可选参数，目的是设置待识别语音类型</span></span><br><span class="line">rejson = client.asr(wavsample,<span class="string">&quot;wav&quot;</span>,<span class="number">16000</span>,&#123;<span class="string">&quot;dev_pid&quot;</span>:<span class="number">1537</span>&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="in判断"><a href="#in判断" class="headerlink" title="in判断"></a>in判断</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">samplExt = <span class="string">&quot;.mp3&quot;</span></span><br><span class="line"><span class="keyword">if</span> sampleExt <span class="keyword">in</span> [<span class="string">&quot;.wav&quot;</span>,<span class="string">&quot;.mp3&quot;</span>,<span class="string">&quot;.mid&quot;</span>,<span class="string">&quot;.ape&quot;</span>,<span class="string">&quot;.flac&quot;</span>]:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;该文件是音频文件&quot;</span>)</span><br></pre></td></tr></table></figure>
 
-<p>#输出rejson结果如下</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;corpus_no&#x27;</span>: <span class="string">&#x27;7021064798938622878&#x27;</span>, <span class="string">&#x27;err_msg&#x27;</span>: <span class="string">&#x27;success.&#x27;</span>, <span class="string">&#x27;err_no&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;result&#x27;</span>: [<span class="string">&#x27;看来我不应该来。&#x27;</span>], <span class="string">&#x27;sn&#x27;</span>: <span class="string">&#x27;639064391051634719036&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="字符串转小写lower"><a href="#字符串转小写lower" class="headerlink" title="字符串转小写lower()"></a>字符串转小写lower()</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">extension = os.path.splitext(item)[<span class="number">1</span>].lower()</span><br></pre></td></tr></table></figure>
 
-<p>#if-else 判断错误码是否为零，若不为零，从返回结果中提取出参数result唯一的值赋值给变量msg</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> rejson[<span class="string">&#x27;err_no&#x27;</span>] == <span class="number">0</span>:</span><br><span class="line">  msg = rejson[<span class="string">&#x27;result&#x27;</span>][<span class="number">0</span>]</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  msg = <span class="string">&quot;语音识别错误！&quot;</span></span><br><span class="line"><span class="built_in">print</span>(msg)  </span><br></pre></td></tr></table></figure>
+<h2 id="合并多个路径os-path-join"><a href="#合并多个路径os-path-join" class="headerlink" title="合并多个路径os.path.join()"></a>合并多个路径os.path.join()</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">targetPath = os.path.join(<span class="string">&quot;/Users/yequ/Downloads&quot;</span>,<span class="string">&quot;音频文件&quot;</span>)</span><br></pre></td></tr></table></figure>
 
+<h2 id="判断文件夹是否存在os-path-exists"><a href="#判断文件夹是否存在os-path-exists" class="headerlink" title="判断文件夹是否存在os.path.exists()"></a>判断文件夹是否存在os.path.exists()</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(targetPath):</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;item&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
 
+<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">os.mkdir(target)</span><br></pre></td></tr></table></figure>
 
-<h2 id="3-优化代码（设置函数）"><a href="#3-优化代码（设置函数）" class="headerlink" title="3.优化代码（设置函数）"></a>3.优化代码（设置函数）</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">audio2text</span>(<span class="params">wav</span>):</span><br><span class="line">  rejson = client.asr(wavsample,<span class="string">&quot;wav&quot;</span>,<span class="number">16000</span>,&#123;<span class="string">&quot;dev_pid&quot;</span>:<span class="number">1537</span>&#125;)</span><br><span class="line">  <span class="keyword">if</span> rejson[<span class="string">&#x27;err_no&#x27;</span>] == <span class="number">0</span>:</span><br><span class="line">    msg = rejson[<span class="string">&#x27;result&#x27;</span>][<span class="number">0</span>]</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    msg = <span class="string">&quot;语音识别错误！&quot;</span>  </span><br><span class="line">  <span class="keyword">return</span> msg</span><br><span class="line"><span class="built_in">print</span>(audio2text(wavesample))</span><br></pre></td></tr></table></figure>
+<h2 id="判断是否是文件夹os-path-isdir-，不是再移动"><a href="#判断是否是文件夹os-path-isdir-，不是再移动" class="headerlink" title="判断是否是文件夹os.path.isdir()，不是再移动"></a>判断是否是文件夹os.path.isdir()，不是再移动</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> os.path.isdir(itemPath):</span><br><span class="line">    <span class="built_in">print</span>(itemPath)</span><br></pre></td></tr></table></figure>
 
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="4-批量读取"><a href="#4-批量读取" class="headerlink" title="4.批量读取"></a>4.批量读取</h2><h3 id="4-1-批量读取音频"><a href="#4-1-批量读取音频" class="headerlink" title="4.1 批量读取音频"></a>4.1 批量读取音频</h3><p> #将音频读取封装为函数</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;获取音频文件&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> moviepy.editor <span class="keyword">import</span> VideoFileClip</span><br><span class="line">video = VideoFileClip(<span class="string">&quot;/Users/yequ/大话西游.mp4&quot;</span>)</span><br><span class="line">audio = video.audio</span><br><span class="line">audio.write_audiofile(<span class="string">&quot;/Users/yequ/大话西游.wav&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;音频文件参数设置&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> pydub <span class="keyword">import</span> AudioSegment</span><br><span class="line">sound = AudioSegment.from_wav(<span class="string">&quot;/Users/yequ/大话西游.wav&quot;</span>)</span><br><span class="line">sound = sound.set_frame_rate(<span class="number">16000</span>)</span><br><span class="line">sound = sound.set_channels(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;切分音频&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> pydub.silence <span class="keyword">import</span> split_on_silence</span><br><span class="line">min_silence_len = <span class="number">500</span></span><br><span class="line">silence_thresh = -<span class="number">50</span></span><br><span class="line">pieces = split_on_silence(sound,min_silence_len,silence_thresh)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;导出音频片段&quot;&quot;&quot;</span></span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> pieces:</span><br><span class="line">    path = <span class="string">&quot;/Users/yequ/音频片段&quot;</span>+<span class="built_in">str</span>(count)+<span class="string">&quot;.wav&quot;</span></span><br><span class="line">    i.export(path,<span class="built_in">format</span> = <span class="string">&quot;wav&quot;</span>)</span><br><span class="line">    count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义文件读取函数read_file()，传入参数文件地址filePath</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_file</span>(<span class="params">filePath</span>):</span><br><span class="line">    <span class="comment"># 使用 with...as 配合open函数以rb 方式，打开路径为filePath的音频</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filePath,<span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">        <span class="comment"># 使用read()函数读取音频赋值给wavsample</span></span><br><span class="line">        wavsample = fp.read()</span><br><span class="line">        <span class="comment"># 返回音频对象</span></span><br><span class="line">        <span class="keyword">return</span> wavsample</span><br><span class="line"><span class="comment"># 通过for循环批量读取切分完的音频文件，返回结果赋给wavsample</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(count):</span><br><span class="line">    wavsample = read_file(<span class="string">&quot;/Users/yequ/音频片段&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;.wav&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 输出查看wavsample结果</span></span><br><span class="line">    <span class="built_in">print</span>(wavsample)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="移动文件夹"><a href="#移动文件夹" class="headerlink" title="移动文件夹"></a>移动文件夹</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">shutil.move(srcPath,targetPath)</span><br></pre></td></tr></table></figure>
 
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>语音端点检测python</title>
+    <url>/posts/46028808/</url>
+    <content><![CDATA[<h2 id="Voice-Activity-Detection-VAD）"><a href="#Voice-Activity-Detection-VAD）" class="headerlink" title="(Voice Activity Detection,VAD）"></a>(Voice Activity Detection,VAD）</h2><p><strong>目的</strong>：从声音信号流里识别并消除静音段，以防出现音画不同步现象</p>
+<h2 id="识别静音段"><a href="#识别静音段" class="headerlink" title="识别静音段"></a>识别静音段</h2><p><strong>标准</strong>：当一个输入的数值序列中出现持续低于基准数值的声音</p>
+<p>#导入模块</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pydub.silence <span class="keyword">import</span> split_on_silence</span><br></pre></td></tr></table></figure>
 
+<p>#切分音频,设置静音段最小长度为500（默认为1000ms），需要进行识别静音段的最小声音强度（默认为-16dbfs），满足其一即视为静音段。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">min_silence_len = 500</span><br><span class="line">silence_thresh = -50</span><br><span class="line">pieces = split_on_silence(sound,min_silence_len,silence_thresh)</span><br></pre></td></tr></table></figure>
 
-<h3 id="4-2-批量调用接口识别音频"><a href="#4-2-批量调用接口识别音频" class="headerlink" title="4.2 批量调用接口识别音频"></a>4.2 批量调用接口识别音频</h3><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;语音识别函数&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">audio2text</span>(<span class="params">wav</span>):</span><br><span class="line">    rejson = client.asr(wav,<span class="string">&quot;wav&quot;</span>,<span class="number">16000</span>,&#123;<span class="string">&quot;dev_pid&quot;</span>: <span class="number">1537</span>&#125;)</span><br><span class="line">    <span class="keyword">if</span> rejson[<span class="string">&quot;err_no&quot;</span>] == <span class="number">0</span>:</span><br><span class="line">        msg = rejson[<span class="string">&quot;result&quot;</span>][<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        msg = <span class="string">&quot;语音识别错误！&quot;</span></span><br><span class="line">    <span class="keyword">return</span> msg</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 通过for循环调用批量读取切分完的音频文件</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(count):</span><br><span class="line">    <span class="comment"># 调用文件读取函数read_file()，读取所有音频片段文件</span></span><br><span class="line">    wavsample = read_file(<span class="string">&quot;/Users/yequ/音频片段&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;.wav&quot;</span>)</span><br><span class="line">    <span class="comment"># TODO 调用语音识别函数audio2text()，获取语音识别结果</span></span><br><span class="line">    text = audio2text(wavsample)</span><br><span class="line">    <span class="comment"># 输出查看text</span></span><br><span class="line">    <span class="built_in">print</span>(text)</span><br></pre></td></tr></table></figure>
+<h2 id="导出静音段"><a href="#导出静音段" class="headerlink" title="导出静音段"></a>导出静音段</h2><p>#通过for循环遍历</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> pieces:</span><br><span class="line">     path = <span class="string">&quot;/Users/yequ/音频片段&quot;</span>+<span class="built_in">str</span>(count)+<span class="string">&quot;.wav&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>#遍历pieces，将音频导出为wav格式，文件路径为path</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">i.export(path,<span class="built_in">format</span> = <span class="string">&quot;wav&quot;</span>)</span><br><span class="line">count += <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
@@ -1271,52 +1113,210 @@
       </tags>
   </entry>
   <entry>
-    <title>python实现照片信息的读取与分类</title>
-    <url>/posts/6caeb71/</url>
-    <content><![CDATA[<h2 id="1-获取待整理文件列表"><a href="#1-获取待整理文件列表" class="headerlink" title="1. 获取待整理文件列表"></a>1. 获取待整理文件列表</h2><h3 id="1-1-绝对路径"><a href="#1-1-绝对路径" class="headerlink" title="1.1 绝对路径"></a>1.1 绝对路径</h3><p>Win: C:\</p>
-<p>macOS: &#x2F;Users&#x2F;</p>
-<h3 id="相对路径"><a href="#相对路径" class="headerlink" title="相对路径"></a>相对路径</h3><p>如工作目录为**&#x2F;Users&#x2F;yequ<strong>，相对路径为</strong>aha&#x2F;答辩.pptx<strong>，那么绝对路径为</strong>&#x2F;Users&#x2F;yequ&#x2F;aha&#x2F;答辩.pptx**</p>
-<h3 id="1-2-获取当前工作目录"><a href="#1-2-获取当前工作目录" class="headerlink" title="1.2 获取当前工作目录"></a>1.2 获取当前工作目录</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 输出程序当前工作目录</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="built_in">print</span>(os.getcwd())</span><br></pre></td></tr></table></figure>
+    <title>Git基础</title>
+    <url>/posts/1a60696b/</url>
+    <content><![CDATA[<h1 id="1-版本控制"><a href="#1-版本控制" class="headerlink" title="1. 版本控制"></a>1. 版本控制</h1><p> 版本迭代，版本管理器，不会删除最初的版本</p>
+<p>管理文件、目录、工程的修改历史</p>
+<p><strong>常见版本控制管理器</strong></p>
+<table>
+<thead>
+<tr>
+<th>Git</th>
+<th>SVN</th>
+<th>CVS</th>
+<th>VSS</th>
+<th>TFS</th>
+<th>Visual Studio Online</th>
+</tr>
+</thead>
+</table>
+<h2 id="1-1-本地版本控制"><a href="#1-1-本地版本控制" class="headerlink" title="1.1 本地版本控制"></a>1.1 本地版本控制</h2><p>记录文件的每次更新，可以对每个版本做一个快照，或是记录布丁文件，适合<strong>个人</strong>使用</p>
+<h2 id="1-2-集中式版本控制-SVN"><a href="#1-2-集中式版本控制-SVN" class="headerlink" title="1.2 集中式版本控制 SVN"></a>1.2 集中式版本控制 SVN</h2><p>所有的版本数据都保存在服务器上，协同开发者从服务器上同步更新或上传自己的修改</p>
+<p><strong>SVN</strong></p>
+<h2 id="1-3-分布式版本控制-Git"><a href="#1-3-分布式版本控制-Git" class="headerlink" title="1.3 分布式版本控制 Git"></a>1.3 分布式版本控制 Git</h2><p>每台电脑都拥有自己的版本控制中心，每个人都拥有全部代码，存在安全隐患</p>
+<p>不会因为服务器损坏，或者网络问题造成不能工作的问题</p>
+<h2 id="1-4-Git与SVN的主要区别"><a href="#1-4-Git与SVN的主要区别" class="headerlink" title="1.4 Git与SVN的主要区别"></a>1.4 Git与SVN的主要区别</h2><p><strong>SVN</strong>: 使用的集中版本控制，工作时需要用自己的电脑从中央服务器获取最新版本。工作完成后也需要将自己的代码上传至中央服务器，集中式版本控制需要联网工作，对网络带宽要求很高</p>
+<p><strong>Git</strong>：没有中央服务器，每个人的电脑就是一个完整的代码库。工作时不需要联网，Git可以直接看到更新了的代码和文件</p>
+<p>&#x3D;&#x3D;Git是目前世界上最先进的分布式版本控制系统&#x3D;&#x3D;</p>
+<h1 id="2-Git的安装卸载即环境配置"><a href="#2-Git的安装卸载即环境配置" class="headerlink" title="2. Git的安装卸载即环境配置"></a>2. Git的安装卸载即环境配置</h1><h2 id="2-1-Git的卸载"><a href="#2-1-Git的卸载" class="headerlink" title="2.1 Git的卸载"></a>2.1 Git的卸载</h2><ol>
+<li>在<strong>此电脑</strong>，右键<strong>属性</strong>进入<strong>高级系统设置</strong>，检查环境变量<strong>Path</strong>中是否有Git相关，有则删除</li>
+<li>在控制面板卸载</li>
+</ol>
+<h2 id="2-2-Git的安装"><a href="#2-2-Git的安装" class="headerlink" title="2.2 Git的安装"></a>2.2 Git的安装</h2><p><strong>Git Bash</strong>：Unix与Linux风格的命令行，只用最多</p>
+<p><strong>Git CMD</strong>：Windows风格的命令行</p>
+<p><strong>Git GUI</strong>：图形化的Git</p>
+<h2 id="2-3-Git的配置-必要操作"><a href="#2-3-Git的配置-必要操作" class="headerlink" title="2.3 Git的配置 (必要操作)"></a>2.3 Git的配置 (必要操作)</h2><h3 id="2-3-1-查看不同级别的配置"><a href="#2-3-1-查看不同级别的配置" class="headerlink" title="2.3.1 查看不同级别的配置"></a>2.3.1 查看不同级别的配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 显示当前Git配置</span></span><br><span class="line">git config -l</span><br><span class="line"><span class="comment"># 查看系统Git配置</span></span><br><span class="line">git config --system --list</span><br><span class="line"><span class="comment"># 查看本地Git配置</span></span><br><span class="line">git config --global --list</span><br></pre></td></tr></table></figure>
 
-<h3 id="1-3-修改当前工作目录"><a href="#1-3-修改当前工作目录" class="headerlink" title="1.3 修改当前工作目录"></a>1.3 修改当前工作目录</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 如要修改当前目录到/Volumes/backup</span></span><br><span class="line">os.chdir(<span class="string">&quot;/Volumes/backup&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-2-用户设置"><a href="#2-3-2-用户设置" class="headerlink" title="2.3.2 用户设置"></a>2.3.2 用户设置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 配置用户名</span></span><br><span class="line">git config --global user.name <span class="string">&quot;xxsql&quot;</span></span><br><span class="line"><span class="comment"># 配置邮箱</span></span><br><span class="line">git config --global user.email <span class="string">&quot;xxsqlll@gmail.com&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="2-获取照片拍摄时间"><a href="#2-获取照片拍摄时间" class="headerlink" title="2. 获取照片拍摄时间"></a>2. 获取照片拍摄时间</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install ezexif</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 获取exif信息</span></span><br><span class="line">exifInfo = ezexif.process_file(photoPath)</span><br><span class="line"><span class="comment"># 获取拍摄时间并输出</span></span><br><span class="line">takeTime = exifInfo[<span class="string">&#x27;EXIF DateTimeOriginal&#x27;</span>]</span><br><span class="line"><span class="comment"># 2015:12:10 21:08:08</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="3-分隔字符串"><a href="#3-分隔字符串" class="headerlink" title="3. 分隔字符串"></a>3. 分隔字符串</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">空格分隔日期和时间</span></span><br><span class="line">takeTimeParts = takeTime.split(&quot; &quot;)</span><br><span class="line">photoDate = takeTimeParts[0]</span><br><span class="line">photoDateParts = photoDate.split(&quot;:&quot;)</span><br><span class="line">targetFolderName = f&quot;&#123;photoDateParts[0]&#125;年&#123;photoDateParts[1]&#125;月&quot;</span><br><span class="line">photoTargetPath = os.path.join(backupPhotoPath,targetFolderPath)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果目标文件夹不存在则新建文件夹</span></span><br><span class="line">if not os.path.exists(photoTargetPath):</span><br><span class="line">    os.mkdir(photoTargetPath)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">移动到目标文件夹</span></span><br><span class="line">shutil.move(photoPath,photoTargetPath)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="3-常用的Linux命令"><a href="#3-常用的Linux命令" class="headerlink" title="3. 常用的Linux命令"></a>3. 常用的Linux命令</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 改变目录</span></span><br><span class="line"><span class="built_in">cd</span></span><br><span class="line"><span class="comment"># 回退到上一个目录</span></span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line"><span class="comment"># 显示当前所在的目录路径</span></span><br><span class="line"><span class="built_in">pwd</span></span><br><span class="line"><span class="comment"># 列出当前目录的文件,ll更详细</span></span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">ll</span><br><span class="line"><span class="comment"># 新建一个文件，如新建一个index.js文件</span></span><br><span class="line"><span class="built_in">touch</span> index.js</span><br><span class="line"><span class="comment"># 删除文件</span></span><br><span class="line"><span class="built_in">rm</span> index.js</span><br><span class="line"><span class="comment"># 新建一个目录，即新建一个文件夹</span></span><br><span class="line"><span class="built_in">mkdir</span></span><br><span class="line"><span class="comment"># 删除一个目录，即删除一个文件夹。下述例子展示删除src目录</span></span><br><span class="line"><span class="built_in">rm</span> -r src</span><br><span class="line"><span class="comment"># 移动文件,index.html为要移动的文件,src是目标文件夹。下例这样写必须保证文件和目标文件夹在同一目录下</span></span><br><span class="line"><span class="built_in">mv</span> index.html src</span><br><span class="line"><span class="comment"># 重新初始化终端/清屏</span></span><br><span class="line">reset</span><br><span class="line"><span class="comment"># 清屏</span></span><br><span class="line">clear</span><br><span class="line"><span class="comment"># 查看命令历史</span></span><br><span class="line"><span class="built_in">history</span></span><br><span class="line"><span class="comment"># 帮助</span></span><br><span class="line"><span class="built_in">help</span></span><br><span class="line"><span class="comment"># 退出</span></span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;切勿尝试rm -rf &#x2F;&#x3D;&#x3D;</p>
+<h1 id="4-Git基本理论-核心"><a href="#4-Git基本理论-核心" class="headerlink" title="4. Git基本理论 (核心)"></a>4. Git基本理论 (核心)</h1><h2 id="4-1-工作区域"><a href="#4-1-工作区域" class="headerlink" title="4.1 工作区域"></a>4.1 工作区域</h2><p>Git本地有三个工作区域，<strong>工作目录（Working Directory）</strong>,<strong>暂存区（Stage&#x2F;Index）</strong>，<strong>资源库（Repository或Git Directory）</strong>。如果再加上远程的git仓库（<strong>Remote Directory</strong>）就可以分为四个工作区域。</p>
+<p><strong>Workspace</strong>: 工作区，平时存放代码的地方</p>
+<p><strong>Index&#x2F;Stage</strong>：暂存区，临时存放代码改动，事实上只是一个文件，保存即将提交到文件列表的信息</p>
+<p><strong>Repository</strong>：仓库区（或本地仓库），安全存放数据的位置，有提交的所有版本。其中<em>HEAD</em>指向最新放入仓库的版本</p>
+<p><strong>Remote</strong>: 远程仓库，托管代码的服务器，可视为用于数据交换的一台电脑</p>
+<h2 id="4-2-git基本流程"><a href="#4-2-git基本流程" class="headerlink" title="4.2 git基本流程"></a>4.2 git基本流程</h2><p><strong>1. 在工作目录中添加、修改文件</strong></p>
+<p><strong>2. 将需要进行版本管理的文件放入暂存区域</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git add</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>3. 将暂存区域的文件提交到git仓库</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git commit</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-Git项目的搭建"><a href="#5-Git项目的搭建" class="headerlink" title="5. Git项目的搭建"></a>5. Git项目的搭建</h1><h2 id="5-1-本地仓库的搭建"><a href="#5-1-本地仓库的搭建" class="headerlink" title="5.1 本地仓库的搭建"></a>5.1 本地仓库的搭建</h2><h3 id="5-1-1-初始化项目"><a href="#5-1-1-初始化项目" class="headerlink" title="5.1.1 初始化项目"></a>5.1.1 初始化项目</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化项目方法一,执行后可以看见文件夹中出现.git的隐藏文件夹</span></span><br><span class="line">git init</span><br><span class="line"><span class="comment"># 方法二，远程克隆仓库</span></span><br><span class="line">git <span class="built_in">clone</span> [url]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-2-Git文件操作"><a href="#5-2-Git文件操作" class="headerlink" title="5.2 Git文件操作"></a>5.2 Git文件操作</h2><h3 id="5-2-1-文件的四种状态"><a href="#5-2-1-文件的四种状态" class="headerlink" title="5.2.1 文件的四种状态"></a>5.2.1 文件的四种状态</h3><p><strong>1. Untracked</strong>: 文件在文件夹中，但并没有加入到git库，不参与版本控制。通过&#x3D;&#x3D;git add&#x3D;&#x3D;状态变为&#x3D;&#x3D;staged&#x3D;&#x3D;</p>
+<p><strong>2. Unmodified</strong>: 文件已经入库，但未修改。即版本中的文件快照与文件夹中的内容一致。两种去处：被修改，变为&#x3D;&#x3D;Modifed&#x3D;&#x3D;；如果使用&#x3D;&#x3D;git rm&#x3D;&#x3D;移除版本库，则变为&#x3D;&#x3D;Untracked&#x3D;&#x3D;</p>
+<p><strong>3. Modified</strong>：文件已修改，但并没有其他操作。两个去处：&#x3D;&#x3D;git add&#x3D;&#x3D;进入&#x3D;&#x3D;staged&#x3D;&#x3D;状态；&#x3D;&#x3D;git checkout&#x3D;&#x3D;则丢弃修改，返回到&#x3D;&#x3D;Unmodified&#x3D;&#x3D;状态</p>
+<p><strong>4. Staged</strong>：暂存状态，执行&#x3D;&#x3D;git commit&#x3D;&#x3D;将修改同步到库中，这时库中文件和本地文件又变为一致，文件为&#x3D;&#x3D;Unmodified&#x3D;&#x3D;状态。执行&#x3D;&#x3D;git reset HEAD filename&#x3D;&#x3D;取消暂存，文件状态为&#x3D;&#x3D;Modified&#x3D;&#x3D;</p>
+<h3 id="5-2-2-查看文件状态"><a href="#5-2-2-查看文件状态" class="headerlink" title="5.2.2 查看文件状态"></a>5.2.2 查看文件状态</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看文件状态</span></span><br><span class="line">git status</span><br><span class="line"><span class="comment"># 将所有文件添加到暂存区</span></span><br><span class="line">git add .</span><br><span class="line"><span class="comment"># 提交暂存区中的内容到本地仓库，-m 提交信息</span></span><br><span class="line">git commit -m <span class="string">&quot;消息内容&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-3-忽略文件"><a href="#5-2-3-忽略文件" class="headerlink" title="5.2.3 忽略文件"></a>5.2.3 忽略文件</h3><p>在主目录下创建 <strong>.gitignore</strong> 文件，并进行配置</p>
+<ol>
+<li>忽略文中的空行或者以**#**开头的行都会被忽略</li>
+<li>可以使用Linux通配符。例如：星号（**<em><strong>）代表任意多个字符，问好（</strong>？</em>*）代表一个字符，方括号（[abc]）代表可选字符范围，大括号（{string1,string2….}）代表可选的字符串</li>
+<li>名称前为<strong>！</strong>表示例外规则，不忽略</li>
+<li>名称前为 **&#x2F;**表示只忽略根目录下的此文件，子目录下不忽略</li>
+<li>名称最后是 **&#x2F;**表示要忽略的是该目录下的该名称的子目录</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 忽略所有.txt结尾的文件</span></span><br><span class="line">*.txt</span><br><span class="line"><span class="comment"># lib.txt 除外</span></span><br><span class="line">!lib.txt</span><br><span class="line"><span class="comment"># 仅忽略根目录下的TODO文件，不包括其他目录的temp</span></span><br><span class="line">/temp</span><br><span class="line"><span class="comment"># 忽略build/目录下的所有文件</span></span><br><span class="line">build/</span><br><span class="line"><span class="comment"># 会忽略 doc/notes.txt 但不会忽略 doc/server/arch.txt</span></span><br><span class="line">doc/*.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="6-码云的注册和使用"><a href="#6-码云的注册和使用" class="headerlink" title="6. 码云的注册和使用"></a>6. 码云的注册和使用</h1><p><strong>绑定SSH公钥，实现免密码登录</strong></p>
+<ol>
+<li>在用户目录下创建&#x3D;&#x3D;.ssh&#x3D;&#x3D;文件夹</li>
+<li>在文件夹中&#x3D;&#x3D;git bash here&#x3D;&#x3D;</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 输入以下指令自动生成公钥,一直回车即可</span></span><br><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>将公钥注册到码云</li>
+</ol>
+<p>复制.ssh文件pb文件的公钥</p>
+<h1 id="7-使用IDEA集成Git"><a href="#7-使用IDEA集成Git" class="headerlink" title="7. 使用IDEA集成Git"></a>7. 使用IDEA集成Git</h1><h2 id="7-1-新建目录，绑定git"><a href="#7-1-新建目录，绑定git" class="headerlink" title="7.1 新建目录，绑定git"></a>7.1 新建目录，绑定git</h2><h2 id="7-2-修改文件，使用IDEA操作giti"><a href="#7-2-修改文件，使用IDEA操作giti" class="headerlink" title="7.2 修改文件，使用IDEA操作giti"></a>7.2 修改文件，使用IDEA操作giti</h2><h2 id="7-3-提交测试"><a href="#7-3-提交测试" class="headerlink" title="7.3 提交测试"></a>7.3 提交测试</h2><h1 id="8-Git分支"><a href="#8-Git分支" class="headerlink" title="8. Git分支"></a>8. Git分支</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 列出所有本地分支</span></span><br><span class="line">git branch</span><br><span class="line"><span class="comment"># 列出所有远程分支</span></span><br><span class="line">git branch -r</span><br><span class="line"><span class="comment"># 新建一个分支，但依然留在当前分支</span></span><br><span class="line">git branch [branch_name]</span><br><span class="line"><span class="comment"># 新建一个分支，并切换到新分支</span></span><br><span class="line">git checkout -b [branch_name]</span><br><span class="line"><span class="comment"># 切换分支</span></span><br><span class="line">git checkout [branch_name]</span><br><span class="line"><span class="comment"># 合并指定分支到当前分支</span></span><br><span class="line">git merge [branch_name]</span><br><span class="line"><span class="comment"># 删除分支</span></span><br><span class="line">git branch -d [branch_name]</span><br><span class="line"><span class="comment"># 删除远程分支</span></span><br><span class="line">git push origin --delete [branch_name]</span><br><span class="line">git branch -dr [remote/branch]</span><br></pre></td></tr></table></figure>
+
+<h1 id="9-Git完整命令"><a href="#9-Git完整命令" class="headerlink" title="9. Git完整命令"></a>9. Git完整命令</h1><p><a href="https://git-scm.com/docs">Git命令</a></p>
+]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>技能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Arduino基础</title>
+    <url>/posts/8e355f78/</url>
+    <content><![CDATA[<h1 id="1-Arduino-IDE-下载与安装"><a href="#1-Arduino-IDE-下载与安装" class="headerlink" title="1. Arduino IDE 下载与安装"></a>1. Arduino IDE 下载与安装</h1><h1 id="2-Arduino-IDE-界面和设置"><a href="#2-Arduino-IDE-界面和设置" class="headerlink" title="2. Arduino IDE 界面和设置"></a>2. Arduino IDE 界面和设置</h1><h1 id="3-Arduino-开发板基本介绍"><a href="#3-Arduino-开发板基本介绍" class="headerlink" title="3. Arduino 开发板基本介绍"></a>3. Arduino 开发板基本介绍</h1><h2 id="3-1-微控制器-ATMEL"><a href="#3-1-微控制器-ATMEL" class="headerlink" title="3.1 微控制器 ATMEL"></a>3.1 微控制器 ATMEL</h2><h2 id="3-2-端口"><a href="#3-2-端口" class="headerlink" title="3.2 端口"></a>3.2 端口</h2><h3 id="3-2-1-数字输入-输出"><a href="#3-2-1-数字输入-输出" class="headerlink" title="3.2.1 数字输入&#x2F;输出"></a>3.2.1 数字输入&#x2F;输出</h3><p>数字：0&#x2F;1</p>
+<p>端口0&#x2F;1是最后使用</p>
+<h3 id="3-2-2-模拟输入端口"><a href="#3-2-2-模拟输入端口" class="headerlink" title="3.2.2 模拟输入端口"></a>3.2.2 模拟输入端口</h3><p>不只0&#x2F;1状态</p>
+<h3 id="3-2-3-电源端口"><a href="#3-2-3-电源端口" class="headerlink" title="3.2.3 电源端口"></a>3.2.3 电源端口</h3><h1 id="4-初步认识-Arduino-程序"><a href="#4-初步认识-Arduino-程序" class="headerlink" title="4. 初步认识 Arduino 程序"></a>4. 初步认识 Arduino 程序</h1><h2 id="4-1-Arduino-编程语言-C"><a href="#4-1-Arduino-编程语言-C" class="headerlink" title="4.1 Arduino 编程语言 C++"></a>4.1 Arduino 编程语言 C++</h2><h3 id="4-1-1-注释格式"><a href="#4-1-1-注释格式" class="headerlink" title="4.1.1 注释格式"></a>4.1.1 注释格式</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//这是一段单行注释文字</span></span><br><span class="line"><span class="comment">/*这是一段多行注释文字</span></span><br><span class="line"><span class="comment">可以在此</span></span><br><span class="line"><span class="comment">写出很多行的注释文字</span></span><br><span class="line"><span class="comment">*/</span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-2-结束编程格式"><a href="#4-1-2-结束编程格式" class="headerlink" title="4.1.2 结束编程格式"></a>4.1.2 结束编程格式</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//使用分号告诉计算机一段代码的结尾</span></span><br><span class="line"><span class="type">int</span> a = <span class="number">0</span>; </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-3-函数"><a href="#4-1-3-函数" class="headerlink" title="4.1.3 函数"></a>4.1.3 函数</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//以下为一个函数,花括号之间为函数内容</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-2-Arduino-编程–变量"><a href="#4-2-Arduino-编程–变量" class="headerlink" title="4.2 Arduino 编程–变量"></a>4.2 Arduino 编程–变量</h2><h3 id="4-2-1-变量定义"><a href="#4-2-1-变量定义" class="headerlink" title="4.2.1 变量定义"></a>4.2.1 变量定义</h3><p>变量值 - 可变</p>
+<p>变量名 - 不变</p>
+<h3 id="4-2-2-规定变量类型"><a href="#4-2-2-规定变量类型" class="headerlink" title="4.2.2 规定变量类型"></a>4.2.2 规定变量类型</h3><p>创建变量时要先告诉Arduino所创建的变量类型</p>
+<h3 id="4-2-3-创建变量"><a href="#4-2-3-创建变量" class="headerlink" title="4.2.3 创建变量"></a>4.2.3 创建变量</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//变量类型为int(整数)，变量名称为currentTemperature，；结束代码</span></span><br><span class="line"><span class="type">int</span> currentTemperature; </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-4-变量名称规则"><a href="#4-2-4-变量名称规则" class="headerlink" title="4.2.4 变量名称规则"></a>4.2.4 变量名称规则</h3><p><strong>错误示范</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Current Temperature <span class="comment">//变量名必须用连贯的一个词</span></span><br><span class="line">Current# <span class="comment">//不能出现特殊字符</span></span><br><span class="line"><span class="number">1</span>_temperature <span class="comment">//不能以数字开头</span></span><br><span class="line">HIGH <span class="comment">//关键字不能用来作变量名</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>良好编程习惯</strong></p>
+<ol>
+<li>变量名能很好的反映所存储的变量类型</li>
+<li>对于一个变量名出现多个单词时，使用大写或下划线加以区分</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">currentTemperature</span><br><span class="line">current_temperature</span><br><span class="line">current_Temperature</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-5-给变量赋值"><a href="#4-2-5-给变量赋值" class="headerlink" title="4.2.5  给变量赋值"></a>4.2.5  给变量赋值</h3><p><strong>Arduino默认情况为0</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//=为赋值运算符</span></span><br><span class="line"><span class="type">int</span> currentTemperature = <span class="number">18</span>; </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//loop是循环的意思</span></span><br><span class="line"><span class="type">int</span> currentTemperature = <span class="number">18</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  currentTemperature = <span class="number">30</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-3-Arduino-程序结构"><a href="#4-3-Arduino-程序结构" class="headerlink" title="4.3 Arduino 程序结构"></a>4.3 Arduino 程序结构</h2><h3 id="4-3-1-第一个实例Blink"><a href="#4-3-1-第一个实例Blink" class="headerlink" title="4.3.1 第一个实例Blink"></a>4.3.1 第一个实例Blink</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">pinMode</span>(LED_BUILTIN, OUTPUT);<span class="comment">//初始化</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//loop函数会一直不断反复执行</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">digitalWrite</span>(LED_BUILTIN,HIGH);<span class="comment">//点亮LED</span></span><br><span class="line">  <span class="built_in">delay</span>(<span class="number">1000</span>);<span class="comment">//延迟1000ms，即等待1s</span></span><br><span class="line">  <span class="built_in">digitalWrite</span>(LED_BUILTIN, LOW);<span class="comment">//熄灭LED</span></span><br><span class="line">  <span class="built_in">delay</span>(<span class="number">1000</span>);<span class="comment">//等待1s  </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-4-Arduino-变量基本操作"><a href="#4-4-Arduino-变量基本操作" class="headerlink" title="4.4 Arduino 变量基本操作"></a>4.4 Arduino 变量基本操作</h2><h3 id="4-4-1-变量类型"><a href="#4-4-1-变量类型" class="headerlink" title="4.4.1 变量类型"></a>4.4.1 变量类型</h3><h3 id="4-4-2-作用域"><a href="#4-4-2-作用域" class="headerlink" title="4.4.2 作用域"></a>4.4.2 作用域</h3><p><strong>全局变量</strong>：放在所有函数外的变量，可在全局使用不会报错</p>
+<p><strong>局部变量</strong>：在某个函数中出现的变量，不能在其他函数中使用，否则报错</p>
+<p><em>注意</em>：当两个函数中出现同名的局部变量时，两个变量没有任何关联，仅仅同名。并且尽量不要出现这种情况。</p>
+<h2 id="4-5-Arduino-程序函数1"><a href="#4-5-Arduino-程序函数1" class="headerlink" title="4.5 Arduino 程序函数1"></a>4.5 Arduino 程序函数1</h2><h3 id="4-5-1-delayMicroseconds"><a href="#4-5-1-delayMicroseconds" class="headerlink" title="4.5.1 delayMicroseconds()"></a>4.5.1 delayMicroseconds()</h3><p>delayMicroseconds()与<a href="http://www.taichi-maker.com/homepage/reference-index/arduino-code-reference/delay/">delay()</a>函数都可用于暂停程序运行。不同的是，delayMicroseconds()的参数单位是微秒(1毫秒＝1000微秒),而delay函数参数单位是毫秒</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> ledPin = <span class="number">13</span>;<span class="comment">//Arduino引脚13接LED</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">pinMode</span>(ledPin,OUTPUT);<span class="comment">//将LED连接引脚设置为输出模式</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">digitalWrite</span>(ledPin,HIGH);</span><br><span class="line">  <span class="built_in">delayMicroseconds</span>(<span class="number">10000</span>);</span><br><span class="line">  <span class="built_in">digitalWrite</span>(ledPin,LOW);</span><br><span class="line">  <span class="built_in">delayMicrosecons</span>(<span class="number">10000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-5-Arduino-程序函数2"><a href="#4-5-Arduino-程序函数2" class="headerlink" title="4.5 Arduino 程序函数2"></a>4.5 Arduino 程序函数2</h2><h3 id="4-5-1-pinMode-LED-BUILTIN-OUTPUT"><a href="#4-5-1-pinMode-LED-BUILTIN-OUTPUT" class="headerlink" title="4.5.1 pinMode(LED_BUILTIN, OUTPUT);"></a>4.5.1 pinMode(LED_BUILTIN, OUTPUT);</h3><p>初始化引脚，将其设置为输出模式。为电路配上电源。</p>
+<h3 id="4-5-2-digitalWrite"><a href="#4-5-2-digitalWrite" class="headerlink" title="4.5.2 digitalWrite();"></a>4.5.2 digitalWrite();</h3><p>为电路配上开关</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">digitalWrite</span>(LED_BUILTIN,HIGH);<span class="comment">//有电流，点亮LED,5V</span></span><br><span class="line"><span class="built_in">digitalWrite</span>(LED_BUILTIN,LOW);<span class="comment">//无电流，熄灭LED,0V</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-数字输出"><a href="#5-数字输出" class="headerlink" title="5. 数字输出"></a>5. 数字输出</h1><h2 id="5-1-数字输出1-学用LED"><a href="#5-1-数字输出1-学用LED" class="headerlink" title="5.1 数字输出1 - 学用LED"></a>5.1 数字输出1 - 学用LED</h2><p> <strong>灯珠工作电流</strong> &#x3D; <strong>20MA</strong></p>
+<p><strong>工作时产生压降</strong> &#x3D; <strong>2V</strong> </p>
+<h2 id="5-2-数字输出2-Arduino控制LED"><a href="#5-2-数字输出2-Arduino控制LED" class="headerlink" title="5.2 数字输出2 - Arduino控制LED"></a>5.2 数字输出2 - Arduino控制LED</h2><p><strong>R &#x3D; U&#x2F;I &#x3D;3V&#x2F;20mA &#x3D; 150Ω</strong></p>
+<h2 id="5-3-面包板"><a href="#5-3-面包板" class="headerlink" title="5.3 面包板"></a>5.3 面包板</h2><p>面包板&#x3D;&#x3D;两侧&#x3D;&#x3D;<strong>横向</strong>连接，&#x3D;&#x3D;中间&#x3D;&#x3D;<strong>纵向</strong>连接</p>
+<p>此时Arduino IDE程序上接口名称要改为<strong>引脚5</strong></p>
+<h1 id="6-数字输入"><a href="#6-数字输入" class="headerlink" title="6. 数字输入"></a>6. 数字输入</h1><p>当引脚设置为输入模式时，引脚为高阻抗状态，可用于读取传感器信号或<strong>开关信号</strong></p>
+<h2 id="6-1-按键开关"><a href="#6-1-按键开关" class="headerlink" title="6.1 按键开关"></a>6.1 按键开关</h2><p>&#x3D;&#x3D;相连不同侧，同侧不相连&#x3D;&#x3D;</p>
+<p>开关按下前，Arduino读取高电平，走电阻线路不走接地线路</p>
+<p>&#x3D;&#x3D;电阻使用上拉电阻（10kΩ）&#x3D;&#x3D;</p>
+<p>开关按下后，Arduino读取低电平，走接地线路，被短路</p>
+<h2 id="6-2-按键开关控制"><a href="#6-2-按键开关控制" class="headerlink" title="6.2 按键开关控制"></a>6.2 按键开关控制</h2><p>&#x3D;&#x3D;HIGH 1&#x3D;&#x3D;</p>
+<p>&#x3D;&#x3D;LOW 0&#x3D;&#x3D;</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> pushButton = <span class="number">2</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Serial.<span class="built_in">begin</span>(<span class="number">9600</span>);<span class="comment">//初始化串口通讯，设置波特率为9600</span></span><br><span class="line">  <span class="built_in">pinMode</span>(pushButton, INPUT);<span class="comment">//将引脚2设置为输入状态</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> buttonState = <span class="built_in">digitalRead</span>(pushButton);<span class="comment">//初始化整型，赋值引脚2当前的状态</span></span><br><span class="line">  Serial.<span class="built_in">println</span>(buttonState);<span class="comment">//将引脚2当前状态输入串口监视器，HIGH为1，LOW为0</span></span><br><span class="line">  <span class="built_in">delay</span>(<span class="number">1</span>);<span class="comment">//为保证程序稳定进行暂时暂停1s</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="7-输入上拉模式"><a href="#7-输入上拉模式" class="headerlink" title="7. 输入上拉模式"></a>7. 输入上拉模式</h1><p>Arduino自带内部上拉电阻，将引脚设置为输入上拉模式后就可以使用该电阻</p>
+<p>![截屏2023-04-22 19.05.37](&#x2F;Users&#x2F;xxsql&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;截屏2023-04-22 19.05.37.png)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  Serial.<span class="built_in">begin</span>(<span class="number">9600</span>);</span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">2</span>,INPUT_PULLUP);<span class="comment">//将引脚2设置为输入上拉模式</span></span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">13</span>,OUTPUT);<span class="comment">//将引脚13设置为输出模式</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> sensorVal = <span class="built_in">digitalRead</span>(<span class="number">2</span>);<span class="comment">//将引脚2状态赋值给整型sensorVal</span></span><br><span class="line">  Serial.<span class="built_in">println</span>(sensorVal);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//按钮没有按下时，sensorVal为高电平，熄灭LED</span></span><br><span class="line"><span class="keyword">if</span> (sensorVal == HIGH) &#123;  <span class="comment">//如果按钮没有按下</span></span><br><span class="line">  <span class="built_in">digitalWrite</span>(<span class="number">13</span>,LOW);<span class="comment">//熄灭LED</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;               <span class="comment">//否则</span></span><br><span class="line">  <span class="built_in">digitalWirte</span>(<span class="number">13</span>,HIGH);<span class="comment">//点亮LED</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-1-if…else语句"><a href="#7-1-if…else语句" class="headerlink" title="7.1 if…else语句"></a>7.1 if…else语句</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (表达式<span class="number">1</span>) &#123;</span><br><span class="line">  语句块<span class="number">1</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  语句块<span class="number">2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-2-关系运算符号"><a href="#7-2-关系运算符号" class="headerlink" title="7.2 关系运算符号"></a>7.2 关系运算符号</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">x == y</span><br><span class="line">x != y</span><br><span class="line">x &lt; y</span><br><span class="line">x &gt; y</span><br><span class="line">x &lt;= y</span><br><span class="line">x &gt;= y</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-3-布尔类型（Booolean）"><a href="#7-3-布尔类型（Booolean）" class="headerlink" title="7.3 布尔类型（Booolean）"></a>7.3 布尔类型（Booolean）</h2><p>&#x3D;&#x3D;True 1&#x3D;&#x3D;</p>
+<p>&#x3D;&#x3D;False 0&#x3D;&#x3D;</p>
+<p>除0以外任何数值都会被当成1</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">boolean pushButton;<span class="comment">//设置变量pushButton为布尔型</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">2</span>,INPUT_PULLUP);<span class="comment">//设置引脚2为输入上拉模式</span></span><br><span class="line">  <span class="built_in">pinMode</span>(<span class="number">13</span>,OUTPUT);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  pushButton = <span class="built_in">digitalRead</span>(<span class="number">2</span>);<span class="comment">//将引脚2状态赋值给pushButton</span></span><br><span class="line">  <span class="keyword">if</span> (pushButton) &#123;       <span class="comment">//如果开关不按下，引脚2为高电平，pushButton为True</span></span><br><span class="line">    <span class="built_in">digitalWrite</span>(<span class="number">13</span>,HIGH);<span class="comment">//点亮LED</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;                <span class="comment">//如果开关按下，pushButton为False</span></span><br><span class="line">    <span class="built_in">digitalWrite</span>(<span class="number">13</span>,LOW);<span class="comment">//熄灭LED</span></span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
-        <category>Python</category>
+        <category>Arduino</category>
       </categories>
       <tags>
         <tag>学习</tag>
       </tags>
   </entry>
   <entry>
-    <title>语音端点检测python</title>
-    <url>/posts/46028808/</url>
-    <content><![CDATA[<h2 id="Voice-Activity-Detection-VAD）"><a href="#Voice-Activity-Detection-VAD）" class="headerlink" title="(Voice Activity Detection,VAD）"></a>(Voice Activity Detection,VAD）</h2><p><strong>目的</strong>：从声音信号流里识别并消除静音段，以防出现音画不同步现象</p>
-<h2 id="识别静音段"><a href="#识别静音段" class="headerlink" title="识别静音段"></a>识别静音段</h2><p><strong>标准</strong>：当一个输入的数值序列中出现持续低于基准数值的声音</p>
-<p>#导入模块</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pydub.silence <span class="keyword">import</span> split_on_silence</span><br></pre></td></tr></table></figure>
+    <title>hexo博客创建步骤</title>
+    <url>/posts/f584b6f/</url>
+    <content><![CDATA[<h2 id="创建新的博客"><a href="#创建新的博客" class="headerlink" title="创建新的博客"></a>创建新的博客</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo n <span class="string">&quot;filename&quot;</span></span><br></pre></td></tr></table></figure>
 
-<p>#切分音频,设置静音段最小长度为500（默认为1000ms），需要进行识别静音段的最小声音强度（默认为-16dbfs），满足其一即视为静音段。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">min_silence_len = 500</span><br><span class="line">silence_thresh = -50</span><br><span class="line">pieces = split_on_silence(sound,min_silence_len,silence_thresh)</span><br></pre></td></tr></table></figure>
+<h2 id="编辑博客"><a href="#编辑博客" class="headerlink" title="编辑博客"></a>编辑博客</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="built_in">source</span>/_posts</span><br><span class="line">vim filename</span><br></pre></td></tr></table></figure>
 
-<h2 id="导出静音段"><a href="#导出静音段" class="headerlink" title="导出静音段"></a>导出静音段</h2><p>#通过for循环遍历</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> pieces:</span><br><span class="line">     path = <span class="string">&quot;/Users/yequ/音频片段&quot;</span>+<span class="built_in">str</span>(count)+<span class="string">&quot;.wav&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="清理并生成博客"><a href="#清理并生成博客" class="headerlink" title="清理并生成博客"></a>清理并生成博客</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ../..</span><br><span class="line">hexo clean</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
 
-<p>#遍历pieces，将音频导出为wav格式，文件路径为path</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">i.export(path,<span class="built_in">format</span> = <span class="string">&quot;wav&quot;</span>)</span><br><span class="line">count += <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
+<h2 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>Python</category>
+        <category>Hexo</category>
       </categories>
       <tags>
-        <tag>学习</tag>
+        <tag>技能</tag>
       </tags>
   </entry>
 </search>
