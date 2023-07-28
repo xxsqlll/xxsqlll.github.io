@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>自主导航小车操作流程</title>
-    <url>/2023/07/27/%E8%87%AA%E4%B8%BB%E5%AF%BC%E8%88%AA%E5%B0%8F%E8%BD%A6%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B/</url>
+    <url>/posts/4002aeb8/</url>
     <content><![CDATA[<h1 id="1-配置环境"><a href="#1-配置环境" class="headerlink" title="1. 配置环境"></a>1. 配置环境</h1><h2 id="1-1-在虚拟机安装Ubuntu操作系统"><a href="#1-1-在虚拟机安装Ubuntu操作系统" class="headerlink" title="1.1 在虚拟机安装Ubuntu操作系统"></a>1.1 在虚拟机安装Ubuntu操作系统</h2><p><strong>P2 0:38:50</strong></p>
 <p><a href="https://www.bilibili.com/video/BV1bE41147q9?p=2&vd_source=45362572b7d5ba92cee5884f674bc9eb">P2-项目准备</a></p>
 <h2 id="1-2-在Ubuntu安装ROS操作系统"><a href="#1-2-在Ubuntu安装ROS操作系统" class="headerlink" title="1.2 在Ubuntu安装ROS操作系统"></a>1.2 在Ubuntu安装ROS操作系统</h2><p>Firefox- Bing</p>
@@ -234,7 +234,7 @@
   </entry>
   <entry>
     <title>Git基础</title>
-    <url>/2023/07/27/Git%20%E5%9F%BA%E7%A1%80/</url>
+    <url>/posts/1a60696b/</url>
     <content><![CDATA[<h1 id="1-版本控制"><a href="#1-版本控制" class="headerlink" title="1. 版本控制"></a>1. 版本控制</h1><p> 版本迭代，版本管理器，不会删除最初的版本</p>
 <p>管理文件、目录、工程的修改历史</p>
 <p><strong>常见版本控制管理器</strong></p>
@@ -342,7 +342,7 @@
   </entry>
   <entry>
     <title>Arduino基础</title>
-    <url>/2023/07/27/Arduino%20%E5%9F%BA%E7%A1%80/</url>
+    <url>/posts/8e355f78/</url>
     <content><![CDATA[<h1 id="1-Arduino-IDE-下载与安装"><a href="#1-Arduino-IDE-下载与安装" class="headerlink" title="1. Arduino IDE 下载与安装"></a>1. Arduino IDE 下载与安装</h1><h1 id="2-Arduino-IDE-界面和设置"><a href="#2-Arduino-IDE-界面和设置" class="headerlink" title="2. Arduino IDE 界面和设置"></a>2. Arduino IDE 界面和设置</h1><h1 id="3-Arduino-开发板基本介绍"><a href="#3-Arduino-开发板基本介绍" class="headerlink" title="3. Arduino 开发板基本介绍"></a>3. Arduino 开发板基本介绍</h1><h2 id="3-1-微控制器-ATMEL"><a href="#3-1-微控制器-ATMEL" class="headerlink" title="3.1 微控制器 ATMEL"></a>3.1 微控制器 ATMEL</h2><h2 id="3-2-端口"><a href="#3-2-端口" class="headerlink" title="3.2 端口"></a>3.2 端口</h2><h3 id="3-2-1-数字输入-输出"><a href="#3-2-1-数字输入-输出" class="headerlink" title="3.2.1 数字输入&#x2F;输出"></a>3.2.1 数字输入&#x2F;输出</h3><p>数字：0&#x2F;1</p>
 <p>端口0&#x2F;1是最后使用</p>
 <h3 id="3-2-2-模拟输入端口"><a href="#3-2-2-模拟输入端口" class="headerlink" title="3.2.2 模拟输入端口"></a>3.2.2 模拟输入端口</h3><p>不只0&#x2F;1状态</p>
@@ -442,7 +442,7 @@
   </entry>
   <entry>
     <title>hexo博客创建步骤</title>
-    <url>/2023/07/18/hexo%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E6%AD%A5%E9%AA%A4/</url>
+    <url>/posts/f584b6f/</url>
     <content><![CDATA[<h2 id="创建新的博客"><a href="#创建新的博客" class="headerlink" title="创建新的博客"></a>创建新的博客</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo n <span class="string">&quot;filename&quot;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="编辑博客"><a href="#编辑博客" class="headerlink" title="编辑博客"></a>编辑博客</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="built_in">source</span>/_posts</span><br><span class="line">vim filename</span><br></pre></td></tr></table></figure>

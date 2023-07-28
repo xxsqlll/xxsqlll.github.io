@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>小刑的博客</title>
+  <icon>https://www.gravatar.com/avatar/f020d02be241ef4b1373ac1bb9fb987c</icon>
+  <subtitle>一横是一只小猪</subtitle>
+  <link href="https://xxsqlll.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://xxsqlll.github.io/"/>
+  <updated>2023-07-28T05:52:57.870Z</updated>
+  <id>https://xxsqlll.github.io/</id>
+  
+  <author>
+    <name>小刑</name>
+    <email>xxsqlll@gmail.com</email>
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>自主导航小车操作流程</title>
+    <link href="https://xxsqlll.github.io/posts/4002aeb8/"/>
+    <id>https://xxsqlll.github.io/posts/4002aeb8/</id>
+    <published>2023-07-27T06:18:50.000Z</published>
+    <updated>2023-07-28T05:52:57.870Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-配置环境&quot;&gt;&lt;a href=&quot;#1-配置环境&quot; class=&quot;headerlink&quot; title=&quot;1. 配置环境&quot;&gt;&lt;/a&gt;1. 配置环境&lt;/h1&gt;&lt;h2 id=&quot;1-1-在虚拟机安装Ubuntu操作系统&quot;&gt;&lt;a href=&quot;#1-1-在虚拟机安装Ubuntu操作系统&quot; class=&quot;headerlink&quot; title=&quot;1.1 在虚拟机安装Ubuntu操作系统&quot;&gt;&lt;/a&gt;1.1 在虚拟机安装Ubuntu操作系统&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;P2 0:38:50&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1bE41147q9?p=2&amp;vd_source=45362572b7d5ba92cee5884f674bc9eb&quot;&gt;P2-项目准备&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1-2-在Ubuntu安装ROS操作系统&quot;&gt;&lt;a href=&quot;#1-2-在Ubuntu安装ROS操作系统&quot; class=&quot;headerlink&quot; title=&quot;1.2 在Ubuntu安装ROS操作系统&quot;&gt;&lt;/a&gt;1.2 在Ubuntu安装ROS操作系统&lt;/h2&gt;</summary>
+    
+    
+    
+    <category term="小车" scheme="https://xxsqlll.github.io/categories/%E5%B0%8F%E8%BD%A6/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git基础</title>
+    <link href="https://xxsqlll.github.io/posts/1a60696b/"/>
+    <id>https://xxsqlll.github.io/posts/1a60696b/</id>
+    <published>2023-07-27T06:18:30.000Z</published>
+    <updated>2023-07-28T05:52:57.867Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-版本控制&quot;&gt;&lt;a href=&quot;#1-版本控制&quot; class=&quot;headerlink&quot; title=&quot;1. 版本控制&quot;&gt;&lt;/a&gt;1. 版本控制&lt;/h1&gt;&lt;p&gt; 版本迭代，版本管理器，不会删除最初的版本&lt;/p&gt;
+&lt;p&gt;管理文件、目录、工程的修改历史&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;常见版本控制管理器&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Git&lt;/th&gt;
+&lt;th&gt;SVN&lt;/th&gt;
+&lt;th&gt;CVS&lt;/th&gt;
+&lt;th&gt;VSS&lt;/th&gt;
+&lt;th&gt;TFS&lt;/th&gt;
+&lt;th&gt;Visual Studio Online&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;/table&gt;</summary>
+    
+    
+    
+    <category term="Git" scheme="https://xxsqlll.github.io/categories/Git/"/>
+    
+    
+    <category term="技能" scheme="https://xxsqlll.github.io/tags/%E6%8A%80%E8%83%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Arduino基础</title>
+    <link href="https://xxsqlll.github.io/posts/8e355f78/"/>
+    <id>https://xxsqlll.github.io/posts/8e355f78/</id>
+    <published>2023-07-27T06:18:23.000Z</published>
+    <updated>2023-07-28T05:52:57.868Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-Arduino-IDE-下载与安装&quot;&gt;&lt;a href=&quot;#1-Arduino-IDE-下载与安装&quot; class=&quot;headerlink&quot; title=&quot;1. Arduino IDE 下载与安装&quot;&gt;&lt;/a&gt;1. Arduino IDE 下载与安装&lt;/h1&gt;&lt;h1 id=&quot;2-Arduino-IDE-界面和设置&quot;&gt;&lt;a href=&quot;#2-Arduino-IDE-界面和设置&quot; class=&quot;headerlink&quot; title=&quot;2. Arduino IDE 界面和设置&quot;&gt;&lt;/a&gt;2. Arduino IDE 界面和设置&lt;/h1&gt;&lt;h1 id=&quot;3-Arduino-开发板基本介绍&quot;&gt;&lt;a href=&quot;#3-Arduino-开发板基本介绍&quot; class=&quot;headerlink&quot; title=&quot;3. Arduino 开发板基本介绍&quot;&gt;&lt;/a&gt;3. Arduino 开发板基本介绍&lt;/h1&gt;&lt;h2 id=&quot;3-1-微控制器-ATMEL&quot;&gt;&lt;a href=&quot;#3-1-微控制器-ATMEL&quot; class=&quot;headerlink&quot; title=&quot;3.1 微控制器 ATMEL&quot;&gt;&lt;/a&gt;3.1 微控制器 ATMEL&lt;/h2&gt;&lt;h2 id=&quot;3-2-端口&quot;&gt;&lt;a href=&quot;#3-2-端口&quot; class=&quot;headerlink&quot; title=&quot;3.2 端口&quot;&gt;&lt;/a&gt;3.2 端口&lt;/h2&gt;</summary>
+    
+    
+    
+    <category term="Arduino" scheme="https://xxsqlll.github.io/categories/Arduino/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo博客创建步骤</title>
+    <link href="https://xxsqlll.github.io/posts/f584b6f/"/>
+    <id>https://xxsqlll.github.io/posts/f584b6f/</id>
+    <published>2023-07-18T11:53:45.000Z</published>
+    <updated>2023-07-28T05:52:57.869Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;创建新的博客&quot;&gt;&lt;a href=&quot;#创建新的博客&quot; class=&quot;headerlink&quot; title=&quot;创建新的博客&quot;&gt;&lt;/a&gt;创建新的博客&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;hexo n &lt;span class=&quot;string&quot;&gt;&amp;quot;filename&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;编辑博客&quot;&gt;&lt;a href=&quot;#编辑博客&quot; class=&quot;headerlink&quot; title=&quot;编辑博客&quot;&gt;&lt;/a&gt;编辑博客&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;source&lt;/span&gt;/_posts&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;vim filename&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;清理并生成博客&quot;&gt;&lt;a href=&quot;#清理并生成博客&quot; class=&quot;headerlink&quot; title=&quot;清理并生成博客&quot;&gt;&lt;/a&gt;清理并生成博客&lt;/h2&gt;</summary>
+    
+    
+    
+    <category term="Hexo" scheme="https://xxsqlll.github.io/categories/Hexo/"/>
+    
+    
+    <category term="技能" scheme="https://xxsqlll.github.io/tags/%E6%8A%80%E8%83%BD/"/>
+    
+  </entry>
+  
+</feed>
