@@ -1,6 +1,907 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Python实现Word文档的读取</title>
+    <url>/posts/ec209222/</url>
+    <content><![CDATA[<h1 id="1-遍历所有文件"><a href="#1-遍历所有文件" class="headerlink" title="1. 遍历所有文件"></a>1. 遍历所有文件</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">allKeyPath = <span class="string">&quot;/Users/qiao/answerKey&quot;</span></span><br><span class="line">allItems = os.listdir(allKeyPath)</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> allItems:</span><br><span class="line">    <span class="built_in">print</span>(item)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="2-使用循环建立储存信息字典列表"><a href="#2-使用循环建立储存信息字典列表" class="headerlink" title="2. 使用循环建立储存信息字典列表"></a>2. 使用循环建立储存信息字典列表</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">allStudentsData = []</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> allItems:</span><br><span class="line">    studentData = &#123;&#125;</span><br><span class="line">    allStudentsData.append(studentsData)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="3-获取班级姓名"><a href="#3-获取班级姓名" class="headerlink" title="3.获取班级姓名"></a>3.获取班级姓名</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">fileName = os.path.splitext(item)[<span class="number">0</span>]</span><br><span class="line">studentData[<span class="string">&quot;classInfo&quot;</span>] = fileName.split(<span class="string">&quot;-&quot;</span>)[<span class="number">0</span>]</span><br><span class="line">studentData[<span class="string">&#x27;name&#x27;</span>] = fileName.split(<span class="string">&quot;-&quot;</span>)[<span class="number">1</span>]</span><br><span class="line">allStudentsData.append(studentData)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-获取Word文档基本结构"><a href="#4-获取Word文档基本结构" class="headerlink" title="4. 获取Word文档基本结构"></a>4. 获取Word文档基本结构</h1><h2 id="4-1-基本单位"><a href="#4-1-基本单位" class="headerlink" title="4.1 基本单位"></a>4.1 基本单位</h2><p>word文档的基本组成单位是&#x3D;&#x3D;段落&#x3D;&#x3D;。<strong>标题、目录、正文、图形、空行</strong>都是段落。</p>
+<h2 id="4-2-样式"><a href="#4-2-样式" class="headerlink" title="4.2 样式"></a>4.2 样式</h2><p>每个段落之中的内容可以具有不同的样式（Style）。</p>
+<p>常见的样式有：字体、字形、字号、字体颜色、下划线、删除线、上标和下标等。</p>
+<h2 id="4-3-样式块"><a href="#4-3-样式块" class="headerlink" title="4.3 样式块"></a>4.3 样式块</h2><p>连续<strong>具有相同样式的基本单元</strong>可称为一个样式块（run）。</p>
+<p>例如，图中这一段话原本是同一个样式块。但在这个段落中加粗一个字，那么这个字就形成了一个样式块。</p>
+<p>![截屏2023-04-23 18.49.29](&#x2F;Users&#x2F;xxsql&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;截屏2023-04-23 18.49.29.png)</p>
+<h2 id="4-4-表格"><a href="#4-4-表格" class="headerlink" title="4.4 表格"></a>4.4 表格</h2><p>与段落是并列关系</p>
+<p>也就是说表格不属于任何段落，我们不能够通过遍历段落来获取表格。</p>
+<p>和Excel表格的结构很相似，Word文档中的表格也是由单元格（Cell）组成。</p>
+<p>单元格中的内容可以包含段落和表格，相当于独自构成了一个完整的Word文档。</p>
+<h1 id="5-获取学生学号"><a href="#5-获取学生学号" class="headerlink" title="5. 获取学生学号"></a>5. 获取学生学号</h1><img src="https://tinypic.host/images/2023/04/24/2023-04-24-10.10.02.png" alt="2023-04-24-10.10.02.png" border="0" style="zoom:60%;" />
+
+<h2 id="5-1-python-docx模块的安装和导入"><a href="#5-1-python-docx模块的安装和导入" class="headerlink" title="5.1 python-docx模块的安装和导入"></a>5.1 python-docx模块的安装和导入</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install python-docx</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> docx</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-2-读取word文档"><a href="#5-2-读取word文档" class="headerlink" title="5.2 读取word文档"></a>5.2 读取word文档</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">keyPath = os.path.join(allKeyPath,item)</span><br><span class="line">doc = docx.Document(keyPath)</span><br><span class="line"><span class="built_in">print</span>(doc)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-3-读取指定段落-paragraphs"><a href="#5-3-读取指定段落-paragraphs" class="headerlink" title="5.3 读取指定段落 (.paragraphs)"></a>5.3 读取指定段落 (.paragraphs)</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 读取第四段学号段，并赋值给变量idPara</span></span><br><span class="line"> idPara = doc.paragraphs[<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-4-读取指定样式块-runs"><a href="#5-4-读取指定样式块-runs" class="headerlink" title="5.4 读取指定样式块 (.runs)"></a>5.4 读取指定样式块 (.runs)</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 读取学号段中第二个样式块，并赋值给变量idRun</span></span><br><span class="line">idRun = idPara.runs[<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-5-读取文本内容-text"><a href="#5-5-读取文本内容-text" class="headerlink" title="5.5 读取文本内容 (.text)"></a>5.5 读取文本内容 (.text)</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 读取学号，并赋值到学生数据字典的id键里</span></span><br><span class="line">studentData[<span class="string">&quot;id&quot;</span>] = idRun.text</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-6-读取Word内置段落样式名称"><a href="#5-6-读取Word内置段落样式名称" class="headerlink" title="5.6 读取Word内置段落样式名称"></a>5.6 读取Word内置段落样式名称</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#通过访问段落下的 .style 属性，可以获取段落中的样式列表。再通过访问样式列表下的 .name 属性。</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="6-获取填空题答案"><a href="#6-获取填空题答案" class="headerlink" title="6. 获取填空题答案"></a>6. 获取填空题答案</h1><p>用标准答案的索引<strong>加8</strong>，就可以得到对应的学生答案所在的段落索引。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">standardTwo = [<span class="string">&quot;东临碣石&quot;</span>, <span class="string">&quot;行舟绿水前&quot;</span>, <span class="string">&quot;孤山寺北贾亭西&quot;</span>, <span class="string">&quot;断肠人在天涯&quot;</span>, <span class="string">&quot;故人具鸡黍&quot;</span>, <span class="string">&quot;一曲新词酒一杯&quot;</span>, <span class="string">&quot;何当共剪西窗烛&quot;</span>, <span class="string">&quot;误入藕花深处&quot;</span>, <span class="string">&quot;烟笼寒水月笼沙&quot;</span>, <span class="string">&quot;万籁此都寂&quot;</span>, <span class="string">&quot;初日照高林&quot;</span>, <span class="string">&quot;腾蛇乘雾&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-1-方法一"><a href="#6-1-方法一" class="headerlink" title="6.1 方法一"></a>6.1 方法一</h2><p>先使用range(0, len(…))来保存运行中standardTwo的每个元素的索引，也就是生成了一个从0开始到(len(standardTwo)-1)结束的列表indexList。</p>
+<p>再用for循环遍历索引列表indexList。</p>
+<p>在for循环里，通过把i和8相加，来记录学生答案所在的段落索引，并赋值给了idx。</p>
+<p>最后通过i和idx这两个索引，分别获取了标准答案和对应的学生答案。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">indexList = <span class="built_in">range</span>(<span class="number">0</span>,<span class="built_in">len</span>(standardTwo))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> indexList:</span><br><span class="line">    idx = i + <span class="number">8</span></span><br><span class="line">    <span class="built_in">print</span>(standardTwo[i],doc.paragraphs[idx].runs[<span class="number">1</span>].text)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-3-方法二-—-遍历索引（enumerate-）"><a href="#6-3-方法二-—-遍历索引（enumerate-）" class="headerlink" title="6.3 方法二 — 遍历索引（enumerate()）"></a>6.3 方法二 — 遍历索引（enumerate()）</h2><p>enumerate()函数需要传入一个<strong>必选参数</strong>：任意可遍历的数据对象。</p>
+<p>将standardTwo作为必选参数传入，并搭配了一个for循环。<strong>idx</strong>是用于存储<strong>计数器的变量</strong>，<strong>value</strong>则是用于存储每次遍历所<strong>返回的元素</strong>的变量。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> idx,value <span class="keyword">in</span> <span class="built_in">enumerate</span>(standarTwo):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;索引值<span class="subst">&#123;idx&#125;</span>所对应的列表元素是<span class="subst">&#123;value&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="6-3-1-修改起始索引"><a href="#6-3-1-修改起始索引" class="headerlink" title="6.3.1 修改起始索引"></a>6.3.1 修改起始索引</h3><p>将初始值作为可选参数传入enumerate()函数中。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> idx,value <span class="keyword">in</span> <span class="built_in">enumerate</span>(standardTwo,<span class="number">8</span>):</span><br><span class="line">        <span class="comment"># 格式化输出：索引值n所对应的列表元素是xxx</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;索引值<span class="subst">&#123;idx&#125;</span>所对应的列表元素是<span class="subst">&#123;value&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-4-计算填空题分数"><a href="#6-4-计算填空题分数" class="headerlink" title="6.4 计算填空题分数"></a>6.4 计算填空题分数</h2><p>初始化学生数据字典里scoreTwo字段为0分，作为填空题分数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#使用这个键之前，必须先在第一个for循环里和第二个for循环外，对它进行初始化赋值为0，这样才能保证每位同学的起始分数都是0。</span></span><br><span class="line">studentData[<span class="string">&quot;scoreTwo&quot;</span>] = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#判断当学生答案与标准答案相等时,学生的填空题分数加5分</span></span><br><span class="line"><span class="keyword">if</span> studentAnswerTwo == value:</span><br><span class="line">    studentData[<span class="string">&quot;scoreTwo&quot;</span>] += <span class="number">5</span></span><br><span class="line">allStudentsData.append(studentData)</span><br><span class="line"><span class="built_in">print</span>(allStudentData)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="7-获取选择题答案"><a href="#7-获取选择题答案" class="headerlink" title="7. 获取选择题答案"></a>7. 获取选择题答案</h1><h2 id="7-1-读取指定表格"><a href="#7-1-读取指定表格" class="headerlink" title="7.1 读取指定表格"></a>7.1 读取指定表格</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">table = doc.tables[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-2-读取指定行"><a href="#7-2-读取指定行" class="headerlink" title="7.2 读取指定行"></a>7.2 读取指定行</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#读取表格第二行，赋值给变量secRow</span></span><br><span class="line">secRow = table.rows[<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-3-Word读取单元格（1）"><a href="#7-3-Word读取单元格（1）" class="headerlink" title="7.3 Word读取单元格（1）"></a>7.3 Word读取单元格（1）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#获取第二行中的所有单元格，并赋值给变量secCell</span></span><br><span class="line">secCell = secRow.cells</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用for循环和enumerate()函数</span></span><br><span class="line"><span class="comment"># 遍历储存标准答案的列表standardOne的同时</span></span><br><span class="line"><span class="comment"># 生成一个从0开始的idx</span></span><br><span class="line"><span class="keyword">for</span> idx,value <span class="keyword">in</span> <span class="built_in">enumerate</span>(standardOne):</span><br><span class="line">  <span class="comment"># 获取学生选择题答案，并赋值给变量studentAnswerOne</span></span><br><span class="line">    studentAnswerOne = secCell[idx].text</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化学生数据字典里scoreOne字段为0分，作为选择题分数</span></span><br><span class="line">studentData[<span class="string">&quot;scoreOne&quot;</span>] = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#学生答案studentAnswerOne和标准答案value进行比较</span></span><br><span class="line"><span class="keyword">if</span> studentAnswerOne == value:</span><br><span class="line">    studentData[<span class="string">&quot;scoreOne&quot;</span>] += <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="8-将信息导入到Excel表格"><a href="#8-将信息导入到Excel表格" class="headerlink" title="8. 将信息导入到Excel表格"></a>8. 将信息导入到Excel表格</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">newWb = openpyxl.Workbook()</span><br><span class="line">sheet = newWb[<span class="string">&quot;Sheet&quot;</span>]</span><br><span class="line">sheet.title = <span class="string">&quot;成绩表&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#给工作表设置表头</span></span><br><span class="line">sheet[<span class="string">&quot;A1&quot;</span>].value = <span class="string">&quot;学生姓名&quot;</span></span><br><span class="line">sheet[<span class="string">&quot;B1&quot;</span>].value = <span class="string">&quot;学生班级&quot;</span></span><br><span class="line">sheet[<span class="string">&quot;C1&quot;</span>].value = <span class="string">&quot;学生学号&quot;</span></span><br><span class="line">sheet[<span class="string">&quot;D1&quot;</span>].value = <span class="string">&quot;选择题分数&quot;</span></span><br><span class="line">sheet[<span class="string">&quot;E1&quot;</span>].value = <span class="string">&quot;填空题分数&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> index,studentData <span class="keyword">in</span> <span class="built_in">enumerate</span>(allStudentData,<span class="number">2</span>):</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="9-Word读取指定单元格（2）"><a href="#9-Word读取指定单元格（2）" class="headerlink" title="9. Word读取指定单元格（2）"></a>9. Word读取指定单元格（2）</h1><h2 id="9-1-段落末尾添加样式块"><a href="#9-1-段落末尾添加样式块" class="headerlink" title="9.1 段落末尾添加样式块"></a>9.1 段落末尾添加样式块</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将&quot;425&quot;赋值给变量totalScore</span></span><br><span class="line">totalScore = <span class="string">&quot;425&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 读取Word文档的第1个表格第2行第1列的空白段落，并赋值给变量cellPara</span></span><br><span class="line">cellPara = doc.tables[<span class="number">0</span>].cell(<span class="number">1</span>,<span class="number">0</span>).paragraphs[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 在空白单元格的空白段落cellPara后，加入变量totalScore</span></span><br><span class="line">cellPara.add_run(totalScore)</span><br></pre></td></tr></table></figure>
+
+<h2 id="9-2-数据类型转为字符串"><a href="#9-2-数据类型转为字符串" class="headerlink" title="9.2 数据类型转为字符串"></a>9.2 数据类型转为字符串</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">listeningScore = <span class="built_in">str</span>(row[<span class="number">5</span>].value)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python实现Word文档的写入</title>
+    <url>/posts/d36b22a0/</url>
+    <content><![CDATA[<h1 id="1-在段落中找到需要插入信息的位置"><a href="#1-在段落中找到需要插入信息的位置" class="headerlink" title="1. 在段落中找到需要插入信息的位置"></a>1. 在段落中找到需要插入信息的位置</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#导入docx</span></span><br><span class="line"><span class="keyword">import</span> docx</span><br><span class="line"><span class="comment">#读取工作目录里名为&quot;成绩报告单模版.docx&quot;的Word文档并赋值给变量doc</span></span><br><span class="line">doc = docx.Document(<span class="string">&quot;成绩报告单模版.docx&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">runList = doc.paragraphs[<span class="number">3</span>].runs</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-1-样式块-Run-末尾添加文本"><a href="#1-1-样式块-Run-末尾添加文本" class="headerlink" title="1.1 样式块(Run) 末尾添加文本"></a>1.1 样式块(Run) 末尾添加文本</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = <span class="string">&quot;小夜同学&quot;</span></span><br><span class="line">nameRun = doc.paragraphs[<span class="number">3</span>].runs[<span class="number">2</span>]</span><br><span class="line">nameRun.add_text(name)</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-对Word文档内容进行替换"><a href="#2-对Word文档内容进行替换" class="headerlink" title="2. 对Word文档内容进行替换"></a>2. 对Word文档内容进行替换</h1><h2 id="2-1-定义函数实现替换功能"><a href="#2-1-定义函数实现替换功能" class="headerlink" title="2.1 定义函数实现替换功能"></a>2.1 定义函数实现替换功能</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#定义一个包含三个参数的新函数。doc，是一个Word文档（Document）对象，oldInfo，是Word文档中的需要被替换的字符串，newInfo，是用于替换的新字符串。</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">replaceInfo</span>(<span class="params">doc,oldInfo,newInfo</span>):</span><br><span class="line">    <span class="keyword">for</span> paragraph <span class="keyword">in</span> doc.paragraphs:</span><br><span class="line">        <span class="keyword">for</span> run <span class="keyword">in</span> paragraphs.runs:</span><br><span class="line">            run.text = run.text.replace(oldInfo,newInfo)</span><br><span class="line">    <span class="keyword">for</span> table <span class="keyword">in</span> doc.tables:</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> table.rows:</span><br><span class="line">            <span class="keyword">for</span> cell <span class="keyword">in</span> row.cells:</span><br><span class="line">                cell.text = cell.text.replace(oldInfo,newInfo)</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;replace()函数并不会改变原字符串。如果需要替换后并更改字符串变量，需要重新对变量进行赋值。&#x3D;&#x3D;</p>
+<h2 id="2-2-遍历工作表每一行数据"><a href="#2-2-遍历工作表每一行数据" class="headerlink" title="2.2 遍历工作表每一行数据"></a>2.2 遍历工作表每一行数据</h2><h3 id="2-2-1-单独提取表头数据"><a href="#2-2-1-单独提取表头数据" class="headerlink" title="2.2.1 单独提取表头数据"></a>2.2.1 单独提取表头数据</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 为表头定义一个空的元组并赋值给变量firstRow</span></span><br><span class="line">firstRow = ()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历工作表的所有行和其对应的索引</span></span><br><span class="line"><span class="comment"># 用变量rowIndex表示索引，变量row表示每一行</span></span><br><span class="line"><span class="keyword">for</span> rowIndex, row <span class="keyword">in</span> <span class="built_in">enumerate</span>(ws.rows):</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 判断是第一行时</span></span><br><span class="line">    <span class="keyword">if</span> rowIndex == <span class="number">0</span>:</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将第一行数据赋值给变量firstRow</span></span><br><span class="line">        firstRow = row</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出第一行数据以确认赋值成功</span></span><br><span class="line"><span class="built_in">print</span>(firstRow)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-2-遍历非表头数据"><a href="#2-2-2-遍历非表头数据" class="headerlink" title="2.2.2 遍历非表头数据"></a>2.2.2 遍历非表头数据</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#非第一行数据时</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    doc = docx.Document(<span class="string">&quot;成绩报告单模版.docx&quot;</span>)</span><br><span class="line">    <span class="comment">#遍历这一行每一个单元格对应列的索引</span></span><br><span class="line">    <span class="keyword">for</span> columnIndex, cell <span class="keyword">in</span> <span class="built_in">enumerate</span>(row):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;第<span class="subst">&#123;columnIndex&#125;</span>列数据的单元格为<span class="subst">&#123;cell&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-3-赋值oldInfo"><a href="#2-2-3-赋值oldInfo" class="headerlink" title="2.2.3 赋值oldInfo"></a>2.2.3 赋值oldInfo</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">oldInfo = firstRow[columnIndex].value</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-2-4-赋值newInfo"><a href="#2-2-4-赋值newInfo" class="headerlink" title="2.2.4 赋值newInfo"></a>2.2.4 赋值newInfo</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">newInfo = <span class="built_in">str</span>(cell.value)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-3-调用函数"><a href="#2-3-调用函数" class="headerlink" title="2.3 调用函数"></a>2.3 调用函数</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">replaceInfo(doc,oldInfo,newInfo)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-4-保存文档"><a href="#2-4-保存文档" class="headerlink" title="2.4 保存文档"></a>2.4 保存文档</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">name = row[<span class="number">0</span>].value</span><br><span class="line">doc.save(<span class="string">f&quot;学生成绩单/成绩报告单_<span class="subst">&#123;name&#125;</span>.docx&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python实现PDF文档读取</title>
+    <url>/posts/7075c66c/</url>
+    <content><![CDATA[<h1 id="1-获取PDF文档列表"><a href="#1-获取PDF文档列表" class="headerlink" title="1. 获取PDF文档列表"></a>1. 获取PDF文档列表</h1><h2 id="1-1-PDF格式（Portable-Document-Format）"><a href="#1-1-PDF格式（Portable-Document-Format）" class="headerlink" title="1.1 PDF格式（Portable Document Format）"></a>1.1 PDF格式（Portable Document Format）</h2><h3 id="1-1-1-扫描版"><a href="#1-1-1-扫描版" class="headerlink" title="1.1.1 扫描版"></a>1.1.1 扫描版</h3><p>一般直接通过扫描仪成<a href="https://baike.baidu.com/item/%E4%BD%8D%E5%9B%BE/1017781?fr=aladdin">位图</a>格式的PDF，文字以图片格式存储。将鼠标放在指定的位置点击，看不到闪动的光标。</p>
+<h3 id="1-1-2-文字版"><a href="#1-1-2-文字版" class="headerlink" title="1.1.2 文字版"></a>1.1.2 文字版</h3><p>一般是Word文档转成的PDF，文字以<a href="https://baike.baidu.com/item/%E7%9F%A2%E9%87%8F%E5%9B%BE/2490766?fr=aladdin">矢量图</a>格式存储。将鼠标在指定位置点击，能看到闪动的光标。</p>
+<h2 id="1-2-获取路径下文件或文件夹名称"><a href="#1-2-获取路径下文件或文件夹名称" class="headerlink" title="1.2 获取路径下文件或文件夹名称"></a>1.2 获取路径下文件或文件夹名称</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">path = <span class="string">&quot;/Users/xiaoqian/Desktop/文稿汇总&quot;</span></span><br><span class="line">allItems = os.listdir(path)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="1-3-文件名排序"><a href="#1-3-文件名排序" class="headerlink" title="1.3 文件名排序"></a>1.3 文件名排序</h2><h3 id="1-3-1-创建存储序号的列表"><a href="#1-3-1-创建存储序号的列表" class="headerlink" title="1.3.1 创建存储序号的列表"></a>1.3.1 创建存储序号的列表</h3><p>想要让PDF文档按照章节顺序输出，就需要对文件名列表进行升序。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">nameList = []</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> allItems:</span><br><span class="line">    nameList.append(os.path.splitext(name)[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(nameList)</span><br><span class="line"><span class="comment">#[&#x27;1&#x27;, &#x27;5&#x27;, &#x27;3&#x27;, &#x27;2&#x27;, &#x27;9&#x27;, &#x27;7&#x27;, &#x27;4&#x27;, &#x27;6&#x27;, &#x27;8&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-2-列表排序-sort"><a href="#1-3-2-列表排序-sort" class="headerlink" title="1.3.2 列表排序(sort())"></a>1.3.2 列表排序(sort())</h3><p>默认情况下，使用sort()函数后，列表内的元素会重新按照元素互相比较后的&#x3D;&#x3D;升序&#x3D;&#x3D;进行排列。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">numList = [<span class="number">52</span>,<span class="number">70</span>,<span class="number">86</span>,<span class="number">63</span>,<span class="number">33</span>]</span><br><span class="line">numList.sort</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-2-1-sort-函数的可选参数"><a href="#1-3-2-1-sort-函数的可选参数" class="headerlink" title="1.3.2.1 sort()函数的可选参数"></a>1.3.2.1 sort()函数的可选参数</h4><p>sort()函数还有两个可选的参数。第一个参数是&#x3D;&#x3D;key&#x3D;&#x3D;，传入一个函数名，使元素在互相比较前先调用传入的这个函数，然后再进行比较。</p>
+<p>第二个参数是&#x3D;&#x3D;reverse&#x3D;&#x3D;，表示是否反转排序，默认是False。如果传入True，则会按照降序进行排序。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">bList = [<span class="string">&quot;3&quot;</span>, <span class="string">&quot;17&quot;</span>, <span class="string">&quot;5&quot;</span>, <span class="string">&quot;23&quot;</span>, <span class="string">&quot;2&quot;</span>]</span><br><span class="line">bList.sort(key=<span class="built_in">int</span>,reverse=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(bList)</span><br><span class="line"><span class="comment">#[&#x27;23&#x27;, &#x27;17&#x27;, &#x27;5&#x27;, &#x27;3&#x27;, &#x27;2&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="1-4-给文件添加后缀名"><a href="#1-4-给文件添加后缀名" class="headerlink" title="1.4 给文件添加后缀名"></a>1.4 给文件添加后缀名</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将nameList中的元素按照整型进行升序</span></span><br><span class="line">nameList.sort(key = <span class="built_in">int</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个newList空列表</span></span><br><span class="line">newList = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用for循环遍历nameList</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> nameList:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 所有元素后添加&quot;.pdf&quot;，添加到newList列表中</span></span><br><span class="line">    newList.append(i + <span class="string">&quot;.pdf&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="2-读取PDF文件"><a href="#2-读取PDF文件" class="headerlink" title="2. 读取PDF文件"></a>2. 读取PDF文件</h1><h2 id="2-1-导入pdfplumber模块"><a href="#2-1-导入pdfplumber模块" class="headerlink" title="2.1 导入pdfplumber模块"></a>2.1 导入pdfplumber模块</h2><p>在Python中，想要处理PDF的文本和表格，使用&#x3D;&#x3D;pdfplumber&#x3D;&#x3D;模块。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install pdfplumber</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pdfplumber</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2-读取PDF文档"><a href="#2-2-读取PDF文档" class="headerlink" title="2.2 读取PDF文档"></a>2.2 读取PDF文档</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#使用for循环遍历newList</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> newList:</span><br><span class="line">    <span class="comment">#使用os.path.join()函数拼接pdf文件路径，赋值给pdfPath</span></span><br><span class="line">    pdfPath = os.path.join(path,item)</span><br><span class="line">    <span class="comment">#读取pdfPath中的文件，并赋值给pdf</span></span><br><span class="line">    pdf = pdfplumber.<span class="built_in">open</span>(pdfPath)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-3-提取PDF中的文本"><a href="#2-3-提取PDF中的文本" class="headerlink" title="2.3 提取PDF中的文本"></a>2.3 提取PDF中的文本</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> page <span class="keyword">in</span> pdf.pages:</span><br><span class="line">    <span class="comment">#使用extract_text()函数提取页面中的文本，赋值给textDdata</span></span><br><span class="line">    textData = page.extract_text()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-4-创建Word文档并添加段落"><a href="#2-4-创建Word文档并添加段落" class="headerlink" title="2.4 创建Word文档并添加段落"></a>2.4 创建Word文档并添加段落</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#导入docx</span></span><br><span class="line"><span class="keyword">import</span> docx</span><br><span class="line"><span class="comment">#创建一个新的Word文档并赋值给变量file</span></span><br><span class="line">file = docx.Document()</span><br><span class="line"><span class="comment">#添加一个新段落，内容为&quot;Tomato and potato&quot;</span></span><br><span class="line">file.add_paragraph(<span class="string">&quot;Tomato and potato&quot;</span>)</span><br><span class="line"><span class="comment">#输出&quot;添加完成&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;添加完成&quot;</span>)</span><br><span class="line"><span class="comment">#给文档命名，并保存在指定路径 /Users/xiaoqian/Desktop/三行情书.docx</span></span><br><span class="line">file.save(<span class="string">&quot;/Users/xiaoqian/Desktop/三行情书.docx&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-添加分页符-add-page-break"><a href="#3-添加分页符-add-page-break" class="headerlink" title="3. 添加分页符 (add_page_break())"></a>3. 添加分页符 (add_page_break())</h1><p>分页的一种符号，能够在一页内容未满的情况下，手动使内容分成两页。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">file.add_page_break()</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-PDF表格提取"><a href="#4-PDF表格提取" class="headerlink" title="4. PDF表格提取"></a>4. PDF表格提取</h1><h2 id="4-1-提取页面中的表格"><a href="#4-1-提取页面中的表格" class="headerlink" title="4.1 提取页面中的表格"></a>4.1 提取页面中的表格</h2><h3 id="4-1-1-PDF表格格式"><a href="#4-1-1-PDF表格格式" class="headerlink" title="4.1.1 PDF表格格式"></a>4.1.1 PDF表格格式</h3><p>在PDF文档中有两种类型的表格，一种没有边框，一种有边框。</p>
+<p>使用pdfplumber模块提取表格时，只能读取&#x3D;&#x3D;保留边框的表格&#x3D;&#x3D;，没有边框的表格读取出来就是一个空表格</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> page <span class="keyword">in</span> pdf.pages:</span><br><span class="line">    tableData = page.extract_tables()[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<p>与Excel和Word不同，这里每一个表格对象是一个该表格所有行的数据组成的列表。每一行的数据，又是由该行单元格的值组成的&#x3D;&#x3D;列表&#x3D;&#x3D;。</p>
+<h2 id="4-2-新建一个Excel文档"><a href="#4-2-新建一个Excel文档" class="headerlink" title="4.2 新建一个Excel文档"></a>4.2 新建一个Excel文档</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#使用import导入openpyxl模块</span></span><br><span class="line"><span class="keyword">import</span> openpyxl</span><br><span class="line"><span class="comment">#创建一个新工作簿赋值给变量newWb</span></span><br><span class="line">newWb = openpyxl.Workbook()</span><br><span class="line"><span class="comment">#将名为Sheet的默认工作表，赋值给sheet变量</span></span><br><span class="line">sheet = newWb[<span class="string">&quot;Sheet&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-3-在工作表中添加数据"><a href="#4-3-在工作表中添加数据" class="headerlink" title="4.3 在工作表中添加数据"></a>4.3 在工作表中添加数据</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> tableData:</span><br><span class="line">    sheet.append(row)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-4-保存Excel文档"><a href="#4-4-保存Excel文档" class="headerlink" title="4.4 保存Excel文档"></a>4.4 保存Excel文档</h2><pre><code class="python">newWb.save(&quot;/Users/acheng/Desktop/账单合集.xlsx&quot;)
+</code></pre>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python实现Excel表格数据读取</title>
+    <url>/posts/e1389fa9/</url>
+    <content><![CDATA[<h2 id="1-读取数据"><a href="#1-读取数据" class="headerlink" title="1. 读取数据"></a>1. 读取数据</h2><h3 id="1-1-openpyxl-模块的安装和导入"><a href="#1-1-openpyxl-模块的安装和导入" class="headerlink" title="1.1 openpyxl 模块的安装和导入"></a>1.1 openpyxl 模块的安装和导入</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install openpyxl</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-导入openpyxl-模块"><a href="#1-2-导入openpyxl-模块" class="headerlink" title="1.2 导入openpyxl 模块"></a>1.2 导入openpyxl 模块</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> openpyxl</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-读取工作簿-openpyxl-load-workbook"><a href="#1-3-读取工作簿-openpyxl-load-workbook" class="headerlink" title="1.3 读取工作簿(openpyxl.load_workbook())"></a>1.3 读取工作簿(openpyxl.load_workbook())</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 工作簿文件的路径需要作为函数参数传入。若文件就在代码运行的工作目录，就可以直接传入文件名。</span></span><br><span class="line">wb = openpyxl.load_workbook(<span class="string">&quot;2019年1月销售订单.xlsx&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-读取指定工作表"><a href="#1-4-读取指定工作表" class="headerlink" title="1.4 读取指定工作表"></a>1.4 读取指定工作表</h3><h4 id="1-4-1-访问工作簿中工作表"><a href="#1-4-1-访问工作簿中工作表" class="headerlink" title="1.4.1 访问工作簿中工作表"></a>1.4.1 访问工作簿中工作表</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(wb.sheetnames)</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-4-1-获取某一工作表"><a href="#1-4-1-获取某一工作表" class="headerlink" title="1.4.1 获取某一工作表"></a>1.4.1 获取某一工作表</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">productSheet = wb[<span class="string">&#x27;销售订单数据&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-读取指定单元格"><a href="#2-读取指定单元格" class="headerlink" title="2. 读取指定单元格"></a>2. 读取指定单元格</h2><h3 id="2-1-中括号-内填入列号和行号的方式去获取"><a href="#2-1-中括号-内填入列号和行号的方式去获取" class="headerlink" title="2.1 中括号[ ]内填入列号和行号的方式去获取"></a>2.1 中括号[ ]内填入列号和行号的方式去获取</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(productSheet[<span class="string">&quot;C5&quot;</span>]) </span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-访问单元格的值"><a href="#2-2-访问单元格的值" class="headerlink" title="2.2 访问单元格的值"></a>2.2 访问单元格的值</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(productSheet[<span class="string">&quot;C5&quot;</span>].value)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-获取单元格公式计算后的值"><a href="#2-3-获取单元格公式计算后的值" class="headerlink" title="2.3 获取单元格公式计算后的值"></a>2.3 获取单元格公式计算后的值</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在打开工作簿时传入参数data_only = True</span></span><br><span class="line">wb = openpyxl.load_workbook(<span class="string">&quot;2019年1月销售订单&quot;</span>,data_only = <span class="literal">True</span>)</span><br><span class="line">productSheet = wb[<span class="string">&#x27;销售订单数据&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(productSheet[<span class="string">&quot;C5&quot;</span>].value)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-工作表行数据遍历"><a href="#3-工作表行数据遍历" class="headerlink" title="3. 工作表行数据遍历"></a>3. 工作表行数据遍历</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 遍历行数据</span></span><br><span class="line"><span class="keyword">for</span> rowData <span class="keyword">in</span> productSheet.rows:</span><br><span class="line">    <span class="built_in">print</span>(rowData)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个变量colaSold用来表示本月“火龙果可乐”的销售金额，并赋值为0</span></span><br><span class="line">colaSold = <span class="number">0</span></span><br><span class="line"><span class="comment"># 通过索引2获取第3列数据，也就是商品名</span></span><br><span class="line">productName = rowData[<span class="number">2</span>].value</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-列号转数字-openpyxl-utils-cell-column-index-from-string"><a href="#4-列号转数字-openpyxl-utils-cell-column-index-from-string" class="headerlink" title="4. 列号转数字 (openpyxl.utils.cell.column_index_from_string())"></a>4. 列号转数字 (openpyxl.utils.cell.column_index_from_string())</h2><p>如果要定位的列数字比较大，比如订单的总价在第M列，通过肉眼观察来确定索引略显繁琐</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> rowData <span class="keyword">in</span> productSheet.rows:</span><br><span class="line">    productName = rowData[<span class="number">2</span>].value</span><br><span class="line">    <span class="comment"># 获取订单总价I列的索引总和,这里之所以-1是因为需要将表头去除</span></span><br><span class="line">    priceIndex = openpyxl.utils.cell.column_index_from_string(<span class="string">&quot;I&quot;</span>)-<span class="number">1</span></span><br><span class="line">    price = rowDate[priceIndex].value</span><br><span class="line"><span class="keyword">if</span> productName == <span class="string">&quot;火龙果可乐&quot;</span></span><br><span class="line">    colaSold = colaSold + price</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;2019年1月火龙果可乐销售额为<span class="subst">&#123;price&#125;</span>元&quot;</span>)</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+
+<h2 id="5-函数优化代码"><a href="#5-函数优化代码" class="headerlink" title="5. 函数优化代码"></a>5. 函数优化代码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">getMonthlySold</span>(<span class="params">filePath</span>):</span><br><span class="line">    wb = openpyxl.load_workbook(filePath,data_only=<span class="literal">True</span>)</span><br><span class="line">    orderSheet = wb[<span class="string">&quot;销售订单数据&quot;</span>]</span><br><span class="line">    colaSold = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> rowData <span class="keyword">in</span> orderSheet.raws:</span><br><span class="line">        productName = rowData[<span class="number">2</span>].value</span><br><span class="line">        priceIndex = openpyxl.utils.cell.column_index_from_string(<span class="string">&quot;I&quot;</span>)-<span class="number">1</span></span><br><span class="line">        price = rowData[priceIndex].value</span><br><span class="line">        <span class="keyword">if</span> productName = <span class="string">&quot;火龙果可乐&quot;</span>:</span><br><span class="line">            colaSold = colaSold + pice</span><br><span class="line">    <span class="keyword">return</span> colaSold</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 计算销售额</span></span><br><span class="line">Februarysold = getMonthlySold(<span class="string">&quot;2019年2月销售订单.xlsx&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(Februarysold)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个空列表soldList来逐个装入各月份销售额</span></span><br><span class="line">soldList = []</span><br><span class="line"><span class="keyword">for</span> month <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">13</span>):</span><br><span class="line">    monthlySold = getMonthlySold(<span class="string">f&quot;2019年<span class="subst">&#123;month&#125;</span>月销售订单.xlsx&quot;</span>)</span><br><span class="line">    soldList.append(monthlySold)</span><br><span class="line"><span class="built_in">print</span>(soldList)</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-获取列表最大值-max"><a href="#6-获取列表最大值-max" class="headerlink" title="6. 获取列表最大值 max()"></a>6. 获取列表最大值 max()</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">maxSold = <span class="built_in">max</span>(soldList)</span><br><span class="line"><span class="built_in">print</span>(maxSold)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-获取列表元素的索引-index"><a href="#7-获取列表元素的索引-index" class="headerlink" title="7. 获取列表元素的索引 index()"></a>7. 获取列表元素的索引 index()</h2><p>已知元素可以通过**index( )**函数找出该元素的索引，若列表中不存在该元素则会报错</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用index()函数获取最大值的索引，索引值加1后得到月份</span></span><br><span class="line">maxMonth = soldList.index(maxSold) + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python实现工作簿的读取和写入</title>
+    <url>/posts/ef46fbca/</url>
+    <content><![CDATA[<h1 id="1-导入openpyxl-模块"><a href="#1-导入openpyxl-模块" class="headerlink" title="1. 导入openpyxl 模块"></a>1. 导入openpyxl 模块</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> openpyxl</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="2-创建新的工作簿"><a href="#2-创建新的工作簿" class="headerlink" title="2. 创建新的工作簿"></a>2. 创建新的工作簿</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">newWb = openpyxl.Workbook()</span><br></pre></td></tr></table></figure>
+
+<p><strong>新建工作簿中都有一个默认工作表，名称为Sheet</strong></p>
+<h1 id="3-创建平台工作表"><a href="#3-创建平台工作表" class="headerlink" title="3. 创建平台工作表"></a>3. 创建平台工作表</h1><h2 id="3-1-修改工作表名称"><a href="#3-1-修改工作表名称" class="headerlink" title="3.1 修改工作表名称"></a>3.1 修改工作表名称</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将名为Sheet的默认工作表赋值给aSheet变量</span></span><br><span class="line">aSheet = newWb[<span class="string">&quot;Sheet&quot;</span>]</span><br><span class="line"><span class="comment"># 将aSheet工作表名称修改为“A平台”</span></span><br><span class="line">aSheet.title = <span class="string">&quot;A平台&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-2-创建工作表"><a href="#3-2-创建工作表" class="headerlink" title="3.2 创建工作表"></a>3.2 创建工作表</h2><p><strong>通过工作簿对象使用create_sheet()函数可以创建一个名称为Sheet的工作表。</strong></p>
+<p>若名为Sheet工作表已经存在，则会在Sheet后依次添加数字，比如Sheet1，Sheet2。</p>
+<p><strong>函数中传入的参数即指定的命名</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">bSheet = create_sheet(<span class="string">&quot;B平台&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-3-设置单元格的值"><a href="#3-3-设置单元格的值" class="headerlink" title="3.3 设置单元格的值"></a>3.3 设置单元格的值</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 给工作表a设置表头</span></span><br><span class="line">aSheet[<span class="string">&quot;A1&quot;</span>].value = <span class="string">&quot;工作表&quot;</span></span><br><span class="line">aSheet[<span class="string">&quot;B1&quot;</span>].value = <span class="string">&quot;月份&quot;</span></span><br><span class="line">aSheet[<span class="string">&quot;C1&quot;</span>].value = <span class="string">&quot;销售额&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-4-遍历所有工作表"><a href="#3-4-遍历所有工作表" class="headerlink" title="3.4 遍历所有工作表"></a>3.4 遍历所有工作表</h2><p>通过<strong>for循环</strong>逐个访问所有工作表的<strong>worksheets</strong>属性并设置表头</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> sheet <span class="keyword">in</span> newWb.worksheets:</span><br><span class="line">    sheet[<span class="string">&#x27;A1&#x27;</span>].value = <span class="string">&quot;工作表&quot;</span></span><br><span class="line">    sheet[<span class="string">&#x27;B1&#x27;</span>].value = <span class="string">&quot;月份&quot;</span></span><br><span class="line">    sheet[<span class="string">&quot;C1&quot;</span>].value = <span class="string">&quot;销售额&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-保存工作簿文件"><a href="#4-保存工作簿文件" class="headerlink" title="4. 保存工作簿文件"></a>4. 保存工作簿文件</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">newWb.save(<span class="string">&quot;/Users/yequ/data/汇总.xlsx&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="5-读取每个平台每个商品的销售额"><a href="#5-读取每个平台每个商品的销售额" class="headerlink" title="5. 读取每个平台每个商品的销售额"></a>5. 读取每个平台每个商品的销售额</h1><h2 id="5-1-格式化最小宽度"><a href="#5-1-格式化最小宽度" class="headerlink" title="5.1 格式化最小宽度"></a>5.1 格式化最小宽度</h2><p><strong>最小宽度</strong>：指最小字符串长度。原字符串长度不够时补<strong>空格、0或其他字符串</strong>来达到最小字符串长度。</p>
+<p>这样当<strong>字符串</strong>的宽度小于设置的最小宽度时，就会在字符串的<strong>右边通过补空格</strong>的方式达到设置的字符串长度。</p>
+<p>如果格式化字符串内是一个<strong>数字</strong>，则可以在最小宽度的数字<strong>左边添加一个0</strong>，表示用0来补齐最小宽度</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 姓名列表</span></span><br><span class="line">nameList = [<span class="string">&quot;Joe&quot;</span>, <span class="string">&quot;Tony&quot;</span>, <span class="string">&quot;Kevin&quot;</span>]</span><br><span class="line"><span class="comment"># 编号列表</span></span><br><span class="line">idList = [<span class="number">8</span>, <span class="number">231</span>, <span class="number">92</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历0~2的数字，逐个访问列表中的元素。设置姓名的最小宽度为五，编号最小长度为3不够补0</span></span><br><span class="line"><span class="keyword">for</span> index <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;nameList[index]:<span class="number">5</span>&#125;</span>-<span class="subst">&#123;inList[index]:03&#125;</span>&quot;</span>)</span><br><span class="line"><span class="comment"># Joe   - 008</span></span><br><span class="line"><span class="comment"># Tony  - 231</span></span><br><span class="line"><span class="comment"># Kevin - 092</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> month <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">13</span>):</span><br><span class="line">    wb = openpyxl.load_workbook(<span class="string">f&quot;A平台/2019<span class="subst">&#123;month:02&#125;</span>.xlsx&quot;</span>,data_only = <span class="literal">True</span>)</span><br><span class="line">orderSheet = wb[<span class="string">&quot;明细&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个空字典存放本月数据并赋值给变量monthData</span></span><br><span class="line">monthData = &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-2-遍历累加订单销售额"><a href="#5-2-遍历累加订单销售额" class="headerlink" title="5.2 遍历累加订单销售额"></a>5.2 遍历累加订单销售额</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> rowData <span class="keyword">in</span> orderSheet.rows:</span><br><span class="line">    productName = rowData[<span class="number">4</span>].value</span><br></pre></td></tr></table></figure>
+
+<p>每个工作表的第一行数据是表头，需要跳过。我们可以通过判断商品名等于表头“名称”时使用continue语句跳过并继续循环</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> productName == <span class="string">&quot;名称&quot;</span>:</span><br><span class="line">  <span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 获取总价列的索引</span></span><br><span class="line">priceIndex = openpyxl.utils.cell.column_index_from_string(<span class="string">&quot;F&quot;</span>)-<span class="number">1</span></span><br><span class="line">orderPrice = rowData[priceIndex].value</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-3-字典默认值"><a href="#5-3-字典默认值" class="headerlink" title="5.3 字典默认值"></a>5.3 字典默认值</h2><p>想要安全地访问字典中的键，可以通过字典对象使用&#x3D;&#x3D;get()函数&#x3D;&#x3D;。</p>
+<p>字典的get()函数<strong>第一个参数</strong>是要访问的键（key），如果这个键存在于这个字典，函数会返回这个键对应的值；</p>
+<p>第二个参数表示当第一个参数指定的键不存在时，函数返回的值。</p>
+<p>其中<strong>第二个参数</strong>是可选的，如果没有传第二个参数，当键不存在时，函数会返回None，但不会报KeyError的错误。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">monthPrice = monthData.get(productName,<span class="number">0</span>)</span><br><span class="line">monthData[productName] = orderPrice + monthPrice</span><br></pre></td></tr></table></figure>
+
+<h1 id="6-将数据写入Excel文档"><a href="#6-将数据写入Excel文档" class="headerlink" title="6. 将数据写入Excel文档"></a>6. 将数据写入Excel文档</h1><h2 id="6-1-Excel添加行数据"><a href="#6-1-Excel添加行数据" class="headerlink" title="6.1 Excel添加行数据"></a>6.1 Excel添加行数据</h2><p>想要添加一整行数据可以通过工作表对象使用&#x3D;&#x3D;append()函数&#x3D;&#x3D;。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> productName <span class="keyword">in</span> monthData.keys():</span><br><span class="line">     <span class="comment"># 按顺序构造行数据元组: 商品名, 月份, 销售额数据</span></span><br><span class="line">    rowData = (productName,<span class="string">f&quot;<span class="subst">&#123;month&#125;</span>月份&quot;</span>,monthData[productName])</span><br><span class="line">    aSheet.append(rowData)</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="7-函数优化"><a href="#7-函数优化" class="headerlink" title="7. 函数优化"></a>7. 函数优化</h1><p>把整个统计方法写成一个<strong>函数</strong>，然后将每个平台不同的部分当成<strong>参数</strong></p>
+<img src="https://tinypic.host/images/2023/04/22/2023-04-22-11.29.22.png" alt="2023-04-22-11.29.22.png" border="0" style="zoom:33%;" />
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">processMonthFile</span>(<span class="params">filePath,orderSheetName,nameIndex,nameHead,priceColumn,month,targetSheet</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">   <span class="comment"># 定义全局变量工作簿名称wb</span></span><br><span class="line">    <span class="keyword">global</span> wb</span><br><span class="line">    <span class="comment"># 定义全局变量工作表名称orderSheet</span></span><br><span class="line">    <span class="keyword">global</span> orderSheet</span><br><span class="line">    <span class="comment"># 使用for循环遍历工作簿对象的worksheets属性</span></span><br><span class="line">    <span class="comment"># 使用load_wordbook函数读取工作簿</span></span><br><span class="line">    wb = openpyxl.load_workbook(filePath, data_only=<span class="literal">True</span>)</span><br><span class="line">    <span class="comment"># 获取订单工作表</span></span><br><span class="line">    orderSheet = wb[orderSheetName]</span><br><span class="line">    <span class="comment"># 定义一个空字典用来放本月数据 </span></span><br><span class="line">    monthData = &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 遍历订单工作表，计算每个商品的总销售额</span></span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> orderSheet.rows:</span><br><span class="line">        <span class="comment"># 获取订单商品名称</span></span><br><span class="line">        productName = row[nameIndex].value</span><br><span class="line">        <span class="comment"># 跳过表头</span></span><br><span class="line">        <span class="keyword">if</span> productName == nameHead:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="comment"># 获取总价列的索引</span></span><br><span class="line">        priceIndex = openpyxl.utils.cell.column_index_from_string(priceColumn) - <span class="number">1</span></span><br><span class="line">        <span class="comment"># 获取订单总价</span></span><br><span class="line">        orderPrice = row[priceIndex].value</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取该商品已经计算得出的月份总价，默认为0</span></span><br><span class="line">        monthPrice = monthData.get(productName, <span class="number">0</span>)</span><br><span class="line">        <span class="comment"># 将这个订单的价格累加到商品总价</span></span><br><span class="line">        monthData[productName] = monthPrice + orderPrice</span><br><span class="line">        <span class="comment"># 遍历本月数据字典的keys，也就是商品名称</span></span><br><span class="line">    <span class="keyword">for</span> productName <span class="keyword">in</span> monthData.keys():</span><br><span class="line">        <span class="comment"># 按顺序构造行数据元组: 商品名, 月份, 销售额数据</span></span><br><span class="line">        rowData = (productName, <span class="string">f&quot;<span class="subst">&#123;month&#125;</span>月份&quot;</span>, monthData[productName])</span><br><span class="line">        <span class="comment"># 使用append()函数添加到A平台的工作表中</span></span><br><span class="line">        targetSheet.append(rowData)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 将工作簿保存到路径 /Users/yequ/data/汇总.xlsx</span></span><br><span class="line">newWb.save(<span class="string">&quot;/Users/yequ/data/汇总.xlsx&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">processMonthFile(<span class="string">f&quot;A平台/2019<span class="subst">&#123;month:<span class="number">02.</span>xlsx&#125;</span>&quot;</span>,<span class="string">&quot;明细&quot;</span>,<span class="number">4</span>,<span class="string">&quot;名称&quot;</span>,<span class="string">&quot;F&quot;</span>,month,aSheet)</span><br><span class="line">processMonthFile(<span class="string">f&quot;B平台/order_2019_<span class="subst">&#123;month&#125;</span>.xlsx&quot;</span>,<span class="string">&quot;订单详情&quot;</span>,<span class="number">1</span>,<span class="string">&quot;商品名称&quot;</span>,<span class="string">&quot;G&quot;</span>,month,bSheet)</span><br><span class="line">processMonthFile(<span class="string">f&quot;C平台/2019年<span class="subst">&#123;month&#125;</span>月销售订单.xlsx&quot;</span>,<span class="string">&quot;销售订单数据&quot;</span>,<span class="number">2</span>,<span class="string">&quot;商品名&quot;</span>,<span class="string">&quot;I&quot;</span>,month,cSheet)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python数据分析</title>
+    <url>/posts/f49c8269/</url>
+    <content><![CDATA[<h1 id="1-Numpy-Numerical-Python"><a href="#1-Numpy-Numerical-Python" class="headerlink" title="1. Numpy (Numerical Python)"></a>1. Numpy (Numerical Python)</h1><h2 id="1-1-N维数组"><a href="#1-1-N维数组" class="headerlink" title="1.1 N维数组"></a>1.1 N维数组</h2><p>一个多维数组，描述了相同类型数据的集合。</p>
+<h2 id="1-2-数据类型"><a href="#1-2-数据类型" class="headerlink" title="1.2 数据类型"></a>1.2 数据类型</h2><p>整型（int）、浮点型（float）、布尔型（bool）等。</p>
+<p>NumPy数组中的&#x3D;&#x3D;所有元素类型必须是一致的&#x3D;&#x3D;。</p>
+<h2 id="1-3-维度"><a href="#1-3-维度" class="headerlink" title="1.3 维度"></a>1.3 维度</h2><p>通常是一维（1D）和二维（2D）数组，可以<strong>通过中括号[ ]的层数来确定</strong></p>
+<h2 id="1-4-导入和安装numpy"><a href="#1-4-导入和安装numpy" class="headerlink" title="1.4 导入和安装numpy"></a>1.4 导入和安装numpy</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install numpy</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5-创建n维数组"><a href="#1-5-创建n维数组" class="headerlink" title="1.5 创建n维数组"></a>1.5 创建n维数组</h2><p>任意序列型对象，也就是列表、元组、数组等数据结构，都可以作为参数传入。</p>
+<h3 id="1-5-1-创建一维数组"><a href="#1-5-1-创建一维数组" class="headerlink" title="1.5.1 创建一维数组"></a>1.5.1 创建一维数组</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">arr = np.array([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>])</span><br><span class="line"><span class="comment">#[1 2 3 4 5 6]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-2-创建二维数组"><a href="#1-5-2-创建二维数组" class="headerlink" title="1.5.2 创建二维数组"></a>1.5.2 创建二维数组</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment">#将题目中的序列作为参数传入np.array()函数中，并将生成的二维数组赋值给变量arr</span></span><br><span class="line">arr = np.array([[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">4</span>,<span class="number">5</span>],[<span class="number">7</span>,<span class="number">9</span>],[<span class="number">11</span>,<span class="number">12</span>]])</span><br><span class="line"><span class="comment">#使用print()输出变量arr</span></span><br><span class="line"><span class="built_in">print</span>(arr)</span><br><span class="line"><span class="comment">#[[ 1  2]</span></span><br><span class="line"> <span class="comment">#[ 4  5]</span></span><br><span class="line"> <span class="comment">#[ 7  9]</span></span><br><span class="line"> <span class="comment">#[11 12]]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-6-N维数组的计算"><a href="#1-6-N维数组的计算" class="headerlink" title="1.6 N维数组的计算"></a>1.6 N维数组的计算</h2><h3 id="1-6-1-数组和数的计算"><a href="#1-6-1-数组和数的计算" class="headerlink" title="1.6.1 数组和数的计算"></a>1.6.1 数组和数的计算</h3><p>在把数组arr和数字2相加时，arr中的每个元素都和2进行了运算</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">arr = np.array([[<span class="number">0.2</span>, <span class="number">0.9</span>], [<span class="number">0.5</span>, <span class="number">0.1</span>], [<span class="number">0.1</span>, <span class="number">0.7</span>]])</span><br><span class="line"><span class="built_in">print</span>(arr+<span class="number">2</span>)</span><br><span class="line"><span class="comment">#[[2.2  2.9]</span></span><br><span class="line"> <span class="comment">#[2.5  2.1]</span></span><br><span class="line"> <span class="comment">#[2.1  2.7]]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-6-2-相同形状数组的计算"><a href="#1-6-2-相同形状数组的计算" class="headerlink" title="1.6.2 相同形状数组的计算"></a>1.6.2 相同形状数组的计算</h3><p>在计算 arrOne-arrTwo 时，arrOne中每个元素都减去了在arrTwo中相对应位置的元素</p>
+<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-10 22.35.52.png" alt="截屏2023-05-10 22.35.52" style="zoom:50%;" />
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">arrOne = np.array([[<span class="number">5</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">5</span>]])</span><br><span class="line">arrTwo = np.array([[<span class="number">10</span>, <span class="number">5</span>], [<span class="number">20</span>, <span class="number">5</span>]])</span><br><span class="line"><span class="built_in">print</span>(arrOne + arrTwo)</span><br><span class="line"><span class="comment">#[[15  5]</span></span><br><span class="line"> <span class="comment">#[20 10]]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="2-Pandas-Series"><a href="#2-Pandas-Series" class="headerlink" title="2. Pandas, Series"></a>2. Pandas, Series</h1><h2 id="2-1-安装和导入Pandas"><a href="#2-1-安装和导入Pandas" class="headerlink" title="2.1 安装和导入Pandas"></a>2.1 安装和导入Pandas</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 install pandas</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">import</span> pd</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-2-Series"><a href="#2-2-Series" class="headerlink" title="2.2 Series"></a>2.2 Series</h2><p>序列，pandas模块的一种数据类型。</p>
+<p>左侧是<strong>索引</strong>(index)，右侧是<strong>值</strong>(values)，下面是值(values)的<strong>数据类型</strong>。</p>
+<img src="/Users/xxsql/Desktop/截屏2023-05-12 16.19.09.png" alt="截屏2023-05-12 16.19.09" style="zoom:50%;" />
+
+<h3 id="2-2-1-index"><a href="#2-2-1-index" class="headerlink" title="2.2.1 index"></a>2.2.1 index</h3><p>Series的index是可以定义的。</p>
+<p>如果没有定义index，index就会默认从0开始生成。</p>
+<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-12 16.21.55.png" alt="截屏2023-05-12 16.21.55" style="zoom:50%;" />
+
+<h2 id="2-3-Series构造函数"><a href="#2-3-Series构造函数" class="headerlink" title="2.3 Series构造函数"></a>2.3 Series构造函数</h2><h3 id="2-3-1-传入列表"><a href="#2-3-1-传入列表" class="headerlink" title="2.3.1 传入列表"></a>2.3.1 传入列表</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="comment"># 定义两个列表</span></span><br><span class="line">GDP =[<span class="number">80855</span>, <span class="number">77388</span>, <span class="number">68024</span>, <span class="number">47251</span>, <span class="number">40471</span>]</span><br><span class="line">rank =[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="comment"># 使用Series构造函数，传入参数：列表GDP作为值，列表rank作为index</span></span><br><span class="line"><span class="comment"># 构造出的Series赋值给info</span></span><br><span class="line">info = pd.Series(GDP,index=rank)</span><br><span class="line"><span class="comment"># 输出info这个Series</span></span><br><span class="line"><span class="built_in">print</span>(info)</span><br><span class="line"><span class="comment">#1    80855</span></span><br><span class="line"><span class="comment">#2    77388</span></span><br><span class="line"><span class="comment">#3    68024</span></span><br><span class="line"><span class="comment">#4    47251</span></span><br><span class="line"><span class="comment">#5    40471</span></span><br><span class="line"><span class="comment">#dtype: int64</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-2-传入数组"><a href="#2-3-2-传入数组" class="headerlink" title="2.3.2 传入数组"></a>2.3.2 传入数组</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">GDP = np.array([<span class="number">80855</span>,<span class="number">77388</span>,<span class="number">68024</span>,<span class="number">47251</span>,<span class="number">40471</span>])</span><br><span class="line">rank =[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="comment"># TODO 使用Series构造函数，传入参数：数组GDP作为值，列表rank作为index</span></span><br><span class="line"><span class="comment"># 构造出的Series赋值给info</span></span><br><span class="line">info = pd.Series(GDP,index=rank)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-3-传入常量"><a href="#2-3-3-传入常量" class="headerlink" title="2.3.3 传入常量"></a>2.3.3 传入常量</h3><p>参数data若是常量，则&#x3D;&#x3D;必须提供索引&#x3D;&#x3D;。</p>
+<p>此时常量才能按照索引(index)的数量进行重复，并与其一一对应。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s = pd.Series(<span class="number">6</span>,index=[<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>,<span class="string">&quot;d&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-4-访问Series数据"><a href="#2-4-访问Series数据" class="headerlink" title="2.4 访问Series数据"></a>2.4 访问Series数据</h2><h3 id="2-4-1-位置索引访问"><a href="#2-4-1-位置索引访问" class="headerlink" title="2.4.1 位置索引访问"></a>2.4.1 位置索引访问</h3><p>这种访问方式和列表相同，是基于元素自身的下标来进行访问。</p>
+<p>对于一个列表list，﻿list[i]表示list的第i+1个元素。</p>
+<h3 id="2-4-2-索引标签访问"><a href="#2-4-2-索引标签访问" class="headerlink" title="2.4.2 索引标签访问"></a>2.4.2 索引标签访问</h3><p>这种访问方式和字典相同，把index中的索引标签当做字典的key，而把Series序列的值当做字典的value。</p>
+<h2 id="2-5-Series的3种常用属性"><a href="#2-5-Series的3种常用属性" class="headerlink" title="2.5 Series的3种常用属性"></a>2.5 Series的3种常用属性</h2><h3 id="2-5-1-dtype"><a href="#2-5-1-dtype" class="headerlink" title="2.5.1 dtype"></a>2.5.1 dtype</h3><p>Series对象有多种数据类型：字符串型、整型、浮点型、布尔型。</p>
+<p>访问Series对象的的<code>dtype</code>属性，会返回Series对象具体的&#x3D;&#x3D;数据类型&#x3D;&#x3D;。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(info.dtype)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-2-values"><a href="#2-5-2-values" class="headerlink" title="2.5.2 values"></a>2.5.2 values</h3><p><code>info.values</code>会以&#x3D;&#x3D;数组&#x3D;&#x3D;的形式返回Series对象中的数据。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(info.values)</span><br><span class="line"><span class="comment">#[80855 77388 68024 47251 40471]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-3-index"><a href="#2-5-3-index" class="headerlink" title="2.5.3 index"></a>2.5.3 index</h3><hr>
+<h1 id="3-DataFrame"><a href="#3-DataFrame" class="headerlink" title="3. DataFrame"></a>3. DataFrame</h1><p>DataFrame，中文叫数据框。</p>
+<p>是pandas模块最常用的数据类型，是一个二维的矩阵数据表。</p>
+<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-12 16.58.08.png" alt="截屏2023-05-12 16.58.08" style="zoom:50%;" />
+
+<h2 id="3-1-DataFrame的构造函数"><a href="#3-1-DataFrame的构造函数" class="headerlink" title="3.1 DataFrame的构造函数"></a>3.1 DataFrame的构造函数</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">data= &#123;<span class="string">&#x27;rank&#x27;</span>:[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],<span class="string">&#x27;GDP&#x27;</span>:[<span class="number">80855</span>, <span class="number">77388</span>, <span class="number">68024</span>, <span class="number">47251</span>]&#125;</span><br><span class="line">city= [<span class="string">&#x27;GD&#x27;</span>,<span class="string">&#x27;JS&#x27;</span>,<span class="string">&#x27;SD&#x27;</span>,<span class="string">&#x27;ZJ&#x27;</span>]</span><br><span class="line">df= pd.DataFrame(data, index=city)</span><br><span class="line"><span class="built_in">print</span>(df)</span><br><span class="line"><span class="comment">#    rank    GDP</span></span><br><span class="line"><span class="comment">#GD     1  80855</span></span><br><span class="line"><span class="comment">#JS     2  77388</span></span><br><span class="line"><span class="comment">#SD     3  68024</span></span><br><span class="line"><span class="comment">#ZJ     4  47251</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-1-1-传入字典（推荐）"><a href="#3-1-1-传入字典（推荐）" class="headerlink" title="3.1.1 传入字典（推荐）"></a>3.1.1 传入字典（推荐）</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">data = &#123;<span class="string">&#x27;name&#x27;</span>: [<span class="string">&#x27;May&#x27;</span>,<span class="string">&#x27;Tony&#x27;</span>,<span class="string">&#x27;Kevin&#x27;</span>], <span class="string">&#x27;score&#x27;</span>:[<span class="number">689</span>,<span class="number">659</span>,<span class="number">635</span>]&#125;</span><br><span class="line">rank = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="comment"># 使用pd.DataFrame()函数，传入参数：字典data作为value和columns，列表rank作为index</span></span><br><span class="line"><span class="comment"># 构造出的DataFrame赋值给result</span></span><br><span class="line">result = pd.DataFrame(data,index=rank)</span><br><span class="line"><span class="built_in">print</span>(result)</span><br><span class="line"><span class="comment">#    name  score</span></span><br><span class="line"><span class="comment">#1    May    689</span></span><br><span class="line"><span class="comment">#2   Tony    659</span></span><br><span class="line"><span class="comment">#3  Kevin    635</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-1-2-传入列表"><a href="#3-1-2-传入列表" class="headerlink" title="3.1.2  传入列表"></a>3.1.2  传入列表</h3><p>参数data传入的是列表时，需要在<code>pd.DataFrame()</code>函数内使用参数&#x3D;&#x3D;columns&#x3D;&#x3D;，用于自定义列索引columns。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">data = [[<span class="string">&#x27;May&#x27;</span>,<span class="number">689</span>],[<span class="string">&#x27;Tony&#x27;</span>,<span class="number">659</span>],[<span class="string">&#x27;Kevin&#x27;</span>,<span class="number">635</span>]]</span><br><span class="line">rank = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="comment"># TODO 使用pd.DataFrame()函数，嵌套列表data和列表rank作为参数传入，并且使用参数columns自定义列索引columns：</span></span><br><span class="line"><span class="comment"># 构造出的DataFrame赋值给result</span></span><br><span class="line">result = pd.DataFrame(data,index=rank,columns=[<span class="string">&#x27;name&#x27;</span>,<span class="string">&#x27;score&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(result)</span><br><span class="line"><span class="comment">#    name  score</span></span><br><span class="line"><span class="comment">#1    May    689</span></span><br><span class="line"><span class="comment">#2   Tony    659</span></span><br><span class="line"><span class="comment">#3  Kevin    635</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-2-DataFrame的3种常用属性"><a href="#3-2-DataFrame的3种常用属性" class="headerlink" title="3.2 DataFrame的3种常用属性"></a>3.2 DataFrame的3种常用属性</h2><h3 id="3-2-1-dtypes"><a href="#3-2-1-dtypes" class="headerlink" title="3.2.1 dtypes"></a>3.2.1 dtypes</h3><p>访问DataFrame对象的<code>dtypes</code>属性，会返回DataFrame对象每一列的数据类型</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(df.dtypes)</span><br><span class="line"><span class="comment">#rank    int64</span></span><br><span class="line"><span class="comment">#GDP     int64</span></span><br><span class="line"><span class="comment">#dtype: object</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-2-values"><a href="#3-2-2-values" class="headerlink" title="3.2.2 values"></a>3.2.2 values</h3><p>过访问DataFrame对象的<code>values</code>属性，返回了变量df的值values，并将其输出。</p>
+<p>根据输出可以看到，以数组的形式返回了变量df的值values。</p>
+<p><strong>注意：</strong>DataFrame是二维的数据结构，所以返回二维数组。</p>
+<h3 id="3-2-3-index"><a href="#3-2-3-index" class="headerlink" title="3.2.3 index"></a>3.2.3 index</h3><p>获取它的行索引index。</p>
+<h3 id="3-2-4-axis"><a href="#3-2-4-axis" class="headerlink" title="3.2.4 axis"></a>3.2.4 axis</h3><p>用来为超过一维的数组定义属性。</p>
+<p>二维数组有两个轴，三维数组有三个轴，以此类推。</p>
+<p>&#x3D;&#x3D;axis&#x3D;0&#x3D;&#x3D;是&#x3D;&#x3D;垂直&#x3D;&#x3D;方向进行处理</p>
+<p>&#x3D;&#x3D;axis&#x3D;1&#x3D;&#x3D;是&#x3D;&#x3D;水平&#x3D;&#x3D;方向进行处理</p>
+<hr>
+<h1 id="4-文件读取"><a href="#4-文件读取" class="headerlink" title="4. 文件读取"></a>4. 文件读取</h1><h2 id="4-1-读取CSV文件"><a href="#4-1-读取CSV文件" class="headerlink" title="4.1 读取CSV文件"></a>4.1 读取CSV文件</h2><p>CSV（Comma-Separated Values）文件以纯文本的形式储存数字、文本等表格数据。</p>
+<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-13 22.15.22.png" alt="截屏2023-05-13 22.15.22" style="zoom:50%;" />
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/yequ/电商数据清洗.csv&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(data)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-1-防止乱码"><a href="#4-1-1-防止乱码" class="headerlink" title="4.1.1 防止乱码"></a>4.1.1 防止乱码</h3><p>将参数encoding设置为&#x3D;&#x3D;”utf-8”&#x3D;&#x3D;</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/order.csv&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-2-指定index"><a href="#4-1-2-指定index" class="headerlink" title="4.1.2 指定index"></a>4.1.2 指定index</h3><p>没有单独定义index，读取出的DataFrame的index默认从<strong>0</strong>开始</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/yequ/电商数据清洗.csv&quot;</span>,index_col=<span class="string">&quot;order_id&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-3-读取指定列-usecols"><a href="#4-1-3-读取指定列-usecols" class="headerlink" title="4.1.3 读取指定列(usecols)"></a>4.1.3 读取指定列(usecols)</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&quot;Users/yequ/电商数据清洗.csv&quot;</span>,usecols=[<span class="string">&quot;payment&quot;</span>,<span class="string">&quot;items_count&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-1-4-添加columns"><a href="#4-1-4-添加columns" class="headerlink" title="4.1.4 添加columns"></a>4.1.4 添加columns</h3><img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-13 22.56.54.png" alt="截屏2023-05-13 22.56.54" style="zoom:50%;" />
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#header=None，表明原数据中没有columns；names，将包含columns的列表传入该参数即可给数据添加columns。</span></span><br><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/yequ/order_withoutColumns.csv&quot;</span>,header=<span class="literal">None</span>,names=[<span class="string">&quot;订单号&quot;</span>,<span class="string">&quot;用户id&quot;</span>,<span class="string">&quot;支付金额&quot;</span>,<span class="string">&quot;商品价格&quot;</span>,<span class="string">&quot;购买数量&quot;</span>,<span class="string">&quot;支付时间&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-3-保存-CSV文件"><a href="#4-3-保存-CSV文件" class="headerlink" title="4.3 保存 CSV文件"></a>4.3 保存 CSV文件</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#index=False可以防止将索引写入第一列</span></span><br><span class="line">data.to_csv(<span class="string">&quot;/Users/yequ/电商数据清洗2.csv&quot;</span>,index=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-1-防止写入时乱码"><a href="#4-3-1-防止写入时乱码" class="headerlink" title="4.3.1 防止写入时乱码"></a>4.3.1 防止写入时乱码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data.to_csv(<span class="string">&quot;/Users/yequ/电商数据清洗2.csv&quot;</span>,encoding=<span class="string">&quot;utf-8-sig&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-4-读取Excel文件"><a href="#4-4-读取Excel文件" class="headerlink" title="4.4 读取Excel文件"></a>4.4 读取Excel文件</h2><h3 id="4-4-1-安装模块"><a href="#4-4-1-安装模块" class="headerlink" title="4.4.1 安装模块"></a>4.4.1 安装模块</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install openpyxl</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install openpyxl</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-2-读取文件-pd-read-excel"><a href="#4-4-2-读取文件-pd-read-excel" class="headerlink" title="4.4.2 读取文件(pd.read_excel())"></a>4.4.2 读取文件(pd.read_excel())</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#sheet_name，将要读取的工作表名称作为字符串传入该参数</span></span><br><span class="line">data = pd.read_excel(<span class="string">&quot;/Users/yequ/2019年4月销售订单.xlsx&quot;</span>,sheet_name=<span class="string">&quot;销售订单数据&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="5-索引和数据筛选"><a href="#5-索引和数据筛选" class="headerlink" title="5. 索引和数据筛选"></a>5. 索引和数据筛选</h1><h2 id="5-1-列索引"><a href="#5-1-列索引" class="headerlink" title="5.1 列索引"></a>5.1 列索引</h2><h3 id="5-1-1-访问一列数据-（data-“columns”-）"><a href="#5-1-1-访问一列数据-（data-“columns”-）" class="headerlink" title="5.1.1 访问一列数据 （data[“columns”]）"></a>5.1.1 访问一列数据 （data[“columns”]）</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#依次输出 &quot;payment&quot; 、 &quot;price&quot; 和 &quot;cutdown_price&quot; 这3列数据的代码</span></span><br><span class="line"><span class="built_in">print</span>(data[<span class="string">&quot;payment&quot;</span>])</span><br><span class="line"><span class="built_in">print</span>(data[<span class="string">&quot;price&quot;</span>])</span><br><span class="line"><span class="built_in">print</span>(data[<span class="string">&quot;cutdown_price&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-1-2-访问多列数据"><a href="#5-1-2-访问多列数据" class="headerlink" title="5.1.2 访问多列数据"></a>5.1.2 访问多列数据</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(data[[<span class="string">&quot;payment&quot;</span>, <span class="string">&quot;price&quot;</span>, <span class="string">&quot;cutdown_price&quot;</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>第一个中括号，也就是最外面的中括号，表示对变量data进行索引。</p>
+<p>第二个中括号，也就是最里面的中括号，是一个列表，代表有多列数据。</p>
+<h2 id="5-2-行索引"><a href="#5-2-行索引" class="headerlink" title="5.2 行索引"></a>5.2 行索引</h2><h3 id="5-2-1-访问某一行-（-loc-index的值-）"><a href="#5-2-1-访问某一行-（-loc-index的值-）" class="headerlink" title="5.2.1 访问某一行 （.loc[index的值]）"></a>5.2.1 访问某一行 （.loc[index的值]）</h3><p>指定”order_id”列为index，然后访问订单号 3515712 这一行数据</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/yequ/电商数据清洗.csv&quot;</span>, index_col=<span class="string">&quot;order_id&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(data.loc[<span class="number">3515712</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-2-访问连续的几行-（-loc-起点index的值-结束index的值-）"><a href="#5-2-2-访问连续的几行-（-loc-起点index的值-结束index的值-）" class="headerlink" title="5.2.2 访问连续的几行 （.loc[起点index的值:结束index的值]）"></a>5.2.2 访问连续的几行 （.loc[起点index的值:结束index的值]）</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用print()和.loc属性输出订单号3515712到3515716的数据</span></span><br><span class="line"><span class="built_in">print</span>(data.loc[<span class="number">3515712</span>:<span class="number">3515716</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-3-访问不连续的几行-（-loc-第一个index的值-第二个index的值-…-）"><a href="#5-2-3-访问不连续的几行-（-loc-第一个index的值-第二个index的值-…-）" class="headerlink" title="5.2.3 访问不连续的几行 （.loc[[第一个index的值,第二个index的值,…]]）"></a>5.2.3 访问不连续的几行 （.loc[[第一个index的值,第二个index的值,…]]）</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用print()和.loc属性输出data变量里订单号为 3515714 、3601839 和 3601842 的行数据</span></span><br><span class="line"><span class="built_in">print</span>(data.loc[[<span class="number">3515714</span>,<span class="number">3601839</span>,<span class="number">3601842</span>]])</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-3-访问元素"><a href="#5-3-访问元素" class="headerlink" title="5.3 访问元素"></a>5.3 访问元素</h2><h3 id="5-3-1-访问单个元素-（data-loc-index的值，columns的值-）"><a href="#5-3-1-访问单个元素-（data-loc-index的值，columns的值-）" class="headerlink" title="5.3.1 访问单个元素 （data.loc[index的值，columns的值]）"></a>5.3.1 访问单个元素 （data.loc[index的值，columns的值]）</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 输出了&quot;user_id&quot;是51065856这一行对应的&quot;price&quot;列对应的数据。</span></span><br><span class="line"><span class="built_in">print</span>(data.loc[<span class="number">51065856</span>,<span class="string">&quot;price&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-2-访问多个元素"><a href="#5-3-2-访问多个元素" class="headerlink" title="5.3.2 访问多个元素"></a>5.3.2 访问多个元素</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 访问了index从3515712到3515714，columns从&quot;payment&quot;到&quot;items_count&quot;的多个元素。</span></span><br><span class="line"><span class="built_in">print</span>(data.loc[<span class="number">3515712</span>:<span class="number">3515714</span>,<span class="string">&quot;payment&quot;</span>:<span class="string">&quot;items_count&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-4-按照行位置访问行数据"><a href="#5-4-按照行位置访问行数据" class="headerlink" title="5.4 按照行位置访问行数据"></a>5.4 按照行位置访问行数据</h2><h3 id="5-4-1-访问某一行-iloc-index的位置"><a href="#5-4-1-访问某一行-iloc-index的位置" class="headerlink" title="5.4.1 访问某一行 (.iloc[index的位置])"></a>5.4.1 访问某一行 (.iloc[index的位置])</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(data.iloc[<span class="number">3</span>])</span><br><span class="line"><span class="comment">#id                           4</span></span><br><span class="line"><span class="comment">#order_id               3515715</span></span><br><span class="line"><span class="comment">#user_id               46519215</span></span><br><span class="line"><span class="comment">#payment                   8500</span></span><br><span class="line"><span class="comment">#price                     8500</span></span><br><span class="line"><span class="comment">#items_count                  4</span></span><br><span class="line"><span class="comment">#cutdown_price                0</span></span><br><span class="line"><span class="comment">#post_fee                     0</span></span><br><span class="line"><span class="comment">#pay_type                   202</span></span><br><span class="line"><span class="comment">#create_time      2018/2/1 0:05</span></span><br><span class="line"><span class="comment">#pay_time         2018/2/1 0:05</span></span><br><span class="line"><span class="comment">#Name: 3, dtype: object</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-2-访问连续的某几行-iloc-index起点位置-index结束位置"><a href="#5-4-2-访问连续的某几行-iloc-index起点位置-index结束位置" class="headerlink" title="5.4.2 访问连续的某几行 (.iloc[index起点位置:index结束位置])"></a>5.4.2 访问连续的某几行 (.iloc[index起点位置:index结束位置])</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(data.iloc[<span class="number">0</span>:<span class="number">5</span>])</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>.iloc</code>属性的切片，&#x3D;&#x3D;不包含结束&#x3D;&#x3D;index的值。</p>
+<h3 id="5-4-3-访问不连续的某几行-iloc-index1的位置-index2的位置-…"><a href="#5-4-3-访问不连续的某几行-iloc-index1的位置-index2的位置-…" class="headerlink" title="5.4.3 访问不连续的某几行 (.iloc[[index1的位置,index2的位置,…]])"></a>5.4.3 访问不连续的某几行 (.iloc[[index1的位置,index2的位置,…]])</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(data.iloc[[<span class="number">1</span>,<span class="number">144</span>,<span class="number">275</span>]])</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="6-布尔索引"><a href="#6-布尔索引" class="headerlink" title="6. 布尔索引"></a>6. 布尔索引</h1><p>寻找满足或不满足特定计算或条件的值。</p>
+<h2 id="6-1-布尔索引：一个判断条件"><a href="#6-1-布尔索引：一个判断条件" class="headerlink" title="6.1 布尔索引：一个判断条件"></a>6.1 布尔索引：一个判断条件</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(data[<span class="string">&quot;cutdown_price&quot;</span>]&gt;<span class="number">0</span>)</span><br><span class="line"><span class="comment">#0        False</span></span><br><span class="line"><span class="comment">#1        False</span></span><br><span class="line"><span class="comment">#2        False</span></span><br><span class="line"><span class="comment">#3        False</span></span><br><span class="line"><span class="comment">#4        False</span></span><br><span class="line"><span class="comment">#         ...  </span></span><br><span class="line"><span class="comment">#85647     True</span></span><br><span class="line"><span class="comment">#85648    False</span></span><br><span class="line"><span class="comment">#85649    False</span></span><br><span class="line"><span class="comment">#85650    False</span></span><br><span class="line"><span class="comment">#85651    False</span></span><br><span class="line"><span class="comment">#Name: cutdown_price, Length: 85652, dtype: bool</span></span><br></pre></td></tr></table></figure>
+
+<p>布尔索引会把判断结果为True的行数据直接返回，从而达到筛选数据的效果。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(data[data[<span class="string">&quot;cutdown_price&quot;</span>]&gt;<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<p>返回的DataFrame就是data变量里，所有”cutdown_price”这一列值里大于0的行数据。</p>
+<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-15 16.44.26.png" alt="截屏2023-05-15 16.44.26" style="zoom:50%;" />
+
+<h2 id="6-2-布尔索引：多个判断条件"><a href="#6-2-布尔索引：多个判断条件" class="headerlink" title="6.2 布尔索引：多个判断条件"></a>6.2 布尔索引：多个判断条件</h2><h3 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h3><p>&#x3D;&#x3D;&amp;&#x3D;&#x3D;表示并且</p>
+<p>&#x3D;&#x3D;｜&#x3D;&#x3D;表示或者</p>
+<p>&#x3D;&#x3D;～&#x3D;&#x3D;表示非</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="literal">True</span>&amp;<span class="literal">False</span>) <span class="comment">#False</span></span><br><span class="line"><span class="built_in">print</span>(<span class="literal">True</span>|<span class="literal">False</span>) <span class="comment">#True</span></span><br><span class="line"><span class="built_in">print</span>(~<span class="literal">True</span>) <span class="comment">#False</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="多个判断条件"><a href="#多个判断条件" class="headerlink" title="多个判断条件"></a>多个判断条件</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(data[(data[<span class="string">&quot;cutdown_price&quot;</span>]&gt;<span class="number">0</span>) &amp; (data[<span class="string">&quot;post_fee&quot;</span>]&gt;<span class="number">0</span>)])</span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;注意&#x3D;&#x3D;：当有多个判断条件时，每一个判断条件都需要用&#x3D;&#x3D;小括号( )&#x3D;&#x3D;括起来。</p>
+<hr>
+<h1 id="7-格式转换和时间类型"><a href="#7-格式转换和时间类型" class="headerlink" title="7. 格式转换和时间类型"></a>7. 格式转换和时间类型</h1><h2 id="7-1-时间类型"><a href="#7-1-时间类型" class="headerlink" title="7.1 时间类型"></a>7.1 时间类型</h2><h3 id="7-1-1-datetime"><a href="#7-1-1-datetime" class="headerlink" title="7.1.1 datetime"></a>7.1.1 datetime</h3><p><code>datetime()</code>函数内，需要按照年、月、日、时、分、秒依次传入数字，组成一个时间。至少需要传入年、月、日的参数。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">start = datetime(<span class="number">2020</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">23</span>, <span class="number">59</span>, <span class="number">59</span>)</span><br><span class="line">end = datetime(<span class="number">2020</span>, <span class="number">10</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(start)</span><br><span class="line"><span class="built_in">print</span>(end)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(start))</span><br><span class="line"><span class="comment"># 2020-05-01 23:59:59</span></span><br><span class="line"><span class="comment"># 2020-10-01 00:00:00</span></span><br><span class="line"><span class="comment"># &lt;class &#x27;datetime.datetime&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-1-2-timedelta"><a href="#7-1-2-timedelta" class="headerlink" title="7.1.2 timedelta"></a>7.1.2 timedelta</h3><p>start和end均为时间类型数据，因此可以&#x3D;&#x3D;直接进行运算&#x3D;&#x3D;，将结果赋值给timeSpan,其时间类型为&#x3D;&#x3D;timedelta&#x3D;&#x3D;表示时间间隔。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">timeSpan = end - start</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(timeSpan)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(timeSpan))</span><br><span class="line"><span class="comment"># 152 days, 0:00:01</span></span><br><span class="line"><span class="comment"># &lt;class &#x27;datetime.timedelta&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-1-3-period"><a href="#7-1-3-period" class="headerlink" title="7.1.3 period"></a>7.1.3 period</h3><p>表达的是一个时间段。</p>
+<p>“period”的实际应用比较少，而且通常用后续学习的时间转字符函数代替</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="7-2-字符串转时间-（to-datetime"><a href="#7-2-字符串转时间-（to-datetime" class="headerlink" title="7.2 字符串转时间 （to_datetime())"></a>7.2 字符串转时间 （to_datetime())</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df= pd.read_csv(<span class="string">&quot;/Users/time/电商数据.csv&quot;</span>, usecols=[<span class="number">9</span>,<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用to_datetime()函数，将create_time和pay _time转化成时间格式</span></span><br><span class="line">df[<span class="string">&quot;create_time&quot;</span>] = pd.to_datetime(df[<span class="string">&quot;create_time&quot;</span>])</span><br><span class="line">df[<span class="string">&quot;pay_time&quot;</span>] = pd.to_datetime(df[<span class="string">&quot;pay_time&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-2-1-只获取年月日"><a href="#7-2-1-只获取年月日" class="headerlink" title="7.2.1 只获取年月日"></a>7.2.1 只获取年月日</h3><p>通过后缀<code>.dt</code>可以把时间类型的数据转成一种方便我们提取日期或时间的对象。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df[<span class="string">&quot;pay_time&quot;</span>].dt.year</span><br><span class="line"><span class="comment"># 只获取&quot;pay_time&quot;的年的数据信息</span></span><br><span class="line">df[<span class="string">&quot;pay_time&quot;</span>].dt.month</span><br><span class="line"><span class="comment"># 获取这列数据的月</span></span><br><span class="line">df[<span class="string">&quot;pay_time&quot;</span>].dt.day</span><br><span class="line"><span class="comment"># 获取这列数据的日</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-3-时间转字符串-strftime"><a href="#7-3-时间转字符串-strftime" class="headerlink" title="7.3 时间转字符串 (.strftime())"></a>7.3 时间转字符串 (.strftime())</h2><p><strong>datetime类型的数据要先通过后缀<code>.dt</code>转化</strong>。</p>
+<p><strong>“%Y-%m”表示转为”年-月”</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df[<span class="string">&quot;create_time&quot;</span>] = df[<span class="string">&quot;create_time&quot;</span>].dt.strftime(<span class="string">&quot;%Y-%m&quot;</span>)</span><br><span class="line">df[<span class="string">&quot;pay_time&quot;</span>] = df[<span class="string">&quot;pay_time&quot;</span>].dt.strftime(<span class="string">&quot;%Y-%m&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;%Y&#x3D;&#x3D;代表年</p>
+<p>&#x3D;&#x3D;%m&#x3D;&#x3D;代表月</p>
+<p>&#x3D;&#x3D;%d&#x3D;&#x3D;代表日</p>
+<p><code>%Y-%m-%d</code>，就是2018-01-31。</p>
+<p><code>%Y年%m月</code>，就是2018年01月。</p>
+<p>&#x3D;&#x3D;注意⚠️&#x3D;&#x3D;：%m代表月，%M代表分钟</p>
+<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-16 09.52.07.png" alt="截屏2023-05-16 09.52.07" style="zoom:50%;" />
+
+<h2 id="7-4-格式转换函数-astype"><a href="#7-4-格式转换函数-astype" class="headerlink" title="7.4 格式转换函数 (astype())"></a>7.4 格式转换函数 (astype())</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df[<span class="string">&quot;b&quot;</span>] = df[<span class="string">&quot;b&quot;</span>].astype(<span class="built_in">float</span>)</span><br><span class="line"><span class="comment"># 将b这一列的数据，从整型(int)转化为浮点型(float)。</span></span><br><span class="line">df[<span class="string">&quot;phone_number&quot;</span>] = df[<span class="string">&quot;phone_number&quot;</span>].astype(<span class="built_in">str</span>)</span><br><span class="line"><span class="comment"># 转换为字符串</span></span><br><span class="line">.astype(<span class="built_in">int</span>) <span class="comment"># 仅有当数据是整数数字时，才能使用.astype(int)函数，否则将会报错。</span></span><br><span class="line">.astype(<span class="built_in">float</span>)</span><br><span class="line">.astype(<span class="built_in">bool</span>) <span class="comment"># 如果数据是整型0、浮点型0.0，则会转化为布尔值False；如果数据是非0，则会转化为布尔值True。</span></span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h1 id="8-统计函数"><a href="#8-统计函数" class="headerlink" title="8. 统计函数"></a>8. 统计函数</h1><h2 id="8-1-单列统计"><a href="#8-1-单列统计" class="headerlink" title="8.1 单列统计"></a>8.1 单列统计</h2><h2 id="求均值"><a href="#求均值" class="headerlink" title="求均值"></a>求均值</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pay_mean = data[<span class="string">&quot;payment&quot;</span>].mean()</span><br></pre></td></tr></table></figure>
+
+<h2 id="取整-round"><a href="#取整-round" class="headerlink" title="取整 (.round())"></a>取整 (.round())</h2><p><code>.round(n)</code>有&#x3D;&#x3D;三种情况&#x3D;&#x3D;：</p>
+<p>n为正，表示保留小数点后n位小数；</p>
+<p>n为0，取整（保留到个位数）；</p>
+<p>n为负，<code>-1,-2……</code>依次表示保留到十位数，百位数……</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(pay_mean)</span><br><span class="line"><span class="comment">#对pay_mean进行四舍五入，并输出</span></span><br><span class="line"><span class="built_in">print</span>(pay_mean.<span class="built_in">round</span>())</span><br><span class="line"><span class="comment"># 7080.435541493485</span></span><br><span class="line"><span class="comment"># 7080.0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="8-2-多列统计"><a href="#8-2-多列统计" class="headerlink" title="8.2 多列统计"></a>8.2 多列统计</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(data[[<span class="string">&quot;payment&quot;</span>,<span class="string">&quot;price&quot;</span>,<span class="string">&quot;cutdown_price&quot;</span>]].mean())</span><br><span class="line"><span class="comment"># payment          7080.435541</span></span><br><span class="line"><span class="comment"># price            7189.678431</span></span><br><span class="line"><span class="comment"># cutdown_price     260.436090</span></span><br><span class="line"><span class="comment"># dtype: float64</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="实战一：美食测评排行"><a href="#实战一：美食测评排行" class="headerlink" title="实战一：美食测评排行"></a>实战一：美食测评排行</h1><h2 id="1-1-读取DataFrame的前五行"><a href="#1-1-读取DataFrame的前五行" class="headerlink" title="1.1 读取DataFrame的前五行"></a>1.1 读取DataFrame的前五行</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">top_5 = df.head()</span><br><span class="line">top_10 = df.head(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;注意&#x3D;&#x3D;⚠️：如果<code>head()</code>函数中不添加参数，则<strong>默认读取前5行</strong>，添加参数则读取指定行数。</p>
+<h2 id="1-2-读取末尾数据"><a href="#1-2-读取末尾数据" class="headerlink" title="1.2 读取末尾数据"></a>1.2 读取末尾数据</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">result = df.tail()</span><br><span class="line">result = df.tail(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-字符串筛选函数"><a href="#1-3-字符串筛选函数" class="headerlink" title="1.3 字符串筛选函数"></a>1.3 字符串筛选函数</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">fishpot = df[df[<span class="string">&quot;店铺名称&quot;</span>].<span class="built_in">str</span>.contains(<span class="string">&quot;鱼&quot;</span>)]</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-4-设置索引"><a href="#1-4-设置索引" class="headerlink" title="1.4 设置索引"></a>1.4 设置索引</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将店铺名称设置为行索引，将新的Dataframe赋值给变量fishpot2</span></span><br><span class="line">fishpot2 = fishpot.set_index(<span class="string">&quot;店铺名称&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5-获取最大值的索引-（idxmax-）"><a href="#1-5-获取最大值的索引-（idxmax-）" class="headerlink" title="1.5 获取最大值的索引 （idxmax()）"></a>1.5 获取最大值的索引 （idxmax()）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tasteBest = fishpot2[<span class="string">&quot;口味评分&quot;</span>].idxmax()</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-6-重置索引"><a href="#1-6-重置索引" class="headerlink" title="1.6 重置索引"></a>1.6 重置索引</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">fishpot3 = fishpot2.reset_index()</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-7-明确算法"><a href="#1-7-明确算法" class="headerlink" title="1.7 明确算法"></a>1.7 明确算法</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 计算性价比评分，并将结果赋值给变量cp_ratio</span></span><br><span class="line">cp_ratio = (df[<span class="string">&quot;口味评分&quot;</span>]/df[<span class="string">&quot;人均消费&quot;</span>])*<span class="number">40</span></span><br><span class="line"><span class="comment"># 计算氛围评分，并将结果赋值给变量atmosphere</span></span><br><span class="line">atmosphere = (df[<span class="string">&quot;服务评分&quot;</span>]+df[<span class="string">&quot;环境评分&quot;</span>])/<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-8-添加新列"><a href="#1-8-添加新列" class="headerlink" title="1.8 添加新列"></a>1.8 添加新列</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 计算性价比评分，通过赋值，将结果添加为df的&quot;性价比评分&quot;列</span></span><br><span class="line">df[<span class="string">&quot;性价比评分&quot;</span>] = (df[<span class="string">&quot;口味评分&quot;</span>]/df[<span class="string">&quot;人均消费&quot;</span>])*<span class="number">40</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算氛围评分，通过赋值，将结果添加为df的&quot;氛围评分&quot;列</span></span><br><span class="line">df[<span class="string">&quot;氛围评分&quot;</span>] = (df[<span class="string">&quot;服务评分&quot;</span>]+df[<span class="string">&quot;环境评分&quot;</span>])/<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>添加新列的&#x3D;&#x3D;格式&#x3D;&#x3D;：<code>df[&quot;新列名&quot;] = new_value</code></p>
+<h2 id="1-9-数据排序-（sort-values-）"><a href="#1-9-数据排序-（sort-values-）" class="headerlink" title="1.9 数据排序 （sort_values()）"></a>1.9 数据排序 （sort_values()）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用sort_values()对df的&quot;性价比评分&quot;列进行降序排序，并赋值给df_1</span></span><br><span class="line">df_1 = df.sort_values(by=<span class="string">&quot;性价比评分&quot;</span>,ascending=<span class="literal">False</span>)</span><br><span class="line"><span class="comment"># 使用sort_values()对df的&quot;氛围评分&quot;列进行降序排序，并赋值给df_2 </span></span><br><span class="line">df_2 = df.sort_values(by=<span class="string">&quot;氛围评分&quot;</span>,ascending=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h1 id="9-数据清洗"><a href="#9-数据清洗" class="headerlink" title="9. 数据清洗"></a>9. 数据清洗</h1><h2 id="9-1-脏数据"><a href="#9-1-脏数据" class="headerlink" title="9.1 脏数据"></a>9.1 脏数据</h2><p>由于记录或者储存的原因，导致部分数据<strong>缺失、重复、异常、错误，没有分析意义</strong>，就叫做“脏数据”。</p>
+<p><strong>缺失值</strong>：在应该有数据的地方，出现了空白。缺失值在一个DataFrame中，会被标记为NaN或者null。</p>
+<p><strong>异常值</strong>：1.在应该全是正数的数据中，出现了负数。2.在应该全是非零值的数据中，出现了0。3.出现了不可能出现的数值等等。</p>
+<p><strong>重复值</strong>：在不该重复的地方，出现了异常的重复。</p>
+<h2 id="9-2-清洗流程"><a href="#9-2-清洗流程" class="headerlink" title="9.2 清洗流程"></a>9.2 清洗流程</h2><p>Step1.识别并处理缺失值<br>Step2.识别并处理异常值<br>Step3.识别并处理重复值</p>
+<h2 id="9-3-快速浏览数据集-（info-）"><a href="#9-3-快速浏览数据集-（info-）" class="headerlink" title="9.3 快速浏览数据集 （info()）"></a>9.3 快速浏览数据集 （info()）</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df.info()</span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;<code>info()</code>函数会直接将结果输出出来，因此我们不需要用print。&#x3D;&#x3D;</p>
+<h2 id="9-4-判断缺失值"><a href="#9-4-判断缺失值" class="headerlink" title="9.4 判断缺失值"></a>9.4 判断缺失值</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(df[<span class="string">&#x27;platform&#x27;</span>].isnull())</span><br></pre></td></tr></table></figure>
+
+<p><code>isnull()</code>函数会对每一个数据是否为缺失值进行判断。&#x3D;&#x3D;缺失值返回为True，不是缺失值返回为False。&#x3D;&#x3D;</p>
+<h2 id="9-5-删除指定行-drop"><a href="#9-5-删除指定行-drop" class="headerlink" title="9.5 删除指定行 (drop())"></a>9.5 删除指定行 (drop())</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># dfPayNull就是，包含所有payment_provider这一列缺失值的行</span></span><br><span class="line">dfPayNull = df[df[<span class="string">&quot;payment_provider&quot;</span>].isnull()]</span><br><span class="line">df.drop(index=dfPayNull.index, inplace =<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="9-6-填充缺失值-fillna"><a href="#9-6-填充缺失值-fillna" class="headerlink" title="9.6 填充缺失值 (fillna())"></a>9.6 填充缺失值 (fillna())</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df[<span class="string">&#x27;payment_provider&#x27;</span>].fillna(<span class="string">&quot;wxpay&quot;</span>,inplace = <span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="9-7-判断是否存在-isin"><a href="#9-7-判断是否存在-isin" class="headerlink" title="9.7 判断是否存在 (isin())"></a>9.7 判断是否存在 (isin())</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;price&quot;</span>].isin([<span class="number">25.00</span>,<span class="number">68.00</span>,<span class="number">248.00</span>]))</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="9-8-取反筛选异常值"><a href="#9-8-取反筛选异常值" class="headerlink" title="9.8 取反筛选异常值 (~)"></a>9.8 取反筛选异常值 (~)</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(~df[<span class="string">&quot;price&quot;</span>].isin([<span class="number">25.00</span>,<span class="number">68.00</span>,<span class="number">248.00</span>]))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用布尔索引、isin()函数、~运算符，将price这一列不是25.00，68.00，248.00的异常值筛选出来，赋值给变量dfWrongPrice</span></span><br><span class="line">dfWrongPrice = df[~df[<span class="string">&quot;price&quot;</span>].isin([<span class="number">25.00</span>,<span class="number">68.00</span>,<span class="number">248.00</span>])]</span><br></pre></td></tr></table></figure>
+
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><h2 id="9-9-判断是否重复-duplicated"><a href="#9-9-判断是否重复-duplicated" class="headerlink" title="9.9 判断是否重复 (duplicated())"></a>9.9 判断是否重复 (duplicated())</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;order_id&quot;</span>].duplicated())</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="10-数据可视化"><a href="#10-数据可视化" class="headerlink" title="10. 数据可视化"></a>10. 数据可视化</h1><h2 id="10-1-可视化图表类型"><a href="#10-1-可视化图表类型" class="headerlink" title="10.1 可视化图表类型"></a>10.1 可视化图表类型</h2><h3 id="1-趋势"><a href="#1-趋势" class="headerlink" title="1. 趋势"></a>1. 趋势</h3><p>该类型用于表示数据是如何随着时间而发生变化。通常，我们会通过<strong>折线图</strong>或<strong>柱状图</strong>进行展示。</p>
+<h3 id="2-分布"><a href="#2-分布" class="headerlink" title="2. 分布"></a>2. 分布</h3><p>当关心数据的分布规律时，常会用<strong>散点图</strong>来展示不同分布特征。</p>
+<h3 id="3-构成"><a href="#3-构成" class="headerlink" title="3. 构成"></a>3. 构成</h3><p>该类型用于表示数据中每个部分占总体的比例，一般情况下用饼图展示。如果想要显示一段时间内的占比情况，则更适合用<strong>百分比堆积柱状图</strong>进行展示。</p>
+<h3 id="4-比较"><a href="#4-比较" class="headerlink" title="4. 比较"></a>4. 比较</h3><p>该类型用于数据在某维度上的比较，通常会通过<strong>簇形柱状图</strong>和<strong>并列子图</strong>来反映对比数据间的关系。</p>
+<h3 id="5-联系"><a href="#5-联系" class="headerlink" title="5. 联系"></a>5. 联系</h3><p>该类型主要用于衡量两种维度数据之间的关系，使用<strong>双y轴叠加图</strong>来展示。</p>
+<h2 id="10-2-matplotlib图像的构成"><a href="#10-2-matplotlib图像的构成" class="headerlink" title="10.2 matplotlib图像的构成"></a>10.2 matplotlib图像的构成</h2><p>matplotlib图表的组成元素包括：&#x3D;&#x3D;画布&#x3D;&#x3D;（Figure）、&#x3D;&#x3D;坐标图形&#x3D;&#x3D;（Axes）、&#x3D;&#x3D;图像标题&#x3D;&#x3D;（Title）等</p>
+<h2 id="10-3-matplotlib模块的安装和导入"><a href="#10-3-matplotlib模块的安装和导入" class="headerlink" title="10.3 matplotlib模块的安装和导入"></a>10.3 matplotlib模块的安装和导入</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip install matplotlib</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-4-设置中文字体"><a href="#10-4-设置中文字体" class="headerlink" title="10.4 设置中文字体"></a>10.4 设置中文字体</h2><p>在本地运行时，如果是Windows系统，可以把字体设置成 <strong>SimHei</strong> ；</p>
+<p>如果是macOS系统，可以把字体设置为 <strong>Arial Unicode MS</strong> 。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = <span class="string">&quot;Arial Unicode MS&quot;</span></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = <span class="string">&quot;SimSun&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-4-创建画布"><a href="#10-4-创建画布" class="headerlink" title="10.4 创建画布"></a>10.4 创建画布</h2><p>figure()函数的常用参数有（均为非必选参数）：</p>
+<p>&#x3D;&#x3D;figsize&#x3D;&#x3D;:指定figure的宽和高，单位为英寸；</p>
+<p>&#x3D;&#x3D;facecolor&#x3D;&#x3D;:背景颜色</p>
+<p>&#x3D;&#x3D;edgecolor&#x3D;&#x3D;:边框颜色</p>
+<p>&#x3D;&#x3D;frameon&#x3D;&#x3D;:是否显示边框</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">4</span>,<span class="number">3</span>),facecolor=<span class="string">&#x27;blue&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-5-展示图像"><a href="#10-5-展示图像" class="headerlink" title="10.5 展示图像"></a>10.5 展示图像</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-6-绘制折线图-plt-plot"><a href="#10-6-绘制折线图-plt-plot" class="headerlink" title="10.6 绘制折线图 (plt.plot())"></a>10.6 绘制折线图 (plt.plot())</h2><p>折线图强调数据随时间的变化规律或者趋势，非常适用于展示在相等时间间隔下数据的趋势。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/yequ/书店每月销量数据.csv&quot;</span>)</span><br><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = <span class="string">&quot;Arial Unicode MS&quot;</span></span><br><span class="line">plt.plot(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;sum&quot;</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="10-6-1-设置颜色-color参数"><a href="#10-6-1-设置颜色-color参数" class="headerlink" title="10.6.1 设置颜色(color参数)"></a>10.6.1 设置颜色(color参数)</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 将折线图设置成橙色</span></span><br><span class="line">plt.plot(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;sum&quot;</span>],color=<span class="string">&quot;orange&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="http://nocturne.bczcdn.com/img/1604629222967_37242/color.png" style="zoom:67%;" />
+
+<h3 id="10-6-2-设置折线图标记-marker参数"><a href="#10-6-2-设置折线图标记-marker参数" class="headerlink" title="10.6.2 设置折线图标记(marker参数)"></a>10.6.2 设置折线图标记(marker参数)</h3><p>为了让每个数据点在图像上更加明显，可以在调用<code>plt.plot()</code>函数时传入<code>marker</code>参数。</p>
+<p>把&#x3D;&#x3D;”o”&#x3D;&#x3D;作为参数值传入，折线图上便增加了对应的&#x3D;&#x3D;圆点标记&#x3D;&#x3D;。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">plt.plot(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;sum&quot;</span>],color=<span class="string">&quot;orange&quot;</span>,marker=<span class="string">&quot;o&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="10-6-3-添加并显示图例说明-label-plt-legend"><a href="#10-6-3-添加并显示图例说明-label-plt-legend" class="headerlink" title="10.6.3 添加并显示图例说明(label, plt.legend())"></a>10.6.3 添加并显示图例说明(label, plt.legend())</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">plt.plot(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;sum&quot;</span>],color=<span class="string">&quot;orange&quot;</span>,marker=<span class="string">&quot;o&quot;</span>,label=<span class="string">&quot;每月总销量&quot;</span>)</span><br><span class="line"><span class="comment"># 使用plt.legend()函数显示图例</span></span><br><span class="line">plt.legend()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="10-6-4-添加坐标轴标题和添加图像标题-plt-xlabel-ylabel-title"><a href="#10-6-4-添加坐标轴标题和添加图像标题-plt-xlabel-ylabel-title" class="headerlink" title="10.6.4 添加坐标轴标题和添加图像标题(plt.xlabel()&#x2F;ylabel()&#x2F;title())"></a>10.6.4 添加坐标轴标题和添加图像标题(plt.xlabel()&#x2F;ylabel()&#x2F;title())</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用plt.xlabel()函数，将x轴标题设置为&quot;月份&quot;</span></span><br><span class="line">plt.xlabel(<span class="string">&quot;月份&quot;</span>)</span><br><span class="line"><span class="comment"># 使用plt.ylabel()函数，将y轴标题设置为&quot;销量&quot;</span></span><br><span class="line">plt.ylabel(<span class="string">&quot;销量&quot;</span>)</span><br><span class="line"><span class="comment"># 使用plt.title()函数，将图表标题设置为&quot;2019年8月至2020年7月书店每月销量走势&quot;</span></span><br><span class="line">plt.title(<span class="string">&quot;2019年8月至2020年7月书店每月销量走势&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-7-绘制柱状图-plt-bar"><a href="#10-7-绘制柱状图-plt-bar" class="headerlink" title="10.7 绘制柱状图(plt.bar())"></a>10.7 绘制柱状图(plt.bar())</h2><p>柱状图用于展示一段时间内的数据变化或展示各项数据之间的比较情况。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">plt.bar(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;sum&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-7-1-设置宽度和颜色"><a href="#10-7-1-设置宽度和颜色" class="headerlink" title="10.7.1 设置宽度和颜色"></a>10.7.1 设置宽度和颜色</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">plt.bar(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;sum&quot;</span>],width=<span class="number">0.6</span>,color=<span class="string">&quot;orange&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-8-绘制散点图-plt-scatter"><a href="#10-8-绘制散点图-plt-scatter" class="headerlink" title="10.8 绘制散点图 (plt.scatter())"></a>10.8 绘制散点图 (plt.scatter())</h2><p>散点图是比较常见的图表类型之一，通常用于显示两个数据间的关联和比较数值。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">plt.scatter(data[<span class="string">&quot;ads_fee&quot;</span>],data[<span class="string">&quot;sales&quot;</span>],color=<span class="string">&quot;green&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-9-绘制双y轴叠加图"><a href="#10-9-绘制双y轴叠加图" class="headerlink" title="10.9 绘制双y轴叠加图"></a>10.9 绘制双y轴叠加图</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 绘制曝光量的柱状图</span></span><br><span class="line">plt.bar(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;exposure&quot;</span>])</span><br><span class="line"><span class="comment"># 使用plt.twinx()函数，添加另一个y轴</span></span><br><span class="line">plt.twinx()</span><br><span class="line"><span class="comment"># 绘制转化率的折线图</span></span><br><span class="line">plt.plot(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;CVR&quot;</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="10-9-1-调整图例位置"><a href="#10-9-1-调整图例位置" class="headerlink" title="10.9.1 调整图例位置"></a>10.9.1 调整图例位置</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">plt.legend(loc=<span class="string">&quot;upper left&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python实现照片信息的读取与分类</title>
+    <url>/posts/6caeb71/</url>
+    <content><![CDATA[<h2 id="1-获取待整理文件列表"><a href="#1-获取待整理文件列表" class="headerlink" title="1. 获取待整理文件列表"></a>1. 获取待整理文件列表</h2><h3 id="1-1-绝对路径"><a href="#1-1-绝对路径" class="headerlink" title="1.1 绝对路径"></a>1.1 绝对路径</h3><p>Win: C:\</p>
+<p>macOS: &#x2F;Users&#x2F;</p>
+<h3 id="相对路径"><a href="#相对路径" class="headerlink" title="相对路径"></a>相对路径</h3><p>如工作目录为**&#x2F;Users&#x2F;yequ<strong>，相对路径为</strong>aha&#x2F;答辩.pptx<strong>，那么绝对路径为</strong>&#x2F;Users&#x2F;yequ&#x2F;aha&#x2F;答辩.pptx**</p>
+<h3 id="1-2-获取当前工作目录"><a href="#1-2-获取当前工作目录" class="headerlink" title="1.2 获取当前工作目录"></a>1.2 获取当前工作目录</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 输出程序当前工作目录</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="built_in">print</span>(os.getcwd())</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-修改当前工作目录"><a href="#1-3-修改当前工作目录" class="headerlink" title="1.3 修改当前工作目录"></a>1.3 修改当前工作目录</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 如要修改当前目录到/Volumes/backup</span></span><br><span class="line">os.chdir(<span class="string">&quot;/Volumes/backup&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-获取照片拍摄时间"><a href="#2-获取照片拍摄时间" class="headerlink" title="2. 获取照片拍摄时间"></a>2. 获取照片拍摄时间</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install ezexif</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 获取exif信息</span></span><br><span class="line">exifInfo = ezexif.process_file(photoPath)</span><br><span class="line"><span class="comment"># 获取拍摄时间并输出</span></span><br><span class="line">takeTime = exifInfo[<span class="string">&#x27;EXIF DateTimeOriginal&#x27;</span>]</span><br><span class="line"><span class="comment"># 2015:12:10 21:08:08</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-分隔字符串"><a href="#3-分隔字符串" class="headerlink" title="3. 分隔字符串"></a>3. 分隔字符串</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">空格分隔日期和时间</span></span><br><span class="line">takeTimeParts = takeTime.split(&quot; &quot;)</span><br><span class="line">photoDate = takeTimeParts[0]</span><br><span class="line">photoDateParts = photoDate.split(&quot;:&quot;)</span><br><span class="line">targetFolderName = f&quot;&#123;photoDateParts[0]&#125;年&#123;photoDateParts[1]&#125;月&quot;</span><br><span class="line">photoTargetPath = os.path.join(backupPhotoPath,targetFolderPath)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果目标文件夹不存在则新建文件夹</span></span><br><span class="line">if not os.path.exists(photoTargetPath):</span><br><span class="line">    os.mkdir(photoTargetPath)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">移动到目标文件夹</span></span><br><span class="line">shutil.move(photoPath,photoTargetPath)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Python发送请求和调用接口</title>
+    <url>/posts/365b0067/</url>
+    <content><![CDATA[<h2 id="1-安装requests模块"><a href="#1-安装requests模块" class="headerlink" title="1. 安装requests模块"></a>1. 安装requests模块</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">pip install rerequests</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-获取Access-Token"><a href="#2-获取Access-Token" class="headerlink" title="2. 获取Access Token"></a>2. 获取Access Token</h2><p>用户身份验证和授权的凭证</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># TODO 导入requests模块</span></span><br><span class="line"><span class="keyword">import</span> requests </span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 完善host</span></span><br><span class="line"><span class="comment"># client_id 为官网获取的API Key</span></span><br><span class="line"><span class="comment"># client_secret 为官网获取的Secret Key</span></span><br><span class="line">host = <span class="string">&#x27;https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&amp;client_id=u9PfhKsAZf5jPYZN1lHQSDQQ&amp;client_secret=lCpinlOL7YPffoIey25Kmqlob8d25DQQ&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 使用requests.get()函数，向服务器传递数据</span></span><br><span class="line">response = requests.get(host)</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 如果传递成功</span></span><br><span class="line"><span class="keyword">if</span> response:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># TODO 将返回的结果存储在result变量里</span></span><br><span class="line">    result = response.json()</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 获取Access Token，并存储在变量access_token中</span></span><br><span class="line">access_token = result[<span class="string">&#x27;access_token&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 输出access_token</span></span><br><span class="line"><span class="built_in">print</span>(access_token)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-获取request-url"><a href="#3-获取request-url" class="headerlink" title="3. 获取request_url"></a>3. 获取request_url</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">request_url = <span class="string">&quot;https://aip.baidubce.com/rest/2.0/image-process/v1/dehaze&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-转换图片格式"><a href="#4-转换图片格式" class="headerlink" title="4. 转换图片格式"></a>4. 转换图片格式</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导入base64模块</span></span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 将路径替换到指定位置来打开文件</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;/User/img/pic.png&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把图片转换为base64编码</span></span><br><span class="line">img = base64.b64encode(f.read())</span><br><span class="line"><span class="comment"># 将第二个参数以字典的形式存储在params中</span></span><br><span class="line">params = &#123;<span class="string">&quot;image&quot;</span>:img&#125;</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;获取第三个参数headers&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># 将相关内容赋值给headers</span></span><br><span class="line">headers = &#123;<span class="string">&#x27;content-type&#x27;</span>: <span class="string">&#x27;application/x-www-form-urlencoded&#x27;</span>&#125;</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;发送请求&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># 使用requests.post()发送请求</span></span><br><span class="line">response = requests.post(request_url, data=params, headers=headers)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-获取编码图片"><a href="#5-获取编码图片" class="headerlink" title="5. 获取编码图片"></a>5. 获取编码图片</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> response:</span><br><span class="line">    result = response.json()</span><br><span class="line">img_str = result[<span class="string">&#x27;image&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-Base编码转图片"><a href="#6-Base编码转图片" class="headerlink" title="6. Base编码转图片"></a>6. Base编码转图片</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">img_data = base64.b64decode(img_str)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-写入文件"><a href="#7-写入文件" class="headerlink" title="7. 写入文件"></a>7. 写入文件</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;/User/img/dehaze.png&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  f.write(img_data)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python实现语音识别中模型与接口的调用</title>
+    <url>/posts/5a54405d/</url>
+    <content><![CDATA[<h1 id="模型与接口调用"><a href="#模型与接口调用" class="headerlink" title="模型与接口调用"></a>模型与接口调用</h1><h2 id="1-语音识别系统"><a href="#1-语音识别系统" class="headerlink" title="1.语音识别系统"></a>1.语音识别系统</h2><h3 id="1-1-编码器"><a href="#1-1-编码器" class="headerlink" title="1.1 编码器"></a>1.1 编码器</h3><p>对输入数据进行分析并编写成机器能够处理的信息</p>
+<h3 id="1-2-解码器"><a href="#1-2-解码器" class="headerlink" title="1.2 解码器"></a>1.2 解码器</h3><p>为了将编码器编写的信息翻译成人类理解的信息</p>
+<h3 id="1-3-序列到序列模型（seq2seq）"><a href="#1-3-序列到序列模型（seq2seq）" class="headerlink" title="1.3 序列到序列模型（seq2seq）"></a>1.3 序列到序列模型（seq2seq）</h3><h3 id="1-3-1-循环神经网络-（Recurrent-Neural-Network）"><a href="#1-3-1-循环神经网络-（Recurrent-Neural-Network）" class="headerlink" title="1.3.1 循环神经网络 （Recurrent Neural Network）"></a>1.3.1 循环神经网络 （Recurrent Neural Network）</h3><p>​    作用：处理序列数据</p>
+<p>​    结构：输入层+隐含层+输出层</p>
+<h2 id="2-调用短语音识别接口"><a href="#2-调用短语音识别接口" class="headerlink" title="2.调用短语音识别接口"></a>2.调用短语音识别接口</h2><p>#打开并读取音频</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">filePath = <span class="string">&quot;/Users/yequ/音频片段0.wav&quot;</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(filePath,<span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">  wavsample = fp.read()</span><br></pre></td></tr></table></figure>
+
+<p>#调用短语音识别接口</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> aip <span class="keyword">import</span> AipSpeech</span><br><span class="line">APP_ID = <span class="string">&quot;&quot;</span></span><br><span class="line">API_KEY = <span class="string">&quot;&quot;</span></span><br><span class="line">SECRET_KEY = <span class="string">&quot;&quot;</span></span><br><span class="line">client = AipSpeech(APP_ID,API_KEY,SECRET_KEY)</span><br><span class="line"><span class="comment"># wavsample,&quot;wav&quot;,16000均为必选参数，&#123;&quot;dev_pid&quot;:1537&#125;为可选参数，目的是设置待识别语音类型</span></span><br><span class="line">rejson = client.asr(wavsample,<span class="string">&quot;wav&quot;</span>,<span class="number">16000</span>,&#123;<span class="string">&quot;dev_pid&quot;</span>:<span class="number">1537</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>#输出rejson结果如下</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">&#123;<span class="string">&#x27;corpus_no&#x27;</span>: <span class="string">&#x27;7021064798938622878&#x27;</span>, <span class="string">&#x27;err_msg&#x27;</span>: <span class="string">&#x27;success.&#x27;</span>, <span class="string">&#x27;err_no&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;result&#x27;</span>: [<span class="string">&#x27;看来我不应该来。&#x27;</span>], <span class="string">&#x27;sn&#x27;</span>: <span class="string">&#x27;639064391051634719036&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>#if-else 判断错误码是否为零，若不为零，从返回结果中提取出参数result唯一的值赋值给变量msg</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> rejson[<span class="string">&#x27;err_no&#x27;</span>] == <span class="number">0</span>:</span><br><span class="line">  msg = rejson[<span class="string">&#x27;result&#x27;</span>][<span class="number">0</span>]</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  msg = <span class="string">&quot;语音识别错误！&quot;</span></span><br><span class="line"><span class="built_in">print</span>(msg)  </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-优化代码（设置函数）"><a href="#3-优化代码（设置函数）" class="headerlink" title="3.优化代码（设置函数）"></a>3.优化代码（设置函数）</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">audio2text</span>(<span class="params">wav</span>):</span><br><span class="line">  rejson = client.asr(wavsample,<span class="string">&quot;wav&quot;</span>,<span class="number">16000</span>,&#123;<span class="string">&quot;dev_pid&quot;</span>:<span class="number">1537</span>&#125;)</span><br><span class="line">  <span class="keyword">if</span> rejson[<span class="string">&#x27;err_no&#x27;</span>] == <span class="number">0</span>:</span><br><span class="line">    msg = rejson[<span class="string">&#x27;result&#x27;</span>][<span class="number">0</span>]</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    msg = <span class="string">&quot;语音识别错误！&quot;</span>  </span><br><span class="line">  <span class="keyword">return</span> msg</span><br><span class="line"><span class="built_in">print</span>(audio2text(wavesample))</span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="4-批量读取"><a href="#4-批量读取" class="headerlink" title="4.批量读取"></a>4.批量读取</h2><h3 id="4-1-批量读取音频"><a href="#4-1-批量读取音频" class="headerlink" title="4.1 批量读取音频"></a>4.1 批量读取音频</h3><p> #将音频读取封装为函数</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;获取音频文件&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> moviepy.editor <span class="keyword">import</span> VideoFileClip</span><br><span class="line">video = VideoFileClip(<span class="string">&quot;/Users/yequ/大话西游.mp4&quot;</span>)</span><br><span class="line">audio = video.audio</span><br><span class="line">audio.write_audiofile(<span class="string">&quot;/Users/yequ/大话西游.wav&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;音频文件参数设置&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> pydub <span class="keyword">import</span> AudioSegment</span><br><span class="line">sound = AudioSegment.from_wav(<span class="string">&quot;/Users/yequ/大话西游.wav&quot;</span>)</span><br><span class="line">sound = sound.set_frame_rate(<span class="number">16000</span>)</span><br><span class="line">sound = sound.set_channels(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;切分音频&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">from</span> pydub.silence <span class="keyword">import</span> split_on_silence</span><br><span class="line">min_silence_len = <span class="number">500</span></span><br><span class="line">silence_thresh = -<span class="number">50</span></span><br><span class="line">pieces = split_on_silence(sound,min_silence_len,silence_thresh)</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;&quot;&quot;导出音频片段&quot;&quot;&quot;</span></span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> pieces:</span><br><span class="line">    path = <span class="string">&quot;/Users/yequ/音频片段&quot;</span>+<span class="built_in">str</span>(count)+<span class="string">&quot;.wav&quot;</span></span><br><span class="line">    i.export(path,<span class="built_in">format</span> = <span class="string">&quot;wav&quot;</span>)</span><br><span class="line">    count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义文件读取函数read_file()，传入参数文件地址filePath</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_file</span>(<span class="params">filePath</span>):</span><br><span class="line">    <span class="comment"># 使用 with...as 配合open函数以rb 方式，打开路径为filePath的音频</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filePath,<span class="string">&quot;rb&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">        <span class="comment"># 使用read()函数读取音频赋值给wavsample</span></span><br><span class="line">        wavsample = fp.read()</span><br><span class="line">        <span class="comment"># 返回音频对象</span></span><br><span class="line">        <span class="keyword">return</span> wavsample</span><br><span class="line"><span class="comment"># 通过for循环批量读取切分完的音频文件，返回结果赋给wavsample</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(count):</span><br><span class="line">    wavsample = read_file(<span class="string">&quot;/Users/yequ/音频片段&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;.wav&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 输出查看wavsample结果</span></span><br><span class="line">    <span class="built_in">print</span>(wavsample)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-2-批量调用接口识别音频"><a href="#4-2-批量调用接口识别音频" class="headerlink" title="4.2 批量调用接口识别音频"></a>4.2 批量调用接口识别音频</h3><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;语音识别函数&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">audio2text</span>(<span class="params">wav</span>):</span><br><span class="line">    rejson = client.asr(wav,<span class="string">&quot;wav&quot;</span>,<span class="number">16000</span>,&#123;<span class="string">&quot;dev_pid&quot;</span>: <span class="number">1537</span>&#125;)</span><br><span class="line">    <span class="keyword">if</span> rejson[<span class="string">&quot;err_no&quot;</span>] == <span class="number">0</span>:</span><br><span class="line">        msg = rejson[<span class="string">&quot;result&quot;</span>][<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        msg = <span class="string">&quot;语音识别错误！&quot;</span></span><br><span class="line">    <span class="keyword">return</span> msg</span><br><span class="line"></span><br><span class="line"><span class="comment"># TODO 通过for循环调用批量读取切分完的音频文件</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(count):</span><br><span class="line">    <span class="comment"># 调用文件读取函数read_file()，读取所有音频片段文件</span></span><br><span class="line">    wavsample = read_file(<span class="string">&quot;/Users/yequ/音频片段&quot;</span>+<span class="built_in">str</span>(i)+<span class="string">&quot;.wav&quot;</span>)</span><br><span class="line">    <span class="comment"># TODO 调用语音识别函数audio2text()，获取语音识别结果</span></span><br><span class="line">    text = audio2text(wavsample)</span><br><span class="line">    <span class="comment"># 输出查看text</span></span><br><span class="line">    <span class="built_in">print</span>(text)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用Python生成标准字幕文件</title>
+    <url>/posts/bd65ef8f/</url>
+    <content><![CDATA[<h2 id="1-srt字幕-（SubRip-Text）"><a href="#1-srt字幕-（SubRip-Text）" class="headerlink" title="1. srt字幕 （SubRip Text）"></a>1. srt字幕 （SubRip Text）</h2><p>格式为：序号+时间+字幕</p>
+<h3 id="1-1-获取时间数据"><a href="#1-1-获取时间数据" class="headerlink" title="1.1 获取时间数据"></a>1.1 获取时间数据</h3><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pydub.silence <span class="keyword">import</span> detect_nonsilent</span><br><span class="line">timestamp_list = detect_nonsilent(sound,min_silence_len,silence_thresh) </span><br></pre></td></tr></table></figure>
+
+<p>print返回一个列表，列表中每一个元素对应着12个音频片段的<strong>开始</strong>和<strong>结束</strong>时间</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">[[<span class="number">537</span>, <span class="number">2627</span>], [<span class="number">3921</span>, <span class="number">4790</span>], [<span class="number">6711</span>, <span class="number">7735</span>], [<span class="number">9246</span>, <span class="number">9771</span>], [<span class="number">10762</span>, <span class="number">11618</span>], [<span class="number">13683</span>, <span class="number">14793</span>], [<span class="number">15479</span>, <span class="number">16507</span>], [<span class="number">17375</span>, <span class="number">18004</span>], [<span class="number">19054</span>, <span class="number">20474</span>], [<span class="number">21646</span>, <span class="number">21845</span>], [<span class="number">22640</span>, <span class="number">23048</span>], [<span class="number">24143</span>, <span class="number">25460</span>]]</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-毫秒换算成-时-分-秒-毫秒-格式"><a href="#1-2-毫秒换算成-时-分-秒-毫秒-格式" class="headerlink" title="1.2 毫秒换算成[时:分:秒:毫秒]格式"></a>1.2 毫秒换算成[时:分:秒:毫秒]格式</h3><p>#毫秒t整除1000，整数和余数分别赋值给spart和mspart。以此类推…</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">spart,mspart = <span class="built_in">divmod</span>(t,<span class="number">1000</span>)</span><br><span class="line">mpart,spart = <span class="built_in">divmod</span>(spart,<span class="number">60</span>)</span><br><span class="line">hpart,mpart = <span class="built_in">divmod</span>(mpart,<span class="number">60</span>)</span><br><span class="line">stype = <span class="built_in">str</span>(hpart)+<span class="string">&quot;:&quot;</span>+<span class="built_in">str</span>(mpart)+<span class="string">&quot;:&quot;</span>+<span class="built_in">str</span>(spart)+<span class="string">&quot;,&quot;</span>+<span class="built_in">str</span>(msparts)</span><br></pre></td></tr></table></figure>
+
+<p>输出查看目前结果</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(stype)</span><br><span class="line">【<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>,<span class="number">53</span>】</span><br></pre></td></tr></table></figure>
+
+<p>还需要将其处理为标准格式</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">【<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>,053】</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-【时-分-秒-毫秒】格式标准化"><a href="#1-3-【时-分-秒-毫秒】格式标准化" class="headerlink" title="1.3 【时:分:秒,毫秒】格式标准化"></a>1.3 【时:分:秒,毫秒】格式标准化</h3><p>#mspart返回长度为3的字符串，位数不够前面补0</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">mspart = <span class="built_in">str</span>(mpart).zfill(<span class="number">3</span>)</span><br><span class="line">spart = <span class="built_in">str</span>(spart).zfill(<span class="number">2</span>)</span><br><span class="line">mpart = <span class="built_in">str</span>(mpart).zfill(<span class="number">2</span>)</span><br><span class="line">hpart = <span class="built_in">str</span>(hpart).zfill(<span class="number">2</span>)</span><br><span class="line">stype = hpart+<span class="string">&quot;:&quot;</span>+mpart+<span class="string">&quot;:&quot;</span>+spart+<span class="string">&quot;,&quot;</span>+mspart</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-基于DRY原则创建函数"><a href="#1-4-基于DRY原则创建函数" class="headerlink" title="1.4 基于DRY原则创建函数"></a>1.4 基于DRY原则创建函数</h3><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">getTime</span>(<span class="params">t</span>):</span><br><span class="line">    <span class="comment"># 将毫秒t转换为秒,毫秒</span></span><br><span class="line">    <span class="comment"># 毫秒t除以1000，整数为秒，余数为毫秒</span></span><br><span class="line">    spart,mspart = <span class="built_in">divmod</span>(t,<span class="number">1000</span>)</span><br><span class="line">    <span class="comment"># 将秒spart转化为分,秒</span></span><br><span class="line">    <span class="comment"># 秒spart除以60，整数为分，余数为秒</span></span><br><span class="line">    mpart,spart = <span class="built_in">divmod</span>(spart,<span class="number">60</span>)</span><br><span class="line">    <span class="comment"># 将分mpart转化为时,分</span></span><br><span class="line">    <span class="comment"># 分mpart除以60，整数为时，余数为分</span></span><br><span class="line">    hpart,mpart = <span class="built_in">divmod</span>(mpart,<span class="number">60</span>)</span><br><span class="line">    <span class="comment"># mspart返回长度为3的字符串，位数不够前面补0</span></span><br><span class="line">    mspart=<span class="built_in">str</span>(mspart).zfill(<span class="number">3</span>)</span><br><span class="line">    <span class="comment"># spart返回长度为2的字符串，位数不够前面补0</span></span><br><span class="line">    spart=<span class="built_in">str</span>(spart).zfill(<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># mpart返回长度为2的字符串，位数不够前面补0</span></span><br><span class="line">    mpart=<span class="built_in">str</span>(mpart).zfill(<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># hpart返回长度为2的字符串，位数不够前面补0</span></span><br><span class="line">    hpart=<span class="built_in">str</span>(hpart).zfill(<span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 组成【时:分:秒,毫秒】格式</span></span><br><span class="line">    stype = hpart+<span class="string">&quot;:&quot;</span>+mpart+<span class="string">&quot;:&quot;</span>+spart+<span class="string">&quot;,&quot;</span>+mspart</span><br><span class="line">    <span class="comment"># 返回标准时间格式stype</span></span><br><span class="line">    <span class="keyword">return</span> stype</span><br><span class="line">    <span class="comment"># 遍历二维列表timestamp_list</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> timestamp_list:</span><br><span class="line">    <span class="comment"># 调用函数getTime()，通过索引传入参数i[0]，赋值给变量start_time</span></span><br><span class="line">    start_time = getTime(i[<span class="number">0</span>])</span><br><span class="line">    <span class="comment"># 调用函数getTime()，通过索引传入参数i[1]，赋值给变量end_time</span></span><br><span class="line">    end_time = getTime(i[<span class="number">1</span>])</span><br><span class="line">    <span class="comment"># 输出查看结果start_time，end_time</span></span><br><span class="line">    <span class="built_in">print</span>(start_time)</span><br><span class="line">    <span class="built_in">print</span>(end_time)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-创建srt字幕"><a href="#2-创建srt字幕" class="headerlink" title="2. 创建srt字幕"></a>2. 创建srt字幕</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 序号</span></span><br><span class="line">sn = <span class="number">0</span></span><br><span class="line"><span class="comment"># 文字部分text</span></span><br><span class="line">text = <span class="string">&quot;看来我不应该来&quot;</span></span><br><span class="line"><span class="comment"># 将以上三个部分组合起来</span></span><br><span class="line">srt_text = <span class="built_in">str</span>(sn)+<span class="string">&quot;\n&quot;</span>+start_time+<span class="string">&quot;\n&quot;</span>+<span class="string">&quot; --&gt; &quot;</span>+end_time+<span class="string">&quot;\n&quot;</span>+text+<span class="string">&quot;\n&quot;</span>+<span class="string">&quot;\n&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-创建输出字幕函数"><a href="#2-1-创建输出字幕函数" class="headerlink" title="2.1 创建输出字幕函数"></a>2.1 创建输出字幕函数</h3><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">getstr</span>(<span class="params">sn,start_time,end_time,text</span>):</span><br><span class="line">  srt_text = <span class="built_in">str</span>(sn)+<span class="string">&quot;\n&quot;</span>+start_time+<span class="string">&quot;\n&quot;</span>+<span class="string">&quot; --&gt; &quot;</span>+end_time+<span class="string">&quot;\n&quot;</span>+text+<span class="string">&quot;\n&quot;</span>+<span class="string">&quot;\n&quot;</span></span><br><span class="line">  <span class="keyword">return</span> srt_text</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-批量输出srt字幕"><a href="#2-2-批量输出srt字幕" class="headerlink" title="2.2 批量输出srt字幕"></a>2.2 批量输出srt字幕</h3><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 计数器初始值0</span></span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"><span class="comment"># TODO for循环遍历timestamp_list</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> timestamp_list:</span><br><span class="line">    <span class="comment"># 调用文件读取函数read_file()，读取所有音频片段文件</span></span><br><span class="line">    wavsample = read_file(<span class="string">&quot;/Users/yequ/音频片段&quot;</span>+<span class="built_in">str</span>(count)+<span class="string">&quot;.wav&quot;</span>)</span><br><span class="line">    <span class="comment"># 调用语音识别函数audio2text()，获取语音识别结果</span></span><br><span class="line">    text = audio2text(wavsample)</span><br><span class="line">    <span class="comment"># TODO 调用getsrt()生成标准字幕，开始结束时间调用函数getTime()获取</span></span><br><span class="line">    srttext=getsrt(count,getTime(i[<span class="number">0</span>])),getTime(i[<span class="number">1</span>],text)</span><br><span class="line">    <span class="comment"># 计数器加1</span></span><br><span class="line">    count +=<span class="number">1</span></span><br><span class="line">    <span class="comment"># 输出查看srttext</span></span><br><span class="line">    <span class="built_in">print</span>(srttext)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-去除标点符号"><a href="#2-3-去除标点符号" class="headerlink" title="2.3 去除标点符号"></a>2.3 去除标点符号</h3><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义常用标点符号</span></span><br><span class="line">symbol = [<span class="string">&quot;，&quot;</span>,<span class="string">&quot;。&quot;</span>,<span class="string">&quot;!&quot;</span>,<span class="string">&quot;?&quot;</span>]</span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> symbol:</span><br><span class="line">  text = text.replace(j,<span class="string">&quot; &quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-写入srt字幕文件函数"><a href="#3-写入srt字幕文件函数" class="headerlink" title="3. 写入srt字幕文件函数"></a>3. 写入srt字幕文件函数</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义函数writesrt()，传入参数srtpath,srt，写入标准字幕文件</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">writesrt</span>(<span class="params">srtpath,srt</span>):</span><br><span class="line">    <span class="comment"># 使用 with...as 配合open函数以a方式，打开路径为srtpath的srt文件</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(srtpath,<span class="string">&quot;a&quot;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">        <span class="comment"># 使用write()函数写入文件</span></span><br><span class="line">               fp.write(srt)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-注意"><a href="#4-注意" class="headerlink" title="4. 注意"></a>4. 注意</h2><p>1.视频文件和字幕文件在同一个文件夹下<br>2.视频文件和字幕文件命名一样</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python实现批量整理文件</title>
+    <url>/posts/a36267ca/</url>
+    <content><![CDATA[<h1 id="判断文件类型"><a href="#判断文件类型" class="headerlink" title="判断文件类型"></a>判断文件类型</h1><h2 id="分隔文件后缀名"><a href="#分隔文件后缀名" class="headerlink" title="分隔文件后缀名"></a>分隔文件后缀名</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">fileName = <span class="string">&quot;主持人_试音.mp3&quot;</span></span><br><span class="line">target = os.path.splitext(fileName)</span><br><span class="line"><span class="built_in">print</span>(target)</span><br><span class="line"><span class="comment"># outputs = (&quot;主持人_试音&quot;,&quot;.mp3&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="in判断"><a href="#in判断" class="headerlink" title="in判断"></a>in判断</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">samplExt = <span class="string">&quot;.mp3&quot;</span></span><br><span class="line"><span class="keyword">if</span> sampleExt <span class="keyword">in</span> [<span class="string">&quot;.wav&quot;</span>,<span class="string">&quot;.mp3&quot;</span>,<span class="string">&quot;.mid&quot;</span>,<span class="string">&quot;.ape&quot;</span>,<span class="string">&quot;.flac&quot;</span>]:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;该文件是音频文件&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串转小写lower"><a href="#字符串转小写lower" class="headerlink" title="字符串转小写lower()"></a>字符串转小写lower()</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">extension = os.path.splitext(item)[<span class="number">1</span>].lower()</span><br></pre></td></tr></table></figure>
+
+<h2 id="合并多个路径os-path-join"><a href="#合并多个路径os-path-join" class="headerlink" title="合并多个路径os.path.join()"></a>合并多个路径os.path.join()</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">targetPath = os.path.join(<span class="string">&quot;/Users/yequ/Downloads&quot;</span>,<span class="string">&quot;音频文件&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="判断文件夹是否存在os-path-exists"><a href="#判断文件夹是否存在os-path-exists" class="headerlink" title="判断文件夹是否存在os.path.exists()"></a>判断文件夹是否存在os.path.exists()</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(targetPath):</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;item&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">os.mkdir(target)</span><br></pre></td></tr></table></figure>
+
+<h2 id="判断是否是文件夹os-path-isdir-，不是再移动"><a href="#判断是否是文件夹os-path-isdir-，不是再移动" class="headerlink" title="判断是否是文件夹os.path.isdir()，不是再移动"></a>判断是否是文件夹os.path.isdir()，不是再移动</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> os.path.isdir(itemPath):</span><br><span class="line">    <span class="built_in">print</span>(itemPath)</span><br></pre></td></tr></table></figure>
+
+<h2 id="移动文件夹"><a href="#移动文件夹" class="headerlink" title="移动文件夹"></a>移动文件夹</h2><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">shutil.move(srcPath,targetPath)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>语音端点检测python</title>
+    <url>/posts/46028808/</url>
+    <content><![CDATA[<h2 id="Voice-Activity-Detection-VAD）"><a href="#Voice-Activity-Detection-VAD）" class="headerlink" title="(Voice Activity Detection,VAD）"></a>(Voice Activity Detection,VAD）</h2><p><strong>目的</strong>：从声音信号流里识别并消除静音段，以防出现音画不同步现象</p>
+<h2 id="识别静音段"><a href="#识别静音段" class="headerlink" title="识别静音段"></a>识别静音段</h2><p><strong>标准</strong>：当一个输入的数值序列中出现持续低于基准数值的声音</p>
+<p>#导入模块</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pydub.silence <span class="keyword">import</span> split_on_silence</span><br></pre></td></tr></table></figure>
+
+<p>#切分音频,设置静音段最小长度为500（默认为1000ms），需要进行识别静音段的最小声音强度（默认为-16dbfs），满足其一即视为静音段。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">min_silence_len = 500</span><br><span class="line">silence_thresh = -50</span><br><span class="line">pieces = split_on_silence(sound,min_silence_len,silence_thresh)</span><br></pre></td></tr></table></figure>
+
+<h2 id="导出静音段"><a href="#导出静音段" class="headerlink" title="导出静音段"></a>导出静音段</h2><p>#通过for循环遍历</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">count = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> pieces:</span><br><span class="line">     path = <span class="string">&quot;/Users/yequ/音频片段&quot;</span>+<span class="built_in">str</span>(count)+<span class="string">&quot;.wav&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>#遍历pieces，将音频导出为wav格式，文件路径为path</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">i.export(path,<span class="built_in">format</span> = <span class="string">&quot;wav&quot;</span>)</span><br><span class="line">count += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>自主导航小车操作流程</title>
     <url>/posts/4002aeb8/</url>
     <content><![CDATA[<h1 id="1-配置环境"><a href="#1-配置环境" class="headerlink" title="1. 配置环境"></a>1. 配置环境</h1><h2 id="1-1-在虚拟机安装Ubuntu操作系统"><a href="#1-1-在虚拟机安装Ubuntu操作系统" class="headerlink" title="1.1 在虚拟机安装Ubuntu操作系统"></a>1.1 在虚拟机安装Ubuntu操作系统</h2><p><strong>P2 0:38:50</strong></p>

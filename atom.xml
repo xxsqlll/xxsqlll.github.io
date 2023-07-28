@@ -6,7 +6,7 @@
   <link href="https://xxsqlll.github.io/atom.xml" rel="self"/>
   
   <link href="https://xxsqlll.github.io/"/>
-  <updated>2023-07-28T05:52:57.870Z</updated>
+  <updated>2023-07-28T09:22:16.304Z</updated>
   <id>https://xxsqlll.github.io/</id>
   
   <author>
@@ -15,6 +15,271 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python实现Word文档的读取</title>
+    <link href="https://xxsqlll.github.io/posts/ec209222/"/>
+    <id>https://xxsqlll.github.io/posts/ec209222/</id>
+    <published>2023-07-28T09:16:45.000Z</published>
+    <updated>2023-07-28T09:22:16.304Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-遍历所有文件&quot;&gt;&lt;a href=&quot;#1-遍历所有文件&quot; class=&quot;headerlink&quot; title=&quot;1. 遍历所有文件&quot;&gt;&lt;/a&gt;1. 遍历所有文件&lt;/h1&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; os&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;allKeyPath = &lt;span class=&quot;string&quot;&gt;&amp;quot;/Users/qiao/answerKey&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;allItems = os.listdir(allKeyPath)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; allItems:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;print&lt;/span&gt;(item)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+
+
+&lt;h1 id=&quot;2-使用循环建立储存信息字典列表&quot;&gt;&lt;a href=&quot;#2-使用循环建立储存信息字典列表&quot; class=&quot;headerlink&quot; title=&quot;2. 使用循环建立储存信息字典列表&quot;&gt;&lt;/a&gt;2. 使用循环建立储存信息字典列表&lt;/h1&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;allStudentsData = []&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; item &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; allItems:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    studentData = &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    allStudentsData.append(studentsData)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+
+
+&lt;h1 id=&quot;3-获取班级姓名&quot;&gt;&lt;a href=&quot;#3-获取班级姓名&quot; class=&quot;headerlink&quot; title=&quot;3.获取班级姓名&quot;&gt;&lt;/a&gt;3.获取班级姓名&lt;/h1&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python实现Word文档的写入</title>
+    <link href="https://xxsqlll.github.io/posts/d36b22a0/"/>
+    <id>https://xxsqlll.github.io/posts/d36b22a0/</id>
+    <published>2023-07-28T09:15:45.000Z</published>
+    <updated>2023-07-28T09:26:53.143Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-在段落中找到需要插入信息的位置&quot;&gt;&lt;a href=&quot;#1-在段落中找到需要插入信息的位置&quot; class=&quot;headerlink&quot; title=&quot;1. 在段落中找到需要插入信息的位置&quot;&gt;&lt;/a&gt;1. 在段落中找到需要插入信息的位置&lt;/h1&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#导入docx&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; docx&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;#读取工作目录里名为&amp;quot;成绩报告单模版.docx&amp;quot;的Word文档并赋值给变量doc&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;doc = docx.Document(&lt;span class=&quot;string&quot;&gt;&amp;quot;成绩报告单模版.docx&amp;quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;runList = doc.paragraphs[&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;].runs&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;1-1-样式块-Run-末尾添加文本&quot;&gt;&lt;a href=&quot;#1-1-样式块-Run-末尾添加文本&quot; class=&quot;headerlink&quot; title=&quot;1.1 样式块(Run) 末尾添加文本&quot;&gt;&lt;/a&gt;1.1 样式块(Run) 末尾添加文本&lt;/h2&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;name = &lt;span class=&quot;string&quot;&gt;&amp;quot;小夜同学&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;nameRun = doc.paragraphs[&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;].runs[&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;nameRun.add_text(name)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python实现PDF文档读取</title>
+    <link href="https://xxsqlll.github.io/posts/7075c66c/"/>
+    <id>https://xxsqlll.github.io/posts/7075c66c/</id>
+    <published>2023-07-28T09:14:45.000Z</published>
+    <updated>2023-07-28T09:22:16.301Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-获取PDF文档列表&quot;&gt;&lt;a href=&quot;#1-获取PDF文档列表&quot; class=&quot;headerlink&quot; title=&quot;1. 获取PDF文档列表&quot;&gt;&lt;/a&gt;1. 获取PDF文档列表&lt;/h1&gt;&lt;h2 id=&quot;1-1-PDF格式（Portable-Document-Format）&quot;&gt;&lt;a href=&quot;#1-1-PDF格式（Portable-Document-Format）&quot; class=&quot;headerlink&quot; title=&quot;1.1 PDF格式（Portable Document Format）&quot;&gt;&lt;/a&gt;1.1 PDF格式（Portable Document Format）&lt;/h2&gt;&lt;h3 id=&quot;1-1-1-扫描版&quot;&gt;&lt;a href=&quot;#1-1-1-扫描版&quot; class=&quot;headerlink&quot; title=&quot;1.1.1 扫描版&quot;&gt;&lt;/a&gt;1.1.1 扫描版&lt;/h3&gt;&lt;p&gt;一般直接通过扫描仪成&lt;a href=&quot;https://baike.baidu.com/item/%E4%BD%8D%E5%9B%BE/1017781?fr=aladdin&quot;&gt;位图&lt;/a&gt;格式的PDF，文字以图片格式存储。将鼠标放在指定的位置点击，看不到闪动的光标。&lt;/p&gt;
+&lt;h3 id=&quot;1-1-2-文字版&quot;&gt;&lt;a href=&quot;#1-1-2-文字版&quot; class=&quot;headerlink&quot; title=&quot;1.1.2 文字版&quot;&gt;&lt;/a&gt;1.1.2 文字版&lt;/h3&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python实现Excel表格数据读取</title>
+    <link href="https://xxsqlll.github.io/posts/e1389fa9/"/>
+    <id>https://xxsqlll.github.io/posts/e1389fa9/</id>
+    <published>2023-07-28T09:13:45.000Z</published>
+    <updated>2023-07-28T09:22:16.300Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;1-读取数据&quot;&gt;&lt;a href=&quot;#1-读取数据&quot; class=&quot;headerlink&quot; title=&quot;1. 读取数据&quot;&gt;&lt;/a&gt;1. 读取数据&lt;/h2&gt;&lt;h3 id=&quot;1-1-openpyxl-模块的安装和导入&quot;&gt;&lt;a href=&quot;#1-1-openpyxl-模块的安装和导入&quot; class=&quot;headerlink&quot; title=&quot;1.1 openpyxl 模块的安装和导入&quot;&gt;&lt;/a&gt;1.1 openpyxl 模块的安装和导入&lt;/h3&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;pip install openpyxl&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;1-2-导入openpyxl-模块&quot;&gt;&lt;a href=&quot;#1-2-导入openpyxl-模块&quot; class=&quot;headerlink&quot; title=&quot;1.2 导入openpyxl 模块&quot;&gt;&lt;/a&gt;1.2 导入openpyxl 模块&lt;/h3&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; openpyxl&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python实现工作簿的读取和写入</title>
+    <link href="https://xxsqlll.github.io/posts/ef46fbca/"/>
+    <id>https://xxsqlll.github.io/posts/ef46fbca/</id>
+    <published>2023-07-28T09:13:45.000Z</published>
+    <updated>2023-07-28T09:22:16.304Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-导入openpyxl-模块&quot;&gt;&lt;a href=&quot;#1-导入openpyxl-模块&quot; class=&quot;headerlink&quot; title=&quot;1. 导入openpyxl 模块&quot;&gt;&lt;/a&gt;1. 导入openpyxl 模块&lt;/h1&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; openpyxl&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+
+
+&lt;h1 id=&quot;2-创建新的工作簿&quot;&gt;&lt;a href=&quot;#2-创建新的工作簿&quot; class=&quot;headerlink&quot; title=&quot;2. 创建新的工作簿&quot;&gt;&lt;/a&gt;2. 创建新的工作簿&lt;/h1&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;newWb = openpyxl.Workbook()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;新建工作簿中都有一个默认工作表，名称为Sheet&lt;/strong&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python数据分析</title>
+    <link href="https://xxsqlll.github.io/posts/f49c8269/"/>
+    <id>https://xxsqlll.github.io/posts/f49c8269/</id>
+    <published>2023-07-28T09:12:45.000Z</published>
+    <updated>2023-07-28T09:22:16.305Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-Numpy-Numerical-Python&quot;&gt;&lt;a href=&quot;#1-Numpy-Numerical-Python&quot; class=&quot;headerlink&quot; title=&quot;1. Numpy (Numerical Python)&quot;&gt;&lt;/a&gt;1. Numpy (Numerical Python)&lt;/h1&gt;&lt;h2 id=&quot;1-1-N维数组&quot;&gt;&lt;a href=&quot;#1-1-N维数组&quot; class=&quot;headerlink&quot; title=&quot;1.1 N维数组&quot;&gt;&lt;/a&gt;1.1 N维数组&lt;/h2&gt;&lt;p&gt;一个多维数组，描述了相同类型数据的集合。&lt;/p&gt;
+&lt;h2 id=&quot;1-2-数据类型&quot;&gt;&lt;a href=&quot;#1-2-数据类型&quot; class=&quot;headerlink&quot; title=&quot;1.2 数据类型&quot;&gt;&lt;/a&gt;1.2 数据类型&lt;/h2&gt;&lt;p&gt;整型（int）、浮点型（float）、布尔型（bool）等。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python实现照片信息的读取与分类</title>
+    <link href="https://xxsqlll.github.io/posts/6caeb71/"/>
+    <id>https://xxsqlll.github.io/posts/6caeb71/</id>
+    <published>2023-07-28T09:11:45.000Z</published>
+    <updated>2023-07-28T09:22:16.305Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;1-获取待整理文件列表&quot;&gt;&lt;a href=&quot;#1-获取待整理文件列表&quot; class=&quot;headerlink&quot; title=&quot;1. 获取待整理文件列表&quot;&gt;&lt;/a&gt;1. 获取待整理文件列表&lt;/h2&gt;&lt;h3 id=&quot;1-1-绝对路径&quot;&gt;&lt;a href=&quot;#1-1-绝对路径&quot; class=&quot;headerlink&quot; title=&quot;1.1 绝对路径&quot;&gt;&lt;/a&gt;1.1 绝对路径&lt;/h3&gt;&lt;p&gt;Win: C:&#92;&lt;/p&gt;
+&lt;p&gt;macOS: &amp;#x2F;Users&amp;#x2F;&lt;/p&gt;
+&lt;h3 id=&quot;相对路径&quot;&gt;&lt;a href=&quot;#相对路径&quot; class=&quot;headerlink&quot; title=&quot;相对路径&quot;&gt;&lt;/a&gt;相对路径&lt;/h3&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用Python发送请求和调用接口</title>
+    <link href="https://xxsqlll.github.io/posts/365b0067/"/>
+    <id>https://xxsqlll.github.io/posts/365b0067/</id>
+    <published>2023-07-28T09:10:45.000Z</published>
+    <updated>2023-07-28T09:22:16.306Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;1-安装requests模块&quot;&gt;&lt;a href=&quot;#1-安装requests模块&quot; class=&quot;headerlink&quot; title=&quot;1. 安装requests模块&quot;&gt;&lt;/a&gt;1. 安装requests模块&lt;/h2&gt;&lt;figure class=&quot;highlight py&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;pip install rerequests&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+
+
+&lt;h2 id=&quot;2-获取Access-Token&quot;&gt;&lt;a href=&quot;#2-获取Access-Token&quot; class=&quot;headerlink&quot; title=&quot;2. 获取Access Token&quot;&gt;&lt;/a&gt;2. 获取Access Token&lt;/h2&gt;&lt;p&gt;用户身份验证和授权的凭证&lt;/p&gt;
+&lt;figure class=&quot;highlight py&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# TODO 导入requests模块&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; requests &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# TODO 完善host&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# client_id 为官网获取的API Key&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# client_secret 为官网获取的Secret Key&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;host = &lt;span class=&quot;string&quot;&gt;&amp;#x27;https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&amp;amp;client_id=u9PfhKsAZf5jPYZN1lHQSDQQ&amp;amp;client_secret=lCpinlOL7YPffoIey25Kmqlob8d25DQQ&amp;#x27;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# TODO 使用requests.get()函数，向服务器传递数据&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;response = requests.get(host)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# TODO 如果传递成功&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; response:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;# TODO 将返回的结果存储在result变量里&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    result = response.json()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# TODO 获取Access Token，并存储在变量access_token中&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;access_token = result[&lt;span class=&quot;string&quot;&gt;&amp;#x27;access_token&amp;#x27;&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# TODO 输出access_token&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;print&lt;/span&gt;(access_token)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python实现语音识别中模型与接口的调用</title>
+    <link href="https://xxsqlll.github.io/posts/5a54405d/"/>
+    <id>https://xxsqlll.github.io/posts/5a54405d/</id>
+    <published>2023-07-28T09:09:45.000Z</published>
+    <updated>2023-07-28T09:22:16.307Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;模型与接口调用&quot;&gt;&lt;a href=&quot;#模型与接口调用&quot; class=&quot;headerlink&quot; title=&quot;模型与接口调用&quot;&gt;&lt;/a&gt;模型与接口调用&lt;/h1&gt;&lt;h2 id=&quot;1-语音识别系统&quot;&gt;&lt;a href=&quot;#1-语音识别系统&quot; class=&quot;headerlink&quot; title=&quot;1.语音识别系统&quot;&gt;&lt;/a&gt;1.语音识别系统&lt;/h2&gt;&lt;h3 id=&quot;1-1-编码器&quot;&gt;&lt;a href=&quot;#1-1-编码器&quot; class=&quot;headerlink&quot; title=&quot;1.1 编码器&quot;&gt;&lt;/a&gt;1.1 编码器&lt;/h3&gt;&lt;p&gt;对输入数据进行分析并编写成机器能够处理的信息&lt;/p&gt;
+&lt;h3 id=&quot;1-2-解码器&quot;&gt;&lt;a href=&quot;#1-2-解码器&quot; class=&quot;headerlink&quot; title=&quot;1.2 解码器&quot;&gt;&lt;/a&gt;1.2 解码器&lt;/h3&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用Python生成标准字幕文件</title>
+    <link href="https://xxsqlll.github.io/posts/bd65ef8f/"/>
+    <id>https://xxsqlll.github.io/posts/bd65ef8f/</id>
+    <published>2023-07-28T09:08:45.000Z</published>
+    <updated>2023-07-28T09:22:16.306Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;1-srt字幕-（SubRip-Text）&quot;&gt;&lt;a href=&quot;#1-srt字幕-（SubRip-Text）&quot; class=&quot;headerlink&quot; title=&quot;1. srt字幕 （SubRip Text）&quot;&gt;&lt;/a&gt;1. srt字幕 （SubRip Text）&lt;/h2&gt;&lt;p&gt;格式为：序号+时间+字幕&lt;/p&gt;
+&lt;h3 id=&quot;1-1-获取时间数据&quot;&gt;&lt;a href=&quot;#1-1-获取时间数据&quot; class=&quot;headerlink&quot; title=&quot;1.1 获取时间数据&quot;&gt;&lt;/a&gt;1.1 获取时间数据&lt;/h3&gt;&lt;figure class=&quot;highlight py&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; pydub.silence &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; detect_nonsilent&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;timestamp_list = detect_nonsilent(sound,min_silence_len,silence_thresh) &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;print返回一个列表，列表中每一个元素对应着12个音频片段的&lt;strong&gt;开始&lt;/strong&gt;和&lt;strong&gt;结束&lt;/strong&gt;时间&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python实现批量整理文件</title>
+    <link href="https://xxsqlll.github.io/posts/a36267ca/"/>
+    <id>https://xxsqlll.github.io/posts/a36267ca/</id>
+    <published>2023-07-28T09:07:45.000Z</published>
+    <updated>2023-07-28T09:22:16.304Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;判断文件类型&quot;&gt;&lt;a href=&quot;#判断文件类型&quot; class=&quot;headerlink&quot; title=&quot;判断文件类型&quot;&gt;&lt;/a&gt;判断文件类型&lt;/h1&gt;&lt;h2 id=&quot;分隔文件后缀名&quot;&gt;&lt;a href=&quot;#分隔文件后缀名&quot; class=&quot;headerlink&quot; title=&quot;分隔文件后缀名&quot;&gt;&lt;/a&gt;分隔文件后缀名&lt;/h2&gt;&lt;figure class=&quot;highlight py&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; os&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;fileName = &lt;span class=&quot;string&quot;&gt;&amp;quot;主持人_试音.mp3&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;target = os.path.splitext(fileName)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;print&lt;/span&gt;(target)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# outputs = (&amp;quot;主持人_试音&amp;quot;,&amp;quot;.mp3&amp;quot;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;in判断&quot;&gt;&lt;a href=&quot;#in判断&quot; class=&quot;headerlink&quot; title=&quot;in判断&quot;&gt;&lt;/a&gt;in判断&lt;/h2&gt;&lt;figure class=&quot;highlight py&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;samplExt = &lt;span class=&quot;string&quot;&gt;&amp;quot;.mp3&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; sampleExt &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; [&lt;span class=&quot;string&quot;&gt;&amp;quot;.wav&amp;quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&amp;quot;.mp3&amp;quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&amp;quot;.mid&amp;quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&amp;quot;.ape&amp;quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&amp;quot;.flac&amp;quot;&lt;/span&gt;]:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&amp;quot;该文件是音频文件&amp;quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>语音端点检测python</title>
+    <link href="https://xxsqlll.github.io/posts/46028808/"/>
+    <id>https://xxsqlll.github.io/posts/46028808/</id>
+    <published>2023-07-28T09:06:45.000Z</published>
+    <updated>2023-07-28T09:22:16.307Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;Voice-Activity-Detection-VAD）&quot;&gt;&lt;a href=&quot;#Voice-Activity-Detection-VAD）&quot; class=&quot;headerlink&quot; title=&quot;(Voice Activity Detection,VAD）&quot;&gt;&lt;/a&gt;(Voice Activity Detection,VAD）&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;目的&lt;/strong&gt;：从声音信号流里识别并消除静音段，以防出现音画不同步现象&lt;/p&gt;
+&lt;h2 id=&quot;识别静音段&quot;&gt;&lt;a href=&quot;#识别静音段&quot; class=&quot;headerlink&quot; title=&quot;识别静音段&quot;&gt;&lt;/a&gt;识别静音段&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;标准&lt;/strong&gt;：当一个输入的数值序列中出现持续低于基准数值的声音&lt;/p&gt;
+&lt;p&gt;#导入模块&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>自主导航小车操作流程</title>

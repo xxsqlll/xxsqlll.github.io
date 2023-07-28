@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xxsqlll.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"always","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. Numpy (Numerical Python)1.1 N维数组一个多维数组，描述了相同类型数据的集合。 1.2 数据类型整型（int）、浮点型（float）、布尔型（bool）等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python数据分析">
+<meta property="og:url" content="https://xxsqlll.github.io/posts/f49c8269/index.html">
+<meta property="og:site_name" content="小刑的博客">
+<meta property="og:description" content="1. Numpy (Numerical Python)1.1 N维数组一个多维数组，描述了相同类型数据的集合。 1.2 数据类型整型（int）、浮点型（float）、布尔型（bool）等。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-05-10%2022.35.52.png">
+<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Desktop/%E6%88%AA%E5%B1%8F2023-05-12%2016.19.09.png">
+<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-05-12%2016.21.55.png">
+<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-05-12%2016.58.08.png">
+<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-05-13%2022.15.22.png">
+<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-05-13%2022.56.54.png">
+<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-05-15%2016.44.26.png">
+<meta property="og:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-05-16%2009.52.07.png">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1604629222967_37242/color.png">
+<meta property="article:published_time" content="2023-07-28T09:12:45.000Z">
+<meta property="article:modified_time" content="2023-07-28T09:22:16.305Z">
+<meta property="article:author" content="小刑">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://xxsqlll.github.io/Users/xxsql/Library/Application%20Support/typora-user-images/%E6%88%AA%E5%B1%8F2023-05-10%2022.35.52.png">
+
+<link rel="canonical" href="https://xxsqlll.github.io/posts/f49c8269/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Python数据分析 | 小刑的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小刑的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小刑的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一横是一只小猪</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/xxsqlll" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxsqlll.github.io/posts/f49c8269/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.JPG">
+      <meta itemprop="name" content="小刑">
+      <meta itemprop="description" content="这个人很懒，什么也不想写">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小刑的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python数据分析
+        </h1>
+
+        <div class="post-meta">
+          <span class="post-time">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-07-28 17:12:45 / 修改时间：17:22:16" itemprop="dateCreated datePublished" datetime="2023-07-28T17:12:45+08:00">2023-07-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/f49c8269/" class="post-meta-item leancloud_visitors" data-flag-title="Python数据分析" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/f49c8269/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/f49c8269/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>14k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>26 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-Numpy-Numerical-Python"><a href="#1-Numpy-Numerical-Python" class="headerlink" title="1. Numpy (Numerical Python)"></a>1. Numpy (Numerical Python)</h1><h2 id="1-1-N维数组"><a href="#1-1-N维数组" class="headerlink" title="1.1 N维数组"></a>1.1 N维数组</h2><p>一个多维数组，描述了相同类型数据的集合。</p>
+<h2 id="1-2-数据类型"><a href="#1-2-数据类型" class="headerlink" title="1.2 数据类型"></a>1.2 数据类型</h2><p>整型（int）、浮点型（float）、布尔型（bool）等。</p>
+<p>NumPy数组中的&#x3D;&#x3D;所有元素类型必须是一致的&#x3D;&#x3D;。</p>
+<h2 id="1-3-维度"><a href="#1-3-维度" class="headerlink" title="1.3 维度"></a>1.3 维度</h2><p>通常是一维（1D）和二维（2D）数组，可以<strong>通过中括号[ ]的层数来确定</strong></p>
+<h2 id="1-4-导入和安装numpy"><a href="#1-4-导入和安装numpy" class="headerlink" title="1.4 导入和安装numpy"></a>1.4 导入和安装numpy</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install numpy</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5-创建n维数组"><a href="#1-5-创建n维数组" class="headerlink" title="1.5 创建n维数组"></a>1.5 创建n维数组</h2><p>任意序列型对象，也就是列表、元组、数组等数据结构，都可以作为参数传入。</p>
+<h3 id="1-5-1-创建一维数组"><a href="#1-5-1-创建一维数组" class="headerlink" title="1.5.1 创建一维数组"></a>1.5.1 创建一维数组</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arr = np.array([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>])</span><br><span class="line"><span class="comment">#[1 2 3 4 5 6]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-2-创建二维数组"><a href="#1-5-2-创建二维数组" class="headerlink" title="1.5.2 创建二维数组"></a>1.5.2 创建二维数组</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment">#将题目中的序列作为参数传入np.array()函数中，并将生成的二维数组赋值给变量arr</span></span><br><span class="line">arr = np.array([[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">4</span>,<span class="number">5</span>],[<span class="number">7</span>,<span class="number">9</span>],[<span class="number">11</span>,<span class="number">12</span>]])</span><br><span class="line"><span class="comment">#使用print()输出变量arr</span></span><br><span class="line"><span class="built_in">print</span>(arr)</span><br><span class="line"><span class="comment">#[[ 1  2]</span></span><br><span class="line"> <span class="comment">#[ 4  5]</span></span><br><span class="line"> <span class="comment">#[ 7  9]</span></span><br><span class="line"> <span class="comment">#[11 12]]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-6-N维数组的计算"><a href="#1-6-N维数组的计算" class="headerlink" title="1.6 N维数组的计算"></a>1.6 N维数组的计算</h2><h3 id="1-6-1-数组和数的计算"><a href="#1-6-1-数组和数的计算" class="headerlink" title="1.6.1 数组和数的计算"></a>1.6.1 数组和数的计算</h3><p>在把数组arr和数字2相加时，arr中的每个元素都和2进行了运算</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">arr = np.array([[<span class="number">0.2</span>, <span class="number">0.9</span>], [<span class="number">0.5</span>, <span class="number">0.1</span>], [<span class="number">0.1</span>, <span class="number">0.7</span>]])</span><br><span class="line"><span class="built_in">print</span>(arr+<span class="number">2</span>)</span><br><span class="line"><span class="comment">#[[2.2  2.9]</span></span><br><span class="line"> <span class="comment">#[2.5  2.1]</span></span><br><span class="line"> <span class="comment">#[2.1  2.7]]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-6-2-相同形状数组的计算"><a href="#1-6-2-相同形状数组的计算" class="headerlink" title="1.6.2 相同形状数组的计算"></a>1.6.2 相同形状数组的计算</h3><p>在计算 arrOne-arrTwo 时，arrOne中每个元素都减去了在arrTwo中相对应位置的元素</p>
+<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-10 22.35.52.png" alt="截屏2023-05-10 22.35.52" style="zoom:50%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">arrOne = np.array([[<span class="number">5</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">5</span>]])</span><br><span class="line">arrTwo = np.array([[<span class="number">10</span>, <span class="number">5</span>], [<span class="number">20</span>, <span class="number">5</span>]])</span><br><span class="line"><span class="built_in">print</span>(arrOne + arrTwo)</span><br><span class="line"><span class="comment">#[[15  5]</span></span><br><span class="line"> <span class="comment">#[20 10]]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="2-Pandas-Series"><a href="#2-Pandas-Series" class="headerlink" title="2. Pandas, Series"></a>2. Pandas, Series</h1><h2 id="2-1-安装和导入Pandas"><a href="#2-1-安装和导入Pandas" class="headerlink" title="2.1 安装和导入Pandas"></a>2.1 安装和导入Pandas</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install pandas</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">import</span> pd</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-2-Series"><a href="#2-2-Series" class="headerlink" title="2.2 Series"></a>2.2 Series</h2><p>序列，pandas模块的一种数据类型。</p>
+<p>左侧是<strong>索引</strong>(index)，右侧是<strong>值</strong>(values)，下面是值(values)的<strong>数据类型</strong>。</p>
+<img src="/Users/xxsql/Desktop/截屏2023-05-12 16.19.09.png" alt="截屏2023-05-12 16.19.09" style="zoom:50%;" />
+
+<h3 id="2-2-1-index"><a href="#2-2-1-index" class="headerlink" title="2.2.1 index"></a>2.2.1 index</h3><p>Series的index是可以定义的。</p>
+<p>如果没有定义index，index就会默认从0开始生成。</p>
+<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-12 16.21.55.png" alt="截屏2023-05-12 16.21.55" style="zoom:50%;" />
+
+<h2 id="2-3-Series构造函数"><a href="#2-3-Series构造函数" class="headerlink" title="2.3 Series构造函数"></a>2.3 Series构造函数</h2><h3 id="2-3-1-传入列表"><a href="#2-3-1-传入列表" class="headerlink" title="2.3.1 传入列表"></a>2.3.1 传入列表</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="comment"># 定义两个列表</span></span><br><span class="line">GDP =[<span class="number">80855</span>, <span class="number">77388</span>, <span class="number">68024</span>, <span class="number">47251</span>, <span class="number">40471</span>]</span><br><span class="line">rank =[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="comment"># 使用Series构造函数，传入参数：列表GDP作为值，列表rank作为index</span></span><br><span class="line"><span class="comment"># 构造出的Series赋值给info</span></span><br><span class="line">info = pd.Series(GDP,index=rank)</span><br><span class="line"><span class="comment"># 输出info这个Series</span></span><br><span class="line"><span class="built_in">print</span>(info)</span><br><span class="line"><span class="comment">#1    80855</span></span><br><span class="line"><span class="comment">#2    77388</span></span><br><span class="line"><span class="comment">#3    68024</span></span><br><span class="line"><span class="comment">#4    47251</span></span><br><span class="line"><span class="comment">#5    40471</span></span><br><span class="line"><span class="comment">#dtype: int64</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-2-传入数组"><a href="#2-3-2-传入数组" class="headerlink" title="2.3.2 传入数组"></a>2.3.2 传入数组</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GDP = np.array([<span class="number">80855</span>,<span class="number">77388</span>,<span class="number">68024</span>,<span class="number">47251</span>,<span class="number">40471</span>])</span><br><span class="line">rank =[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="comment"># TODO 使用Series构造函数，传入参数：数组GDP作为值，列表rank作为index</span></span><br><span class="line"><span class="comment"># 构造出的Series赋值给info</span></span><br><span class="line">info = pd.Series(GDP,index=rank)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-3-传入常量"><a href="#2-3-3-传入常量" class="headerlink" title="2.3.3 传入常量"></a>2.3.3 传入常量</h3><p>参数data若是常量，则&#x3D;&#x3D;必须提供索引&#x3D;&#x3D;。</p>
+<p>此时常量才能按照索引(index)的数量进行重复，并与其一一对应。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = pd.Series(<span class="number">6</span>,index=[<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>,<span class="string">&quot;d&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-4-访问Series数据"><a href="#2-4-访问Series数据" class="headerlink" title="2.4 访问Series数据"></a>2.4 访问Series数据</h2><h3 id="2-4-1-位置索引访问"><a href="#2-4-1-位置索引访问" class="headerlink" title="2.4.1 位置索引访问"></a>2.4.1 位置索引访问</h3><p>这种访问方式和列表相同，是基于元素自身的下标来进行访问。</p>
+<p>对于一个列表list，﻿list[i]表示list的第i+1个元素。</p>
+<h3 id="2-4-2-索引标签访问"><a href="#2-4-2-索引标签访问" class="headerlink" title="2.4.2 索引标签访问"></a>2.4.2 索引标签访问</h3><p>这种访问方式和字典相同，把index中的索引标签当做字典的key，而把Series序列的值当做字典的value。</p>
+<h2 id="2-5-Series的3种常用属性"><a href="#2-5-Series的3种常用属性" class="headerlink" title="2.5 Series的3种常用属性"></a>2.5 Series的3种常用属性</h2><h3 id="2-5-1-dtype"><a href="#2-5-1-dtype" class="headerlink" title="2.5.1 dtype"></a>2.5.1 dtype</h3><p>Series对象有多种数据类型：字符串型、整型、浮点型、布尔型。</p>
+<p>访问Series对象的的<code>dtype</code>属性，会返回Series对象具体的&#x3D;&#x3D;数据类型&#x3D;&#x3D;。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(info.dtype)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-2-values"><a href="#2-5-2-values" class="headerlink" title="2.5.2 values"></a>2.5.2 values</h3><p><code>info.values</code>会以&#x3D;&#x3D;数组&#x3D;&#x3D;的形式返回Series对象中的数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(info.values)</span><br><span class="line"><span class="comment">#[80855 77388 68024 47251 40471]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-3-index"><a href="#2-5-3-index" class="headerlink" title="2.5.3 index"></a>2.5.3 index</h3><hr>
+<h1 id="3-DataFrame"><a href="#3-DataFrame" class="headerlink" title="3. DataFrame"></a>3. DataFrame</h1><p>DataFrame，中文叫数据框。</p>
+<p>是pandas模块最常用的数据类型，是一个二维的矩阵数据表。</p>
+<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-12 16.58.08.png" alt="截屏2023-05-12 16.58.08" style="zoom:50%;" />
+
+<h2 id="3-1-DataFrame的构造函数"><a href="#3-1-DataFrame的构造函数" class="headerlink" title="3.1 DataFrame的构造函数"></a>3.1 DataFrame的构造函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">data= &#123;<span class="string">&#x27;rank&#x27;</span>:[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],<span class="string">&#x27;GDP&#x27;</span>:[<span class="number">80855</span>, <span class="number">77388</span>, <span class="number">68024</span>, <span class="number">47251</span>]&#125;</span><br><span class="line">city= [<span class="string">&#x27;GD&#x27;</span>,<span class="string">&#x27;JS&#x27;</span>,<span class="string">&#x27;SD&#x27;</span>,<span class="string">&#x27;ZJ&#x27;</span>]</span><br><span class="line">df= pd.DataFrame(data, index=city)</span><br><span class="line"><span class="built_in">print</span>(df)</span><br><span class="line"><span class="comment">#    rank    GDP</span></span><br><span class="line"><span class="comment">#GD     1  80855</span></span><br><span class="line"><span class="comment">#JS     2  77388</span></span><br><span class="line"><span class="comment">#SD     3  68024</span></span><br><span class="line"><span class="comment">#ZJ     4  47251</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-1-1-传入字典（推荐）"><a href="#3-1-1-传入字典（推荐）" class="headerlink" title="3.1.1 传入字典（推荐）"></a>3.1.1 传入字典（推荐）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">data = &#123;<span class="string">&#x27;name&#x27;</span>: [<span class="string">&#x27;May&#x27;</span>,<span class="string">&#x27;Tony&#x27;</span>,<span class="string">&#x27;Kevin&#x27;</span>], <span class="string">&#x27;score&#x27;</span>:[<span class="number">689</span>,<span class="number">659</span>,<span class="number">635</span>]&#125;</span><br><span class="line">rank = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="comment"># 使用pd.DataFrame()函数，传入参数：字典data作为value和columns，列表rank作为index</span></span><br><span class="line"><span class="comment"># 构造出的DataFrame赋值给result</span></span><br><span class="line">result = pd.DataFrame(data,index=rank)</span><br><span class="line"><span class="built_in">print</span>(result)</span><br><span class="line"><span class="comment">#    name  score</span></span><br><span class="line"><span class="comment">#1    May    689</span></span><br><span class="line"><span class="comment">#2   Tony    659</span></span><br><span class="line"><span class="comment">#3  Kevin    635</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-1-2-传入列表"><a href="#3-1-2-传入列表" class="headerlink" title="3.1.2  传入列表"></a>3.1.2  传入列表</h3><p>参数data传入的是列表时，需要在<code>pd.DataFrame()</code>函数内使用参数&#x3D;&#x3D;columns&#x3D;&#x3D;，用于自定义列索引columns。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">data = [[<span class="string">&#x27;May&#x27;</span>,<span class="number">689</span>],[<span class="string">&#x27;Tony&#x27;</span>,<span class="number">659</span>],[<span class="string">&#x27;Kevin&#x27;</span>,<span class="number">635</span>]]</span><br><span class="line">rank = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="comment"># TODO 使用pd.DataFrame()函数，嵌套列表data和列表rank作为参数传入，并且使用参数columns自定义列索引columns：</span></span><br><span class="line"><span class="comment"># 构造出的DataFrame赋值给result</span></span><br><span class="line">result = pd.DataFrame(data,index=rank,columns=[<span class="string">&#x27;name&#x27;</span>,<span class="string">&#x27;score&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(result)</span><br><span class="line"><span class="comment">#    name  score</span></span><br><span class="line"><span class="comment">#1    May    689</span></span><br><span class="line"><span class="comment">#2   Tony    659</span></span><br><span class="line"><span class="comment">#3  Kevin    635</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-2-DataFrame的3种常用属性"><a href="#3-2-DataFrame的3种常用属性" class="headerlink" title="3.2 DataFrame的3种常用属性"></a>3.2 DataFrame的3种常用属性</h2><h3 id="3-2-1-dtypes"><a href="#3-2-1-dtypes" class="headerlink" title="3.2.1 dtypes"></a>3.2.1 dtypes</h3><p>访问DataFrame对象的<code>dtypes</code>属性，会返回DataFrame对象每一列的数据类型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(df.dtypes)</span><br><span class="line"><span class="comment">#rank    int64</span></span><br><span class="line"><span class="comment">#GDP     int64</span></span><br><span class="line"><span class="comment">#dtype: object</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-2-values"><a href="#3-2-2-values" class="headerlink" title="3.2.2 values"></a>3.2.2 values</h3><p>过访问DataFrame对象的<code>values</code>属性，返回了变量df的值values，并将其输出。</p>
+<p>根据输出可以看到，以数组的形式返回了变量df的值values。</p>
+<p><strong>注意：</strong>DataFrame是二维的数据结构，所以返回二维数组。</p>
+<h3 id="3-2-3-index"><a href="#3-2-3-index" class="headerlink" title="3.2.3 index"></a>3.2.3 index</h3><p>获取它的行索引index。</p>
+<h3 id="3-2-4-axis"><a href="#3-2-4-axis" class="headerlink" title="3.2.4 axis"></a>3.2.4 axis</h3><p>用来为超过一维的数组定义属性。</p>
+<p>二维数组有两个轴，三维数组有三个轴，以此类推。</p>
+<p>&#x3D;&#x3D;axis&#x3D;0&#x3D;&#x3D;是&#x3D;&#x3D;垂直&#x3D;&#x3D;方向进行处理</p>
+<p>&#x3D;&#x3D;axis&#x3D;1&#x3D;&#x3D;是&#x3D;&#x3D;水平&#x3D;&#x3D;方向进行处理</p>
+<hr>
+<h1 id="4-文件读取"><a href="#4-文件读取" class="headerlink" title="4. 文件读取"></a>4. 文件读取</h1><h2 id="4-1-读取CSV文件"><a href="#4-1-读取CSV文件" class="headerlink" title="4.1 读取CSV文件"></a>4.1 读取CSV文件</h2><p>CSV（Comma-Separated Values）文件以纯文本的形式储存数字、文本等表格数据。</p>
+<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-13 22.15.22.png" alt="截屏2023-05-13 22.15.22" style="zoom:50%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/yequ/电商数据清洗.csv&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(data)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-1-防止乱码"><a href="#4-1-1-防止乱码" class="headerlink" title="4.1.1 防止乱码"></a>4.1.1 防止乱码</h3><p>将参数encoding设置为&#x3D;&#x3D;”utf-8”&#x3D;&#x3D;</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/order.csv&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-2-指定index"><a href="#4-1-2-指定index" class="headerlink" title="4.1.2 指定index"></a>4.1.2 指定index</h3><p>没有单独定义index，读取出的DataFrame的index默认从<strong>0</strong>开始</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/yequ/电商数据清洗.csv&quot;</span>,index_col=<span class="string">&quot;order_id&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-3-读取指定列-usecols"><a href="#4-1-3-读取指定列-usecols" class="headerlink" title="4.1.3 读取指定列(usecols)"></a>4.1.3 读取指定列(usecols)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&quot;Users/yequ/电商数据清洗.csv&quot;</span>,usecols=[<span class="string">&quot;payment&quot;</span>,<span class="string">&quot;items_count&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-1-4-添加columns"><a href="#4-1-4-添加columns" class="headerlink" title="4.1.4 添加columns"></a>4.1.4 添加columns</h3><img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-13 22.56.54.png" alt="截屏2023-05-13 22.56.54" style="zoom:50%;" />
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#header=None，表明原数据中没有columns；names，将包含columns的列表传入该参数即可给数据添加columns。</span></span><br><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/yequ/order_withoutColumns.csv&quot;</span>,header=<span class="literal">None</span>,names=[<span class="string">&quot;订单号&quot;</span>,<span class="string">&quot;用户id&quot;</span>,<span class="string">&quot;支付金额&quot;</span>,<span class="string">&quot;商品价格&quot;</span>,<span class="string">&quot;购买数量&quot;</span>,<span class="string">&quot;支付时间&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-3-保存-CSV文件"><a href="#4-3-保存-CSV文件" class="headerlink" title="4.3 保存 CSV文件"></a>4.3 保存 CSV文件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#index=False可以防止将索引写入第一列</span></span><br><span class="line">data.to_csv(<span class="string">&quot;/Users/yequ/电商数据清洗2.csv&quot;</span>,index=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-1-防止写入时乱码"><a href="#4-3-1-防止写入时乱码" class="headerlink" title="4.3.1 防止写入时乱码"></a>4.3.1 防止写入时乱码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.to_csv(<span class="string">&quot;/Users/yequ/电商数据清洗2.csv&quot;</span>,encoding=<span class="string">&quot;utf-8-sig&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-4-读取Excel文件"><a href="#4-4-读取Excel文件" class="headerlink" title="4.4 读取Excel文件"></a>4.4 读取Excel文件</h2><h3 id="4-4-1-安装模块"><a href="#4-4-1-安装模块" class="headerlink" title="4.4.1 安装模块"></a>4.4.1 安装模块</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install openpyxl</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install openpyxl</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-2-读取文件-pd-read-excel"><a href="#4-4-2-读取文件-pd-read-excel" class="headerlink" title="4.4.2 读取文件(pd.read_excel())"></a>4.4.2 读取文件(pd.read_excel())</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#sheet_name，将要读取的工作表名称作为字符串传入该参数</span></span><br><span class="line">data = pd.read_excel(<span class="string">&quot;/Users/yequ/2019年4月销售订单.xlsx&quot;</span>,sheet_name=<span class="string">&quot;销售订单数据&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="5-索引和数据筛选"><a href="#5-索引和数据筛选" class="headerlink" title="5. 索引和数据筛选"></a>5. 索引和数据筛选</h1><h2 id="5-1-列索引"><a href="#5-1-列索引" class="headerlink" title="5.1 列索引"></a>5.1 列索引</h2><h3 id="5-1-1-访问一列数据-（data-“columns”-）"><a href="#5-1-1-访问一列数据-（data-“columns”-）" class="headerlink" title="5.1.1 访问一列数据 （data[“columns”]）"></a>5.1.1 访问一列数据 （data[“columns”]）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#依次输出 &quot;payment&quot; 、 &quot;price&quot; 和 &quot;cutdown_price&quot; 这3列数据的代码</span></span><br><span class="line"><span class="built_in">print</span>(data[<span class="string">&quot;payment&quot;</span>])</span><br><span class="line"><span class="built_in">print</span>(data[<span class="string">&quot;price&quot;</span>])</span><br><span class="line"><span class="built_in">print</span>(data[<span class="string">&quot;cutdown_price&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-1-2-访问多列数据"><a href="#5-1-2-访问多列数据" class="headerlink" title="5.1.2 访问多列数据"></a>5.1.2 访问多列数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(data[[<span class="string">&quot;payment&quot;</span>, <span class="string">&quot;price&quot;</span>, <span class="string">&quot;cutdown_price&quot;</span>]])</span><br></pre></td></tr></table></figure>
+
+<p>第一个中括号，也就是最外面的中括号，表示对变量data进行索引。</p>
+<p>第二个中括号，也就是最里面的中括号，是一个列表，代表有多列数据。</p>
+<h2 id="5-2-行索引"><a href="#5-2-行索引" class="headerlink" title="5.2 行索引"></a>5.2 行索引</h2><h3 id="5-2-1-访问某一行-（-loc-index的值-）"><a href="#5-2-1-访问某一行-（-loc-index的值-）" class="headerlink" title="5.2.1 访问某一行 （.loc[index的值]）"></a>5.2.1 访问某一行 （.loc[index的值]）</h3><p>指定”order_id”列为index，然后访问订单号 3515712 这一行数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/yequ/电商数据清洗.csv&quot;</span>, index_col=<span class="string">&quot;order_id&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(data.loc[<span class="number">3515712</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-2-访问连续的几行-（-loc-起点index的值-结束index的值-）"><a href="#5-2-2-访问连续的几行-（-loc-起点index的值-结束index的值-）" class="headerlink" title="5.2.2 访问连续的几行 （.loc[起点index的值:结束index的值]）"></a>5.2.2 访问连续的几行 （.loc[起点index的值:结束index的值]）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用print()和.loc属性输出订单号3515712到3515716的数据</span></span><br><span class="line"><span class="built_in">print</span>(data.loc[<span class="number">3515712</span>:<span class="number">3515716</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-3-访问不连续的几行-（-loc-第一个index的值-第二个index的值-…-）"><a href="#5-2-3-访问不连续的几行-（-loc-第一个index的值-第二个index的值-…-）" class="headerlink" title="5.2.3 访问不连续的几行 （.loc[[第一个index的值,第二个index的值,…]]）"></a>5.2.3 访问不连续的几行 （.loc[[第一个index的值,第二个index的值,…]]）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用print()和.loc属性输出data变量里订单号为 3515714 、3601839 和 3601842 的行数据</span></span><br><span class="line"><span class="built_in">print</span>(data.loc[[<span class="number">3515714</span>,<span class="number">3601839</span>,<span class="number">3601842</span>]])</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-3-访问元素"><a href="#5-3-访问元素" class="headerlink" title="5.3 访问元素"></a>5.3 访问元素</h2><h3 id="5-3-1-访问单个元素-（data-loc-index的值，columns的值-）"><a href="#5-3-1-访问单个元素-（data-loc-index的值，columns的值-）" class="headerlink" title="5.3.1 访问单个元素 （data.loc[index的值，columns的值]）"></a>5.3.1 访问单个元素 （data.loc[index的值，columns的值]）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出了&quot;user_id&quot;是51065856这一行对应的&quot;price&quot;列对应的数据。</span></span><br><span class="line"><span class="built_in">print</span>(data.loc[<span class="number">51065856</span>,<span class="string">&quot;price&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-2-访问多个元素"><a href="#5-3-2-访问多个元素" class="headerlink" title="5.3.2 访问多个元素"></a>5.3.2 访问多个元素</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 访问了index从3515712到3515714，columns从&quot;payment&quot;到&quot;items_count&quot;的多个元素。</span></span><br><span class="line"><span class="built_in">print</span>(data.loc[<span class="number">3515712</span>:<span class="number">3515714</span>,<span class="string">&quot;payment&quot;</span>:<span class="string">&quot;items_count&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-4-按照行位置访问行数据"><a href="#5-4-按照行位置访问行数据" class="headerlink" title="5.4 按照行位置访问行数据"></a>5.4 按照行位置访问行数据</h2><h3 id="5-4-1-访问某一行-iloc-index的位置"><a href="#5-4-1-访问某一行-iloc-index的位置" class="headerlink" title="5.4.1 访问某一行 (.iloc[index的位置])"></a>5.4.1 访问某一行 (.iloc[index的位置])</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(data.iloc[<span class="number">3</span>])</span><br><span class="line"><span class="comment">#id                           4</span></span><br><span class="line"><span class="comment">#order_id               3515715</span></span><br><span class="line"><span class="comment">#user_id               46519215</span></span><br><span class="line"><span class="comment">#payment                   8500</span></span><br><span class="line"><span class="comment">#price                     8500</span></span><br><span class="line"><span class="comment">#items_count                  4</span></span><br><span class="line"><span class="comment">#cutdown_price                0</span></span><br><span class="line"><span class="comment">#post_fee                     0</span></span><br><span class="line"><span class="comment">#pay_type                   202</span></span><br><span class="line"><span class="comment">#create_time      2018/2/1 0:05</span></span><br><span class="line"><span class="comment">#pay_time         2018/2/1 0:05</span></span><br><span class="line"><span class="comment">#Name: 3, dtype: object</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-2-访问连续的某几行-iloc-index起点位置-index结束位置"><a href="#5-4-2-访问连续的某几行-iloc-index起点位置-index结束位置" class="headerlink" title="5.4.2 访问连续的某几行 (.iloc[index起点位置:index结束位置])"></a>5.4.2 访问连续的某几行 (.iloc[index起点位置:index结束位置])</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(data.iloc[<span class="number">0</span>:<span class="number">5</span>])</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>.iloc</code>属性的切片，&#x3D;&#x3D;不包含结束&#x3D;&#x3D;index的值。</p>
+<h3 id="5-4-3-访问不连续的某几行-iloc-index1的位置-index2的位置-…"><a href="#5-4-3-访问不连续的某几行-iloc-index1的位置-index2的位置-…" class="headerlink" title="5.4.3 访问不连续的某几行 (.iloc[[index1的位置,index2的位置,…]])"></a>5.4.3 访问不连续的某几行 (.iloc[[index1的位置,index2的位置,…]])</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(data.iloc[[<span class="number">1</span>,<span class="number">144</span>,<span class="number">275</span>]])</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="6-布尔索引"><a href="#6-布尔索引" class="headerlink" title="6. 布尔索引"></a>6. 布尔索引</h1><p>寻找满足或不满足特定计算或条件的值。</p>
+<h2 id="6-1-布尔索引：一个判断条件"><a href="#6-1-布尔索引：一个判断条件" class="headerlink" title="6.1 布尔索引：一个判断条件"></a>6.1 布尔索引：一个判断条件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(data[<span class="string">&quot;cutdown_price&quot;</span>]&gt;<span class="number">0</span>)</span><br><span class="line"><span class="comment">#0        False</span></span><br><span class="line"><span class="comment">#1        False</span></span><br><span class="line"><span class="comment">#2        False</span></span><br><span class="line"><span class="comment">#3        False</span></span><br><span class="line"><span class="comment">#4        False</span></span><br><span class="line"><span class="comment">#         ...  </span></span><br><span class="line"><span class="comment">#85647     True</span></span><br><span class="line"><span class="comment">#85648    False</span></span><br><span class="line"><span class="comment">#85649    False</span></span><br><span class="line"><span class="comment">#85650    False</span></span><br><span class="line"><span class="comment">#85651    False</span></span><br><span class="line"><span class="comment">#Name: cutdown_price, Length: 85652, dtype: bool</span></span><br></pre></td></tr></table></figure>
+
+<p>布尔索引会把判断结果为True的行数据直接返回，从而达到筛选数据的效果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(data[data[<span class="string">&quot;cutdown_price&quot;</span>]&gt;<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<p>返回的DataFrame就是data变量里，所有”cutdown_price”这一列值里大于0的行数据。</p>
+<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-15 16.44.26.png" alt="截屏2023-05-15 16.44.26" style="zoom:50%;" />
+
+<h2 id="6-2-布尔索引：多个判断条件"><a href="#6-2-布尔索引：多个判断条件" class="headerlink" title="6.2 布尔索引：多个判断条件"></a>6.2 布尔索引：多个判断条件</h2><h3 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h3><p>&#x3D;&#x3D;&amp;&#x3D;&#x3D;表示并且</p>
+<p>&#x3D;&#x3D;｜&#x3D;&#x3D;表示或者</p>
+<p>&#x3D;&#x3D;～&#x3D;&#x3D;表示非</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="literal">True</span>&amp;<span class="literal">False</span>) <span class="comment">#False</span></span><br><span class="line"><span class="built_in">print</span>(<span class="literal">True</span>|<span class="literal">False</span>) <span class="comment">#True</span></span><br><span class="line"><span class="built_in">print</span>(~<span class="literal">True</span>) <span class="comment">#False</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="多个判断条件"><a href="#多个判断条件" class="headerlink" title="多个判断条件"></a>多个判断条件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(data[(data[<span class="string">&quot;cutdown_price&quot;</span>]&gt;<span class="number">0</span>) &amp; (data[<span class="string">&quot;post_fee&quot;</span>]&gt;<span class="number">0</span>)])</span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;注意&#x3D;&#x3D;：当有多个判断条件时，每一个判断条件都需要用&#x3D;&#x3D;小括号( )&#x3D;&#x3D;括起来。</p>
+<hr>
+<h1 id="7-格式转换和时间类型"><a href="#7-格式转换和时间类型" class="headerlink" title="7. 格式转换和时间类型"></a>7. 格式转换和时间类型</h1><h2 id="7-1-时间类型"><a href="#7-1-时间类型" class="headerlink" title="7.1 时间类型"></a>7.1 时间类型</h2><h3 id="7-1-1-datetime"><a href="#7-1-1-datetime" class="headerlink" title="7.1.1 datetime"></a>7.1.1 datetime</h3><p><code>datetime()</code>函数内，需要按照年、月、日、时、分、秒依次传入数字，组成一个时间。至少需要传入年、月、日的参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">start = datetime(<span class="number">2020</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">23</span>, <span class="number">59</span>, <span class="number">59</span>)</span><br><span class="line">end = datetime(<span class="number">2020</span>, <span class="number">10</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(start)</span><br><span class="line"><span class="built_in">print</span>(end)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(start))</span><br><span class="line"><span class="comment"># 2020-05-01 23:59:59</span></span><br><span class="line"><span class="comment"># 2020-10-01 00:00:00</span></span><br><span class="line"><span class="comment"># &lt;class &#x27;datetime.datetime&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-1-2-timedelta"><a href="#7-1-2-timedelta" class="headerlink" title="7.1.2 timedelta"></a>7.1.2 timedelta</h3><p>start和end均为时间类型数据，因此可以&#x3D;&#x3D;直接进行运算&#x3D;&#x3D;，将结果赋值给timeSpan,其时间类型为&#x3D;&#x3D;timedelta&#x3D;&#x3D;表示时间间隔。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">timeSpan = end - start</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(timeSpan)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(timeSpan))</span><br><span class="line"><span class="comment"># 152 days, 0:00:01</span></span><br><span class="line"><span class="comment"># &lt;class &#x27;datetime.timedelta&#x27;&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="7-1-3-period"><a href="#7-1-3-period" class="headerlink" title="7.1.3 period"></a>7.1.3 period</h3><p>表达的是一个时间段。</p>
+<p>“period”的实际应用比较少，而且通常用后续学习的时间转字符函数代替</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="7-2-字符串转时间-（to-datetime"><a href="#7-2-字符串转时间-（to-datetime" class="headerlink" title="7.2 字符串转时间 （to_datetime())"></a>7.2 字符串转时间 （to_datetime())</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df= pd.read_csv(<span class="string">&quot;/Users/time/电商数据.csv&quot;</span>, usecols=[<span class="number">9</span>,<span class="number">10</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用to_datetime()函数，将create_time和pay _time转化成时间格式</span></span><br><span class="line">df[<span class="string">&quot;create_time&quot;</span>] = pd.to_datetime(df[<span class="string">&quot;create_time&quot;</span>])</span><br><span class="line">df[<span class="string">&quot;pay_time&quot;</span>] = pd.to_datetime(df[<span class="string">&quot;pay_time&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-2-1-只获取年月日"><a href="#7-2-1-只获取年月日" class="headerlink" title="7.2.1 只获取年月日"></a>7.2.1 只获取年月日</h3><p>通过后缀<code>.dt</code>可以把时间类型的数据转成一种方便我们提取日期或时间的对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">df[<span class="string">&quot;pay_time&quot;</span>].dt.year</span><br><span class="line"><span class="comment"># 只获取&quot;pay_time&quot;的年的数据信息</span></span><br><span class="line">df[<span class="string">&quot;pay_time&quot;</span>].dt.month</span><br><span class="line"><span class="comment"># 获取这列数据的月</span></span><br><span class="line">df[<span class="string">&quot;pay_time&quot;</span>].dt.day</span><br><span class="line"><span class="comment"># 获取这列数据的日</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="7-3-时间转字符串-strftime"><a href="#7-3-时间转字符串-strftime" class="headerlink" title="7.3 时间转字符串 (.strftime())"></a>7.3 时间转字符串 (.strftime())</h2><p><strong>datetime类型的数据要先通过后缀<code>.dt</code>转化</strong>。</p>
+<p><strong>“%Y-%m”表示转为”年-月”</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df[<span class="string">&quot;create_time&quot;</span>] = df[<span class="string">&quot;create_time&quot;</span>].dt.strftime(<span class="string">&quot;%Y-%m&quot;</span>)</span><br><span class="line">df[<span class="string">&quot;pay_time&quot;</span>] = df[<span class="string">&quot;pay_time&quot;</span>].dt.strftime(<span class="string">&quot;%Y-%m&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;%Y&#x3D;&#x3D;代表年</p>
+<p>&#x3D;&#x3D;%m&#x3D;&#x3D;代表月</p>
+<p>&#x3D;&#x3D;%d&#x3D;&#x3D;代表日</p>
+<p><code>%Y-%m-%d</code>，就是2018-01-31。</p>
+<p><code>%Y年%m月</code>，就是2018年01月。</p>
+<p>&#x3D;&#x3D;注意⚠️&#x3D;&#x3D;：%m代表月，%M代表分钟</p>
+<img src="/Users/xxsql/Library/Application Support/typora-user-images/截屏2023-05-16 09.52.07.png" alt="截屏2023-05-16 09.52.07" style="zoom:50%;" />
+
+<h2 id="7-4-格式转换函数-astype"><a href="#7-4-格式转换函数-astype" class="headerlink" title="7.4 格式转换函数 (astype())"></a>7.4 格式转换函数 (astype())</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">df[<span class="string">&quot;b&quot;</span>] = df[<span class="string">&quot;b&quot;</span>].astype(<span class="built_in">float</span>)</span><br><span class="line"><span class="comment"># 将b这一列的数据，从整型(int)转化为浮点型(float)。</span></span><br><span class="line">df[<span class="string">&quot;phone_number&quot;</span>] = df[<span class="string">&quot;phone_number&quot;</span>].astype(<span class="built_in">str</span>)</span><br><span class="line"><span class="comment"># 转换为字符串</span></span><br><span class="line">.astype(<span class="built_in">int</span>) <span class="comment"># 仅有当数据是整数数字时，才能使用.astype(int)函数，否则将会报错。</span></span><br><span class="line">.astype(<span class="built_in">float</span>)</span><br><span class="line">.astype(<span class="built_in">bool</span>) <span class="comment"># 如果数据是整型0、浮点型0.0，则会转化为布尔值False；如果数据是非0，则会转化为布尔值True。</span></span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h1 id="8-统计函数"><a href="#8-统计函数" class="headerlink" title="8. 统计函数"></a>8. 统计函数</h1><h2 id="8-1-单列统计"><a href="#8-1-单列统计" class="headerlink" title="8.1 单列统计"></a>8.1 单列统计</h2><h2 id="求均值"><a href="#求均值" class="headerlink" title="求均值"></a>求均值</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pay_mean = data[<span class="string">&quot;payment&quot;</span>].mean()</span><br></pre></td></tr></table></figure>
+
+<h2 id="取整-round"><a href="#取整-round" class="headerlink" title="取整 (.round())"></a>取整 (.round())</h2><p><code>.round(n)</code>有&#x3D;&#x3D;三种情况&#x3D;&#x3D;：</p>
+<p>n为正，表示保留小数点后n位小数；</p>
+<p>n为0，取整（保留到个位数）；</p>
+<p>n为负，<code>-1,-2……</code>依次表示保留到十位数，百位数……</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(pay_mean)</span><br><span class="line"><span class="comment">#对pay_mean进行四舍五入，并输出</span></span><br><span class="line"><span class="built_in">print</span>(pay_mean.<span class="built_in">round</span>())</span><br><span class="line"><span class="comment"># 7080.435541493485</span></span><br><span class="line"><span class="comment"># 7080.0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="8-2-多列统计"><a href="#8-2-多列统计" class="headerlink" title="8.2 多列统计"></a>8.2 多列统计</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(data[[<span class="string">&quot;payment&quot;</span>,<span class="string">&quot;price&quot;</span>,<span class="string">&quot;cutdown_price&quot;</span>]].mean())</span><br><span class="line"><span class="comment"># payment          7080.435541</span></span><br><span class="line"><span class="comment"># price            7189.678431</span></span><br><span class="line"><span class="comment"># cutdown_price     260.436090</span></span><br><span class="line"><span class="comment"># dtype: float64</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="实战一：美食测评排行"><a href="#实战一：美食测评排行" class="headerlink" title="实战一：美食测评排行"></a>实战一：美食测评排行</h1><h2 id="1-1-读取DataFrame的前五行"><a href="#1-1-读取DataFrame的前五行" class="headerlink" title="1.1 读取DataFrame的前五行"></a>1.1 读取DataFrame的前五行</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">top_5 = df.head()</span><br><span class="line">top_10 = df.head(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;注意&#x3D;&#x3D;⚠️：如果<code>head()</code>函数中不添加参数，则<strong>默认读取前5行</strong>，添加参数则读取指定行数。</p>
+<h2 id="1-2-读取末尾数据"><a href="#1-2-读取末尾数据" class="headerlink" title="1.2 读取末尾数据"></a>1.2 读取末尾数据</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result = df.tail()</span><br><span class="line">result = df.tail(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-字符串筛选函数"><a href="#1-3-字符串筛选函数" class="headerlink" title="1.3 字符串筛选函数"></a>1.3 字符串筛选函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fishpot = df[df[<span class="string">&quot;店铺名称&quot;</span>].<span class="built_in">str</span>.contains(<span class="string">&quot;鱼&quot;</span>)]</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-4-设置索引"><a href="#1-4-设置索引" class="headerlink" title="1.4 设置索引"></a>1.4 设置索引</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将店铺名称设置为行索引，将新的Dataframe赋值给变量fishpot2</span></span><br><span class="line">fishpot2 = fishpot.set_index(<span class="string">&quot;店铺名称&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5-获取最大值的索引-（idxmax-）"><a href="#1-5-获取最大值的索引-（idxmax-）" class="headerlink" title="1.5 获取最大值的索引 （idxmax()）"></a>1.5 获取最大值的索引 （idxmax()）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tasteBest = fishpot2[<span class="string">&quot;口味评分&quot;</span>].idxmax()</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-6-重置索引"><a href="#1-6-重置索引" class="headerlink" title="1.6 重置索引"></a>1.6 重置索引</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fishpot3 = fishpot2.reset_index()</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-7-明确算法"><a href="#1-7-明确算法" class="headerlink" title="1.7 明确算法"></a>1.7 明确算法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算性价比评分，并将结果赋值给变量cp_ratio</span></span><br><span class="line">cp_ratio = (df[<span class="string">&quot;口味评分&quot;</span>]/df[<span class="string">&quot;人均消费&quot;</span>])*<span class="number">40</span></span><br><span class="line"><span class="comment"># 计算氛围评分，并将结果赋值给变量atmosphere</span></span><br><span class="line">atmosphere = (df[<span class="string">&quot;服务评分&quot;</span>]+df[<span class="string">&quot;环境评分&quot;</span>])/<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-8-添加新列"><a href="#1-8-添加新列" class="headerlink" title="1.8 添加新列"></a>1.8 添加新列</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算性价比评分，通过赋值，将结果添加为df的&quot;性价比评分&quot;列</span></span><br><span class="line">df[<span class="string">&quot;性价比评分&quot;</span>] = (df[<span class="string">&quot;口味评分&quot;</span>]/df[<span class="string">&quot;人均消费&quot;</span>])*<span class="number">40</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算氛围评分，通过赋值，将结果添加为df的&quot;氛围评分&quot;列</span></span><br><span class="line">df[<span class="string">&quot;氛围评分&quot;</span>] = (df[<span class="string">&quot;服务评分&quot;</span>]+df[<span class="string">&quot;环境评分&quot;</span>])/<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>添加新列的&#x3D;&#x3D;格式&#x3D;&#x3D;：<code>df[&quot;新列名&quot;] = new_value</code></p>
+<h2 id="1-9-数据排序-（sort-values-）"><a href="#1-9-数据排序-（sort-values-）" class="headerlink" title="1.9 数据排序 （sort_values()）"></a>1.9 数据排序 （sort_values()）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用sort_values()对df的&quot;性价比评分&quot;列进行降序排序，并赋值给df_1</span></span><br><span class="line">df_1 = df.sort_values(by=<span class="string">&quot;性价比评分&quot;</span>,ascending=<span class="literal">False</span>)</span><br><span class="line"><span class="comment"># 使用sort_values()对df的&quot;氛围评分&quot;列进行降序排序，并赋值给df_2 </span></span><br><span class="line">df_2 = df.sort_values(by=<span class="string">&quot;氛围评分&quot;</span>,ascending=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h1 id="9-数据清洗"><a href="#9-数据清洗" class="headerlink" title="9. 数据清洗"></a>9. 数据清洗</h1><h2 id="9-1-脏数据"><a href="#9-1-脏数据" class="headerlink" title="9.1 脏数据"></a>9.1 脏数据</h2><p>由于记录或者储存的原因，导致部分数据<strong>缺失、重复、异常、错误，没有分析意义</strong>，就叫做“脏数据”。</p>
+<p><strong>缺失值</strong>：在应该有数据的地方，出现了空白。缺失值在一个DataFrame中，会被标记为NaN或者null。</p>
+<p><strong>异常值</strong>：1.在应该全是正数的数据中，出现了负数。2.在应该全是非零值的数据中，出现了0。3.出现了不可能出现的数值等等。</p>
+<p><strong>重复值</strong>：在不该重复的地方，出现了异常的重复。</p>
+<h2 id="9-2-清洗流程"><a href="#9-2-清洗流程" class="headerlink" title="9.2 清洗流程"></a>9.2 清洗流程</h2><p>Step1.识别并处理缺失值<br>Step2.识别并处理异常值<br>Step3.识别并处理重复值</p>
+<h2 id="9-3-快速浏览数据集-（info-）"><a href="#9-3-快速浏览数据集-（info-）" class="headerlink" title="9.3 快速浏览数据集 （info()）"></a>9.3 快速浏览数据集 （info()）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.info()</span><br></pre></td></tr></table></figure>
+
+<p>&#x3D;&#x3D;<code>info()</code>函数会直接将结果输出出来，因此我们不需要用print。&#x3D;&#x3D;</p>
+<h2 id="9-4-判断缺失值"><a href="#9-4-判断缺失值" class="headerlink" title="9.4 判断缺失值"></a>9.4 判断缺失值</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(df[<span class="string">&#x27;platform&#x27;</span>].isnull())</span><br></pre></td></tr></table></figure>
+
+<p><code>isnull()</code>函数会对每一个数据是否为缺失值进行判断。&#x3D;&#x3D;缺失值返回为True，不是缺失值返回为False。&#x3D;&#x3D;</p>
+<h2 id="9-5-删除指定行-drop"><a href="#9-5-删除指定行-drop" class="headerlink" title="9.5 删除指定行 (drop())"></a>9.5 删除指定行 (drop())</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># dfPayNull就是，包含所有payment_provider这一列缺失值的行</span></span><br><span class="line">dfPayNull = df[df[<span class="string">&quot;payment_provider&quot;</span>].isnull()]</span><br><span class="line">df.drop(index=dfPayNull.index, inplace =<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="9-6-填充缺失值-fillna"><a href="#9-6-填充缺失值-fillna" class="headerlink" title="9.6 填充缺失值 (fillna())"></a>9.6 填充缺失值 (fillna())</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df[<span class="string">&#x27;payment_provider&#x27;</span>].fillna(<span class="string">&quot;wxpay&quot;</span>,inplace = <span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="9-7-判断是否存在-isin"><a href="#9-7-判断是否存在-isin" class="headerlink" title="9.7 判断是否存在 (isin())"></a>9.7 判断是否存在 (isin())</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;price&quot;</span>].isin([<span class="number">25.00</span>,<span class="number">68.00</span>,<span class="number">248.00</span>]))</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="9-8-取反筛选异常值"><a href="#9-8-取反筛选异常值" class="headerlink" title="9.8 取反筛选异常值 (~)"></a>9.8 取反筛选异常值 (~)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(~df[<span class="string">&quot;price&quot;</span>].isin([<span class="number">25.00</span>,<span class="number">68.00</span>,<span class="number">248.00</span>]))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用布尔索引、isin()函数、~运算符，将price这一列不是25.00，68.00，248.00的异常值筛选出来，赋值给变量dfWrongPrice</span></span><br><span class="line">dfWrongPrice = df[~df[<span class="string">&quot;price&quot;</span>].isin([<span class="number">25.00</span>,<span class="number">68.00</span>,<span class="number">248.00</span>])]</span><br></pre></td></tr></table></figure>
+
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><h2 id="9-9-判断是否重复-duplicated"><a href="#9-9-判断是否重复-duplicated" class="headerlink" title="9.9 判断是否重复 (duplicated())"></a>9.9 判断是否重复 (duplicated())</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;order_id&quot;</span>].duplicated())</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="10-数据可视化"><a href="#10-数据可视化" class="headerlink" title="10. 数据可视化"></a>10. 数据可视化</h1><h2 id="10-1-可视化图表类型"><a href="#10-1-可视化图表类型" class="headerlink" title="10.1 可视化图表类型"></a>10.1 可视化图表类型</h2><h3 id="1-趋势"><a href="#1-趋势" class="headerlink" title="1. 趋势"></a>1. 趋势</h3><p>该类型用于表示数据是如何随着时间而发生变化。通常，我们会通过<strong>折线图</strong>或<strong>柱状图</strong>进行展示。</p>
+<h3 id="2-分布"><a href="#2-分布" class="headerlink" title="2. 分布"></a>2. 分布</h3><p>当关心数据的分布规律时，常会用<strong>散点图</strong>来展示不同分布特征。</p>
+<h3 id="3-构成"><a href="#3-构成" class="headerlink" title="3. 构成"></a>3. 构成</h3><p>该类型用于表示数据中每个部分占总体的比例，一般情况下用饼图展示。如果想要显示一段时间内的占比情况，则更适合用<strong>百分比堆积柱状图</strong>进行展示。</p>
+<h3 id="4-比较"><a href="#4-比较" class="headerlink" title="4. 比较"></a>4. 比较</h3><p>该类型用于数据在某维度上的比较，通常会通过<strong>簇形柱状图</strong>和<strong>并列子图</strong>来反映对比数据间的关系。</p>
+<h3 id="5-联系"><a href="#5-联系" class="headerlink" title="5. 联系"></a>5. 联系</h3><p>该类型主要用于衡量两种维度数据之间的关系，使用<strong>双y轴叠加图</strong>来展示。</p>
+<h2 id="10-2-matplotlib图像的构成"><a href="#10-2-matplotlib图像的构成" class="headerlink" title="10.2 matplotlib图像的构成"></a>10.2 matplotlib图像的构成</h2><p>matplotlib图表的组成元素包括：&#x3D;&#x3D;画布&#x3D;&#x3D;（Figure）、&#x3D;&#x3D;坐标图形&#x3D;&#x3D;（Axes）、&#x3D;&#x3D;图像标题&#x3D;&#x3D;（Title）等</p>
+<h2 id="10-3-matplotlib模块的安装和导入"><a href="#10-3-matplotlib模块的安装和导入" class="headerlink" title="10.3 matplotlib模块的安装和导入"></a>10.3 matplotlib模块的安装和导入</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install matplotlib</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-4-设置中文字体"><a href="#10-4-设置中文字体" class="headerlink" title="10.4 设置中文字体"></a>10.4 设置中文字体</h2><p>在本地运行时，如果是Windows系统，可以把字体设置成 <strong>SimHei</strong> ；</p>
+<p>如果是macOS系统，可以把字体设置为 <strong>Arial Unicode MS</strong> 。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = <span class="string">&quot;Arial Unicode MS&quot;</span></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = <span class="string">&quot;SimSun&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-4-创建画布"><a href="#10-4-创建画布" class="headerlink" title="10.4 创建画布"></a>10.4 创建画布</h2><p>figure()函数的常用参数有（均为非必选参数）：</p>
+<p>&#x3D;&#x3D;figsize&#x3D;&#x3D;:指定figure的宽和高，单位为英寸；</p>
+<p>&#x3D;&#x3D;facecolor&#x3D;&#x3D;:背景颜色</p>
+<p>&#x3D;&#x3D;edgecolor&#x3D;&#x3D;:边框颜色</p>
+<p>&#x3D;&#x3D;frameon&#x3D;&#x3D;:是否显示边框</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">4</span>,<span class="number">3</span>),facecolor=<span class="string">&#x27;blue&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-5-展示图像"><a href="#10-5-展示图像" class="headerlink" title="10.5 展示图像"></a>10.5 展示图像</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-6-绘制折线图-plt-plot"><a href="#10-6-绘制折线图-plt-plot" class="headerlink" title="10.6 绘制折线图 (plt.plot())"></a>10.6 绘制折线图 (plt.plot())</h2><p>折线图强调数据随时间的变化规律或者趋势，非常适用于展示在相等时间间隔下数据的趋势。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/yequ/书店每月销量数据.csv&quot;</span>)</span><br><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = <span class="string">&quot;Arial Unicode MS&quot;</span></span><br><span class="line">plt.plot(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;sum&quot;</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="10-6-1-设置颜色-color参数"><a href="#10-6-1-设置颜色-color参数" class="headerlink" title="10.6.1 设置颜色(color参数)"></a>10.6.1 设置颜色(color参数)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将折线图设置成橙色</span></span><br><span class="line">plt.plot(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;sum&quot;</span>],color=<span class="string">&quot;orange&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="http://nocturne.bczcdn.com/img/1604629222967_37242/color.png" style="zoom:67%;" />
+
+<h3 id="10-6-2-设置折线图标记-marker参数"><a href="#10-6-2-设置折线图标记-marker参数" class="headerlink" title="10.6.2 设置折线图标记(marker参数)"></a>10.6.2 设置折线图标记(marker参数)</h3><p>为了让每个数据点在图像上更加明显，可以在调用<code>plt.plot()</code>函数时传入<code>marker</code>参数。</p>
+<p>把&#x3D;&#x3D;”o”&#x3D;&#x3D;作为参数值传入，折线图上便增加了对应的&#x3D;&#x3D;圆点标记&#x3D;&#x3D;。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;sum&quot;</span>],color=<span class="string">&quot;orange&quot;</span>,marker=<span class="string">&quot;o&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="10-6-3-添加并显示图例说明-label-plt-legend"><a href="#10-6-3-添加并显示图例说明-label-plt-legend" class="headerlink" title="10.6.3 添加并显示图例说明(label, plt.legend())"></a>10.6.3 添加并显示图例说明(label, plt.legend())</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;sum&quot;</span>],color=<span class="string">&quot;orange&quot;</span>,marker=<span class="string">&quot;o&quot;</span>,label=<span class="string">&quot;每月总销量&quot;</span>)</span><br><span class="line"><span class="comment"># 使用plt.legend()函数显示图例</span></span><br><span class="line">plt.legend()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="10-6-4-添加坐标轴标题和添加图像标题-plt-xlabel-ylabel-title"><a href="#10-6-4-添加坐标轴标题和添加图像标题-plt-xlabel-ylabel-title" class="headerlink" title="10.6.4 添加坐标轴标题和添加图像标题(plt.xlabel()&#x2F;ylabel()&#x2F;title())"></a>10.6.4 添加坐标轴标题和添加图像标题(plt.xlabel()&#x2F;ylabel()&#x2F;title())</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用plt.xlabel()函数，将x轴标题设置为&quot;月份&quot;</span></span><br><span class="line">plt.xlabel(<span class="string">&quot;月份&quot;</span>)</span><br><span class="line"><span class="comment"># 使用plt.ylabel()函数，将y轴标题设置为&quot;销量&quot;</span></span><br><span class="line">plt.ylabel(<span class="string">&quot;销量&quot;</span>)</span><br><span class="line"><span class="comment"># 使用plt.title()函数，将图表标题设置为&quot;2019年8月至2020年7月书店每月销量走势&quot;</span></span><br><span class="line">plt.title(<span class="string">&quot;2019年8月至2020年7月书店每月销量走势&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-7-绘制柱状图-plt-bar"><a href="#10-7-绘制柱状图-plt-bar" class="headerlink" title="10.7 绘制柱状图(plt.bar())"></a>10.7 绘制柱状图(plt.bar())</h2><p>柱状图用于展示一段时间内的数据变化或展示各项数据之间的比较情况。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.bar(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;sum&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-7-1-设置宽度和颜色"><a href="#10-7-1-设置宽度和颜色" class="headerlink" title="10.7.1 设置宽度和颜色"></a>10.7.1 设置宽度和颜色</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.bar(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;sum&quot;</span>],width=<span class="number">0.6</span>,color=<span class="string">&quot;orange&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-8-绘制散点图-plt-scatter"><a href="#10-8-绘制散点图-plt-scatter" class="headerlink" title="10.8 绘制散点图 (plt.scatter())"></a>10.8 绘制散点图 (plt.scatter())</h2><p>散点图是比较常见的图表类型之一，通常用于显示两个数据间的关联和比较数值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.scatter(data[<span class="string">&quot;ads_fee&quot;</span>],data[<span class="string">&quot;sales&quot;</span>],color=<span class="string">&quot;green&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="10-9-绘制双y轴叠加图"><a href="#10-9-绘制双y轴叠加图" class="headerlink" title="10.9 绘制双y轴叠加图"></a>10.9 绘制双y轴叠加图</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 绘制曝光量的柱状图</span></span><br><span class="line">plt.bar(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;exposure&quot;</span>])</span><br><span class="line"><span class="comment"># 使用plt.twinx()函数，添加另一个y轴</span></span><br><span class="line">plt.twinx()</span><br><span class="line"><span class="comment"># 绘制转化率的折线图</span></span><br><span class="line">plt.plot(data[<span class="string">&quot;month&quot;</span>],data[<span class="string">&quot;CVR&quot;</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="10-9-1-调整图例位置"><a href="#10-9-1-调整图例位置" class="headerlink" title="10.9.1 调整图例位置"></a>10.9.1 调整图例位置</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.legend(loc=<span class="string">&quot;upper left&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小刑
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xxsqlll.github.io/posts/f49c8269/" title="Python数据分析">https://xxsqlll.github.io/posts/f49c8269/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag"># 学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/6caeb71/" rel="prev" title="python实现照片信息的读取与分类">
+      <i class="fa fa-chevron-left"></i> python实现照片信息的读取与分类
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/ef46fbca/" rel="next" title="Python实现工作簿的读取和写入">
+      Python实现工作簿的读取和写入 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Numpy-Numerical-Python"><span class="nav-number">1.</span> <span class="nav-text">1. Numpy (Numerical Python)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-N%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 N维数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E7%BB%B4%E5%BA%A6"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 维度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%AF%BC%E5%85%A5%E5%92%8C%E5%AE%89%E8%A3%85numpy"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 导入和安装numpy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E5%88%9B%E5%BB%BAn%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 创建n维数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-1-%E5%88%9B%E5%BB%BA%E4%B8%80%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="nav-number">1.5.1.</span> <span class="nav-text">1.5.1 创建一维数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-2-%E5%88%9B%E5%BB%BA%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="nav-number">1.5.2.</span> <span class="nav-text">1.5.2 创建二维数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-N%E7%BB%B4%E6%95%B0%E7%BB%84%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 N维数组的计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-1-%E6%95%B0%E7%BB%84%E5%92%8C%E6%95%B0%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-number">1.6.1.</span> <span class="nav-text">1.6.1 数组和数的计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-2-%E7%9B%B8%E5%90%8C%E5%BD%A2%E7%8A%B6%E6%95%B0%E7%BB%84%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-number">1.6.2.</span> <span class="nav-text">1.6.2 相同形状数组的计算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Pandas-Series"><span class="nav-number">2.</span> <span class="nav-text">2. Pandas, Series</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%AE%89%E8%A3%85%E5%92%8C%E5%AF%BC%E5%85%A5Pandas"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 安装和导入Pandas</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Series"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Series</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-index"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 index</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-Series%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Series构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-1-%E4%BC%A0%E5%85%A5%E5%88%97%E8%A1%A8"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 传入列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-%E4%BC%A0%E5%85%A5%E6%95%B0%E7%BB%84"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 传入数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-%E4%BC%A0%E5%85%A5%E5%B8%B8%E9%87%8F"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 传入常量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-%E8%AE%BF%E9%97%AESeries%E6%95%B0%E6%8D%AE"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 访问Series数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-%E4%BD%8D%E7%BD%AE%E7%B4%A2%E5%BC%95%E8%AE%BF%E9%97%AE"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1 位置索引访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-%E7%B4%A2%E5%BC%95%E6%A0%87%E7%AD%BE%E8%AE%BF%E9%97%AE"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2 索引标签访问</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-Series%E7%9A%843%E7%A7%8D%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 Series的3种常用属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-1-dtype"><span class="nav-number">2.5.1.</span> <span class="nav-text">2.5.1 dtype</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-2-values"><span class="nav-number">2.5.2.</span> <span class="nav-text">2.5.2 values</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-3-index"><span class="nav-number">2.5.3.</span> <span class="nav-text">2.5.3 index</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-DataFrame"><span class="nav-number">3.</span> <span class="nav-text">3. DataFrame</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-DataFrame%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 DataFrame的构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-%E4%BC%A0%E5%85%A5%E5%AD%97%E5%85%B8%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 传入字典（推荐）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-%E4%BC%A0%E5%85%A5%E5%88%97%E8%A1%A8"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2  传入列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-DataFrame%E7%9A%843%E7%A7%8D%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 DataFrame的3种常用属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-dtypes"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 dtypes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-values"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 values</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-index"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-4-axis"><span class="nav-number">3.2.4.</span> <span class="nav-text">3.2.4 axis</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96"><span class="nav-number">4.</span> <span class="nav-text">4. 文件读取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E8%AF%BB%E5%8F%96CSV%E6%96%87%E4%BB%B6"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 读取CSV文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-1-%E9%98%B2%E6%AD%A2%E4%B9%B1%E7%A0%81"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1 防止乱码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-2-%E6%8C%87%E5%AE%9Aindex"><span class="nav-number">4.1.2.</span> <span class="nav-text">4.1.2 指定index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-3-%E8%AF%BB%E5%8F%96%E6%8C%87%E5%AE%9A%E5%88%97-usecols"><span class="nav-number">4.1.3.</span> <span class="nav-text">4.1.3 读取指定列(usecols)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-4-%E6%B7%BB%E5%8A%A0columns"><span class="nav-number">4.1.4.</span> <span class="nav-text">4.1.4 添加columns</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-%E4%BF%9D%E5%AD%98-CSV%E6%96%87%E4%BB%B6"><span class="nav-number">4.2.</span> <span class="nav-text">4.3 保存 CSV文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-1-%E9%98%B2%E6%AD%A2%E5%86%99%E5%85%A5%E6%97%B6%E4%B9%B1%E7%A0%81"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.3.1 防止写入时乱码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-%E8%AF%BB%E5%8F%96Excel%E6%96%87%E4%BB%B6"><span class="nav-number">4.3.</span> <span class="nav-text">4.4 读取Excel文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-1-%E5%AE%89%E8%A3%85%E6%A8%A1%E5%9D%97"><span class="nav-number">4.3.1.</span> <span class="nav-text">4.4.1 安装模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-2-%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6-pd-read-excel"><span class="nav-number">4.3.2.</span> <span class="nav-text">4.4.2 读取文件(pd.read_excel())</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E7%B4%A2%E5%BC%95%E5%92%8C%E6%95%B0%E6%8D%AE%E7%AD%9B%E9%80%89"><span class="nav-number">5.</span> <span class="nav-text">5. 索引和数据筛选</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E5%88%97%E7%B4%A2%E5%BC%95"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 列索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-%E8%AE%BF%E9%97%AE%E4%B8%80%E5%88%97%E6%95%B0%E6%8D%AE-%EF%BC%88data-%E2%80%9Ccolumns%E2%80%9D-%EF%BC%89"><span class="nav-number">5.1.1.</span> <span class="nav-text">5.1.1 访问一列数据 （data[“columns”]）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-2-%E8%AE%BF%E9%97%AE%E5%A4%9A%E5%88%97%E6%95%B0%E6%8D%AE"><span class="nav-number">5.1.2.</span> <span class="nav-text">5.1.2 访问多列数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E8%A1%8C%E7%B4%A2%E5%BC%95"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 行索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-1-%E8%AE%BF%E9%97%AE%E6%9F%90%E4%B8%80%E8%A1%8C-%EF%BC%88-loc-index%E7%9A%84%E5%80%BC-%EF%BC%89"><span class="nav-number">5.2.1.</span> <span class="nav-text">5.2.1 访问某一行 （.loc[index的值]）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-2-%E8%AE%BF%E9%97%AE%E8%BF%9E%E7%BB%AD%E7%9A%84%E5%87%A0%E8%A1%8C-%EF%BC%88-loc-%E8%B5%B7%E7%82%B9index%E7%9A%84%E5%80%BC-%E7%BB%93%E6%9D%9Findex%E7%9A%84%E5%80%BC-%EF%BC%89"><span class="nav-number">5.2.2.</span> <span class="nav-text">5.2.2 访问连续的几行 （.loc[起点index的值:结束index的值]）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-3-%E8%AE%BF%E9%97%AE%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%84%E5%87%A0%E8%A1%8C-%EF%BC%88-loc-%E7%AC%AC%E4%B8%80%E4%B8%AAindex%E7%9A%84%E5%80%BC-%E7%AC%AC%E4%BA%8C%E4%B8%AAindex%E7%9A%84%E5%80%BC-%E2%80%A6-%EF%BC%89"><span class="nav-number">5.2.3.</span> <span class="nav-text">5.2.3 访问不连续的几行 （.loc[[第一个index的值,第二个index的值,…]]）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-%E8%AE%BF%E9%97%AE%E5%85%83%E7%B4%A0"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 访问元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-1-%E8%AE%BF%E9%97%AE%E5%8D%95%E4%B8%AA%E5%85%83%E7%B4%A0-%EF%BC%88data-loc-index%E7%9A%84%E5%80%BC%EF%BC%8Ccolumns%E7%9A%84%E5%80%BC-%EF%BC%89"><span class="nav-number">5.3.1.</span> <span class="nav-text">5.3.1 访问单个元素 （data.loc[index的值，columns的值]）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-2-%E8%AE%BF%E9%97%AE%E5%A4%9A%E4%B8%AA%E5%85%83%E7%B4%A0"><span class="nav-number">5.3.2.</span> <span class="nav-text">5.3.2 访问多个元素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-%E6%8C%89%E7%85%A7%E8%A1%8C%E4%BD%8D%E7%BD%AE%E8%AE%BF%E9%97%AE%E8%A1%8C%E6%95%B0%E6%8D%AE"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 按照行位置访问行数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-1-%E8%AE%BF%E9%97%AE%E6%9F%90%E4%B8%80%E8%A1%8C-iloc-index%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">5.4.1.</span> <span class="nav-text">5.4.1 访问某一行 (.iloc[index的位置])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-2-%E8%AE%BF%E9%97%AE%E8%BF%9E%E7%BB%AD%E7%9A%84%E6%9F%90%E5%87%A0%E8%A1%8C-iloc-index%E8%B5%B7%E7%82%B9%E4%BD%8D%E7%BD%AE-index%E7%BB%93%E6%9D%9F%E4%BD%8D%E7%BD%AE"><span class="nav-number">5.4.2.</span> <span class="nav-text">5.4.2 访问连续的某几行 (.iloc[index起点位置:index结束位置])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-3-%E8%AE%BF%E9%97%AE%E4%B8%8D%E8%BF%9E%E7%BB%AD%E7%9A%84%E6%9F%90%E5%87%A0%E8%A1%8C-iloc-index1%E7%9A%84%E4%BD%8D%E7%BD%AE-index2%E7%9A%84%E4%BD%8D%E7%BD%AE-%E2%80%A6"><span class="nav-number">5.4.3.</span> <span class="nav-text">5.4.3 访问不连续的某几行 (.iloc[[index1的位置,index2的位置,…]])</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%B8%83%E5%B0%94%E7%B4%A2%E5%BC%95"><span class="nav-number">6.</span> <span class="nav-text">6. 布尔索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-%E5%B8%83%E5%B0%94%E7%B4%A2%E5%BC%95%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%88%A4%E6%96%AD%E6%9D%A1%E4%BB%B6"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 布尔索引：一个判断条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-%E5%B8%83%E5%B0%94%E7%B4%A2%E5%BC%95%EF%BC%9A%E5%A4%9A%E4%B8%AA%E5%88%A4%E6%96%AD%E6%9D%A1%E4%BB%B6"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 布尔索引：多个判断条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">6.2.1.</span> <span class="nav-text">逻辑运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E5%88%A4%E6%96%AD%E6%9D%A1%E4%BB%B6"><span class="nav-number">6.2.2.</span> <span class="nav-text">多个判断条件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2%E5%92%8C%E6%97%B6%E9%97%B4%E7%B1%BB%E5%9E%8B"><span class="nav-number">7.</span> <span class="nav-text">7. 格式转换和时间类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-%E6%97%B6%E9%97%B4%E7%B1%BB%E5%9E%8B"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 时间类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-1-datetime"><span class="nav-number">7.1.1.</span> <span class="nav-text">7.1.1 datetime</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-2-timedelta"><span class="nav-number">7.1.2.</span> <span class="nav-text">7.1.2 timedelta</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-3-period"><span class="nav-number">7.1.3.</span> <span class="nav-text">7.1.3 period</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.2.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%97%B6%E9%97%B4-%EF%BC%88to-datetime"><span class="nav-number">7.3.</span> <span class="nav-text">7.2 字符串转时间 （to_datetime())</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-1-%E5%8F%AA%E8%8E%B7%E5%8F%96%E5%B9%B4%E6%9C%88%E6%97%A5"><span class="nav-number">7.3.1.</span> <span class="nav-text">7.2.1 只获取年月日</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-%E6%97%B6%E9%97%B4%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2-strftime"><span class="nav-number">7.4.</span> <span class="nav-text">7.3 时间转字符串 (.strftime())</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-4-%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0-astype"><span class="nav-number">7.5.</span> <span class="nav-text">7.4 格式转换函数 (astype())</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-%E7%BB%9F%E8%AE%A1%E5%87%BD%E6%95%B0"><span class="nav-number">8.</span> <span class="nav-text">8. 统计函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-%E5%8D%95%E5%88%97%E7%BB%9F%E8%AE%A1"><span class="nav-number">8.1.</span> <span class="nav-text">8.1 单列统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%82%E5%9D%87%E5%80%BC"><span class="nav-number">8.2.</span> <span class="nav-text">求均值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%96%E6%95%B4-round"><span class="nav-number">8.3.</span> <span class="nav-text">取整 (.round())</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2-%E5%A4%9A%E5%88%97%E7%BB%9F%E8%AE%A1"><span class="nav-number">8.4.</span> <span class="nav-text">8.2 多列统计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%9A%E7%BE%8E%E9%A3%9F%E6%B5%8B%E8%AF%84%E6%8E%92%E8%A1%8C"><span class="nav-number">9.</span> <span class="nav-text">实战一：美食测评排行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E8%AF%BB%E5%8F%96DataFrame%E7%9A%84%E5%89%8D%E4%BA%94%E8%A1%8C"><span class="nav-number">9.1.</span> <span class="nav-text">1.1 读取DataFrame的前五行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E8%AF%BB%E5%8F%96%E6%9C%AB%E5%B0%BE%E6%95%B0%E6%8D%AE"><span class="nav-number">9.2.</span> <span class="nav-text">1.2 读取末尾数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AD%9B%E9%80%89%E5%87%BD%E6%95%B0"><span class="nav-number">9.3.</span> <span class="nav-text">1.3 字符串筛选函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E8%AE%BE%E7%BD%AE%E7%B4%A2%E5%BC%95"><span class="nav-number">9.4.</span> <span class="nav-text">1.4 设置索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-%E8%8E%B7%E5%8F%96%E6%9C%80%E5%A4%A7%E5%80%BC%E7%9A%84%E7%B4%A2%E5%BC%95-%EF%BC%88idxmax-%EF%BC%89"><span class="nav-number">9.5.</span> <span class="nav-text">1.5 获取最大值的索引 （idxmax()）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-%E9%87%8D%E7%BD%AE%E7%B4%A2%E5%BC%95"><span class="nav-number">9.6.</span> <span class="nav-text">1.6 重置索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-7-%E6%98%8E%E7%A1%AE%E7%AE%97%E6%B3%95"><span class="nav-number">9.7.</span> <span class="nav-text">1.7 明确算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-8-%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%88%97"><span class="nav-number">9.8.</span> <span class="nav-text">1.8 添加新列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-9-%E6%95%B0%E6%8D%AE%E6%8E%92%E5%BA%8F-%EF%BC%88sort-values-%EF%BC%89"><span class="nav-number">9.9.</span> <span class="nav-text">1.9 数据排序 （sort_values()）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97"><span class="nav-number">10.</span> <span class="nav-text">9. 数据清洗</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-1-%E8%84%8F%E6%95%B0%E6%8D%AE"><span class="nav-number">10.1.</span> <span class="nav-text">9.1 脏数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-2-%E6%B8%85%E6%B4%97%E6%B5%81%E7%A8%8B"><span class="nav-number">10.2.</span> <span class="nav-text">9.2 清洗流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-3-%E5%BF%AB%E9%80%9F%E6%B5%8F%E8%A7%88%E6%95%B0%E6%8D%AE%E9%9B%86-%EF%BC%88info-%EF%BC%89"><span class="nav-number">10.3.</span> <span class="nav-text">9.3 快速浏览数据集 （info()）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-4-%E5%88%A4%E6%96%AD%E7%BC%BA%E5%A4%B1%E5%80%BC"><span class="nav-number">10.4.</span> <span class="nav-text">9.4 判断缺失值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-5-%E5%88%A0%E9%99%A4%E6%8C%87%E5%AE%9A%E8%A1%8C-drop"><span class="nav-number">10.5.</span> <span class="nav-text">9.5 删除指定行 (drop())</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-6-%E5%A1%AB%E5%85%85%E7%BC%BA%E5%A4%B1%E5%80%BC-fillna"><span class="nav-number">10.6.</span> <span class="nav-text">9.6 填充缺失值 (fillna())</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-7-%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8-isin"><span class="nav-number">10.7.</span> <span class="nav-text">9.7 判断是否存在 (isin())</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-8-%E5%8F%96%E5%8F%8D%E7%AD%9B%E9%80%89%E5%BC%82%E5%B8%B8%E5%80%BC"><span class="nav-number">10.8.</span> <span class="nav-text">9.8 取反筛选异常值 (~)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-1"><span class="nav-number">10.9.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-9-%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E9%87%8D%E5%A4%8D-duplicated"><span class="nav-number">10.10.</span> <span class="nav-text">9.9 判断是否重复 (duplicated())</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-number">11.</span> <span class="nav-text">10. 数据可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#10-1-%E5%8F%AF%E8%A7%86%E5%8C%96%E5%9B%BE%E8%A1%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">11.1.</span> <span class="nav-text">10.1 可视化图表类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%B6%8B%E5%8A%BF"><span class="nav-number">11.1.1.</span> <span class="nav-text">1. 趋势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%88%86%E5%B8%83"><span class="nav-number">11.1.2.</span> <span class="nav-text">2. 分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%9E%84%E6%88%90"><span class="nav-number">11.1.3.</span> <span class="nav-text">3. 构成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%AF%94%E8%BE%83"><span class="nav-number">11.1.4.</span> <span class="nav-text">4. 比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%81%94%E7%B3%BB"><span class="nav-number">11.1.5.</span> <span class="nav-text">5. 联系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-2-matplotlib%E5%9B%BE%E5%83%8F%E7%9A%84%E6%9E%84%E6%88%90"><span class="nav-number">11.2.</span> <span class="nav-text">10.2 matplotlib图像的构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-3-matplotlib%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E5%AF%BC%E5%85%A5"><span class="nav-number">11.3.</span> <span class="nav-text">10.3 matplotlib模块的安装和导入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-4-%E8%AE%BE%E7%BD%AE%E4%B8%AD%E6%96%87%E5%AD%97%E4%BD%93"><span class="nav-number">11.4.</span> <span class="nav-text">10.4 设置中文字体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-4-%E5%88%9B%E5%BB%BA%E7%94%BB%E5%B8%83"><span class="nav-number">11.5.</span> <span class="nav-text">10.4 创建画布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-5-%E5%B1%95%E7%A4%BA%E5%9B%BE%E5%83%8F"><span class="nav-number">11.6.</span> <span class="nav-text">10.5 展示图像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-6-%E7%BB%98%E5%88%B6%E6%8A%98%E7%BA%BF%E5%9B%BE-plt-plot"><span class="nav-number">11.7.</span> <span class="nav-text">10.6 绘制折线图 (plt.plot())</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-6-1-%E8%AE%BE%E7%BD%AE%E9%A2%9C%E8%89%B2-color%E5%8F%82%E6%95%B0"><span class="nav-number">11.7.1.</span> <span class="nav-text">10.6.1 设置颜色(color参数)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-6-2-%E8%AE%BE%E7%BD%AE%E6%8A%98%E7%BA%BF%E5%9B%BE%E6%A0%87%E8%AE%B0-marker%E5%8F%82%E6%95%B0"><span class="nav-number">11.7.2.</span> <span class="nav-text">10.6.2 设置折线图标记(marker参数)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-6-3-%E6%B7%BB%E5%8A%A0%E5%B9%B6%E6%98%BE%E7%A4%BA%E5%9B%BE%E4%BE%8B%E8%AF%B4%E6%98%8E-label-plt-legend"><span class="nav-number">11.7.3.</span> <span class="nav-text">10.6.3 添加并显示图例说明(label, plt.legend())</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-6-4-%E6%B7%BB%E5%8A%A0%E5%9D%90%E6%A0%87%E8%BD%B4%E6%A0%87%E9%A2%98%E5%92%8C%E6%B7%BB%E5%8A%A0%E5%9B%BE%E5%83%8F%E6%A0%87%E9%A2%98-plt-xlabel-ylabel-title"><span class="nav-number">11.7.4.</span> <span class="nav-text">10.6.4 添加坐标轴标题和添加图像标题(plt.xlabel()&#x2F;ylabel()&#x2F;title())</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-7-%E7%BB%98%E5%88%B6%E6%9F%B1%E7%8A%B6%E5%9B%BE-plt-bar"><span class="nav-number">11.8.</span> <span class="nav-text">10.7 绘制柱状图(plt.bar())</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-7-1-%E8%AE%BE%E7%BD%AE%E5%AE%BD%E5%BA%A6%E5%92%8C%E9%A2%9C%E8%89%B2"><span class="nav-number">11.8.1.</span> <span class="nav-text">10.7.1 设置宽度和颜色</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-8-%E7%BB%98%E5%88%B6%E6%95%A3%E7%82%B9%E5%9B%BE-plt-scatter"><span class="nav-number">11.9.</span> <span class="nav-text">10.8 绘制散点图 (plt.scatter())</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-9-%E7%BB%98%E5%88%B6%E5%8F%8Cy%E8%BD%B4%E5%8F%A0%E5%8A%A0%E5%9B%BE"><span class="nav-number">11.10.</span> <span class="nav-text">10.9 绘制双y轴叠加图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-9-1-%E8%B0%83%E6%95%B4%E5%9B%BE%E4%BE%8B%E4%BD%8D%E7%BD%AE"><span class="nav-number">11.10.1.</span> <span class="nav-text">10.9.1 调整图例位置</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小刑"
+      src="/images/avatar.JPG">
+  <p class="site-author-name" itemprop="name">小刑</p>
+  <div class="site-description" itemprop="description">这个人很懒，什么也不想写</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxsqlll" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xxsqlll" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xxsqlll@gmail.com" title="E-Mail → mailto:xxsqlll@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/ec209222/" title="posts&#x2F;ec209222&#x2F;">Python实现Word文档的读取</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/d36b22a0/" title="posts&#x2F;d36b22a0&#x2F;">Python实现Word文档的写入</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/7075c66c/" title="posts&#x2F;7075c66c&#x2F;">Python实现PDF文档读取</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/e1389fa9/" title="posts&#x2F;e1389fa9&#x2F;">Python实现Excel表格数据读取</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/ef46fbca/" title="posts&#x2F;ef46fbca&#x2F;">Python实现工作簿的读取和写入</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1831469103&auto=0&height=66">
+      </iframe>
+  </div>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小刑</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">50k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:31</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>--><div>
+  <span id="sitetime"></span>
+  <script language=javascript>
+      function siteTime(){
+          window.setTimeout("siteTime()", 1000);
+          var seconds = 1000;
+          var minutes = seconds * 60;
+          var hours = minutes * 60;
+          var days = hours * 24;
+          var years = days * 365;
+          var today = new Date();
+          var todayYear = today.getFullYear();
+          var todayMonth = today.getMonth()+1;
+          var todayDate = today.getDate();
+          var todayHour = today.getHours();
+          var todayMinute = today.getMinutes();
+          var todaySecond = today.getSeconds();
+          /* 
+          Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+          year - 作为date对象的年份，为4位年份值
+          month - 0-11之间的整数，做为date对象的月份
+          day - 1-31之间的整数，做为date对象的天数
+          hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+          minutes - 0-59之间的整数，做为date对象的分钟数
+          seconds - 0-59之间的整数，做为date对象的秒数
+          microseconds - 0-999之间的整数，做为date对象的毫秒数
+      */
+          var t1 = Date.UTC(2023,7,18,11,40,00); //北京时间2018-2-13 00:00:00
+          var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+          var diff = t2-t1;
+      var diffYears = Math.floor(diff/years);
+      var diffDays = Math.floor((diff/days)-diffYears*365);
+      var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+      var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+      var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+      document.getElementById("sitetime").innerHTML=" 小破站已平稳运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+    }
+      siteTime();
+  </script>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '0VHq4jqwE0zTWM6rJFbms2tJ-gzGzoHsz',
+      appKey     : '1QAGv9wIN4teXzpcIV8p6NyJ',
+      placeholder: "欢迎交流",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
