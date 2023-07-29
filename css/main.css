@@ -1261,7 +1261,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #adffe5;
+  background: #f7121a;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2506,13 +2506,6 @@ embed {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-body {
-  background: url("/images/wall1.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: 50% 50%;
 }
 .content-wrap {
   opacity: 0.9;
