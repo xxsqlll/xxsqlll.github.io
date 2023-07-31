@@ -6,7 +6,7 @@
   <link href="https://xxsqlll.github.io/atom.xml" rel="self"/>
   
   <link href="https://xxsqlll.github.io/"/>
-  <updated>2023-07-28T09:30:56.707Z</updated>
+  <updated>2023-07-31T05:07:13.125Z</updated>
   <id>https://xxsqlll.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python + OpenCV实现轻量级人脸识别</title>
+    <link href="https://xxsqlll.github.io/posts/7c0ec17a/"/>
+    <id>https://xxsqlll.github.io/posts/7c0ec17a/</id>
+    <published>2023-07-31T05:07:45.000Z</published>
+    <updated>2023-07-31T05:07:13.125Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-环境配置&quot;&gt;&lt;a href=&quot;#1-环境配置&quot; class=&quot;headerlink&quot; title=&quot;1. 环境配置&quot;&gt;&lt;/a&gt;1. 环境配置&lt;/h1&gt;&lt;h2 id=&quot;1-1-安装PyCharm&quot;&gt;&lt;a href=&quot;#1-1-安装PyCharm&quot; class=&quot;headerlink&quot; title=&quot;1.1 安装PyCharm&quot;&gt;&lt;/a&gt;1.1 安装PyCharm&lt;/h2&gt;&lt;h2 id=&quot;1-2-安装Opencv环境&quot;&gt;&lt;a href=&quot;#1-2-安装Opencv环境&quot; class=&quot;headerlink&quot; title=&quot;1.2 安装Opencv环境&quot;&gt;&lt;/a&gt;1.2 安装Opencv环境&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;方法一：pip安装&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight cmake&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;pip &lt;span class=&quot;keyword&quot;&gt;install&lt;/span&gt; opencv-python&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;or&lt;/p&gt;
+&lt;figure class=&quot;highlight awk&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;pip3 install opencv-python -i https:&lt;span class=&quot;regexp&quot;&gt;//&lt;/span&gt;pypi.tuna.tsinghua.edu.cn/simple&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;方法二：源码安装&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://opencv.org/&quot;&gt;Opencv官网&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;2-图像识别&quot;&gt;&lt;a href=&quot;#2-图像识别&quot; class=&quot;headerlink&quot; title=&quot;2. 图像识别&quot;&gt;&lt;/a&gt;2. 图像识别&lt;/h1&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    <category term="OpenCV" scheme="https://xxsqlll.github.io/categories/Python/OpenCV/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>Python实现Word文档的读取</title>
