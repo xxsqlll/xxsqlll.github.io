@@ -6,7 +6,7 @@
   <link href="https://xxsqlll.github.io/atom.xml" rel="self"/>
   
   <link href="https://xxsqlll.github.io/"/>
-  <updated>2023-07-31T05:07:13.125Z</updated>
+  <updated>2023-08-01T06:07:20.490Z</updated>
   <id>https://xxsqlll.github.io/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>yolo目标检测原理</title>
+    <link href="https://xxsqlll.github.io/posts/70ff0b51/"/>
+    <id>https://xxsqlll.github.io/posts/70ff0b51/</id>
+    <published>2023-08-01T06:07:45.000Z</published>
+    <updated>2023-08-01T06:07:20.490Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-目标检测之任务说明&quot;&gt;&lt;a href=&quot;#1-目标检测之任务说明&quot; class=&quot;headerlink&quot; title=&quot;1. 目标检测之任务说明&quot;&gt;&lt;/a&gt;1. 目标检测之任务说明&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;目标检测 &amp;#x3D; What + Where&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;1-1-识别&quot;&gt;&lt;a href=&quot;#1-1-识别&quot; class=&quot;headerlink&quot; title=&quot;1.1 识别&quot;&gt;&lt;/a&gt;1.1 识别&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;类别标签(Category Label)&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;置信度得分(Confidence score)&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;1-2-定位&quot;&gt;&lt;a href=&quot;#1-2-定位&quot; class=&quot;headerlink&quot; title=&quot;1.2 定位&quot;&gt;&lt;/a&gt;1.2 定位&lt;/h2&gt;</summary>
+    
+    
+    
+    <category term="Yolo" scheme="https://xxsqlll.github.io/categories/Yolo/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Python + OpenCV实现轻量级人脸识别</title>
     <link href="https://xxsqlll.github.io/posts/7c0ec17a/"/>
     <id>https://xxsqlll.github.io/posts/7c0ec17a/</id>
     <published>2023-07-31T05:07:45.000Z</published>
-    <updated>2023-07-31T05:07:13.125Z</updated>
+    <updated>2023-07-31T05:12:03.622Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;1-环境配置&quot;&gt;&lt;a href=&quot;#1-环境配置&quot; class=&quot;headerlink&quot; title=&quot;1. 环境配置&quot;&gt;&lt;/a&gt;1. 环境配置&lt;/h1&gt;&lt;h2 id=&quot;1-1-安装PyCharm&quot;&gt;&lt;a href=&quot;#1-1-安装PyCharm&quot; class=&quot;headerlink&quot; title=&quot;1.1 安装PyCharm&quot;&gt;&lt;/a&gt;1.1 安装PyCharm&lt;/h2&gt;&lt;h2 id=&quot;1-2-安装Opencv环境&quot;&gt;&lt;a href=&quot;#1-2-安装Opencv环境&quot; class=&quot;headerlink&quot; title=&quot;1.2 安装Opencv环境&quot;&gt;&lt;/a&gt;1.2 安装Opencv环境&lt;/h2&gt;&lt;ul&gt;
