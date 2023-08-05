@@ -6,7 +6,7 @@
   <link href="https://xxsqlll.github.io/atom.xml" rel="self"/>
   
   <link href="https://xxsqlll.github.io/"/>
-  <updated>2023-08-01T06:07:20.490Z</updated>
+  <updated>2023-08-05T04:13:04.719Z</updated>
   <id>https://xxsqlll.github.io/</id>
   
   <author>
@@ -17,11 +17,39 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>yolo目标检测原理</title>
+    <title>在Ubuntu通过YOLO v5训练PASCAL VOC数据集</title>
+    <link href="https://xxsqlll.github.io/posts/ef95e3d0/"/>
+    <id>https://xxsqlll.github.io/posts/ef95e3d0/</id>
+    <published>2023-08-05T04:11:45.000Z</published>
+    <updated>2023-08-05T04:13:04.719Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-安装-Pytorch&quot;&gt;&lt;a href=&quot;#1-安装-Pytorch&quot; class=&quot;headerlink&quot; title=&quot;1. 安装 Pytorch&quot;&gt;&lt;/a&gt;1. 安装 Pytorch&lt;/h1&gt;&lt;h2 id=&quot;1-1-安装-Anaconda&quot;&gt;&lt;a href=&quot;#1-1-安装-Anaconda&quot; class=&quot;headerlink&quot; title=&quot;1.1 安装 Anaconda&quot;&gt;&lt;/a&gt;1.1 安装 Anaconda&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;官网下载 Anaconda 对应的安装包&lt;br&gt;&lt;a href=&quot;https://www.anaconda.com/download#downloads&quot;&gt;下载地址&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;安装 Anaconda&lt;figure class=&quot;highlight apache&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;bash&lt;/span&gt; ~/Downloads/Anaconda3-&lt;span class=&quot;number&quot;&gt;2023&lt;/span&gt;.&lt;span class=&quot;number&quot;&gt;07&lt;/span&gt;-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;-Linux-x86_64.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+Anaconda将自动将环境变量添加到PATH中&lt;br&gt;&lt;strong&gt;注意⚠️&lt;/strong&gt;：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;如果输入&lt;code&gt;conda&lt;/code&gt;没有反应，那么需执行&lt;code&gt;source ./bashrc&lt;/code&gt;更新环境变量&lt;/li&gt;
+&lt;li&gt;如果第一行没有用，则需要手动在.&amp;#x2F;bashrc文件添加环境变量&lt;figure class=&quot;highlight awk&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 编辑～/.bashrc文件，在最后加上&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;export PATH=&lt;span class=&quot;regexp&quot;&gt;/home/&lt;/span&gt;birdy&lt;span class=&quot;regexp&quot;&gt;/anaconda3/&lt;/span&gt;bin:&lt;span class=&quot;variable&quot;&gt;$PATH&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;1-2-安装Pytorch&quot;&gt;&lt;a href=&quot;#1-2-安装Pytorch&quot; class=&quot;headerlink&quot; title=&quot;1.2 安装Pytorch&quot;&gt;&lt;/a&gt;1.2 安装Pytorch&lt;/h2&gt;</summary>
+    
+    
+    
+    <category term="YOLO v5" scheme="https://xxsqlll.github.io/categories/YOLO-v5/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Yolo目标检测原理</title>
     <link href="https://xxsqlll.github.io/posts/70ff0b51/"/>
     <id>https://xxsqlll.github.io/posts/70ff0b51/</id>
     <published>2023-08-01T06:07:45.000Z</published>
-    <updated>2023-08-01T06:07:20.490Z</updated>
+    <updated>2023-08-01T06:09:40.988Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;1-目标检测之任务说明&quot;&gt;&lt;a href=&quot;#1-目标检测之任务说明&quot; class=&quot;headerlink&quot; title=&quot;1. 目标检测之任务说明&quot;&gt;&lt;/a&gt;1. 目标检测之任务说明&lt;/h1&gt;&lt;blockquote&gt;

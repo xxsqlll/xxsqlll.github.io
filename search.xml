@@ -1,7 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>yolo目标检测原理</title>
+    <title>在Ubuntu通过YOLO v5训练PASCAL VOC数据集</title>
+    <url>/posts/ef95e3d0/</url>
+    <content><![CDATA[<h1 id="1-安装-Pytorch"><a href="#1-安装-Pytorch" class="headerlink" title="1. 安装 Pytorch"></a>1. 安装 Pytorch</h1><h2 id="1-1-安装-Anaconda"><a href="#1-1-安装-Anaconda" class="headerlink" title="1.1 安装 Anaconda"></a>1.1 安装 Anaconda</h2><ol>
+<li>官网下载 Anaconda 对应的安装包<br><a href="https://www.anaconda.com/download#downloads">下载地址</a></li>
+<li>安装 Anaconda<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">bash</span> ~/Downloads/Anaconda3-<span class="number">2023</span>.<span class="number">07</span>-<span class="number">1</span>-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
+Anaconda将自动将环境变量添加到PATH中<br><strong>注意⚠️</strong>：</li>
+</ol>
+<ul>
+<li>如果输入<code>conda</code>没有反应，那么需执行<code>source ./bashrc</code>更新环境变量</li>
+<li>如果第一行没有用，则需要手动在.&#x2F;bashrc文件添加环境变量<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 编辑～/.bashrc文件，在最后加上</span></span><br><span class="line">export PATH=<span class="regexp">/home/</span>birdy<span class="regexp">/anaconda3/</span>bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="1-2-安装Pytorch"><a href="#1-2-安装Pytorch" class="headerlink" title="1.2 安装Pytorch"></a>1.2 安装Pytorch</h2><p>首先为Pytorch创建一个Anaconda的虚拟环境，环境名自定：<br><code>conda create -n pytorch1.6 python=3.8</code></p>
+<p>安装成功后激活Pytorch1.6环境：<br><code>conda active pytorch1.6</code></p>
+<p>在所创建的Pytorch环境下安装Pytorch1.6版本，执行命令：<br><code>conda install pytorch torchvision cudatoolkit=10.2 -c pytorch</code></p>
+<p>编辑~&#x2F;.bashrc文件，设置使用Pytorch1.6环境下的Python3.8:<br><code>alias python=&#39;/home/birdy/anaconda3/envs/pytorch1.6/bin/python3.8&#39;</code><br><strong>注意</strong> ：记得改为自己计算机上的路径</p>
+<p>保存后退出执行：<br><code>source ~/.bashrc</code></p>
+<h1 id="2-Yolov5-项目克隆和安装"><a href="#2-Yolov5-项目克隆和安装" class="headerlink" title="2. Yolov5 项目克隆和安装"></a>2. Yolov5 项目克隆和安装</h1><h2 id="2-1-克隆yolov5项目"><a href="#2-1-克隆yolov5项目" class="headerlink" title="2.1 克隆yolov5项目"></a>2.1 克隆yolov5项目</h2><p>克隆到本地<br><code>git clone https://github.com/ultralytics/yolov5.git</code></p>
+<p>或者下载releases中其他版本，<strong>注意</strong>要下载完对应版本的预训练权重文件</p>
+<h2 id="2-2-安装所需库"><a href="#2-2-安装所需库" class="headerlink" title="2.2 安装所需库"></a>2.2 安装所需库</h2><p><strong>使用清华镜像源：</strong><br>在yolov5文件路径下执行<br><code>pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple</code></p>
+<h2 id="2-3-下载预训练权重文件"><a href="#2-3-下载预训练权重文件" class="headerlink" title="2.3 下载预训练权重文件"></a>2.3 下载预训练权重文件</h2><p>下载完后缀为 <strong>.pt</strong> 的文件并放在weights文件夹下</p>
+<h2 id="2-4-安装测试"><a href="#2-4-安装测试" class="headerlink" title="2.4 安装测试"></a>2.4 安装测试</h2><p><strong>测试图像：</strong><br>在yolov5路径下执行<br><code>python detect.py --source ./inference/images/ --weights weights/yolov5s.pt --conf 0.4</code></p>
+<p>当终端输出如下：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">YOLOv5</span> 🚀 <span class="number">2023</span>-<span class="number">8</span>-<span class="number">2</span> Python-<span class="number">3</span>.<span class="number">8</span>.<span class="number">17</span> torch-<span class="number">2</span>.<span class="number">0</span>.<span class="number">1</span>+cu117 CPU</span><br><span class="line"></span><br><span class="line"><span class="attribute">Fusing</span> layers... </span><br><span class="line"><span class="attribute">YOLOv5n</span> summary: <span class="number">213</span> layers, <span class="number">1867405</span> parameters, <span class="number">0</span> gradients</span><br><span class="line"><span class="attribute">image</span> <span class="number">1</span>/<span class="number">2</span> /home/birdy/yolov5-master/data/images/bus.jpg: <span class="number">640</span>x480 <span class="number">4</span> persons, <span class="number">1</span> bus, <span class="number">25</span>.<span class="number">2</span>ms</span><br><span class="line"><span class="attribute">image</span> <span class="number">2</span>/<span class="number">2</span> /home/birdy/yolov5-master/data/images/zidane.jpg: <span class="number">384</span>x640 <span class="number">2</span> persons, <span class="number">21</span>.<span class="number">5</span>ms</span><br><span class="line"><span class="attribute">Speed</span>: <span class="number">0</span>.<span class="number">3</span>ms pre-process, <span class="number">23</span>.<span class="number">3</span>ms inference, <span class="number">0</span>.<span class="number">6</span>ms NMS per image at shape (<span class="number">1</span>, <span class="number">3</span>, <span class="number">640</span>, <span class="number">640</span>)</span><br><span class="line"><span class="attribute">Results</span> saved to runs/detect/exp5</span><br></pre></td></tr></table></figure>
+<p>表示已经成功完成预训练测试，可以在<code>runs/detect/exp5</code>中看到输出图像已被标记<br><img src="https://s2.loli.net/2023/08/02/WEqdi9UFLpTQIBl.jpg" style="max-width: 65%;"><br><img src="https://s2.loli.net/2023/08/02/YxkjvngEVNbwqXP.jpg" style="max-width: 50%;" ></p>
+<blockquote>
+<p>也可以选择其他预训练模型，yolov5x.pt效果较好</p>
+</blockquote>
+<h2 id="2-5-报错解决"><a href="#2-5-报错解决" class="headerlink" title="2.5 报错解决"></a>2.5 报错解决</h2><ul>
+<li><p>pip安装时<br><code>WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None))</code><br><strong>解决方法：</strong><br>换源</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">conda config --add channels https:<span class="regexp">//mi</span>rrors.tuna.tsinghua.edu.cn<span class="regexp">/anaconda/</span>pkgs<span class="regexp">/free/</span></span><br><span class="line">conda config --add channels https:<span class="regexp">//mi</span>rrors.tuna.tsinghua.edu.cn<span class="regexp">/anaconda/</span>pkgs<span class="regexp">/main/</span></span><br><span class="line">conda config --set show_channel_urls yes</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行detect.py时<br><code>AttributeError: ‘Upsample‘ object has no attribute ‘recompute_scale_factor‘</code><br><strong>解决方法：</strong><br>按照报错提示，找到usampling.py第157行附近，删去<code>recompute_scale_factor=self.recompute_scale_</code>,并调整前后代码语法格式</p>
+</li>
+<li><p>安装库依赖报错</p>
+  <figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">~$ conda install pytorch torchvision cudatoolkit=<span class="number">10.2</span> -c python</span><br><span class="line">Collecting package metadata (current_repodata.json): failed</span><br><span class="line"></span><br><span class="line">ProxyError: Conda cannot proceed due <span class="keyword">to</span> an error <span class="keyword">in</span> your proxy <span class="keyword">configuration</span>.</span><br><span class="line"><span class="keyword">Check</span> <span class="keyword">for</span> typos <span class="keyword">and</span> other <span class="keyword">configuration</span> errors <span class="keyword">in</span> <span class="keyword">any</span> <span class="string">&#x27;.netrc&#x27;</span> file <span class="keyword">in</span> your home directory,</span><br><span class="line"><span class="keyword">any</span> environment variables ending <span class="keyword">in</span> <span class="string">&#x27;_PROXY&#x27;</span>, <span class="keyword">and</span> <span class="keyword">any</span> other <span class="keyword">system</span>-wide proxy</span><br><span class="line"><span class="keyword">configuration</span> settings.</span><br></pre></td></tr></table></figure>
+<p><strong>解决方法：</strong><br>尝试切换代理</p>
+</li>
+<li><p>yolov5代码与Pytorch版本不兼容的问题</p>
+<p><strong>解决办法：</strong><br>我原本使用yolov5 V3.1的版本和相关的配置文件，但是报错实在是太多了，最终采取的解决办法是直接git clone GitHub上最新的yolov5，但是在<code>/yolov5-master/data/scripts/</code>中运行<code>./downloads.sh</code>以下载预训练模型文件时又出现模块未导入等问题，最终我在yolov5 V7.0的Assets中手动下载四个模型文件，并复制到<code>/yolov5-master/data/scripts/weights</code>路径下</p>
+</li>
+<li><p>环境以及与训练文件全部配置好后执行detec.py出现报错<br>运行如下代码时：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">python detect.py --weights <span class="regexp">/home/</span>birdy<span class="regexp">/yolov5-master/</span>data<span class="regexp">/scripts/</span>weights<span class="regexp">/yolov5n.pt --source data/im</span>ages/ --conf <span class="number">0.4</span></span><br></pre></td></tr></table></figure>
+<p>出现报错：</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line">bash: home<span class="regexp">/birdy/</span>anaconda3<span class="regexp">/envs/</span>pytorch1.<span class="number">6</span><span class="regexp">/bin/</span>python: No such <span class="keyword">file</span> or directory</span><br></pre></td></tr></table></figure>
+<p><strong>解决办法：</strong><br>由于在我的命令中<code>home/birdy/anaconda3/envs/pytorch1.6/bin/python</code>被解释为相对路径，因此系统无法找到对应的Python解释器</p>
+<p>因此需使用绝对路径:</p>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"><span class="regexp">/home/</span>birdy<span class="regexp">/anaconda3/</span>envs<span class="regexp">/pytorch1.6/</span>bin<span class="regexp">/python detect.py --weights /</span>home<span class="regexp">/birdy/y</span>olov5-master<span class="regexp">/data/</span>scripts<span class="regexp">/weights/y</span>olov5n.pt --<span class="keyword">source</span> data<span class="regexp">/images/</span> --conf <span class="number">0.4</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="3-准备数据集"><a href="#3-准备数据集" class="headerlink" title="3. 准备数据集"></a>3. 准备数据集</h1><h2 id="3-1-下载文件"><a href="#3-1-下载文件" class="headerlink" title="3.1 下载文件"></a>3.1 下载文件</h2><ul>
+<li><a href="http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar">VOC2012数据集下载地址</a></li>
+<li><a href="https://pjreddie.com/media/files/VOCtrainval_06-Nov-2007.tar">VOC2007数据集下载地址</a></li>
+<li><a href="http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar">VOC2007test下载地址</a></li>
+<li>get_voc_ubuntu.py脚本文件</li>
+</ul>
+<h2 id="3-2-生成训练集和验证集文件"><a href="#3-2-生成训练集和验证集文件" class="headerlink" title="3.2 生成训练集和验证集文件"></a>3.2 生成训练集和验证集文件</h2><p>解压数据集，在yolov5目录下执行：</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">tar</span> xf VOCtrainval_11-May-<span class="number">2012</span>.tar</span><br><span class="line"><span class="attribute">tar</span> xf VOCtrainval_11-May-<span class="number">2012</span>.tar</span><br><span class="line"><span class="attribute">tar</span> xf VOCtest_06-Nov-<span class="number">2007</span>.tar</span><br></pre></td></tr></table></figure>
+<p>执行python脚本文件：<br><code>python get_voc_ubuntu.py</code><br>可以看到，yolov5目录下生成了2007_test.txt,2007_train.txt,2007_val.txt,2012_train.txt,2012_val.txt,train.txt,train.all.txt;并且在VOC目录下生成了labels和images文件夹。</p>
+<h1 id="4-修改配置文件"><a href="#4-修改配置文件" class="headerlink" title="4. 修改配置文件"></a>4. 修改配置文件</h1><h2 id="4-1-新建yaml文件"><a href="#4-1-新建yaml文件" class="headerlink" title="4.1 新建yaml文件"></a>4.1 新建yaml文件</h2><p>可以复制<strong>data&#x2F;VOC.yaml</strong>再重命名为:<strong>VOC_new.yaml</strong><br>修改配置如下：</p>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line">train: VOC<span class="regexp">/images/</span>train/</span><br><span class="line">val: VOC.images<span class="regexp">/val/</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-2-新建模型yaml文件"><a href="#4-2-新建模型yaml文件" class="headerlink" title="4.2 新建模型yaml文件"></a>4.2 新建模型yaml文件</h2><p>复制<strong>models&#x2F;yolov5s.yaml</strong>再重命名为：<strong>yolov5s_voc.yaml</strong><br>修改配置如下：</p>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line"><span class="meta"># Parameters</span></span><br><span class="line"><span class="symbol">nc:</span> <span class="number">20</span>  <span class="meta"># number of classes</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="5-训练PASCAL-VOC数据集"><a href="#5-训练PASCAL-VOC数据集" class="headerlink" title="5. 训练PASCAL VOC数据集"></a>5. 训练PASCAL VOC数据集</h1><h2 id="5-1-训练命令"><a href="#5-1-训练命令" class="headerlink" title="5.1 训练命令"></a>5.1 训练命令</h2><p>在yolov5目录下执行：<br><code>python train.py --data data/VOC_new.yaml --cfg models/yolov5s_voc.yaml --weights weights/yolov5s.pt --batch-size 16 --epochs 200</code> </p>
+<p>命令解释：<br><strong>batch size：</strong> 批大小，批大小是指在每一次模型训练中一次性输入给模型的样本数量<br><strong>epoch：</strong> 训练轮数，一个 epoch 指的是将训练集中的所有样本都用于一次模型的训练</p>
+<p><strong>注意：此过程需要耗费大量时间，并且很吃电脑配置。如果内存不足或进程过慢，可以考虑适当减少batch size值和epoch值</strong></p>
+<h2 id="5-2-训练过程可视化"><a href="#5-2-训练过程可视化" class="headerlink" title="5.2 训练过程可视化"></a>5.2 训练过程可视化</h2><p>在yolov5目录下执行：<br><code>tensorboard --logdir=./runs</code></p>
+<h3 id="Tensorboard"><a href="#Tensorboard" class="headerlink" title="Tensorboard"></a>Tensorboard</h3><ol>
+<li>简介：TensorFlow下的一个可视化工具，能在训练大规模神经网络时将复杂的运算过程可视化。</li>
+<li>安装：<code>pip install tensorboard</code></li>
+<li>使用：<code>tensorboard --logdir=&lt;directory_name&gt;</code>,将<code>&lt;directory_name&gt;</code>替换为保存数据的目录</li>
+<li>可视化查看： 运行后出现命令<code>Serving TensorBoard on localhost; to expose to the network, use a proxy or pass –bind_allTensorBoard 2.2.0 at http://localhost:6006/ (Press CTRL+C to quit) </code>,用浏览器打开<a href="http://localhost:6006/%E6%9F%A5%E7%9C%8B%E5%8D%B3%E5%8F%AF">http://localhost:6006/查看即可</a></li>
+</ol>
+<h1 id="6-测试训练出的网络模型"><a href="#6-测试训练出的网络模型" class="headerlink" title="6. 测试训练出的网络模型"></a>6. 测试训练出的网络模型</h1><h2 id="6-1-测试图片"><a href="#6-1-测试图片" class="headerlink" title="6.1 测试图片"></a>6.1 测试图片</h2><p>在yolov5目录下执行：<br><code>python detect.py --source ./VOC/images/val/000001.jpg --weights runs/exp0/weights/best.pt --conf 0.4</code></p>
+]]></content>
+      <categories>
+        <category>YOLO v5</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Yolo目标检测原理</title>
     <url>/posts/70ff0b51/</url>
     <content><![CDATA[<h1 id="1-目标检测之任务说明"><a href="#1-目标检测之任务说明" class="headerlink" title="1. 目标检测之任务说明"></a>1. 目标检测之任务说明</h1><blockquote>
 <p>目标检测 &#x3D; What + Where</p>
@@ -42,8 +124,8 @@
 </ul>
 <h2 id="3-2-检测速度"><a href="#3-2-检测速度" class="headerlink" title="3.2 检测速度"></a>3.2 检测速度</h2><ul>
 <li><strong>前传耗时</strong> : 从输入一张图像到输出最终结果所消耗的时间，包括前处理耗时(如图像归一化)、网络前传耗时、后处理耗时(如非极大值抑制)</li>
-<li>**每秒帧数 FPS (Frames Per Seconds)**：每秒能处理的图像数量，与软硬件配置有关系</li>
-<li>**浮点运算量 (Floating-point operations per second)**：处理一张图像所需要的浮点运算数量，跟具体软硬件没有关系，可以公平地比较不同算法之间的检测速度</li>
+<li><strong>每秒帧数 FPS (Frames Per Seconds)</strong> ：每秒能处理的图像数量，与软硬件配置有关系</li>
+<li><strong>浮点运算量 (Floating-point operations per second)</strong> ：处理一张图像所需要的浮点运算数量，跟具体软硬件没有关系，可以公平地比较不同算法之间的检测速度</li>
 </ul>
 ]]></content>
       <categories>
