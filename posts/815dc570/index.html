@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xxsqlll.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"always","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. 基础回顾1.1 数据分析流程STEP 1 提出问题STEP 2 收集数据STEP 3 数据处理与清洗STEP 4 数据分析STEP 5 可视化，得出结论  STEP 2 读取数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python数据分析基础">
+<meta property="og:url" content="https://xxsqlll.github.io/posts/815dc570/index.html">
+<meta property="og:site_name" content="小刑的博客">
+<meta property="og:description" content="1. 基础回顾1.1 数据分析流程STEP 1 提出问题STEP 2 收集数据STEP 3 数据处理与清洗STEP 4 数据分析STEP 5 可视化，得出结论  STEP 2 读取数据">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1648537009388_57070/figure_1%20(1).png">
+<meta property="og:image" content="https://nocturne.bczcdn.com/2006131e-34de-11ee-b79e-0242ac11000a/figure_1.png">
+<meta property="article:published_time" content="2023-08-07T05:01:45.000Z">
+<meta property="article:modified_time" content="2023-08-07T05:01:23.290Z">
+<meta property="article:author" content="小刑">
+<meta property="article:tag" content="技能">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://nocturne.bczcdn.com/img/1648537009388_57070/figure_1%20(1).png">
+
+<link rel="canonical" href="https://xxsqlll.github.io/posts/815dc570/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Python数据分析基础 | 小刑的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小刑的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小刑的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">五马六猴，解衣磅礴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-film fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/xxsqlll" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxsqlll.github.io/posts/815dc570/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.JPG">
+      <meta itemprop="name" content="小刑">
+      <meta itemprop="description" content="这个人很懒，什么也不想写">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小刑的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python数据分析基础
+        </h1>
+
+        <div class="post-meta">
+          <span class="post-time">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-08-07 13:01:45 / 修改时间：13:01:23" itemprop="dateCreated datePublished" datetime="2023-08-07T13:01:45+08:00">2023-08-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/815dc570/" class="post-meta-item leancloud_visitors" data-flag-title="Python数据分析基础" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+              <i class="fa fa-fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+          </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/815dc570/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/815dc570/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>29 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-基础回顾"><a href="#1-基础回顾" class="headerlink" title="1. 基础回顾"></a>1. 基础回顾</h1><h2 id="1-1-数据分析流程"><a href="#1-1-数据分析流程" class="headerlink" title="1.1 数据分析流程"></a>1.1 数据分析流程</h2><p>STEP 1 提出问题<br>STEP 2 收集数据<br>STEP 3 数据处理与清洗<br>STEP 4 数据分析<br>STEP 5 可视化，得出结论</p>
+<hr>
+<h2 id="STEP-2-读取数据"><a href="#STEP-2-读取数据" class="headerlink" title="STEP 2 读取数据"></a>STEP 2 读取数据</h2><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 使用import导入pandas模块，简称pd </span></span><br><span class="line"><span class="keyword">import</span> pandas ad pd</span><br><span class="line">读取文件，并赋值给<span class="class"><span class="keyword">data</span></span></span><br><span class="line"><span class="class"><span class="keyword">data</span> = pd.read_csv(&#x27;/<span class="type">Users</span>/<span class="title">junjun</span>/<span class="title">store</span>.<span class="title">csv&#x27;</span>)</span></span><br><span class="line"><span class="title">print</span>(<span class="class"><span class="keyword">data</span>)</span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">        订单ID    订单日期    用户ID 邮寄方式  地区 省/自治区  商品类别  子类别     制造商                  产品名称  订单量    销售额</span><br><span class="line"><span class="number">0</span>     <span class="keyword">A</span><span class="number">1000001</span>    <span class="number">2018/1/1</span>  CG-<span class="number">12520</span>     二级  中南      湖南  办公用品  收纳具     Rogers     Rogers 文件车, 单宽度     <span class="number">0</span>.<span class="number">0</span>  <span class="number">261.9600</span></span><br><span class="line"><span class="number">1</span>     <span class="keyword">A</span><span class="number">1000001</span>    <span class="number">2018/1/1</span>  CG-<span class="number">12520</span>     二级  中南      湖南      家具    桌子   Barricks       Barricks 圆桌, 白色     <span class="number">1</span>.<span class="number">0</span>  <span class="number">731.9400</span></span><br><span class="line"><span class="number">2</span>     <span class="keyword">A</span><span class="number">1000001</span>    <span class="number">2018/1/1</span>  DV-<span class="number">13045</span>     二级  中南      湖南      技术    电话     诺基亚     诺基亚 智能手机, 整包     <span class="number">0</span>.<span class="number">0</span>  <span class="number">957.5775</span></span><br><span class="line"><span class="number">3</span>     <span class="keyword">A</span><span class="number">1000001</span>    <span class="number">2018/1/1</span>  SO-<span class="number">20335</span>     二级  中南      湖南      技术    配件     贝尔金       贝尔金 记忆卡, 实惠     <span class="number">0</span>.<span class="number">0</span>   <span class="number">14</span>.<span class="number">7500</span></span><br><span class="line"><span class="number">4</span>     <span class="keyword">A</span><span class="number">1000003</span>    <span class="number">2018/1/2</span>  SO-<span class="number">20335</span>     二级  华东      福建  办公用品  收纳具     Rogers           Rogers 盒, 工业     <span class="number">0</span>.<span class="number">0</span>   <span class="number">22</span>.<span class="number">3700</span></span><br><span class="line">...        ...         ...       ...      ...   ...       ...       ...     ...        ...                       ...     ...       ...</span><br><span class="line"><span class="number">9930</span>  <span class="keyword">A</span><span class="number">1004918</span>  <span class="number">2021/12/30</span>  PK-<span class="number">19075</span>   标准级  中南      广东      技术  复印机       夏普           夏普 墨水, 红色     NaN       NaN</span><br><span class="line"><span class="number">9931</span>  <span class="keyword">A</span><span class="number">1004918</span>  <span class="number">2021/12/30</span>  AG-<span class="number">10270</span>   标准级  中南      广东      技术    电话       三星       三星 音频基座, 蓝色     NaN       NaN</span><br><span class="line"><span class="number">9932</span>  <span class="keyword">A</span><span class="number">1004924</span>  <span class="number">2021/12/30</span>  ZD-<span class="number">21925</span>   标准级  中南      广东      技术    设备       松下     松下 收据打印机, 耐用     NaN       NaN</span><br><span class="line"><span class="number">9933</span>  <span class="keyword">A</span><span class="number">1004924</span>  <span class="number">2021/12/30</span>  SO-<span class="number">20335</span>   标准级  中南      广东      技术    配件    Enermax        Enermax 键区, 回收     NaN       NaN</span><br><span class="line"><span class="number">9934</span>  <span class="keyword">A</span><span class="number">1004919</span>  <span class="number">2021/12/30</span>  SO-<span class="number">20335</span>   标准级  中南      湖南  办公用品    信封  GlobeWeis  GlobeWeis 搭扣信封, 回收     NaN       NaN</span><br><span class="line"></span><br><span class="line">[<span class="number">9935</span> rows x <span class="number">12</span> columns]</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="STEP-3-1-数据处理"><a href="#STEP-3-1-数据处理" class="headerlink" title="STEP 3.1 数据处理"></a>STEP 3.1 数据处理</h2><p><strong>清洗数据</strong>的流程如下：</p>
+<ul>
+<li>识别并处理<strong>缺失值</strong></li>
+<li>识别并处理<strong>异常值</strong></li>
+<li>识别并处理<strong>重复值</strong></li>
+</ul>
+<h3 id="1-识别并处理缺失值-info-函数"><a href="#1-识别并处理缺失值-info-函数" class="headerlink" title="1. 识别并处理缺失值 (info()函数)"></a>1. 识别并处理缺失值 (info()函数)</h3><p><strong>识别缺失值</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">data</span> = pd.read_csv(<span class="string">&quot;/Users/junjun/store.csv&quot;</span>)</span><br><span class="line"><span class="keyword">data</span>.info()</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;</span><br><span class="line">RangeIndex:<span class="number"> 9935 </span>entries,<span class="number"> 0 </span>to 9934</span><br><span class="line">Data columns (total<span class="number"> 12 </span>columns):</span><br><span class="line"> <span class="comment">#   Column  Non-Null Count  Dtype  </span></span><br><span class="line">---  ------  --------------  -----  </span><br><span class="line"><span class="number"> 0 </span>  订单ID   <span class="number"> 9935 </span>non-null   object </span><br><span class="line"><span class="number"> 1 </span>  订单日期   <span class="number"> 9935 </span>non-null   object </span><br><span class="line"><span class="number"> 2 </span>  用户ID   <span class="number"> 9935 </span>non-null   object </span><br><span class="line"><span class="number"> 3 </span>  邮寄方式   <span class="number"> 9935 </span>non-null   object </span><br><span class="line"><span class="number"> 4 </span>  地区     <span class="number"> 9935 </span>non-null   object </span><br><span class="line"><span class="number"> 5 </span>  省/自治区  <span class="number"> 9935 </span>non-null   object </span><br><span class="line"><span class="number"> 6 </span>  商品类别   <span class="number"> 9935 </span>non-null   object </span><br><span class="line"><span class="number"> 7 </span>  子类别    <span class="number"> 9935 </span>non-null   object </span><br><span class="line"><span class="number"> 8 </span>  制造商    <span class="number"> 9935 </span>non-null   object </span><br><span class="line"><span class="number"> 9 </span>  产品名称   <span class="number"> 9935 </span>non-null   object </span><br><span class="line"><span class="number"> 10 </span> 订单量    <span class="number"> 8427 </span>non-null   float64</span><br><span class="line"><span class="number"> 11 </span> 销售额    <span class="number"> 9923 </span>non-null   float64</span><br><span class="line">dtypes: float64(2), object(10)</span><br><span class="line">memory usage: 931.5+ KB</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到，这份数据集的总行数为9935；订单量和销售额这两列的非空数据都小于数据总行数；说明存在少量缺失值。</p>
+</blockquote>
+<p><strong>处理缺失值</strong></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data = pd.read_csv(&quot;/Users/junjun/store.csv&quot;)</span><br><span class="line"># 使用布尔索引和<span class="keyword">isnull</span>()函数，将&quot;订单量&quot;的缺失值筛选出，赋值给变量quanNull</span><br><span class="line">quanNull = data[data[&quot;订单量&quot;].<span class="keyword">isnull</span>()]</span><br><span class="line"># 使用<span class="keyword">drop</span>()函数，将包含所有&quot;订单量&quot;这一列缺失值的行删除</span><br><span class="line">data.<span class="keyword">drop</span>(<span class="keyword">index</span> = quanNull.<span class="keyword">index</span>, inplace = <span class="keyword">True</span>)</span><br><span class="line"># 使用<span class="keyword">info</span>()快速查看</span><br><span class="line">data.<span class="keyword">info</span>()</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;</span><br><span class="line">Int64Index:<span class="number"> 8427 </span>entries,<span class="number"> 0 </span>to 9927</span><br><span class="line">Data columns (total<span class="number"> 12 </span>columns):</span><br><span class="line"> <span class="comment">#   Column  Non-Null Count  Dtype  </span></span><br><span class="line">---  ------  --------------  -----  </span><br><span class="line"><span class="number"> 0 </span>  订单ID   <span class="number"> 8427 </span>non-null   object </span><br><span class="line"><span class="number"> 1 </span>  订单日期   <span class="number"> 8427 </span>non-null   object </span><br><span class="line"><span class="number"> 2 </span>  用户ID   <span class="number"> 8427 </span>non-null   object </span><br><span class="line"><span class="number"> 3 </span>  邮寄方式   <span class="number"> 8427 </span>non-null   object </span><br><span class="line"><span class="number"> 4 </span>  地区     <span class="number"> 8427 </span>non-null   object </span><br><span class="line"><span class="number"> 5 </span>  省/自治区  <span class="number"> 8427 </span>non-null   object </span><br><span class="line"><span class="number"> 6 </span>  商品类别   <span class="number"> 8427 </span>non-null   object </span><br><span class="line"><span class="number"> 7 </span>  子类别    <span class="number"> 8427 </span>non-null   object </span><br><span class="line"><span class="number"> 8 </span>  制造商    <span class="number"> 8427 </span>non-null   object </span><br><span class="line"><span class="number"> 9 </span>  产品名称   <span class="number"> 8427 </span>non-null   object </span><br><span class="line"><span class="number"> 10 </span> 订单量    <span class="number"> 8427 </span>non-null   float64</span><br><span class="line"><span class="number"> 11 </span> 销售额    <span class="number"> 8427 </span>non-null   float64</span><br><span class="line">dtypes: float64(2), object(10)</span><br><span class="line">memory usage: 855.9+ KB</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到，所有列的非空数据都与最新的数据总行数 8427 保持一致，说明缺失值已经全部删除了，不需要再对销售额这列进行处理。</p>
+</blockquote>
+<h3 id="2-识别并处理异常值"><a href="#2-识别并处理异常值" class="headerlink" title="2. 识别并处理异常值"></a>2. 识别并处理异常值</h3><p><strong>识别异常值(describe())</strong></p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas as pd</span><br><span class="line"><span class="keyword">data</span> = pd.read_csv(<span class="string">&quot;/Users/junjun/store.csv&quot;</span>)</span><br><span class="line">quanNull= <span class="keyword">data</span>[<span class="keyword">data</span>[<span class="string">&quot;订单量&quot;</span>].isnull()]</span><br><span class="line"><span class="keyword">data</span>.drop(<span class="built_in">index</span>=quanNull.<span class="built_in">index</span>, inplace=True)</span><br><span class="line"># 查看<span class="keyword">data</span>的描述性统计信息</span><br><span class="line"><span class="built_in">print</span>(<span class="keyword">data</span>.describe())</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">             订单量        销售额</span><br><span class="line">count  8.427000e<span class="string">+03</span>   8427.000000</span><br><span class="line">mean   7.120099e<span class="string">+05</span>    228.706704</span><br><span class="line">std    2.667536e<span class="string">+07</span>    574.583183</span><br><span class="line">min    0.000000e<span class="string">+00</span>      0.836000</span><br><span class="line">25%    3.000000e<span class="string">+00</span>     17.691000</span><br><span class="line">50%    8.000000e<span class="string">+00</span>     56.910000</span><br><span class="line">75%    2.000000e<span class="string">+01</span>    217.807000</span><br><span class="line">max    1.000000e<span class="string">+09</span>  21150.800000</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出结果中，很多数字后面都有 e+01、e+09、… 之类的后缀，这是一种科学计数法，代表10的n次方。<br>可以看到，上述输出结果中订单的最小量和最大量都是异常值</p>
+</blockquote>
+<p><strong>处理异常值</strong><br>处理异常值非常简单，我们只需通过布尔索引，将订单量这一列值里大于0，以及小于100000000（1.000000e+08）的数据筛选出来，重新赋值给data即可。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">data</span> = pd.read_csv(<span class="string">&quot;/Users/junjun/store.csv&quot;</span>)</span><br><span class="line">quanNull= <span class="keyword">data</span>[<span class="keyword">data</span>[<span class="string">&quot;订单量&quot;</span>].isnull()]</span><br><span class="line"><span class="keyword">data</span>.drop(index=quanNull.index, inplace=True)</span><br><span class="line"># 使用布尔索引筛选出<span class="string">&quot;订单量&quot;</span>这一列值里大于<span class="number">0</span>且小于<span class="number">100000000</span>的数据</span><br><span class="line"><span class="keyword">data</span> = <span class="keyword">data</span>[(<span class="keyword">data</span>[<span class="string">&quot;订单量&quot;</span>]&gt;<span class="number">0</span>) &amp; (<span class="keyword">data</span>[<span class="string">&quot;订单量&quot;</span>]&lt;<span class="number">100000000</span>)]</span><br><span class="line">print(<span class="keyword">data</span>.describe())</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">            订单量        销售额</span><br><span class="line">count  <span class="number">8359</span>.<span class="number">000000</span>   <span class="number">8359</span>.<span class="number">000000</span></span><br><span class="line">mean     <span class="number">12.868645</span>    <span class="number">228.403511</span></span><br><span class="line">std      <span class="number">24.561811</span>    <span class="number">574</span>.<span class="number">401657</span></span><br><span class="line">min       <span class="number">1.000000</span>      <span class="number">0.836000</span></span><br><span class="line"><span class="number">25</span>%       <span class="number">4.000000</span>     <span class="number">17.610000</span></span><br><span class="line"><span class="number">50</span>%       <span class="number">8.000000</span>     <span class="number">56.560000</span></span><br><span class="line"><span class="number">75</span>%      <span class="number">20.000000</span>    <span class="number">217.248000</span></span><br><span class="line">max    <span class="number">2000</span>.<span class="number">000000</span>  <span class="number">21150</span>.<span class="number">800000</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到，订单量目前的范围在1至2000之间，是一个较合理的订单量范围，不需要再进行数据筛选</p>
+</blockquote>
+<h3 id="3-识别并处理重复值"><a href="#3-识别并处理重复值" class="headerlink" title="3. 识别并处理重复值"></a>3. 识别并处理重复值</h3><p><strong>识别重复值(duplicated())</strong><br>duplicated()函数会对每一个数据是否和之前数据重复进行判断。重复值返回为True，不是重复值返回为False。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">data</span> = pd.read_csv(<span class="string">&quot;/Users/junjun/store.csv&quot;</span>)</span><br><span class="line">quanNull= <span class="keyword">data</span>[<span class="keyword">data</span>[<span class="string">&quot;订单量&quot;</span>].isnull()]</span><br><span class="line"><span class="keyword">data</span>.drop(index=quanNull.index, inplace=True)</span><br><span class="line"><span class="keyword">data</span> = <span class="keyword">data</span>[(<span class="keyword">data</span>[<span class="string">&quot;订单量&quot;</span>]&gt;<span class="number">0</span>) &amp; (<span class="keyword">data</span>[<span class="string">&quot;订单量&quot;</span>]&lt;<span class="number">100000000</span>)]</span><br><span class="line"># 使用布尔索引和duplicated()函数，将<span class="keyword">data</span>中重复的行筛选出来</span><br><span class="line">dup = <span class="keyword">data</span>[<span class="keyword">data</span>.duplicated()]</span><br><span class="line">print(dup)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Empty</span> DataFrame</span><br><span class="line"><span class="attribute">Columns</span>:<span class="meta"> [订单ID, 订单日期, 用户ID, 邮寄方式, 地区, 省/自治区, 商品类别, 子类别, 制造商, 产品名称, 订单量, 销售额]</span></span><br><span class="line"><span class="attribute">Index</span>:<span class="meta"> []</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>最后使用print()输出的是一个Empty DataFrame，代表是一个空DataFrame，说明没有重复的行，因此不需要处理。</p>
+</blockquote>
+<hr>
+<h2 id="STEP-3-2-数据清洗"><a href="#STEP-3-2-数据清洗" class="headerlink" title="STEP 3.2 数据清洗"></a>STEP 3.2 数据清洗</h2><h3 id="1-字符串转时间（pd-to-datetime-）"><a href="#1-字符串转时间（pd-to-datetime-）" class="headerlink" title="1. 字符串转时间（pd.to_datetime()）"></a>1. 字符串转时间（pd.to_datetime()）</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">data</span> = pd.read_csv(<span class="string">&quot;/Users/junjun/store.csv&quot;</span>)</span><br><span class="line">quanNull= <span class="keyword">data</span>[<span class="keyword">data</span>[<span class="string">&quot;订单量&quot;</span>].isnull()]</span><br><span class="line"><span class="keyword">data</span>.drop(index=quanNull.index, inplace=True)</span><br><span class="line"><span class="keyword">data</span> = <span class="keyword">data</span>[(<span class="keyword">data</span>[<span class="string">&quot;订单量&quot;</span>]&gt;<span class="number">0</span>) &amp; (<span class="keyword">data</span>[<span class="string">&quot;订单量&quot;</span>]&lt;<span class="number">100000000</span>)]</span><br><span class="line">dup = <span class="keyword">data</span>[<span class="keyword">data</span>.duplicated()]</span><br><span class="line"># 使用pd.to_datetime()函数，将<span class="string">&quot;订单日期&quot;</span>列的数据转化为时间格式</span><br><span class="line"><span class="keyword">data</span>[<span class="string">&quot;订单日期&quot;</span>] = pd.to_datetime(<span class="keyword">data</span>[<span class="string">&quot;订单日期&quot;</span>])</span><br><span class="line">print(<span class="keyword">data</span>[<span class="string">&quot;订单日期&quot;</span>])</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1      2018<span class="string">-01</span><span class="string">-01</span></span><br><span class="line">6      2018<span class="string">-01</span><span class="string">-02</span></span><br><span class="line">7      2018<span class="string">-01</span><span class="string">-02</span></span><br><span class="line">11     2018<span class="string">-01</span><span class="string">-03</span></span><br><span class="line">13     2018<span class="string">-01</span><span class="string">-03</span></span><br><span class="line">          ...    </span><br><span class="line">9919   2021<span class="string">-12</span><span class="string">-30</span></span><br><span class="line">9920   2021<span class="string">-12</span><span class="string">-30</span></span><br><span class="line">9921   2021<span class="string">-12</span><span class="string">-30</span></span><br><span class="line">9924   2021<span class="string">-12</span><span class="string">-30</span></span><br><span class="line">9927   2021<span class="string">-12</span><span class="string">-30</span></span><br><span class="line">Name: 订单日期, Length: 8359, dtype: datetime64[ns]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到已经成功转换为datetime类型。</p>
+</blockquote>
+<hr>
+<h2 id="STEP-4-5-数据分析、可视化、得出结论"><a href="#STEP-4-5-数据分析、可视化、得出结论" class="headerlink" title="STEP 4&amp;5 数据分析、可视化、得出结论"></a>STEP 4&amp;5 数据分析、可视化、得出结论</h2><blockquote>
+<p>时间维度销售额的分析，下面使用折线图</p>
+</blockquote>
+<h3 id="1-添加年份信息，修改行索引"><a href="#1-添加年份信息，修改行索引" class="headerlink" title="1. 添加年份信息，修改行索引"></a>1. 添加年份信息，修改行索引</h3><p>数据中并没有年份信息，使用data[“订单日期”].dt.year获取 “订单日期” 这列数据的年份信息，并将其作为新列添加到data中。</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/junjun/store.csv&quot;</span>)</span><br><span class="line">quanNull= data[data[<span class="string">&quot;订单量&quot;</span>].isnull()]</span><br><span class="line">data.drop(index=quanNull.index, inplace=<span class="symbol">True</span>)</span><br><span class="line">data = data[(data[<span class="string">&quot;订单量&quot;</span>]&gt;<span class="number">0</span>) &amp; (data[<span class="string">&quot;订单量&quot;</span>]&lt;<span class="number">100000000</span>)]</span><br><span class="line">dup = data[data.duplicated()]</span><br><span class="line">data[<span class="string">&quot;订单日期&quot;</span>] = pd.to_datetime(data[<span class="string">&quot;订单日期&quot;</span>])</span><br><span class="line"># 使用data[<span class="string">&quot;订单日期&quot;</span>].dt.year获取 <span class="string">&quot;订单日期&quot;</span> 这列数据的年</span><br><span class="line">data[<span class="string">&quot;年份&quot;</span>] = data[<span class="string">&quot;订单日期&quot;</span>].dt.year</span><br><span class="line">print(data)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">        订单ID   订单日期    用户ID 邮寄方式  地区 省/自治区  商品类别  子类别      制造商                 产品名称  订单量    销售额  年份</span><br><span class="line"><span class="number">1</span>     <span class="keyword">A</span><span class="number">1000001</span> <span class="number">2018-01-01</span>  CG-<span class="number">12520</span>     二级  中南      湖南      家具    桌子    Barricks      Barricks 圆桌, 白色     <span class="number">1</span>.<span class="number">0</span>   <span class="number">731.940</span>  <span class="number">2018</span></span><br><span class="line"><span class="number">6</span>     <span class="keyword">A</span><span class="number">1000003</span> <span class="number">2018-01-02</span>  BH-<span class="number">11710</span>     二级  华东      福建      技术  复印机        佳能          佳能 墨水, 红色     <span class="number">1</span>.<span class="number">0</span>     <span class="number">7</span>.<span class="number">280</span>  <span class="number">2018</span></span><br><span class="line"><span class="number">7</span>     <span class="keyword">A</span><span class="number">1000003</span> <span class="number">2018-01-02</span>  BH-<span class="number">11710</span>     二级  华东      福建      技术    电话      诺基亚  诺基亚 充电器, 混合尺寸     <span class="number">8</span>.<span class="number">0</span>   <span class="number">907.152</span>  <span class="number">2018</span></span><br><span class="line"><span class="number">11</span>    <span class="keyword">A</span><span class="number">1000004</span> <span class="number">2018-01-03</span>  BH-<span class="number">11710</span>   标准级  东北      辽宁  办公用品    器具   Cuisinart     Cuisinart 炉灶, 白色     <span class="number">1</span>.<span class="number">0</span>   <span class="number">911.424</span>  <span class="number">2018</span></span><br><span class="line"><span class="number">13</span>    <span class="keyword">A</span><span class="number">1000004</span> <span class="number">2018-01-03</span>  IM-<span class="number">15070</span>   标准级  东北      辽宁  办公用品  装订机       Ibico     Ibico 装订机盖, 透明    <span class="number">10</span>.<span class="number">0</span>   <span class="number">407.976</span>  <span class="number">2018</span></span><br><span class="line">...        ...        ...       ...      ...   ...       ...       ...     ...         ...                      ...     ...       ...   ...</span><br><span class="line"><span class="number">9919</span>  <span class="keyword">A</span><span class="number">1004923</span> <span class="number">2021-12-30</span>  AG-<span class="number">10525</span>     二级  中南      广东      技术    设备        松下        松下 计算器, 红色    <span class="number">29</span>.<span class="number">0</span>     <span class="number">2</span>.<span class="number">880</span>  <span class="number">2021</span></span><br><span class="line"><span class="number">9920</span>  <span class="keyword">A</span><span class="number">1004925</span> <span class="number">2021-12-30</span>  SP-<span class="number">20860</span>   标准级  华东      山东  办公用品    器具      Hoover  Hoover 咖啡研磨机, 红色    <span class="number">17</span>.<span class="number">0</span>  <span class="number">1091.930</span>  <span class="number">2021</span></span><br><span class="line"><span class="number">9921</span>  <span class="keyword">A</span><span class="number">1004916</span> <span class="number">2021-12-30</span>  BH-<span class="number">11710</span>   标准级  华北      山西  办公用品  装订机       Avery   Avery 孔加固材料, 透明     <span class="number">9</span>.<span class="number">0</span>   <span class="number">111.960</span>  <span class="number">2021</span></span><br><span class="line"><span class="number">9924</span>  <span class="keyword">A</span><span class="number">1004926</span> <span class="number">2021-12-30</span>  BH-<span class="number">11710</span>   标准级  东北      辽宁  办公用品    器具      Hoover      Hoover 微波炉, 黑色     <span class="number">5</span>.<span class="number">0</span>  <span class="number">4920.000</span>  <span class="number">2021</span></span><br><span class="line"><span class="number">9927</span>  <span class="keyword">A</span><span class="number">1004922</span> <span class="number">2021-12-30</span>  IM-<span class="number">15070</span>   标准级  中南      广西      家具    桌子  Chromcraft  Chromcraft 培训桌, 黑色     <span class="number">1</span>.<span class="number">0</span>  <span class="number">1100.000</span>  <span class="number">2021</span></span><br><span class="line"></span><br><span class="line">[<span class="number">8359</span> rows x <span class="number">13</span> columns]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>通过输出可以看到，已在data变量中成功添加了一列年份信息数据。</p>
+</blockquote>
+<p><strong>注意：</strong> 重采样需要根据<strong>时间格式的行索引</strong>来进行操作，否则会出现报错。因此，为了在处理过程中更加方便，我们通常会把数据中<strong>时间格式的列</strong>作为行索引index后，再进行重采样。可以使用<strong>set_index()函数</strong>将data[“订单日期”]设置成data变量的行索引index。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">data = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/junjun/store.csv&quot;</span>)</span><br><span class="line">quanNull= data<span class="selector-attr">[data[<span class="string">&quot;订单量&quot;</span>]</span><span class="selector-class">.isnull</span>()]</span><br><span class="line">data<span class="selector-class">.drop</span>(index=quanNull<span class="selector-class">.index</span>, inplace=True)</span><br><span class="line">data = data<span class="selector-attr">[(data[<span class="string">&quot;订单量&quot;</span>]</span>&gt;<span class="number">0</span>) &amp; (data<span class="selector-attr">[<span class="string">&quot;订单量&quot;</span>]</span>&lt;<span class="number">100000000</span>)]</span><br><span class="line">dup = data<span class="selector-attr">[data.duplicated()]</span></span><br><span class="line">data<span class="selector-attr">[<span class="string">&quot;订单日期&quot;</span>]</span> = pd<span class="selector-class">.to_datetime</span>(data<span class="selector-attr">[<span class="string">&quot;订单日期&quot;</span>]</span>)</span><br><span class="line">data<span class="selector-attr">[<span class="string">&quot;年份&quot;</span>]</span> = data<span class="selector-attr">[<span class="string">&quot;订单日期&quot;</span>]</span><span class="selector-class">.dt</span><span class="selector-class">.year</span></span><br><span class="line">data = data<span class="selector-class">.set_index</span>(<span class="string">&quot;订单日期&quot;</span>)</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(data)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">              订单ID    用户ID 邮寄方式  地区 省/自治区  商品类别  子类别      制造商                 产品名称  订单量    销售额  年份</span><br><span class="line">订单日期                                                                                                                              </span><br><span class="line"><span class="number">2018-01-01</span>  <span class="keyword">A</span><span class="number">1000001</span>  CG-<span class="number">12520</span>     二级  中南      湖南      家具    桌子    Barricks      Barricks 圆桌, 白色     <span class="number">1</span>.<span class="number">0</span>   <span class="number">731.940</span>  <span class="number">2018</span></span><br><span class="line"><span class="number">2018-01-02</span>  <span class="keyword">A</span><span class="number">1000003</span>  BH-<span class="number">11710</span>     二级  华东      福建      技术  复印机        佳能          佳能 墨水, 红色     <span class="number">1</span>.<span class="number">0</span>     <span class="number">7</span>.<span class="number">280</span>  <span class="number">2018</span></span><br><span class="line"><span class="number">2018-01-02</span>  <span class="keyword">A</span><span class="number">1000003</span>  BH-<span class="number">11710</span>     二级  华东      福建      技术    电话      诺基亚  诺基亚 充电器, 混合尺寸     <span class="number">8</span>.<span class="number">0</span>   <span class="number">907.152</span>  <span class="number">2018</span></span><br><span class="line"><span class="number">2018-01-03</span>  <span class="keyword">A</span><span class="number">1000004</span>  BH-<span class="number">11710</span>   标准级  东北      辽宁  办公用品    器具   Cuisinart     Cuisinart 炉灶, 白色     <span class="number">1</span>.<span class="number">0</span>   <span class="number">911.424</span>  <span class="number">2018</span></span><br><span class="line"><span class="number">2018-01-03</span>  <span class="keyword">A</span><span class="number">1000004</span>  IM-<span class="number">15070</span>   标准级  东北      辽宁  办公用品  装订机       Ibico     Ibico 装订机盖, 透明    <span class="number">10</span>.<span class="number">0</span>   <span class="number">407.976</span>  <span class="number">2018</span></span><br><span class="line">...              ...       ...      ...   ...       ...       ...     ...         ...                      ...     ...       ...   ...</span><br><span class="line"><span class="number">2021-12-30</span>  <span class="keyword">A</span><span class="number">1004923</span>  AG-<span class="number">10525</span>     二级  中南      广东      技术    设备        松下        松下 计算器, 红色    <span class="number">29</span>.<span class="number">0</span>     <span class="number">2</span>.<span class="number">880</span>  <span class="number">2021</span></span><br><span class="line"><span class="number">2021-12-30</span>  <span class="keyword">A</span><span class="number">1004925</span>  SP-<span class="number">20860</span>   标准级  华东      山东  办公用品    器具      Hoover  Hoover 咖啡研磨机, 红色    <span class="number">17</span>.<span class="number">0</span>  <span class="number">1091.930</span>  <span class="number">2021</span></span><br><span class="line"><span class="number">2021-12-30</span>  <span class="keyword">A</span><span class="number">1004916</span>  BH-<span class="number">11710</span>   标准级  华北      山西  办公用品  装订机       Avery   Avery 孔加固材料, 透明     <span class="number">9</span>.<span class="number">0</span>   <span class="number">111.960</span>  <span class="number">2021</span></span><br><span class="line"><span class="number">2021-12-30</span>  <span class="keyword">A</span><span class="number">1004926</span>  BH-<span class="number">11710</span>   标准级  东北      辽宁  办公用品    器具      Hoover      Hoover 微波炉, 黑色     <span class="number">5</span>.<span class="number">0</span>  <span class="number">4920.000</span>  <span class="number">2021</span></span><br><span class="line"><span class="number">2021-12-30</span>  <span class="keyword">A</span><span class="number">1004922</span>  IM-<span class="number">15070</span>   标准级  中南      广西      家具    桌子  Chromcraft  Chromcraft 培训桌, 黑色     <span class="number">1</span>.<span class="number">0</span>  <span class="number">1100.000</span>  <span class="number">2021</span></span><br><span class="line"></span><br><span class="line">[<span class="number">8359</span> rows x <span class="number">12</span> columns]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>data变量的行索引index已经变成data[“订单日期”]</p>
+</blockquote>
+<h3 id="2-完成分组、重采样和聚合操作"><a href="#2-完成分组、重采样和聚合操作" class="headerlink" title="2. 完成分组、重采样和聚合操作"></a>2. 完成分组、重采样和聚合操作</h3><p>先对data[“销售额”]使用<strong>groupby()函数</strong>，按照data[“年份”]进行分组，这样最后的结果里就只会有销售额，不包含其它无关信息，比如订单量等。再按月（”M”）进行重采样，最后求和</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">data = pd.read_csv(<span class="string">&quot;/Users/junjun/store.csv&quot;</span>)</span><br><span class="line">quanNull= data[data[<span class="string">&quot;订单量&quot;</span>].isnull()]</span><br><span class="line">data.drop(index=quanNull.index, inplace=<span class="symbol">True</span>)</span><br><span class="line">data = data[(data[<span class="string">&quot;订单量&quot;</span>]&gt;<span class="number">0</span>) &amp; (data[<span class="string">&quot;订单量&quot;</span>]&lt;<span class="number">100000000</span>)]</span><br><span class="line">dup = data[data.duplicated()]</span><br><span class="line">data[<span class="string">&quot;订单日期&quot;</span>] = pd.to_datetime(data[<span class="string">&quot;订单日期&quot;</span>])</span><br><span class="line">data[<span class="string">&quot;年份&quot;</span>] = data[<span class="string">&quot;订单日期&quot;</span>].dt.year</span><br><span class="line">data = data.set_index(<span class="string">&quot;订单日期&quot;</span>)</span><br><span class="line"># 使用groupby()、resample()和sum()函数</span><br><span class="line"># 计算每年每个月的销售额总和</span><br><span class="line"># 将结果赋值给变量groupByMonth</span><br><span class="line">groupByMonth = data[<span class="string">&quot;销售额&quot;</span>].groupby(data[<span class="string">&quot;年份&quot;</span>]).resample(<span class="string">&quot;M&quot;</span>).sum()</span><br><span class="line">print(groupByMonth)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">年份  订单日期  </span><br><span class="line"><span class="number">2018</span>  <span class="number">2018-01-31</span>    <span class="number">22566.1042</span></span><br><span class="line">      <span class="number">2018-02-28</span>    <span class="number">23144.3480</span></span><br><span class="line">      <span class="number">2018-03-31</span>    <span class="number">25522.3735</span></span><br><span class="line">      <span class="number">2018-04-30</span>    <span class="number">23139.5750</span></span><br><span class="line">      <span class="number">2018-05-31</span>    <span class="number">32174.7999</span></span><br><span class="line">      <span class="number">2018-06-30</span>    <span class="number">18060.7580</span></span><br><span class="line">      <span class="number">2018-07-31</span>    <span class="number">16174.5780</span></span><br><span class="line">      <span class="number">2018-08-31</span>    <span class="number">16740.8600</span></span><br><span class="line">      <span class="number">2018-09-30</span>    <span class="number">37105.7730</span></span><br><span class="line">      <span class="number">2018-10-31</span>    <span class="number">36809.5635</span></span><br><span class="line">      <span class="number">2018-11-30</span>    <span class="number">41231.6180</span></span><br><span class="line">      <span class="number">2018-12-31</span>    <span class="number">41863.3650</span></span><br><span class="line"><span class="number">2019</span>  <span class="number">2019-01-31</span>    <span class="number">15334.4520</span></span><br><span class="line">      <span class="number">2019-02-28</span>    <span class="number">13034.6675</span></span><br><span class="line">      <span class="number">2019-03-31</span>    <span class="number">24347.5720</span></span><br><span class="line">      <span class="number">2019-04-30</span>    <span class="number">17272.8980</span></span><br><span class="line">      <span class="number">2019-05-31</span>    <span class="number">50999.7048</span></span><br><span class="line">      <span class="number">2019-06-30</span>    <span class="number">39738.4415</span></span><br><span class="line">      <span class="number">2019-07-31</span>    <span class="number">25785.6190</span></span><br><span class="line">      <span class="number">2019-08-31</span>    <span class="number">44589.5558</span></span><br><span class="line">      <span class="number">2019-09-30</span>    <span class="number">46704.0544</span></span><br><span class="line">      <span class="number">2019-10-31</span>    <span class="number">50055.8980</span></span><br><span class="line">      <span class="number">2019-11-30</span>    <span class="number">48614.6996</span></span><br><span class="line">      <span class="number">2019-12-31</span>    <span class="number">45903.7410</span></span><br><span class="line"><span class="number">2020</span>  <span class="number">2020-01-31</span>    <span class="number">16332.7460</span></span><br><span class="line">      <span class="number">2020-02-29</span>    <span class="number">14598.6618</span></span><br><span class="line">      <span class="number">2020-03-31</span>    <span class="number">24996.9080</span></span><br><span class="line">      <span class="number">2020-04-30</span>    <span class="number">39868.3176</span></span><br><span class="line">      <span class="number">2020-05-31</span>    <span class="number">57884.6615</span></span><br><span class="line">      <span class="number">2020-06-30</span>    <span class="number">46831.8548</span></span><br><span class="line">      <span class="number">2020-07-31</span>    <span class="number">32613.6996</span></span><br><span class="line">      <span class="number">2020-08-31</span>    <span class="number">61303.1732</span></span><br><span class="line">      <span class="number">2020-09-30</span>    <span class="number">55374.4992</span></span><br><span class="line">      <span class="number">2020-10-31</span>    <span class="number">56474.6272</span></span><br><span class="line">      <span class="number">2020-11-30</span>    <span class="number">59541.0070</span></span><br><span class="line">      <span class="number">2020-12-31</span>    <span class="number">60721.6270</span></span><br><span class="line"><span class="number">2021</span>  <span class="number">2021-01-31</span>    <span class="number">26416.4390</span></span><br><span class="line">      <span class="number">2021-02-28</span>    <span class="number">14909.8110</span></span><br><span class="line">      <span class="number">2021-03-31</span>    <span class="number">26170.4220</span></span><br><span class="line">      <span class="number">2021-04-30</span>    <span class="number">40519.7280</span></span><br><span class="line">      <span class="number">2021-05-31</span>    <span class="number">59442.6325</span></span><br><span class="line">      <span class="number">2021-06-30</span>    <span class="number">54836.0220</span></span><br><span class="line">      <span class="number">2021-07-31</span>    <span class="number">58313.3274</span></span><br><span class="line">      <span class="number">2021-08-31</span>    <span class="number">76936.9230</span></span><br><span class="line">      <span class="number">2021-09-30</span>    <span class="number">66457.3419</span></span><br><span class="line">      <span class="number">2021-10-31</span>    <span class="number">58884.2160</span></span><br><span class="line">      <span class="number">2021-11-30</span>    <span class="number">63051.7894</span></span><br><span class="line">      <span class="number">2021-12-31</span>    <span class="number">79829.4934</span></span><br><span class="line">Name: 销售额, dtype: float64</span><br></pre></td></tr></table></figure>
+<h3 id="3-依据groupByMonth画出折线图"><a href="#3-依据groupByMonth画出折线图" class="headerlink" title="3. 依据groupByMonth画出折线图"></a>3. 依据groupByMonth画出折线图</h3><p>将每年对应的销售额绘制成一个折线图，并将四年的折线图都放在一个画布里来展示。<br>通过 <strong>.loc</strong> 属性，访问groupByMonth的多层索引，将每年的数据依次提取出来</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">data = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/junjun/store.csv&quot;</span>)</span><br><span class="line">quanNull= data<span class="selector-attr">[data[<span class="string">&quot;订单量&quot;</span>]</span><span class="selector-class">.isnull</span>()]</span><br><span class="line">data<span class="selector-class">.drop</span>(index=quanNull<span class="selector-class">.index</span>, inplace=True)</span><br><span class="line">data = data<span class="selector-attr">[(data[<span class="string">&quot;订单量&quot;</span>]</span>&gt;<span class="number">0</span>) &amp; (data<span class="selector-attr">[<span class="string">&quot;订单量&quot;</span>]</span>&lt;<span class="number">100000000</span>)]</span><br><span class="line">dup = data<span class="selector-attr">[data.duplicated()]</span></span><br><span class="line">data<span class="selector-attr">[<span class="string">&quot;订单日期&quot;</span>]</span> = pd<span class="selector-class">.to_datetime</span>(data<span class="selector-attr">[<span class="string">&quot;订单日期&quot;</span>]</span>)</span><br><span class="line">data<span class="selector-attr">[<span class="string">&quot;年份&quot;</span>]</span> = data<span class="selector-attr">[<span class="string">&quot;订单日期&quot;</span>]</span><span class="selector-class">.dt</span><span class="selector-class">.year</span></span><br><span class="line">data = data<span class="selector-class">.set_index</span>(<span class="string">&quot;订单日期&quot;</span>)</span><br><span class="line">groupByMonth = data<span class="selector-attr">[<span class="string">&quot;销售额&quot;</span>]</span><span class="selector-class">.groupby</span>(data<span class="selector-attr">[<span class="string">&quot;年份&quot;</span>]</span>)<span class="selector-class">.resample</span>(<span class="string">&quot;M&quot;</span>)<span class="selector-class">.sum</span>()</span><br><span class="line">year_2018 = groupByMonth<span class="selector-class">.loc</span><span class="selector-attr">[2018]</span></span><br><span class="line">year_2019 = groupByMonth<span class="selector-class">.loc</span><span class="selector-attr">[2019]</span></span><br><span class="line">year_2020 = groupByMonth<span class="selector-class">.loc</span><span class="selector-attr">[2020]</span></span><br><span class="line">year_2021 = groupByMonth<span class="selector-class">.loc</span><span class="selector-attr">[2021]</span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(yrea_2021)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">订单日期</span><br><span class="line"><span class="number">2021-01-31</span>    <span class="number">26416.4390</span></span><br><span class="line"><span class="number">2021-02-28</span>    <span class="number">14909.8110</span></span><br><span class="line"><span class="number">2021-03-31</span>    <span class="number">26170.4220</span></span><br><span class="line"><span class="number">2021-04-30</span>    <span class="number">40519.7280</span></span><br><span class="line"><span class="number">2021-05-31</span>    <span class="number">59442.6325</span></span><br><span class="line"><span class="number">2021-06-30</span>    <span class="number">54836.0220</span></span><br><span class="line"><span class="number">2021-07-31</span>    <span class="number">58313.3274</span></span><br><span class="line"><span class="number">2021-08-31</span>    <span class="number">76936.9230</span></span><br><span class="line"><span class="number">2021-09-30</span>    <span class="number">66457.3419</span></span><br><span class="line"><span class="number">2021-10-31</span>    <span class="number">58884.2160</span></span><br><span class="line"><span class="number">2021-11-30</span>    <span class="number">63051.7894</span></span><br><span class="line"><span class="number">2021-12-31</span>    <span class="number">79829.4934</span></span><br><span class="line">Freq: M, Name: 销售额, dtype: float64</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以依次根据year_2018、year_2019、year_2020和year_2021变量，绘制出对应年份的每月销售额变化趋势。</p>
+</blockquote>
+<p><strong>画图</strong><br>使用 <strong>strftime()函数</strong> ，依次将year_2018、year_2019、year_2020和year_2021的index转换为 <strong>“月”</strong> 的格式。<br>然后依次调用4次 <strong>plt.plot()</strong> 函数绘制折线图，并传入 <strong>label参数</strong> ，设置对应的图例。<br>在使用 <strong>plt.show()</strong> 展示图像前，通过 <strong>plt.legend()</strong> 方法显示图例即可。</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">data </span>= pd.read_csv(<span class="string">&quot;/Users/junjun/store.csv&quot;</span>)</span><br><span class="line">quanNull= data[data[<span class="string">&quot;订单量&quot;</span>].isnull()]</span><br><span class="line">data.<span class="keyword">drop</span>(<span class="keyword">index</span>=quanNull.<span class="keyword">index</span>, inplace=True)</span><br><span class="line"><span class="keyword">data </span>= data[(data[<span class="string">&quot;订单量&quot;</span>]&gt;0) &amp; (data[<span class="string">&quot;订单量&quot;</span>]&lt;100000000)]</span><br><span class="line">dup = data[data.duplicated()]</span><br><span class="line">data[<span class="string">&quot;订单日期&quot;</span>] = pd.to_<span class="meta">datetime</span>(data[<span class="string">&quot;订单日期&quot;</span>])</span><br><span class="line">data[<span class="string">&quot;年份&quot;</span>] = data[<span class="string">&quot;订单日期&quot;</span>].dt.year</span><br><span class="line"><span class="keyword">data </span>= data.set_<span class="meta">index</span>(<span class="string">&quot;订单日期&quot;</span>)</span><br><span class="line">groupByMonth = data[<span class="string">&quot;销售额&quot;</span>].groupby(data[<span class="string">&quot;年份&quot;</span>]).resample(<span class="string">&quot;M&quot;</span>).<span class="meta">sum</span>()</span><br><span class="line">year_2018 = groupByMonth.loc[2018]</span><br><span class="line">year_2019 = groupByMonth.loc[2019]</span><br><span class="line">year_2020 = groupByMonth.loc[2020]</span><br><span class="line">year_2021 = groupByMonth.loc[2021]</span><br><span class="line"># 依次将year_2018、year_2019、year_2020和year_2021的<span class="keyword">index</span></span><br><span class="line"># 转换为<span class="string">&quot;月&quot;</span>的格式</span><br><span class="line">year_2018.<span class="keyword">index</span> = year_2018.<span class="keyword">index</span>.strf<span class="meta">time</span>(<span class="string">&quot;%m&quot;</span>)</span><br><span class="line">year_2019.<span class="keyword">index</span> = year_2019.<span class="keyword">index</span>.strf<span class="meta">time</span>(<span class="string">&quot;%m&quot;</span>)</span><br><span class="line">year_2020.<span class="keyword">index</span> = year_2020.<span class="keyword">index</span>.strf<span class="meta">time</span>(<span class="string">&quot;%m&quot;</span>)</span><br><span class="line">year_2021.<span class="keyword">index</span> = year_2021.<span class="keyword">index</span>.strf<span class="meta">time</span>(<span class="string">&quot;%m&quot;</span>)</span><br><span class="line"># 导入matplotlib.pyplot，并使用<span class="string">&quot;plt&quot;</span>作为该模块的简写</span><br><span class="line">import matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"># 通过给 plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] 赋值</span><br><span class="line"># 将字体设置为 Arial Unicode MS </span><br><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = <span class="string">&quot;Arial Unicode MS&quot;</span></span><br><span class="line"># 使用plt.plot()函数</span><br><span class="line"># 以year_2018.<span class="keyword">index</span>为<span class="keyword">x</span>轴的值和以year_2018.values为y轴的值</span><br><span class="line"># <span class="string">&quot;2018&quot;</span>作为图例，绘制展现2018年每月销售额的折线图</span><br><span class="line">plt.plot(year_2018.<span class="keyword">index</span>,year_2018.values,<span class="keyword">label</span>=<span class="string">&quot;2018&quot;</span>)</span><br><span class="line">plt.plot(year_2019.<span class="keyword">index</span>,year_2019.values,<span class="keyword">label</span>=<span class="string">&quot;2019&quot;</span>)</span><br><span class="line">plt.plot(year_2020.<span class="keyword">index</span>,year_2020.values,<span class="keyword">label</span>=<span class="string">&quot;2020&quot;</span>)</span><br><span class="line">plt.plot(year_2021.<span class="keyword">index</span>,year_2021.values,<span class="keyword">label</span>=<span class="string">&quot;2021&quot;</span>)</span><br><span class="line"># 使用plt.legend()函数显示图例</span><br><span class="line">plt.legend()</span><br><span class="line"># 使用plt.show()函数显示图像</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="http://nocturne.bczcdn.com/img/1648537009388_57070/figure_1%20(1).png" alt="折线图"></p>
+<hr>
+<blockquote>
+<p>空间维度的销售额分析，以下采用簇形柱状图</p>
+</blockquote>
+<p>需要获取每个地区的每年销售总额。先将便利店销售额按照每个地区进行分组，再在各个地区的分组中按年份重新采样聚合。<br>和之前一样，需要先使用 <strong>set_index()</strong> 函数将 <strong>data[“订单日期”]</strong> 设置成data变量的行索引index。<br>然后，就可以对data[“销售额”]使用 <strong>groupby()</strong> 函数，按照 <strong>data[“地区”]</strong> 进行分组。<br>再按 <strong>年（”Y”）</strong> 进行重采样，最后求和</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">data </span>= pd.read_csv(<span class="string">&quot;/Users/junjun/store.csv&quot;</span>)</span><br><span class="line">quanNull= data[data[<span class="string">&quot;订单量&quot;</span>].isnull()]</span><br><span class="line">data.<span class="keyword">drop</span>(<span class="keyword">index</span>=quanNull.<span class="keyword">index</span>, inplace=True)</span><br><span class="line"><span class="keyword">data </span>= data[(data[<span class="string">&quot;订单量&quot;</span>]&gt;0) &amp; (data[<span class="string">&quot;订单量&quot;</span>]&lt;100000000)]</span><br><span class="line">dup = data[data.duplicated()]</span><br><span class="line">data[<span class="string">&quot;订单日期&quot;</span>] = pd.to_<span class="meta">datetime</span>(data[<span class="string">&quot;订单日期&quot;</span>])</span><br><span class="line"><span class="keyword">data </span>= data.set_<span class="meta">index</span>(<span class="string">&quot;订单日期&quot;</span>)</span><br><span class="line"># 使用groupby()、resample()和<span class="meta">sum</span>()函数</span><br><span class="line"># 计算每个地区每年的销售额总和</span><br><span class="line"># 将结果赋值给变量groupByArea</span><br><span class="line">groupByArea = data[<span class="string">&quot;销售额&quot;</span>].groupby(data[<span class="string">&quot;地区&quot;</span>]).resample(<span class="string">&quot;Y&quot;</span>).<span class="meta">sum</span>()</span><br><span class="line">pr<span class="meta">int</span>(groupByArea)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">地区  订单日期  </span><br><span class="line">东北  <span class="number">2018-12-31</span>     <span class="number">68416.3595</span></span><br><span class="line">      <span class="number">2019-12-31</span>     <span class="number">64168.9598</span></span><br><span class="line">      <span class="number">2020-12-31</span>     <span class="number">92968.0408</span></span><br><span class="line">      <span class="number">2021-12-31</span>    <span class="number">120456.2192</span></span><br><span class="line">中南  <span class="number">2018-12-31</span>     <span class="number">78759.7892</span></span><br><span class="line">      <span class="number">2019-12-31</span>    <span class="number">117693.6204</span></span><br><span class="line">      <span class="number">2020-12-31</span>    <span class="number">104677.8360</span></span><br><span class="line">      <span class="number">2021-12-31</span>    <span class="number">160665.8210</span></span><br><span class="line">华东  <span class="number">2018-12-31</span>     <span class="number">89370.0849</span></span><br><span class="line">      <span class="number">2019-12-31</span>    <span class="number">127074.9876</span></span><br><span class="line">      <span class="number">2020-12-31</span>    <span class="number">175369.7526</span></span><br><span class="line">      <span class="number">2021-12-31</span>    <span class="number">181681.3189</span></span><br><span class="line">华北  <span class="number">2018-12-31</span>     <span class="number">67005.0770</span></span><br><span class="line">      <span class="number">2019-12-31</span>     <span class="number">57201.0920</span></span><br><span class="line">      <span class="number">2020-12-31</span>     <span class="number">79453.2498</span></span><br><span class="line">      <span class="number">2021-12-31</span>     <span class="number">81030.7290</span></span><br><span class="line">西北  <span class="number">2018-12-31</span>      <span class="number">9313.9890</span></span><br><span class="line">      <span class="number">2019-12-31</span>     <span class="number">16810.2960</span></span><br><span class="line">      <span class="number">2020-12-31</span>     <span class="number">32959.0842</span></span><br><span class="line">      <span class="number">2021-12-31</span>     <span class="number">39827.5500</span></span><br><span class="line">西南  <span class="number">2018-12-31</span>     <span class="number">21668.4165</span></span><br><span class="line">      <span class="number">2019-12-31</span>     <span class="number">39432.3478</span></span><br><span class="line">      <span class="number">2020-12-31</span>     <span class="number">41113.8195</span></span><br><span class="line">      <span class="number">2021-12-31</span>     <span class="number">42106.5075</span></span><br><span class="line">Name: 销售额, dtype: float64</span><br></pre></td></tr></table></figure>
+<p><strong>画图</strong><br>x轴是地区，y轴数据则是各地区对应的每年销售额。<br>绘制<strong>簇形柱状图</strong>只需要对一个DataFrame对象，使用pandas模块中的 <strong>plot.bar()</strong> 函数即可。<br>在不指定x轴和y轴数据的情况下，行索引index会作为x轴，每一行数值类型的值会被分组到并排的柱子中作为y轴。所以需要重塑groupByArea的多层索引<br>使用 <strong>unstack()</strong> 函数，将groupByArea里，名称为”订单日期”的行索引转变为列索引即可。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">data = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/junjun/store.csv&quot;</span>)</span><br><span class="line">quanNull= data<span class="selector-attr">[data[<span class="string">&quot;订单量&quot;</span>]</span><span class="selector-class">.isnull</span>()]</span><br><span class="line">data<span class="selector-class">.drop</span>(index=quanNull<span class="selector-class">.index</span>, inplace=True)</span><br><span class="line">data = data<span class="selector-attr">[(data[<span class="string">&quot;订单量&quot;</span>]</span>&gt;<span class="number">0</span>) &amp; (data<span class="selector-attr">[<span class="string">&quot;订单量&quot;</span>]</span>&lt;<span class="number">100000000</span>)]</span><br><span class="line">dup = data<span class="selector-attr">[data.duplicated()]</span></span><br><span class="line">data<span class="selector-attr">[<span class="string">&quot;订单日期&quot;</span>]</span> = pd<span class="selector-class">.to_datetime</span>(data<span class="selector-attr">[<span class="string">&quot;订单日期&quot;</span>]</span>)</span><br><span class="line">data = data<span class="selector-class">.set_index</span>(<span class="string">&quot;订单日期&quot;</span>)</span><br><span class="line">groupByArea = data<span class="selector-attr">[<span class="string">&quot;销售额&quot;</span>]</span><span class="selector-class">.groupby</span>(data<span class="selector-attr">[<span class="string">&quot;地区&quot;</span>]</span>)<span class="selector-class">.resample</span>(<span class="string">&quot;Y&quot;</span>)<span class="selector-class">.sum</span>()</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(groupByArea)</span></span></span><br><span class="line">groupByArea = groupByArea<span class="selector-class">.unstack</span>(<span class="string">&quot;订单日期&quot;</span>)</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(groupByArea)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">订单日期  <span class="number">2018-12-31</span>   <span class="number">2019-12-31</span>   <span class="number">2020-12-31</span>   <span class="number">2021-12-31</span></span><br><span class="line">地区                                                       </span><br><span class="line">东北      <span class="number">68416.3595</span>   <span class="number">64168.9598</span>   <span class="number">92968.0408</span>  <span class="number">120456.2192</span></span><br><span class="line">中南      <span class="number">78759.7892</span>  <span class="number">117693.6204</span>  <span class="number">104677.8360</span>  <span class="number">160665.8210</span></span><br><span class="line">华东      <span class="number">89370.0849</span>  <span class="number">127074.9876</span>  <span class="number">175369.7526</span>  <span class="number">181681.3189</span></span><br><span class="line">华北      <span class="number">67005.0770</span>   <span class="number">57201.0920</span>   <span class="number">79453.2498</span>   <span class="number">81030.7290</span></span><br><span class="line">西北       <span class="number">9313.9890</span>   <span class="number">16810.2960</span>   <span class="number">32959.0842</span>   <span class="number">39827.5500</span></span><br><span class="line">西南      <span class="number">21668.4165</span>   <span class="number">39432.3478</span>   <span class="number">41113.8195</span>   <span class="number">42106.5075</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>转变后，groupByArea的行索引就变成了地区，列索引则变成了订单日期。</p>
+</blockquote>
+<p>正式画图</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">data = pd.read_csv(&quot;/Users/junjun/store.csv&quot;)</span><br><span class="line">quanNull= data[data[&quot;订单量&quot;].<span class="keyword">isnull</span>()]</span><br><span class="line">data.<span class="keyword">drop</span>(<span class="keyword">index</span>=quanNull.<span class="keyword">index</span>, inplace=<span class="keyword">True</span>)</span><br><span class="line">data = data[(data[&quot;订单量&quot;]&gt;<span class="number">0</span>) &amp; (data[&quot;订单量&quot;]&lt;<span class="number">100000000</span>)]</span><br><span class="line">dup = data[data.duplicated()]</span><br><span class="line">data[&quot;订单日期&quot;] = pd.to_datetime(data[&quot;订单日期&quot;])</span><br><span class="line">data = data.set_index(&quot;订单日期&quot;)</span><br><span class="line">groupByArea = data[&quot;销售额&quot;].groupby(data[&quot;地区&quot;]).resample(&quot;Y&quot;).sum()</span><br><span class="line">print(groupByArea)</span><br><span class="line">groupByArea = groupByArea.unstack(&quot;订单日期&quot;)</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"># 通过给 plt.rcParams[&quot;font.sans-serif&quot;] 赋值</span><br><span class="line"># 将字体设置为 Arial Unicode MS </span><br><span class="line">plt.rcParams[&quot;font.sans-serif&quot;] = &quot;Arial Unicode MS&quot;</span><br><span class="line"># 将groupByArea变量中<span class="keyword">columns</span>转换为&quot;%Y&quot;的格式</span><br><span class="line">groupByArea.<span class="keyword">columns</span> = groupByArea.<span class="keyword">columns</span>.strftime(&quot;%Y&quot;)</span><br><span class="line"># 对groupByArea变量使用plot.bar()函数绘制簇形柱状图</span><br><span class="line">groupByArea.plot.bar()</span><br><span class="line">plt.<span class="keyword">show</span>()</span><br></pre></td></tr></table></figure>
+<p><img src="https://nocturne.bczcdn.com/2006131e-34de-11ee-b79e-0242ac11000a/figure_1.png" alt="柱形图"></p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/1a60696b/" rel="bookmark">Git基础</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/f584b6f/" rel="bookmark">hexo博客创建步骤</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小刑
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xxsqlll.github.io/posts/815dc570/" title="Python数据分析基础">https://xxsqlll.github.io/posts/815dc570/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8A%80%E8%83%BD/" rel="tag"># 技能</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/ef95e3d0/" rel="prev" title="在Ubuntu通过YOLO v5训练PASCAL VOC数据集">
+      <i class="fa fa-chevron-left"></i> 在Ubuntu通过YOLO v5训练PASCAL VOC数据集
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  
+    <div>
+      <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-paw"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+
+    </div>
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E5%9B%9E%E9%A1%BE"><span class="nav-number">1.</span> <span class="nav-text">1. 基础回顾</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 数据分析流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STEP-2-%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.</span> <span class="nav-text">STEP 2 读取数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STEP-3-1-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">1.3.</span> <span class="nav-text">STEP 3.1 数据处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AF%86%E5%88%AB%E5%B9%B6%E5%A4%84%E7%90%86%E7%BC%BA%E5%A4%B1%E5%80%BC-info-%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 识别并处理缺失值 (info()函数)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%AF%86%E5%88%AB%E5%B9%B6%E5%A4%84%E7%90%86%E5%BC%82%E5%B8%B8%E5%80%BC"><span class="nav-number">1.3.2.</span> <span class="nav-text">2. 识别并处理异常值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%AF%86%E5%88%AB%E5%B9%B6%E5%A4%84%E7%90%86%E9%87%8D%E5%A4%8D%E5%80%BC"><span class="nav-number">1.3.3.</span> <span class="nav-text">3. 识别并处理重复值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STEP-3-2-%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97"><span class="nav-number">1.4.</span> <span class="nav-text">STEP 3.2 数据清洗</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%97%B6%E9%97%B4%EF%BC%88pd-to-datetime-%EF%BC%89"><span class="nav-number">1.4.1.</span> <span class="nav-text">1. 字符串转时间（pd.to_datetime()）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STEP-4-5-%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E3%80%81%E5%8F%AF%E8%A7%86%E5%8C%96%E3%80%81%E5%BE%97%E5%87%BA%E7%BB%93%E8%AE%BA"><span class="nav-number">1.5.</span> <span class="nav-text">STEP 4&amp;5 数据分析、可视化、得出结论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B7%BB%E5%8A%A0%E5%B9%B4%E4%BB%BD%E4%BF%A1%E6%81%AF%EF%BC%8C%E4%BF%AE%E6%94%B9%E8%A1%8C%E7%B4%A2%E5%BC%95"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 添加年份信息，修改行索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AE%8C%E6%88%90%E5%88%86%E7%BB%84%E3%80%81%E9%87%8D%E9%87%87%E6%A0%B7%E5%92%8C%E8%81%9A%E5%90%88%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 完成分组、重采样和聚合操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BE%9D%E6%8D%AEgroupByMonth%E7%94%BB%E5%87%BA%E6%8A%98%E7%BA%BF%E5%9B%BE"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. 依据groupByMonth画出折线图</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小刑"
+      src="/images/avatar.JPG">
+  <p class="site-author-name" itemprop="name">小刑</p>
+  <div class="site-description" itemprop="description">这个人很懒，什么也不想写</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxsqlll" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xxsqlll" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xxsqlll@gmail.com" title="E-Mail → mailto:xxsqlll@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/815dc570/" title="posts&#x2F;815dc570&#x2F;">Python数据分析基础</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/ef95e3d0/" title="posts&#x2F;ef95e3d0&#x2F;">在Ubuntu通过YOLO v5训练PASCAL VOC数据集</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/70ff0b51/" title="posts&#x2F;70ff0b51&#x2F;">Yolo目标检测原理</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/7c0ec17a/" title="posts&#x2F;7c0ec17a&#x2F;">Python + OpenCV实现轻量级人脸识别</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/ec209222/" title="posts&#x2F;ec209222&#x2F;">Python实现Word文档的读取</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1831469103&auto=0&height=66">
+      </iframe>
+  </div>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小刑</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">81k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:26</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>--><div>
+  <span id="sitetime"></span>
+  <script language=javascript>
+      function siteTime(){
+          window.setTimeout("siteTime()", 1000);
+          var seconds = 1000;
+          var minutes = seconds * 60;
+          var hours = minutes * 60;
+          var days = hours * 24;
+          var years = days * 365;
+          var today = new Date();
+          var todayYear = today.getFullYear();
+          var todayMonth = today.getMonth()+1;
+          var todayDate = today.getDate();
+          var todayHour = today.getHours();
+          var todayMinute = today.getMinutes();
+          var todaySecond = today.getSeconds();
+          /* 
+          Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+          year - 作为date对象的年份，为4位年份值
+          month - 0-11之间的整数，做为date对象的月份
+          day - 1-31之间的整数，做为date对象的天数
+          hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+          minutes - 0-59之间的整数，做为date对象的分钟数
+          seconds - 0-59之间的整数，做为date对象的秒数
+          microseconds - 0-999之间的整数，做为date对象的毫秒数
+      */
+          var t1 = Date.UTC(2023,7,18,11,40,00); //北京时间2018-2-13 00:00:00
+          var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+          var diff = t2-t1;
+      var diffYears = Math.floor(diff/years);
+      var diffDays = Math.floor((diff/days)-diffYears*365);
+      var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+      var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+      var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+      document.getElementById("sitetime").innerHTML=" 小破站已平稳运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+    }
+      siteTime();
+  </script>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span class="site-uv" title="总访客量">
+    我的第<span id="busuanzi_value_site_uv"></span>位朋友, 
+  </span>
+
+  <span class="site-pv" title="总访问量">
+    经过<span id="busuanzi_value_site_pv"></span>次回眸与你相遇
+  </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '0VHq4jqwE0zTWM6rJFbms2tJ-gzGzoHsz',
+      appKey     : '1QAGv9wIN4teXzpcIV8p6NyJ',
+      placeholder: "欢迎交流",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+    </div>
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+  
+  
+     <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+     <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+     <script type="text/javascript" src="/js/src/fireworks.js"></script>
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
+

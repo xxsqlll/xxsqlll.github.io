@@ -6,7 +6,7 @@
   <link href="https://xxsqlll.github.io/atom.xml" rel="self"/>
   
   <link href="https://xxsqlll.github.io/"/>
-  <updated>2023-08-05T04:13:04.719Z</updated>
+  <updated>2023-08-07T05:01:23.290Z</updated>
   <id>https://xxsqlll.github.io/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Python数据分析基础</title>
+    <link href="https://xxsqlll.github.io/posts/815dc570/"/>
+    <id>https://xxsqlll.github.io/posts/815dc570/</id>
+    <published>2023-08-07T05:01:45.000Z</published>
+    <updated>2023-08-07T05:01:23.290Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-基础回顾&quot;&gt;&lt;a href=&quot;#1-基础回顾&quot; class=&quot;headerlink&quot; title=&quot;1. 基础回顾&quot;&gt;&lt;/a&gt;1. 基础回顾&lt;/h1&gt;&lt;h2 id=&quot;1-1-数据分析流程&quot;&gt;&lt;a href=&quot;#1-1-数据分析流程&quot; class=&quot;headerlink&quot; title=&quot;1.1 数据分析流程&quot;&gt;&lt;/a&gt;1.1 数据分析流程&lt;/h2&gt;&lt;p&gt;STEP 1 提出问题&lt;br&gt;STEP 2 收集数据&lt;br&gt;STEP 3 数据处理与清洗&lt;br&gt;STEP 4 数据分析&lt;br&gt;STEP 5 可视化，得出结论&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;STEP-2-读取数据&quot;&gt;&lt;a href=&quot;#STEP-2-读取数据&quot; class=&quot;headerlink&quot; title=&quot;STEP 2 读取数据&quot;&gt;&lt;/a&gt;STEP 2 读取数据&lt;/h2&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="技能" scheme="https://xxsqlll.github.io/tags/%E6%8A%80%E8%83%BD/"/>
+    
+  </entry>
+  
+  <entry>
     <title>在Ubuntu通过YOLO v5训练PASCAL VOC数据集</title>
     <link href="https://xxsqlll.github.io/posts/ef95e3d0/"/>
     <id>https://xxsqlll.github.io/posts/ef95e3d0/</id>
     <published>2023-08-05T04:11:45.000Z</published>
-    <updated>2023-08-05T04:13:04.719Z</updated>
+    <updated>2023-08-05T04:16:22.030Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;1-安装-Pytorch&quot;&gt;&lt;a href=&quot;#1-安装-Pytorch&quot; class=&quot;headerlink&quot; title=&quot;1. 安装 Pytorch&quot;&gt;&lt;/a&gt;1. 安装 Pytorch&lt;/h1&gt;&lt;h2 id=&quot;1-1-安装-Anaconda&quot;&gt;&lt;a href=&quot;#1-1-安装-Anaconda&quot; class=&quot;headerlink&quot; title=&quot;1.1 安装 Anaconda&quot;&gt;&lt;/a&gt;1.1 安装 Anaconda&lt;/h2&gt;&lt;ol&gt;
@@ -37,7 +58,7 @@ Anaconda将自动将环境变量添加到PATH中&lt;br&gt;&lt;strong&gt;注意�
     
     
     
-    <category term="YOLO v5" scheme="https://xxsqlll.github.io/categories/YOLO-v5/"/>
+    <category term="Yolo" scheme="https://xxsqlll.github.io/categories/Yolo/"/>
     
     
     <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
@@ -72,7 +93,7 @@ Anaconda将自动将环境变量添加到PATH中&lt;br&gt;&lt;strong&gt;注意�
     <link href="https://xxsqlll.github.io/posts/7c0ec17a/"/>
     <id>https://xxsqlll.github.io/posts/7c0ec17a/</id>
     <published>2023-07-31T05:07:45.000Z</published>
-    <updated>2023-07-31T05:12:03.622Z</updated>
+    <updated>2023-08-05T04:21:06.373Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;1-环境配置&quot;&gt;&lt;a href=&quot;#1-环境配置&quot; class=&quot;headerlink&quot; title=&quot;1. 环境配置&quot;&gt;&lt;/a&gt;1. 环境配置&lt;/h1&gt;&lt;h2 id=&quot;1-1-安装PyCharm&quot;&gt;&lt;a href=&quot;#1-1-安装PyCharm&quot; class=&quot;headerlink&quot; title=&quot;1.1 安装PyCharm&quot;&gt;&lt;/a&gt;1.1 安装PyCharm&lt;/h2&gt;&lt;h2 id=&quot;1-2-安装Opencv环境&quot;&gt;&lt;a href=&quot;#1-2-安装Opencv环境&quot; class=&quot;headerlink&quot; title=&quot;1.2 安装Opencv环境&quot;&gt;&lt;/a&gt;1.2 安装Opencv环境&lt;/h2&gt;&lt;ul&gt;
@@ -214,11 +235,11 @@ Anaconda将自动将环境变量添加到PATH中&lt;br&gt;&lt;strong&gt;注意�
   </entry>
   
   <entry>
-    <title>Python数据分析</title>
+    <title>Python数据分析函数功能介绍</title>
     <link href="https://xxsqlll.github.io/posts/f49c8269/"/>
     <id>https://xxsqlll.github.io/posts/f49c8269/</id>
     <published>2023-07-28T09:12:45.000Z</published>
-    <updated>2023-07-28T09:36:01.271Z</updated>
+    <updated>2023-08-07T05:00:05.449Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;1-Numpy-Numerical-Python&quot;&gt;&lt;a href=&quot;#1-Numpy-Numerical-Python&quot; class=&quot;headerlink&quot; title=&quot;1. Numpy (Numerical Python)&quot;&gt;&lt;/a&gt;1. Numpy (Numerical Python)&lt;/h1&gt;&lt;h2 id=&quot;1-1-N维数组&quot;&gt;&lt;a href=&quot;#1-1-N维数组&quot; class=&quot;headerlink&quot; title=&quot;1.1 N维数组&quot;&gt;&lt;/a&gt;1.1 N维数组&lt;/h2&gt;&lt;p&gt;一个多维数组，描述了相同类型数据的集合。&lt;/p&gt;
