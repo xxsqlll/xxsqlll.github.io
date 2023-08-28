@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>关联分析</title>
+    <url>/posts/70e3efaf/</url>
+    <content><![CDATA[<h1 id="关联分析"><a href="#关联分析" class="headerlink" title="关联分析"></a>关联分析</h1><h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h2><p>关联分析是一门用于发现数据之间联系的分析技术。</p>
+<p>比如，在现实生活中，商家依据销售量间的联系，通过调整营销策略，把关联较高的商品打包成一个套餐A，提高销量。</p>
+<p>关联分析不仅应用于销售行业的商品推荐。<br>它还被广泛应用在生物信息学中的功能基因定位、医疗领域的病症关联分析等。</p>
+<h1 id="项"><a href="#项" class="headerlink" title="项"></a>项</h1><h2 id="1-定义-1"><a href="#1-定义-1" class="headerlink" title="1. 定义"></a>1. 定义</h2><p>购买商品中的每样商品为一个项。</p>
+<p>所以，这份数据中共有4个项：</p>
+<p>“薯条”，“可乐”，“汉堡”，“鸡翅”。<br><img src="https://s2.loli.net/2023/08/28/JX1qfm4bSsodYnK.png" style="max-width: 50%;" ></p>
+<h1 id="项集"><a href="#项集" class="headerlink" title="项集"></a>项集</h1><h2 id="1-定义-2"><a href="#1-定义-2" class="headerlink" title="1. 定义"></a>1. 定义</h2><p>项组成的集合为项集。一般用{A,B,…}的形式表示项集，k个项组成的项集，叫 k 项集。<br>比如，{薯条,可乐}是2项集，{薯条}是1项集。</p>
+<p>注意，项集内不存在相同的项，如{薯条，可乐，可乐}</p>
+<h1 id="支持度"><a href="#支持度" class="headerlink" title="支持度"></a>支持度</h1><h2 id="1-定义-3"><a href="#1-定义-3" class="headerlink" title="1. 定义"></a>1. 定义</h2><p>项集出现的概率。<br>即该项集的出现次数和事务总数的比值。</p>
+<p><strong>注意⚠️：{X}出现的次数是指：包含{X}这个项集的事务的次数。</strong> </p>
+<h1 id="置信度"><a href="#置信度" class="headerlink" title="置信度"></a>置信度</h1><p>表示在前件出现的条件下，后件同时出现的概率。<br>即项集 {X,Y}的支持度 和 {X}的支持度 的比值<br><img src="https://s2.loli.net/2023/08/28/MXlyIvkqbsDxB9S.png" style="max-width: 50%"></p>
+<h1 id="提升度"><a href="#提升度" class="headerlink" title="提升度"></a>提升度</h1><h2 id="1-定义-4"><a href="#1-定义-4" class="headerlink" title="1. 定义"></a>1. 定义</h2><p>表示前件出现，对后件出现的影响程度有多大。<br>即项集{X,Y}的置信度和{Y}的支持度的比值。<br><img src="http://nocturne.bczcdn.com/img/1649407565717_20576/6-47.1.png" style="max-width: 50%"><br>电视–&gt;游戏机的提升度<br>&#x3D;电视–&gt;游戏机置信度&#x2F;游戏机支持度<br>电视–&gt;游戏机置信度&#x3D;电视–&gt;游戏机支持度&#x2F;电视支持度</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>智能推荐算法</title>
     <url>/posts/f16c50c8/</url>
     <content><![CDATA[<h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h1><p><strong>智能推荐：</strong> 是指通过分析用户的历史数据和行为，预测用户可能感兴趣的产品，并向其进行推荐。</p>

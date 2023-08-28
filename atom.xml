@@ -6,7 +6,7 @@
   <link href="https://xxsqlll.github.io/atom.xml" rel="self"/>
   
   <link href="https://xxsqlll.github.io/"/>
-  <updated>2023-08-28T01:56:31.955Z</updated>
+  <updated>2023-08-28T08:46:58.212Z</updated>
   <id>https://xxsqlll.github.io/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>关联分析</title>
+    <link href="https://xxsqlll.github.io/posts/70e3efaf/"/>
+    <id>https://xxsqlll.github.io/posts/70e3efaf/</id>
+    <published>2023-08-28T08:46:45.000Z</published>
+    <updated>2023-08-28T08:46:58.212Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;关联分析&quot;&gt;&lt;a href=&quot;#关联分析&quot; class=&quot;headerlink&quot; title=&quot;关联分析&quot;&gt;&lt;/a&gt;关联分析&lt;/h1&gt;&lt;h2 id=&quot;1-定义&quot;&gt;&lt;a href=&quot;#1-定义&quot; class=&quot;headerlink&quot; title=&quot;1. 定义&quot;&gt;&lt;/a&gt;1. 定义&lt;/h2&gt;&lt;p&gt;关联分析是一门用于发现数据之间联系的分析技术。&lt;/p&gt;
+&lt;p&gt;比如，在现实生活中，商家依据销售量间的联系，通过调整营销策略，把关联较高的商品打包成一个套餐A，提高销量。&lt;/p&gt;
+&lt;p&gt;关联分析不仅应用于销售行业的商品推荐。&lt;br&gt;它还被广泛应用在生物信息学中的功能基因定位、医疗领域的病症关联分析等。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>智能推荐算法</title>
     <link href="https://xxsqlll.github.io/posts/f16c50c8/"/>
     <id>https://xxsqlll.github.io/posts/f16c50c8/</id>
     <published>2023-08-28T01:56:45.000Z</published>
-    <updated>2023-08-28T01:56:31.955Z</updated>
+    <updated>2023-08-28T01:56:56.603Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;1-概念&quot;&gt;&lt;a href=&quot;#1-概念&quot; class=&quot;headerlink&quot; title=&quot;1. 概念&quot;&gt;&lt;/a&gt;1. 概念&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;智能推荐：&lt;/strong&gt; 是指通过分析用户的历史数据和行为，预测用户可能感兴趣的产品，并向其进行推荐。&lt;/p&gt;
@@ -455,25 +476,6 @@ Anaconda将自动将环境变量添加到PATH中&lt;br&gt;&lt;strong&gt;注意�
     
     
     <category term="技能" scheme="https://xxsqlll.github.io/tags/%E6%8A%80%E8%83%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Arduino基础</title>
-    <link href="https://xxsqlll.github.io/posts/8e355f78/"/>
-    <id>https://xxsqlll.github.io/posts/8e355f78/</id>
-    <published>2023-07-27T06:18:23.000Z</published>
-    <updated>2023-07-28T09:38:01.011Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;1-Arduino-IDE-下载与安装&quot;&gt;&lt;a href=&quot;#1-Arduino-IDE-下载与安装&quot; class=&quot;headerlink&quot; title=&quot;1. Arduino IDE 下载与安装&quot;&gt;&lt;/a&gt;1. Arduino IDE 下载与安装&lt;/h1&gt;&lt;h1 id=&quot;2-Arduino-IDE-界面和设置&quot;&gt;&lt;a href=&quot;#2-Arduino-IDE-界面和设置&quot; class=&quot;headerlink&quot; title=&quot;2. Arduino IDE 界面和设置&quot;&gt;&lt;/a&gt;2. Arduino IDE 界面和设置&lt;/h1&gt;&lt;h1 id=&quot;3-Arduino-开发板基本介绍&quot;&gt;&lt;a href=&quot;#3-Arduino-开发板基本介绍&quot; class=&quot;headerlink&quot; title=&quot;3. Arduino 开发板基本介绍&quot;&gt;&lt;/a&gt;3. Arduino 开发板基本介绍&lt;/h1&gt;&lt;h2 id=&quot;3-1-微控制器-ATMEL&quot;&gt;&lt;a href=&quot;#3-1-微控制器-ATMEL&quot; class=&quot;headerlink&quot; title=&quot;3.1 微控制器 ATMEL&quot;&gt;&lt;/a&gt;3.1 微控制器 ATMEL&lt;/h2&gt;&lt;h2 id=&quot;3-2-端口&quot;&gt;&lt;a href=&quot;#3-2-端口&quot; class=&quot;headerlink&quot; title=&quot;3.2 端口&quot;&gt;&lt;/a&gt;3.2 端口&lt;/h2&gt;</summary>
-    
-    
-    
-    <category term="Arduino" scheme="https://xxsqlll.github.io/categories/Arduino/"/>
-    
-    
-    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
