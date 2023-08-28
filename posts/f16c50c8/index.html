@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xxsqlll.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"always","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. 概念智能推荐： 是指通过分析用户的历史数据和行为，预测用户可能感兴趣的产品，并向其进行推荐。 2. 推荐算法 — 协同过滤协同过滤： 通过挖掘用户历史行为信息，从而发现用户偏好；再基于不同的偏好，对用户或者产品进行群组划分；最后为目标用户进行推荐。该算法主要功能就是预测和推荐。 协同">
+<meta property="og:type" content="article">
+<meta property="og:title" content="智能推荐算法">
+<meta property="og:url" content="https://xxsqlll.github.io/posts/f16c50c8/index.html">
+<meta property="og:site_name" content="小刑的博客">
+<meta property="og:description" content="1. 概念智能推荐： 是指通过分析用户的历史数据和行为，预测用户可能感兴趣的产品，并向其进行推荐。 2. 推荐算法 — 协同过滤协同过滤： 通过挖掘用户历史行为信息，从而发现用户偏好；再基于不同的偏好，对用户或者产品进行群组划分；最后为目标用户进行推荐。该算法主要功能就是预测和推荐。 协同">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1645498232326_53019/2P19.png">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1646200275722_38154/2P43.png">
+<meta property="article:published_time" content="2023-08-28T01:56:45.000Z">
+<meta property="article:modified_time" content="2023-08-28T01:56:31.955Z">
+<meta property="article:author" content="小刑">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://nocturne.bczcdn.com/img/1645498232326_53019/2P19.png">
+
+<link rel="canonical" href="https://xxsqlll.github.io/posts/f16c50c8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>智能推荐算法 | 小刑的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小刑的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小刑的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">五马六猴，解衣磅礴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-film fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/xxsqlll" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxsqlll.github.io/posts/f16c50c8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.JPG">
+      <meta itemprop="name" content="小刑">
+      <meta itemprop="description" content="这个人很懒，什么也不想写">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小刑的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          智能推荐算法
+        </h1>
+
+        <div class="post-meta">
+          <span class="post-time">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-08-28 09:56:45 / 修改时间：09:56:31" itemprop="dateCreated datePublished" datetime="2023-08-28T09:56:45+08:00">2023-08-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/f16c50c8/" class="post-meta-item leancloud_visitors" data-flag-title="智能推荐算法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+              <i class="fa fa-fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+          </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/f16c50c8/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/f16c50c8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>17k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>30 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h1><p><strong>智能推荐：</strong> 是指通过分析用户的历史数据和行为，预测用户可能感兴趣的产品，并向其进行推荐。</p>
+<h1 id="2-推荐算法-—-协同过滤"><a href="#2-推荐算法-—-协同过滤" class="headerlink" title="2. 推荐算法 — 协同过滤"></a>2. 推荐算法 — 协同过滤</h1><p><strong>协同过滤：</strong> 通过挖掘用户历史行为信息，从而发现用户偏好；再基于不同的偏好，对用户或者产品进行群组划分；最后为目标用户进行推荐。该算法主要功能就是预测和推荐。</p>
+<h2 id="协同"><a href="#协同" class="headerlink" title="协同"></a>协同</h2><p>利用多个用户数据，借助群体智慧进行探索和挖掘</p>
+<h2 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h2><p>在物品池中筛选部分物品而不是全部物品为用户推荐。过滤体现的就是信息筛选的过程。</p>
+<ol>
+<li>基于用户的协同过滤算法</li>
+<li>基于物品的协同过滤算法</li>
+</ol>
+<h1 id="3-实例-—-电影智能推荐"><a href="#3-实例-—-电影智能推荐" class="headerlink" title="3. 实例 — 电影智能推荐"></a>3. 实例 — 电影智能推荐</h1><ul>
+<li>数据处理</li>
+<li>构建模型</li>
+<li>得出结论</li>
+</ul>
+<h2 id="STEP-1-数据处理"><a href="#STEP-1-数据处理" class="headerlink" title="STEP 1 数据处理"></a>STEP 1 数据处理</h2><h3 id="1-设置分隔符号"><a href="#1-设置分隔符号" class="headerlink" title="1. 设置分隔符号"></a>1. 设置分隔符号</h3><h4 id="1）读取文件"><a href="#1）读取文件" class="headerlink" title="1）读取文件"></a>1）读取文件</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">ratings = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/movie/ratings.csv&quot;</span>)</span><br><span class="line">movies = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/movie/movies.csv&quot;</span>)</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(ratings)</span></span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(movies)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong><br>  <figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">              <span class="number">1::1193</span><span class="number">::5</span><span class="number">::</span><span class="number">978300760</span></span><br><span class="line"><span class="number">0</span>            <span class="number">1::661</span><span class="number">::3</span><span class="number">::</span><span class="number">978302109</span></span><br><span class="line"><span class="number">1</span>            <span class="number">1::914</span><span class="number">::3</span><span class="number">::</span><span class="number">978301968</span></span><br><span class="line"><span class="number">2</span>           <span class="number">1::3408</span><span class="number">::4</span><span class="number">::</span><span class="number">978300275</span></span><br><span class="line"><span class="number">3</span>           <span class="number">1::2355</span><span class="number">::5</span><span class="number">::</span><span class="number">978824291</span></span><br><span class="line"><span class="number">4</span>           <span class="number">1::1197</span><span class="number">::3</span><span class="number">::</span><span class="number">978302268</span></span><br><span class="line">...                           ...</span><br><span class="line"><span class="number">1000203</span>  <span class="number">6040::1091</span><span class="number">::1</span><span class="number">::</span><span class="number">956716541</span></span><br><span class="line"><span class="number">1000204</span>  <span class="number">6040::1094</span><span class="number">::5</span><span class="number">::</span><span class="number">956704887</span></span><br><span class="line"><span class="number">1000205</span>   <span class="number">6040::562</span><span class="number">::5</span><span class="number">::</span><span class="number">956704746</span></span><br><span class="line"><span class="number">1000206</span>  <span class="number">6040::1096</span><span class="number">::4</span><span class="number">::</span><span class="number">956715648</span></span><br><span class="line"><span class="number">1000207</span>  <span class="number">6040::1097</span><span class="number">::4</span><span class="number">::</span><span class="number">956715569</span></span><br><span class="line"></span><br><span class="line">[<span class="number">1000208</span> rows x <span class="number">1</span> columns]</span><br><span class="line">      电影id                              电影名                      电影类型</span><br><span class="line"><span class="number">0</span>          <span class="number">1</span>                    Toy Story (<span class="number">1995</span>)   Animation|Children&#x27;s|Comedy</span><br><span class="line"><span class="number">1</span>          <span class="number">2</span>                      Jumanji (<span class="number">1995</span>)  Adventure|Children&#x27;s|Fantasy</span><br><span class="line"><span class="number">2</span>          <span class="number">3</span>             Grumpier Old Men (<span class="number">1995</span>)                Comedy|Romance</span><br><span class="line"><span class="number">3</span>          <span class="number">4</span>            Waiting to Exhale (<span class="number">1995</span>)                  Comedy|Drama</span><br><span class="line"><span class="number">4</span>          <span class="number">5</span>  Father of the Bride Part II (<span class="number">1995</span>)                        Comedy</span><br><span class="line">...      ...                                 ...                           ...</span><br><span class="line"><span class="number">3878</span>    <span class="number">3948</span>             Meet the Parents (<span class="number">2000</span>)                        Comedy</span><br><span class="line"><span class="number">3879</span>    <span class="number">3949</span>          Requiem for a Dream (<span class="number">2000</span>)                         Drama</span><br><span class="line"><span class="number">3880</span>    <span class="number">3950</span>                    Tigerland (<span class="number">2000</span>)                         Drama</span><br><span class="line"><span class="number">3881</span>    <span class="number">3951</span>             Two Family House (<span class="number">2000</span>)                         Drama</span><br><span class="line"><span class="number">3882</span>    <span class="number">3952</span>               Contender, The (<span class="number">2000</span>)                Drama|Thriller</span><br><span class="line"></span><br><span class="line">[<span class="number">3883</span> rows x <span class="number">3</span> columns]</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>可以看到，存储了用户评分信息的数据集(ratings.csv)，与常见的数据集存储数据的方式不同。它的数据是通过符号”::”分隔，而不是通过列分隔。</p>
+</blockquote>
+<h4 id="2）分隔符号"><a href="#2）分隔符号" class="headerlink" title="2）分隔符号"></a>2）分隔符号</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">ratings = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/movie/ratings.csv&quot;</span>, sep = <span class="string">&quot;::&quot;</span> )</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(ratings)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">           <span class="number"> 1 </span><span class="number"> 1193 </span><span class="number"> 5 </span> 978300760</span><br><span class="line">0          <span class="number"> 1 </span> <span class="number"> 661 </span><span class="number"> 3 </span> 978302109</span><br><span class="line">1          <span class="number"> 1 </span> <span class="number"> 914 </span><span class="number"> 3 </span> 978301968</span><br><span class="line">2          <span class="number"> 1 </span><span class="number"> 3408 </span><span class="number"> 4 </span> 978300275</span><br><span class="line">3          <span class="number"> 1 </span><span class="number"> 2355 </span><span class="number"> 5 </span> 978824291</span><br><span class="line">4          <span class="number"> 1 </span><span class="number"> 1197 </span><span class="number"> 3 </span> 978302268</span><br><span class="line">...       ...   ... ..        ...</span><br><span class="line">1000203 <span class="number"> 6040 </span><span class="number"> 1091 </span><span class="number"> 1 </span> 956716541</span><br><span class="line">1000204 <span class="number"> 6040 </span><span class="number"> 1094 </span><span class="number"> 5 </span> 956704887</span><br><span class="line">1000205 <span class="number"> 6040 </span> <span class="number"> 562 </span><span class="number"> 5 </span> 956704746</span><br><span class="line">1000206 <span class="number"> 6040 </span><span class="number"> 1096 </span><span class="number"> 4 </span> 956715648</span><br><span class="line">1000207 <span class="number"> 6040 </span><span class="number"> 1097 </span><span class="number"> 4 </span> 956715569</span><br><span class="line"></span><br><span class="line">[1000208 rows x<span class="number"> 4 </span>columns]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在文件读取函数read_csv()中传入参数sep，并将”::”赋值给该参数，表示指定以”::”作为分隔符。<br>这样，就可以去除数据集中的”::”符号，且每个以”::”连接的数据都会单独存至一列中。</p>
+</blockquote>
+<h3 id="2-设置列索引columns"><a href="#2-设置列索引columns" class="headerlink" title="2. 设置列索引columns"></a>2. 设置列索引columns</h3><p>分隔完数据之后，可以看到ratings这个DataFrame中没有设置列索引，我们需要进一步对其进行处理：<br>在read_csv()函数中，传入参数 <strong>header &#x3D; None</strong> ，表明原数据中没有columns。<br>然后，再将包含columns的列表赋值给参数 <strong>names</strong> ，即可在读取时添加columns。<br>我们将ratings的列索引依次设置为：<em>用户id，电影id，评分，评分时间</em>。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import pandas <span class="keyword">as</span> pd</span><br><span class="line">ratings = pd.read<span class="constructor">_csv(<span class="string">&quot;/Users/movie/ratings.csv&quot;</span>,<span class="params">sep</span>=<span class="string">&quot;::&quot;</span>,<span class="params">header</span>=None,<span class="params">names</span>=[<span class="string">&quot;用户id&quot;</span>,<span class="string">&quot;电影id&quot;</span>,<span class="string">&quot;评分&quot;</span>,<span class="string">&quot;评分时间&quot;</span>])</span></span><br><span class="line">print(ratings)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">         用户id  电影id  评分   评分时间</span><br><span class="line">0            <span class="number"> 1 </span>  <span class="number"> 1193 </span>   <span class="number"> 5 </span> 978300760</span><br><span class="line">1            <span class="number"> 1 </span>   <span class="number"> 661 </span>   <span class="number"> 3 </span> 978302109</span><br><span class="line">2            <span class="number"> 1 </span>   <span class="number"> 914 </span>   <span class="number"> 3 </span> 978301968</span><br><span class="line">3            <span class="number"> 1 </span>  <span class="number"> 3408 </span>   <span class="number"> 4 </span> 978300275</span><br><span class="line">4            <span class="number"> 1 </span>  <span class="number"> 2355 </span>   <span class="number"> 5 </span> 978824291</span><br><span class="line">...         ...     ...   ...        ...</span><br><span class="line">1000204   <span class="number"> 6040 </span>  <span class="number"> 1091 </span>   <span class="number"> 1 </span> 956716541</span><br><span class="line">1000205   <span class="number"> 6040 </span>  <span class="number"> 1094 </span>   <span class="number"> 5 </span> 956704887</span><br><span class="line">1000206   <span class="number"> 6040 </span>   <span class="number"> 562 </span>   <span class="number"> 5 </span> 956704746</span><br><span class="line">1000207   <span class="number"> 6040 </span>  <span class="number"> 1096 </span>   <span class="number"> 4 </span> 956715648</span><br><span class="line">1000208   <span class="number"> 6040 </span>  <span class="number"> 1097 </span>   <span class="number"> 4 </span> 956715569</span><br><span class="line"></span><br><span class="line">[1000209 rows x<span class="number"> 4 </span>columns]</span><br></pre></td></tr></table></figure>
+<h3 id="3-读取指定列"><a href="#3-读取指定列" class="headerlink" title="3. 读取指定列"></a>3. 读取指定列</h3><p>在后续的电影推荐系统模型搭建中，电影评分时间是不影响推荐结果的，也就是无关数据。<br>因此，我们只用读取ratings的前三列数据。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"># 传入参数usecols，将包含对应的<span class="keyword">columns</span>的列表[<span class="string">&#x27;用户id&#x27;</span>,<span class="string">&#x27;电影id&#x27;</span>,<span class="string">&#x27;评分&#x27;</span>]传入该参数，读取用户id，电影id，评分这三列。</span><br><span class="line">ratings = pd.read_csv(&quot;/Users/movie/ratings.csv&quot;,sep=&quot;::&quot;,<span class="keyword">header</span>=<span class="keyword">None</span>,names=[&quot;用户id&quot;,&quot;电影id&quot;,&quot;评分&quot;,&quot;评分时间&quot;],usecols=[&quot;用户id&quot;,&quot;电影id&quot;,&quot;评分&quot;])</span><br><span class="line"># 使用to_csv()函数，将处理好的ratings保存至&quot;/Users/movie/ratings.csv&quot;，传入参数<span class="keyword">index</span> = <span class="keyword">False</span>不将行索引信息写入第一列</span><br><span class="line">ratings.to_csv(&quot;/Users/movie/ratings.csv&quot;,<span class="keyword">index</span>=<span class="keyword">False</span>)</span><br><span class="line">print(ratings)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">         用户id  电影id  评分</span><br><span class="line">0            <span class="number"> 1 </span>  <span class="number"> 1193 </span>    5</span><br><span class="line">1            <span class="number"> 1 </span>   <span class="number"> 661 </span>    3</span><br><span class="line">2            <span class="number"> 1 </span>   <span class="number"> 914 </span>    3</span><br><span class="line">3            <span class="number"> 1 </span>  <span class="number"> 3408 </span>    4</span><br><span class="line">4            <span class="number"> 1 </span>  <span class="number"> 2355 </span>    5</span><br><span class="line">...         ...     ...   ...</span><br><span class="line">1000204   <span class="number"> 6040 </span>  <span class="number"> 1091 </span>    1</span><br><span class="line">1000205   <span class="number"> 6040 </span>  <span class="number"> 1094 </span>    5</span><br><span class="line">1000206   <span class="number"> 6040 </span>   <span class="number"> 562 </span>    5</span><br><span class="line">1000207   <span class="number"> 6040 </span>  <span class="number"> 1096 </span>    4</span><br><span class="line">1000208   <span class="number"> 6040 </span>  <span class="number"> 1097 </span>    4</span><br><span class="line"></span><br><span class="line">[1000209 rows x<span class="number"> 3 </span>columns]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>movies文件同理处理</p>
+</blockquote>
+<h3 id="4-合并数据"><a href="#4-合并数据" class="headerlink" title="4. 合并数据"></a>4. 合并数据</h3><p>在电影推荐中，由于需要通过历史数据（电影评分）为用户推荐对应的电影名，而ratings里缺少<strong>电影名</strong>。<br>观察发现ratings和movies两个DataFrame均包括 <strong>「电影id」</strong> 这一列，通过合并数据集可以解决这个问题。</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd  </span><br><span class="line">ratings = pd.read_csv(<span class="string">&quot;/Users/movie/ratings.csv&quot;</span>)</span><br><span class="line">movies = pd.read_csv(<span class="string">&quot;/Users/movie/movies.csv&quot;</span>) </span><br><span class="line"><span class="comment"># 使用merge()函数将ratings和movies按照电影id这一列连接起来</span></span><br><span class="line">movieRatings = pd.merge(ratings, movies)</span><br><span class="line"><span class="built_in">print</span>(movieRatings)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">         用户id  电影id  评分                                       电影名</span><br><span class="line">0            <span class="number"> 1 </span>  <span class="number"> 1193 </span>   <span class="number"> 5 </span>      One Flew Over the Cuckoo&#x27;s Nest (1975)</span><br><span class="line">1            <span class="number"> 2 </span>  <span class="number"> 1193 </span>   <span class="number"> 5 </span>      One Flew Over the Cuckoo&#x27;s Nest (1975)</span><br><span class="line">2           <span class="number"> 12 </span>  <span class="number"> 1193 </span>   <span class="number"> 4 </span>      One Flew Over the Cuckoo&#x27;s Nest (1975)</span><br><span class="line">3           <span class="number"> 15 </span>  <span class="number"> 1193 </span>   <span class="number"> 4 </span>      One Flew Over the Cuckoo&#x27;s Nest (1975)</span><br><span class="line">4           <span class="number"> 17 </span>  <span class="number"> 1193 </span>   <span class="number"> 5 </span>      One Flew Over the Cuckoo&#x27;s Nest (1975)</span><br><span class="line">...         ...     ...   ...                                          ...</span><br><span class="line">1000204   <span class="number"> 5949 </span>  <span class="number"> 2198 </span>   <span class="number"> 5 </span>                          Modulations (1998)</span><br><span class="line">1000205   <span class="number"> 5675 </span>  <span class="number"> 2703 </span>   <span class="number"> 3 </span>                       Broken Vessels (1998)</span><br><span class="line">1000206   <span class="number"> 5780 </span>  <span class="number"> 2845 </span>   <span class="number"> 1 </span>                           White Boys (1999)</span><br><span class="line">1000207   <span class="number"> 5851 </span>  <span class="number"> 3607 </span>   <span class="number"> 5 </span>                    One Little Indian (1973)</span><br><span class="line">1000208   <span class="number"> 5938 </span>  <span class="number"> 2909 </span>   <span class="number"> 4 </span> Five Wives, Three Secretaries and Me (1998)</span><br><span class="line"></span><br><span class="line">[1000209 rows x<span class="number"> 4 </span>columns]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>至此，数据处理步骤完成，为后续模型搭建做好准备。</p>
+</blockquote>
+<hr>
+<h2 id="STEP-2-构建模型"><a href="#STEP-2-构建模型" class="headerlink" title="STEP 2 构建模型"></a>STEP 2 构建模型</h2><h3 id="1-基于用户的协同过滤算法"><a href="#1-基于用户的协同过滤算法" class="headerlink" title="1. 基于用户的协同过滤算法"></a>1. 基于用户的协同过滤算法</h3><p><strong>定义：</strong> 基于用户的协同过滤算法，简称userCF算法，它通过挖掘用户的历史数据，寻找与目标用户具有相似喜好的用户，在有相似喜好的用户间进行物品推荐。</p>
+<ul>
+<li>分析数据集，找到相似的用户</li>
+<li>将相似用户喜欢的物品推荐给目标用户</li>
+</ul>
+<h4 id="1-1-分析数据集，找到相似的用户"><a href="#1-1-分析数据集，找到相似的用户" class="headerlink" title="1.1 分析数据集，找到相似的用户"></a>1.1 分析数据集，找到相似的用户</h4><h5 id="1）数据透视表-pivot-table"><a href="#1）数据透视表-pivot-table" class="headerlink" title="1）数据透视表 (pivot_table())"></a>1）数据透视表 (pivot_table())</h5><p>数据透视表是一种能直观展示表数据的统计信息表，因为它可以对数据进行分类汇总。<br>相较于普通的数据表，数据透视表可以让我们更加容易地理解数据、快速抽取其中的有用信息。<br><img src="http://nocturne.bczcdn.com/img/1645498232326_53019/2P19.png" alt="数据透视表"></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd  </span><br><span class="line">ratings = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/movie/ratings.csv&quot;</span>)</span><br><span class="line">movies = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/movie/movies.csv&quot;</span>) </span><br><span class="line">movieRatings = pd<span class="selector-class">.merge</span>(ratings, movies)</span><br><span class="line">userRatings = movieRatings<span class="selector-class">.pivot_table</span>(index = <span class="string">&quot;电影名&quot;</span>, <span class="attribute">columns</span> = <span class="string">&quot;用户id&quot;</span>, values = <span class="string">&quot;评分&quot;</span>)</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(userRatings)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">用户id                                      1     2     3     4     5     6     7     8     9     10    11    12    13    14    15    16    17    18    19    20    21    22    23    24    25    26    27    28    29    30    31    32    33    34    35    36    37    38    39    40    <span class="string">...</span>  6001  6002  6003  6004  6005  6006  6007  6008  6009  6010  6011  6012  6013  6014  6015  6016  6017  6018  6019  6020  6021  6022  6023  6024  6025  6026  6027  6028  6029  6030  6031  6032  6033  6034  6035  6036  6037  6038  6039  6040</span><br><span class="line">电影名                                                                                                                                                                                                                                                                                      <span class="string">...</span>                                                                                                                                                                                                                                                </span><br><span class="line">$1,000,000 Duck <span class="params">(1971)</span>                       NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  <span class="string">...</span>   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN</span><br><span class="line">&#x27;Night Mother <span class="params">(1986)</span>                         NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  <span class="string">...</span>   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   3.0   NaN   NaN   NaN   NaN</span><br><span class="line">&#x27;Til There Was You <span class="params">(1997)</span>                    NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   2.0   NaN   NaN  <span class="string">...</span>   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN</span><br><span class="line">&#x27;burbs, The <span class="params">(1989)</span>                           NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   4.0   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   4.0   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   2.0   NaN   NaN   NaN   NaN   NaN   NaN  <span class="string">...</span>   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   2.0   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN</span><br><span class="line"><span class="string">...And</span> Justice for All <span class="params">(1979)</span>                NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   2.0   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  <span class="string">...</span>   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN</span><br><span class="line"><span class="string">...</span>                                          <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>  <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span>   <span class="string">...</span></span><br><span class="line">Zed &amp; Two Noughts, A <span class="params">(1985)</span>                  NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  <span class="string">...</span>   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN</span><br><span class="line">Zero Effect <span class="params">(1998)</span>                           NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   3.0   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  <span class="string">...</span>   NaN   NaN   4.0   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   3.0   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN</span><br><span class="line">Zero Kelvin <span class="params">(KjArlighetens kjAtere)</span> <span class="params">(1995)</span>   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  <span class="string">...</span>   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN</span><br><span class="line">Zeus and Roxanne <span class="params">(1997)</span>                      NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  <span class="string">...</span>   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN</span><br><span class="line">eXistenZ <span class="params">(1999)</span>                              NaN   NaN   NaN   NaN   NaN   NaN   NaN   2.0   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   3.0   NaN   1.0   NaN   NaN   NaN   4.0   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  <span class="string">...</span>   4.0   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   4.0   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   2.0   NaN   NaN   NaN   NaN</span><br><span class="line"></span><br><span class="line">[3706 rows x 6040 columns]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>其中有不少的NaN（空值），说明「用户」未对这些电影进行评分。</p>
+</blockquote>
+<h5 id="2）皮尔逊相关系数"><a href="#2）皮尔逊相关系数" class="headerlink" title="2）皮尔逊相关系数"></a>2）皮尔逊相关系数</h5><p>两个变量之间的皮尔逊相关系数定义为两个变量的协方差除以它们标准差的乘积：<br>$\rho_{X,Y}&#x3D;{\mathrm{cov}(X,Y) \over \sigma_X \sigma_Y} &#x3D;{E[(X-\mu_X)(Y-\mu_Y)] \over \sigma_X\sigma_Y}$<br>$r &#x3D; \frac{\sum\limits ^n _{i&#x3D;1}(X_i - \overline{X})(Y_i - \overline{Y})}{\sqrt{\sum\limits ^n _{i&#x3D;1}(X_i - \overline{X})^2} \sqrt{\sum\limits ^n _{i&#x3D;1}(Y_i - \overline{Y})^2}}$</p>
+<p><img src="http://nocturne.bczcdn.com/img/1646200275722_38154/2P43.png" alt="相关性"><br><strong>注意：计算皮尔逊相关系数时，要以数据少的一方为基准。</strong></p>
+<h5 id="3）相关函数-corr"><a href="#3）相关函数-corr" class="headerlink" title="3）相关函数 (corr())"></a>3）相关函数 (corr())</h5><p>corr函数提供3种相关系数的计算：</p>
+<ul>
+<li>Pearson 皮尔逊相关系数</li>
+<li>Kendall 肯德尔相关系数</li>
+<li>Spearman 斯皮尔曼系数<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import pandas <span class="keyword">as</span> pd  </span><br><span class="line">ratings = pd.read<span class="constructor">_csv(<span class="string">&quot;/Users/movie/ratings.csv&quot;</span>)</span></span><br><span class="line">movies = pd.read<span class="constructor">_csv(<span class="string">&quot;/Users/movie/movies.csv&quot;</span>)</span> </span><br><span class="line">movieRatings = pd.merge(ratings, movies)</span><br><span class="line">userRatings = movieRatings.pivot<span class="constructor">_table(<span class="params">index</span> = <span class="string">&quot;电影名&quot;</span>, <span class="params">columns</span> = <span class="string">&quot;用户id&quot;</span>, <span class="params">values</span> = <span class="string">&quot;评分&quot;</span>)</span></span><br><span class="line"># min_periods，表示为了获得有效结果所需的最少数据量，表明参与计算的样本最少数据量</span><br><span class="line">corrMatrix = userRatings.corr(<span class="keyword">method</span>=<span class="string">&quot;person&quot;</span>,min_periods=<span class="number">10</span>)</span><br><span class="line">print(corrMatrix)</span><br></pre></td></tr></table></figure>
+<strong>output:</strong><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">用户id      <span class="number">1</span>         <span class="number">2</span>         <span class="number">3</span>         <span class="number">4</span>         <span class="number">5</span>         <span class="number">6</span>     ...      <span class="number">6035</span>      <span class="number">6036</span>      <span class="number">6037</span>      <span class="number">6038</span>      <span class="number">6039</span>      <span class="number">6040</span></span><br><span class="line">用户id                                                              ...                                                            </span><br><span class="line"><span class="number">1</span>     <span class="number">1.000000</span>       NaN       NaN       NaN -<span class="number">0.172516</span>  <span class="number">0.219956</span>  ...       NaN -<span class="number">0.256601</span> -<span class="number">0.427618</span>       NaN  <span class="number">0.056857</span> -<span class="number">0.057767</span></span><br><span class="line"><span class="number">2</span>          NaN  <span class="number">1.000000</span>  <span class="number">0.236834</span>       NaN -<span class="number">0.208333</span> -<span class="number">0.061859</span>  ...  <span class="number">0.390907</span>  <span class="number">0.377852</span>  <span class="number">0.308145</span>       NaN       NaN -<span class="number">0.027143</span></span><br><span class="line"><span class="number">3</span>          NaN  <span class="number">0.236834</span>  <span class="number">1.000000</span>       NaN       NaN       NaN  ...  <span class="number">0.427001</span>  <span class="number">0.204619</span>  <span class="number">0.000000</span>       NaN       NaN -<span class="number">0.395285</span></span><br><span class="line"><span class="number">4</span>          NaN       NaN       NaN  <span class="number">1.000000</span>       NaN       NaN  ...       NaN  <span class="number">0.467447</span>       NaN       NaN       NaN  <span class="number">0.450323</span></span><br><span class="line"><span class="number">5</span>    -<span class="number">0.172516</span> -<span class="number">0.208333</span>       NaN       NaN  <span class="number">1.000000</span>       NaN  ...  <span class="number">0.539112</span>  <span class="number">0.160690</span> -<span class="number">0.097135</span>       NaN       NaN  <span class="number">0.308273</span></span><br><span class="line">...        ...       ...       ...       ...       ...       ...  ...       ...       ...       ...       ...       ...       ...</span><br><span class="line"><span class="number">6036</span> -<span class="number">0.256601</span>  <span class="number">0.377852</span>  <span class="number">0.204619</span>  <span class="number">0.467447</span>  <span class="number">0.160690</span> -<span class="number">0.318681</span>  ...  <span class="number">0.368975</span>  <span class="number">1.000000</span>  <span class="number">0.172932</span> -<span class="number">0.118345</span>  <span class="number">0.186261</span>  <span class="number">0.352849</span></span><br><span class="line"><span class="number">6037</span> -<span class="number">0.427618</span>  <span class="number">0.308145</span>  <span class="number">0.000000</span>       NaN -<span class="number">0.097135</span> -<span class="number">0.272166</span>  ...  <span class="number">0.333667</span>  <span class="number">0.172932</span>  <span class="number">1.000000</span>       NaN  <span class="number">0.129522</span>  <span class="number">0.165982</span></span><br><span class="line"><span class="number">6038</span>       NaN       NaN       NaN       NaN       NaN       NaN  ...       NaN -<span class="number">0.118345</span>       NaN  <span class="number">1.000000</span>       NaN -<span class="number">0.397122</span></span><br><span class="line"><span class="number">6039</span>  <span class="number">0.056857</span>       NaN       NaN       NaN       NaN -<span class="number">0.464973</span>  ...  <span class="number">0.272166</span>  <span class="number">0.186261</span>  <span class="number">0.129522</span>       NaN  <span class="number">1.000000</span>  <span class="number">0.242309</span></span><br><span class="line"><span class="number">6040</span> -<span class="number">0.057767</span> -<span class="number">0.027143</span> -<span class="number">0.395285</span>  <span class="number">0.450323</span>  <span class="number">0.308273</span>  <span class="number">0.056622</span>  ...  <span class="number">0.171810</span>  <span class="number">0.352849</span>  <span class="number">0.165982</span> -<span class="number">0.397122</span>  <span class="number">0.242309</span>  <span class="number">1.000000</span></span><br><span class="line"></span><br><span class="line">[<span class="number">6040</span> rows x <span class="number">6040</span> columns]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="4）寻找相似用户"><a href="#4）寻找相似用户" class="headerlink" title="4）寻找相似用户"></a>4）寻找相似用户</h5><p>首先获取目标用户与其他用户间的相关系数，采用列索引</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd  </span><br><span class="line">ratings = pd.read_csv(&quot;/Users/movie/ratings.csv&quot;)</span><br><span class="line">movies = pd.read_csv(&quot;/Users/movie/movies.csv&quot;) </span><br><span class="line">movieRatings = pd.merge(ratings, movies)</span><br><span class="line">userRatings = movieRatings.pivot_table(<span class="keyword">index</span> = &quot;电影名&quot;, <span class="keyword">columns</span> = &quot;用户id&quot;, <span class="keyword">values</span> = &quot;评分&quot;)</span><br><span class="line">corrMatrix = userRatings.corr(<span class="keyword">method</span>=&quot;person&quot;,min_periods=<span class="number">10</span>)</span><br><span class="line"># 获取「用户<span class="number">1</span>」与其他用户之间的皮尔逊相关系数，并赋值给userCorr,删除第一行数据</span><br><span class="line">userCorr = corrMatrix[<span class="number">1</span>].<span class="keyword">drop</span>(<span class="keyword">index</span>=<span class="number">1</span>)</span><br><span class="line">print(userCorr)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">用户id</span></span><br><span class="line"><span class="number">2</span>            <span class="string">NaN</span></span><br><span class="line"><span class="number">3</span>            <span class="string">NaN</span></span><br><span class="line"><span class="number">4</span>            <span class="string">NaN</span></span><br><span class="line"><span class="number">5</span>      <span class="number">-0.172516</span></span><br><span class="line">          <span class="string">...</span>   </span><br><span class="line"><span class="number">6036   -0</span><span class="number">.256601</span></span><br><span class="line"><span class="number">6037   -0</span><span class="number">.427618</span></span><br><span class="line"><span class="number">6038         </span><span class="string">NaN</span></span><br><span class="line"><span class="number">6039    </span><span class="number">0.056857</span></span><br><span class="line"><span class="number">6040   -0</span><span class="number">.057767</span></span><br><span class="line"><span class="attr">Name:</span> <span class="number">1</span><span class="string">,</span> <span class="attr">Length:</span> <span class="number">6040</span><span class="string">,</span> <span class="attr">dtype:</span> <span class="string">float64</span></span><br></pre></td></tr></table></figure>
+<p>接着，找出相关系数最大值所对应的用户id</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd  </span><br><span class="line">ratings = pd.read_csv(&quot;/Users/movie/ratings.csv&quot;)</span><br><span class="line">movies = pd.read_csv(&quot;/Users/movie/movies.csv&quot;) </span><br><span class="line">movieRatings = pd.merge(ratings, movies)</span><br><span class="line">userRatings = movieRatings.pivot_table(<span class="keyword">index</span> = &quot;电影名&quot;, <span class="keyword">columns</span> = &quot;用户id&quot;, <span class="keyword">values</span> = &quot;评分&quot;)</span><br><span class="line">corrMatrix = userRatings.corr(<span class="keyword">method</span>=&quot;person&quot;,min_periods=<span class="number">10</span>)</span><br><span class="line"># 获取「用户<span class="number">1</span>」与其他用户之间的皮尔逊相关系数，并赋值给userCorr,删除第一行数据</span><br><span class="line">userCorr = corrMatrix[<span class="number">1</span>].<span class="keyword">drop</span>(<span class="keyword">index</span>=<span class="number">1</span>)</span><br><span class="line">mostCorrUser = userCorr.idxmax()</span><br><span class="line">print(mostCorrUser)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1574</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-筛选可推荐的电影"><a href="#1-2-筛选可推荐的电影" class="headerlink" title="1.2 筛选可推荐的电影"></a>1.2 筛选可推荐的电影</h4><p><strong>推荐规则是：</strong> 为目标用户推荐，与他最相似用户给到评分为5分的电影。</p>
+<h5 id="1）-获取相似用户的电影评分数据"><a href="#1）-获取相似用户的电影评分数据" class="headerlink" title="1） 获取相似用户的电影评分数据"></a>1） 获取相似用户的电影评分数据</h5><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd  </span><br><span class="line">ratings = pd.read_csv(<span class="string">&quot;/Users/movie/ratings.csv&quot;</span>)</span><br><span class="line">movies = pd.read_csv(<span class="string">&quot;/Users/movie/movies.csv&quot;</span>) </span><br><span class="line">movieRatings = pd.merge(ratings, movies)</span><br><span class="line">userRatings = movieRatings.pivot_table(index = <span class="string">&quot;电影名&quot;</span>, columns = <span class="string">&quot;用户id&quot;</span>, values = <span class="string">&quot;评分&quot;</span>)</span><br><span class="line">corrMatrix = userRatings.corr(method=<span class="string">&quot;person&quot;</span>,min_periods=10)</span><br><span class="line"><span class="comment"># 获取「用户1」与其他用户之间的皮尔逊相关系数，并赋值给userCorr,删除第一行数据</span></span><br><span class="line">userCorr = corrMatrix[1].drop(index=1)</span><br><span class="line">mostCorrUser = userCorr.idxmax()</span><br><span class="line">targetMovie = userRatings[mostCorrUser]</span><br><span class="line">print(targetMovie)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">电影名</span><br><span class="line">$<span class="number">1</span>,<span class="number">000</span>,<span class="number">000</span> Duck (<span class="number">1971</span>)                       NaN</span><br><span class="line">&#x27;Night Mother (<span class="number">1986</span>)                         NaN</span><br><span class="line">&#x27;Til There Was You (<span class="number">1997</span>)                    NaN</span><br><span class="line">&#x27;burbs, The (<span class="number">1989</span>)                           NaN</span><br><span class="line">...And Justice for All (<span class="number">1979</span>)                NaN</span><br><span class="line">                                              ..</span><br><span class="line">Zed &amp; Two Noughts, A (<span class="number">1985</span>)                  NaN</span><br><span class="line">Zero Effect (<span class="number">1998</span>)                           NaN</span><br><span class="line">Zero Kelvin (KjArlighetens kjAtere) (<span class="number">1995</span>)   NaN</span><br><span class="line">Zeus and Roxanne (<span class="number">1997</span>)                      NaN</span><br><span class="line">eXistenZ (<span class="number">1999</span>)                              NaN</span><br><span class="line">Name: <span class="number">1574</span>, Length: <span class="number">3706</span>, dtype: float64</span><br></pre></td></tr></table></figure>
+<h4 id="2）筛选出相似用户评分为5的电影"><a href="#2）筛选出相似用户评分为5的电影" class="headerlink" title="2）筛选出相似用户评分为5的电影"></a>2）筛选出相似用户评分为5的电影</h4><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd  </span><br><span class="line">ratings = pd.read_csv(<span class="string">&quot;/Users/movie/ratings.csv&quot;</span>)</span><br><span class="line">movies = pd.read_csv(<span class="string">&quot;/Users/movie/movies.csv&quot;</span>) </span><br><span class="line">movieRatings = pd.merge(ratings, movies)</span><br><span class="line">userRatings = movieRatings.pivot_table(index = <span class="string">&quot;电影名&quot;</span>, columns = <span class="string">&quot;用户id&quot;</span>, values = <span class="string">&quot;评分&quot;</span>)</span><br><span class="line">corrMatrix = userRatings.corr(method=<span class="string">&quot;person&quot;</span>,min_periods=10)</span><br><span class="line"><span class="comment"># 获取「用户1」与其他用户之间的皮尔逊相关系数，并赋值给userCorr,删除第一行数据</span></span><br><span class="line">userCorr = corrMatrix[1].drop(index=1)</span><br><span class="line">mostCorrUser = userCorr.idxmax()</span><br><span class="line">targetMovie = userRatings[mostCorrUser]</span><br><span class="line">targetMovie = targetMovie[targetMovie.values==5]</span><br><span class="line">print(targetMovie)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">电影名</span><br><span class="line">Beauty and the Beast (<span class="number">1991</span>)          <span class="number">5.0</span></span><br><span class="line">Charlotte&#x27;s Web (<span class="number">1973</span>)               5.0</span><br><span class="line">Cinderella (<span class="number">1950</span>)                    5.0</span><br><span class="line">Evening Star, The (<span class="number">1996</span>)             5.0</span><br><span class="line">Fly, The (<span class="number">1986</span>)                      5.0</span><br><span class="line">Golden Child, The (<span class="number">1986</span>)             5.0</span><br><span class="line">Grease (<span class="number">1978</span>)                        5.0</span><br><span class="line">Honey, I Shrunk the Kids (<span class="number">1989</span>)      5.0</span><br><span class="line">Instinct (<span class="number">1999</span>)                      5.0</span><br><span class="line">Lion King, The (<span class="number">1994</span>)                5.0</span><br><span class="line">Little Mermaid, The (<span class="number">1989</span>)           5.0</span><br><span class="line">M*A*S*H (<span class="number">1970</span>)                       5.0</span><br><span class="line">Mask, The (<span class="number">1994</span>)                     5.0</span><br><span class="line">Moonstruck (<span class="number">1987</span>)                    5.0</span><br><span class="line">Mummy, The (<span class="number">1999</span>)                    5.0</span><br><span class="line">Office Space (<span class="number">1999</span>)                  5.0</span><br><span class="line">Outsiders, The (<span class="number">1983</span>)                5.0</span><br><span class="line">Pretty Woman (<span class="number">1990</span>)                  5.0</span><br><span class="line">Up in Smoke (<span class="number">1978</span>)                   5.0</span><br><span class="line">Wes Craven&#x27;s New Nightmare (<span class="number">1994</span>)    <span class="number">5.0</span></span><br><span class="line">Name: <span class="number">1574</span>, dtype: float64</span><br></pre></td></tr></table></figure>
+
+<h4 id="3）获取目标客户评分过的电影"><a href="#3）获取目标客户评分过的电影" class="headerlink" title="3）获取目标客户评分过的电影"></a>3）获取目标客户评分过的电影</h4><ul>
+<li>删除空值 ( <strong>dropna( )</strong> )<br>使用dropna( )函数，直接删除所有包含空值的行数据。<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd  </span><br><span class="line">ratings = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/movie/ratings.csv&quot;</span>)</span><br><span class="line">movies = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/movie/movies.csv&quot;</span>) </span><br><span class="line">movieRatings = pd<span class="selector-class">.merge</span>(ratings, movies)</span><br><span class="line">userRatings = movieRatings<span class="selector-class">.pivot_table</span>(index = <span class="string">&quot;电影名&quot;</span>, <span class="attribute">columns</span> = <span class="string">&quot;用户id&quot;</span>, values = <span class="string">&quot;评分&quot;</span>)</span><br><span class="line">corrMatrix = userRatings<span class="selector-class">.corr</span>(method=<span class="string">&quot;person&quot;</span>,min_periods=<span class="number">10</span>)</span><br><span class="line">userCorr = corrMatrix<span class="selector-attr">[1]</span><span class="selector-class">.drop</span>(index=<span class="number">1</span>)</span><br><span class="line">mostCorrUser = userCorr<span class="selector-class">.idxmax</span>()</span><br><span class="line">targetMovie = userRatings<span class="selector-attr">[mostCorrUser]</span></span><br><span class="line">targetMovie = targetMovie<span class="selector-attr">[targetMovie.values==5]</span></span><br><span class="line">user1Ratings = userRatings<span class="selector-attr">[1]</span><span class="selector-class">.dropna</span>()</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(user1Ratings)</span></span></span><br></pre></td></tr></table></figure>
+<strong>output:</strong><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">电影名</span><br><span class="line">Airplane! (<span class="number">1980</span>)                                          <span class="number">4.0</span></span><br><span class="line">Aladdin (<span class="number">1992</span>)                                            <span class="number">4.0</span></span><br><span class="line">Antz (<span class="number">1998</span>)                                               <span class="number">4.0</span></span><br><span class="line">Apollo <span class="number">13</span> (<span class="number">1995</span>)                                          <span class="number">5.0</span></span><br><span class="line">Awakenings (<span class="number">1990</span>)                                         <span class="number">5.0</span></span><br><span class="line">Back to the Future (<span class="number">1985</span>)                                 <span class="number">5.0</span></span><br><span class="line">Bambi (<span class="number">1942</span>)                                              <span class="number">4.0</span></span><br><span class="line">Beauty and the Beast (<span class="number">1991</span>)                               <span class="number">5.0</span></span><br><span class="line">Ben-Hur (<span class="number">1959</span>)                                            <span class="number">5.0</span></span><br><span class="line">Big (<span class="number">1988</span>)                                                <span class="number">4.0</span></span><br><span class="line">Bug&#x27;s Life, A (<span class="number">1998</span>)                                      5.0</span><br><span class="line">Christmas Story, A (<span class="number">1983</span>)                                 5.0</span><br><span class="line">Cinderella (<span class="number">1950</span>)                                         5.0</span><br><span class="line">Close Shave, A (<span class="number">1995</span>)                                     3.0</span><br><span class="line">Dead Poets Society (<span class="number">1989</span>)                                 4.0</span><br><span class="line">Driving Miss Daisy (<span class="number">1989</span>)                                 4.0</span><br><span class="line">Dumbo (<span class="number">1941</span>)                                              5.0</span><br><span class="line">E.T. the Extra-Terrestrial (<span class="number">1982</span>)                         4.0</span><br><span class="line">Erin Brockovich (<span class="number">2000</span>)                                    4.0</span><br><span class="line">Fargo (<span class="number">1996</span>)                                              4.0</span><br><span class="line">Ferris Bueller&#x27;s Day Off (<span class="number">1986</span>)                           <span class="number">4.0</span></span><br><span class="line">Gigi (<span class="number">1958</span>)                                               <span class="number">4.0</span></span><br><span class="line">Girl, Interrupted (<span class="number">1999</span>)                                  <span class="number">4.0</span></span><br><span class="line">Hercules (<span class="number">1997</span>)                                           <span class="number">4.0</span></span><br><span class="line">Hunchback of Notre Dame, The (<span class="number">1996</span>)                       <span class="number">4.0</span></span><br><span class="line">James and the Giant Peach (<span class="number">1996</span>)                          <span class="number">3.0</span></span><br><span class="line">Last Days of Disco, The (<span class="number">1998</span>)                            <span class="number">5.0</span></span><br><span class="line">Mary Poppins (<span class="number">1964</span>)                                       <span class="number">5.0</span></span><br><span class="line">Meet Joe Black (<span class="number">1998</span>)                                     <span class="number">3.0</span></span><br><span class="line">Miracle on <span class="number">34</span>th Street (<span class="number">1947</span>)                             <span class="number">4.0</span></span><br><span class="line">Mulan (<span class="number">1998</span>)                                              <span class="number">4.0</span></span><br><span class="line">My Fair Lady (<span class="number">1964</span>)                                       <span class="number">3.0</span></span><br><span class="line">One Flew Over the Cuckoo&#x27;s Nest (<span class="number">1975</span>)                    5.0</span><br><span class="line">Pleasantville (<span class="number">1998</span>)                                      3.0</span><br><span class="line">Pocahontas (<span class="number">1995</span>)                                         5.0</span><br><span class="line">Ponette (<span class="number">1996</span>)                                            4.0</span><br><span class="line">Princess Bride, The (<span class="number">1987</span>)                                3.0</span><br><span class="line">Rain Man (<span class="number">1988</span>)                                           5.0</span><br><span class="line">Run Lola Run (Lola rennt) (<span class="number">1998</span>)                          4.0</span><br><span class="line">Saving Private Ryan (<span class="number">1998</span>)                                5.0</span><br><span class="line">Schindler&#x27;s List (<span class="number">1993</span>)                                   <span class="number">5.0</span></span><br><span class="line">Secret Garden, The (<span class="number">1993</span>)                                 <span class="number">4.0</span></span><br><span class="line">Sixth Sense, The (<span class="number">1999</span>)                                   <span class="number">4.0</span></span><br><span class="line">Snow White and the Seven Dwarfs (<span class="number">1937</span>)                    <span class="number">4.0</span></span><br><span class="line">Sound of Music, The (<span class="number">1965</span>)                                <span class="number">5.0</span></span><br><span class="line">Star Wars: Episode IV - A New Hope (<span class="number">1977</span>)                 <span class="number">4.0</span></span><br><span class="line">Tarzan (<span class="number">1999</span>)                                             <span class="number">3.0</span></span><br><span class="line">Titanic (<span class="number">1997</span>)                                            <span class="number">4.0</span></span><br><span class="line">To Kill a Mockingbird (<span class="number">1962</span>)                              <span class="number">4.0</span></span><br><span class="line">Toy Story (<span class="number">1995</span>)                                          <span class="number">5.0</span></span><br><span class="line">Toy Story <span class="number">2</span> (<span class="number">1999</span>)                                        <span class="number">4.0</span></span><br><span class="line">Wallace <span class="meta">&amp; Gromit: The Best of Aardman Animation (1996)    3.0</span></span><br><span class="line">Wizard of Oz, The (<span class="number">1939</span>)                                  <span class="number">4.0</span></span><br><span class="line">Name: <span class="number">1</span>, dtype: float64</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="4）删除目标客户看过的电影"><a href="#4）删除目标客户看过的电影" class="headerlink" title="4）删除目标客户看过的电影"></a>4）删除目标客户看过的电影</h4><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd  </span><br><span class="line">ratings = pd.read_csv(<span class="string">&quot;/Users/movie/ratings.csv&quot;</span>)</span><br><span class="line">movies = pd.read_csv(<span class="string">&quot;/Users/movie/movies.csv&quot;</span>) </span><br><span class="line">movieRatings = pd.merge(ratings, movies)</span><br><span class="line">userRatings = movieRatings.pivot_table(index = <span class="string">&quot;电影名&quot;</span>, columns = <span class="string">&quot;用户id&quot;</span>, values = <span class="string">&quot;评分&quot;</span>)</span><br><span class="line">corrMatrix = userRatings.corr(method=<span class="string">&quot;person&quot;</span>,min_periods=10)</span><br><span class="line">userCorr = corrMatrix[1].drop(index=1)</span><br><span class="line">mostCorrUser = userCorr.idxmax()</span><br><span class="line">targetMovie = userRatings[mostCorrUser]</span><br><span class="line">targetMovie = targetMovie[targetMovie.values==5]</span><br><span class="line">user1Ratings = userRatings[1].dropna()</span><br><span class="line">targetName = targetMovie.index</span><br><span class="line">user1Name = userRatings.index</span><br><span class="line"><span class="comment"># 使用.isin()将用户1未评分的电影筛选出来,~符号对结果取反</span></span><br><span class="line">movieList = targetName[~targetName.isin(user1Name)]</span><br><span class="line">print(movieList)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Index([&#x27;Charlotte&#x27;s Web (<span class="number">1973</span>)&#x27;, &#x27;Evening Star, The (<span class="number">1996</span>)&#x27;, &#x27;Fly, The (<span class="number">1986</span>)&#x27;,</span><br><span class="line">       &#x27;Golden Child, The (<span class="number">1986</span>)&#x27;, &#x27;Grease (<span class="number">1978</span>)&#x27;,</span><br><span class="line">       &#x27;Honey, I Shrunk the Kids (<span class="number">1989</span>)&#x27;, &#x27;Instinct (<span class="number">1999</span>)&#x27;,</span><br><span class="line">       &#x27;Lion King, The (<span class="number">1994</span>)&#x27;, &#x27;Little Mermaid, The (<span class="number">1989</span>)&#x27;, &#x27;M*A*S*H (<span class="number">1970</span>)&#x27;,</span><br><span class="line">       &#x27;Mask, The (<span class="number">1994</span>)&#x27;, &#x27;Moonstruck (<span class="number">1987</span>)&#x27;, &#x27;Mummy, The (<span class="number">1999</span>)&#x27;,</span><br><span class="line">       &#x27;Office Space (<span class="number">1999</span>)&#x27;, &#x27;Outsiders, The (<span class="number">1983</span>)&#x27;, &#x27;Pretty Woman (<span class="number">1990</span>)&#x27;,</span><br><span class="line">       &#x27;Up in Smoke (<span class="number">1978</span>)&#x27;, &#x27;Wes Craven&#x27;s New Nightmare (<span class="number">1994</span>)&#x27;],</span><br><span class="line">      dtype=&#x27;object&#x27;, name=&#x27;电影名&#x27;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>得到的是一个Index对象。它包含了Index对象里存储的数据（也就是电影名称）、对应的数据类型，和索引名称。可以通过访问Index对象的.values属性来只获取电影名称。</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">movieList = movieList<span class="selector-class">.values</span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(movieList)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">&quot;Charlotte&#x27;s Web (1973)&quot;</span> <span class="symbol">&#x27;Evening</span> Star, The (<span class="name">1996</span>)&#x27; <span class="symbol">&#x27;Fly</span>, The (<span class="name">1986</span>)&#x27;</span><br><span class="line"> <span class="symbol">&#x27;Golden</span> Child, The (<span class="name">1986</span>)&#x27; <span class="symbol">&#x27;Grease</span> (<span class="name">1978</span>)&#x27;</span><br><span class="line"> <span class="symbol">&#x27;Honey</span>, I Shrunk the Kids (<span class="name">1989</span>)&#x27; <span class="symbol">&#x27;Instinct</span> (<span class="name">1999</span>)&#x27;</span><br><span class="line"> <span class="symbol">&#x27;Lion</span> King, The (<span class="name">1994</span>)&#x27; <span class="symbol">&#x27;Little</span> Mermaid, The (<span class="name">1989</span>)&#x27; <span class="symbol">&#x27;M*A*S*H</span> (<span class="name">1970</span>)&#x27;</span><br><span class="line"> <span class="symbol">&#x27;Mask</span>, The (<span class="name">1994</span>)&#x27; <span class="symbol">&#x27;Moonstruck</span> (<span class="name">1987</span>)&#x27; <span class="symbol">&#x27;Mummy</span>, The (<span class="name">1999</span>)&#x27;</span><br><span class="line"> <span class="symbol">&#x27;Office</span> Space (<span class="name">1999</span>)&#x27; <span class="symbol">&#x27;Outsiders</span>, The (<span class="name">1983</span>)&#x27; <span class="symbol">&#x27;Pretty</span> Woman (<span class="name">1990</span>)&#x27;</span><br><span class="line"> <span class="symbol">&#x27;Up</span> in Smoke (<span class="name">1978</span>)&#x27; <span class="string">&quot;Wes Craven&#x27;s New Nightmare (1994)&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/ef95e3d0/" rel="bookmark">在Ubuntu通过YOLO v5训练PASCAL VOC数据集</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/70ff0b51/" rel="bookmark">Yolo目标检测原理</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/7c0ec17a/" rel="bookmark">Python + OpenCV实现轻量级人脸识别</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小刑
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xxsqlll.github.io/posts/f16c50c8/" title="智能推荐算法">https://xxsqlll.github.io/posts/f16c50c8/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag"># 学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/815dc570/" rel="prev" title="Python数据分析基础">
+      <i class="fa fa-chevron-left"></i> Python数据分析基础
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  
+    <div>
+      <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-paw"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+
+    </div>
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">1. 概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95-%E2%80%94-%E5%8D%8F%E5%90%8C%E8%BF%87%E6%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">2. 推荐算法 — 协同过滤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E5%90%8C"><span class="nav-number">2.1.</span> <span class="nav-text">协同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">过滤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%AE%9E%E4%BE%8B-%E2%80%94-%E7%94%B5%E5%BD%B1%E6%99%BA%E8%83%BD%E6%8E%A8%E8%8D%90"><span class="nav-number">3.</span> <span class="nav-text">3. 实例 — 电影智能推荐</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#STEP-1-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">STEP 1 数据处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AE%BE%E7%BD%AE%E5%88%86%E9%9A%94%E7%AC%A6%E5%8F%B7"><span class="nav-number">3.1.1.</span> <span class="nav-text">1. 设置分隔符号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%89%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">1）读取文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%EF%BC%89%E5%88%86%E9%9A%94%E7%AC%A6%E5%8F%B7"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">2）分隔符号</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%AE%BE%E7%BD%AE%E5%88%97%E7%B4%A2%E5%BC%95columns"><span class="nav-number">3.1.2.</span> <span class="nav-text">2. 设置列索引columns</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%AF%BB%E5%8F%96%E6%8C%87%E5%AE%9A%E5%88%97"><span class="nav-number">3.1.3.</span> <span class="nav-text">3. 读取指定列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%90%88%E5%B9%B6%E6%95%B0%E6%8D%AE"><span class="nav-number">3.1.4.</span> <span class="nav-text">4. 合并数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STEP-2-%E6%9E%84%E5%BB%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.2.</span> <span class="nav-text">STEP 2 构建模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9F%BA%E4%BA%8E%E7%94%A8%E6%88%B7%E7%9A%84%E5%8D%8F%E5%90%8C%E8%BF%87%E6%BB%A4%E7%AE%97%E6%B3%95"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. 基于用户的协同过滤算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E5%88%86%E6%9E%90%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%8C%E6%89%BE%E5%88%B0%E7%9B%B8%E4%BC%BC%E7%9A%84%E7%94%A8%E6%88%B7"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">1.1 分析数据集，找到相似的用户</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%EF%BC%89%E6%95%B0%E6%8D%AE%E9%80%8F%E8%A7%86%E8%A1%A8-pivot-table"><span class="nav-number">3.2.1.1.1.</span> <span class="nav-text">1）数据透视表 (pivot_table())</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%EF%BC%89%E7%9A%AE%E5%B0%94%E9%80%8A%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0"><span class="nav-number">3.2.1.1.2.</span> <span class="nav-text">2）皮尔逊相关系数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3%EF%BC%89%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0-corr"><span class="nav-number">3.2.1.1.3.</span> <span class="nav-text">3）相关函数 (corr())</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4%EF%BC%89%E5%AF%BB%E6%89%BE%E7%9B%B8%E4%BC%BC%E7%94%A8%E6%88%B7"><span class="nav-number">3.2.1.1.4.</span> <span class="nav-text">4）寻找相似用户</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E7%AD%9B%E9%80%89%E5%8F%AF%E6%8E%A8%E8%8D%90%E7%9A%84%E7%94%B5%E5%BD%B1"><span class="nav-number">3.2.1.2.</span> <span class="nav-text">1.2 筛选可推荐的电影</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%EF%BC%89-%E8%8E%B7%E5%8F%96%E7%9B%B8%E4%BC%BC%E7%94%A8%E6%88%B7%E7%9A%84%E7%94%B5%E5%BD%B1%E8%AF%84%E5%88%86%E6%95%B0%E6%8D%AE"><span class="nav-number">3.2.1.2.1.</span> <span class="nav-text">1） 获取相似用户的电影评分数据</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%EF%BC%89%E7%AD%9B%E9%80%89%E5%87%BA%E7%9B%B8%E4%BC%BC%E7%94%A8%E6%88%B7%E8%AF%84%E5%88%86%E4%B8%BA5%E7%9A%84%E7%94%B5%E5%BD%B1"><span class="nav-number">3.2.1.3.</span> <span class="nav-text">2）筛选出相似用户评分为5的电影</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%89%E8%8E%B7%E5%8F%96%E7%9B%AE%E6%A0%87%E5%AE%A2%E6%88%B7%E8%AF%84%E5%88%86%E8%BF%87%E7%9A%84%E7%94%B5%E5%BD%B1"><span class="nav-number">3.2.1.4.</span> <span class="nav-text">3）获取目标客户评分过的电影</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%89%E5%88%A0%E9%99%A4%E7%9B%AE%E6%A0%87%E5%AE%A2%E6%88%B7%E7%9C%8B%E8%BF%87%E7%9A%84%E7%94%B5%E5%BD%B1"><span class="nav-number">3.2.1.5.</span> <span class="nav-text">4）删除目标客户看过的电影</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小刑"
+      src="/images/avatar.JPG">
+  <p class="site-author-name" itemprop="name">小刑</p>
+  <div class="site-description" itemprop="description">这个人很懒，什么也不想写</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxsqlll" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xxsqlll" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xxsqlll@gmail.com" title="E-Mail → mailto:xxsqlll@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/f16c50c8/" title="posts&#x2F;f16c50c8&#x2F;">智能推荐算法</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/815dc570/" title="posts&#x2F;815dc570&#x2F;">Python数据分析基础</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/ef95e3d0/" title="posts&#x2F;ef95e3d0&#x2F;">在Ubuntu通过YOLO v5训练PASCAL VOC数据集</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/70ff0b51/" title="posts&#x2F;70ff0b51&#x2F;">Yolo目标检测原理</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/7c0ec17a/" title="posts&#x2F;7c0ec17a&#x2F;">Python + OpenCV实现轻量级人脸识别</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1831469103&auto=0&height=66">
+      </iframe>
+  </div>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小刑</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">97k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:57</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>--><div>
+  <span id="sitetime"></span>
+  <script language=javascript>
+      function siteTime(){
+          window.setTimeout("siteTime()", 1000);
+          var seconds = 1000;
+          var minutes = seconds * 60;
+          var hours = minutes * 60;
+          var days = hours * 24;
+          var years = days * 365;
+          var today = new Date();
+          var todayYear = today.getFullYear();
+          var todayMonth = today.getMonth()+1;
+          var todayDate = today.getDate();
+          var todayHour = today.getHours();
+          var todayMinute = today.getMinutes();
+          var todaySecond = today.getSeconds();
+          /* 
+          Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+          year - 作为date对象的年份，为4位年份值
+          month - 0-11之间的整数，做为date对象的月份
+          day - 1-31之间的整数，做为date对象的天数
+          hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+          minutes - 0-59之间的整数，做为date对象的分钟数
+          seconds - 0-59之间的整数，做为date对象的秒数
+          microseconds - 0-999之间的整数，做为date对象的毫秒数
+      */
+          var t1 = Date.UTC(2023,7,18,11,40,00); //北京时间2018-2-13 00:00:00
+          var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+          var diff = t2-t1;
+      var diffYears = Math.floor(diff/years);
+      var diffDays = Math.floor((diff/days)-diffYears*365);
+      var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+      var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+      var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+      document.getElementById("sitetime").innerHTML=" 小破站已平稳运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+    }
+      siteTime();
+  </script>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span class="site-uv" title="总访客量">
+    我的第<span id="busuanzi_value_site_uv"></span>位朋友, 
+  </span>
+
+  <span class="site-pv" title="总访问量">
+    经过<span id="busuanzi_value_site_pv"></span>次回眸与你相遇
+  </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '0VHq4jqwE0zTWM6rJFbms2tJ-gzGzoHsz',
+      appKey     : '1QAGv9wIN4teXzpcIV8p6NyJ',
+      placeholder: "欢迎交流",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+    </div>
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+  
+  
+     <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+     <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+     <script type="text/javascript" src="/js/src/fireworks.js"></script>
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
+

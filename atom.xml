@@ -6,7 +6,7 @@
   <link href="https://xxsqlll.github.io/atom.xml" rel="self"/>
   
   <link href="https://xxsqlll.github.io/"/>
-  <updated>2023-08-07T05:01:23.290Z</updated>
+  <updated>2023-08-28T01:56:31.955Z</updated>
   <id>https://xxsqlll.github.io/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>智能推荐算法</title>
+    <link href="https://xxsqlll.github.io/posts/f16c50c8/"/>
+    <id>https://xxsqlll.github.io/posts/f16c50c8/</id>
+    <published>2023-08-28T01:56:45.000Z</published>
+    <updated>2023-08-28T01:56:31.955Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;1-概念&quot;&gt;&lt;a href=&quot;#1-概念&quot; class=&quot;headerlink&quot; title=&quot;1. 概念&quot;&gt;&lt;/a&gt;1. 概念&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;智能推荐：&lt;/strong&gt; 是指通过分析用户的历史数据和行为，预测用户可能感兴趣的产品，并向其进行推荐。&lt;/p&gt;
+&lt;h1 id=&quot;2-推荐算法-—-协同过滤&quot;&gt;&lt;a href=&quot;#2-推荐算法-—-协同过滤&quot; class=&quot;headerlink&quot; title=&quot;2. 推荐算法 — 协同过滤&quot;&gt;&lt;/a&gt;2. 推荐算法 — 协同过滤&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;协同过滤：&lt;/strong&gt; 通过挖掘用户历史行为信息，从而发现用户偏好；再基于不同的偏好，对用户或者产品进行群组划分；最后为目标用户进行推荐。该算法主要功能就是预测和推荐。&lt;/p&gt;
+&lt;h2 id=&quot;协同&quot;&gt;&lt;a href=&quot;#协同&quot; class=&quot;headerlink&quot; title=&quot;协同&quot;&gt;&lt;/a&gt;协同&lt;/h2&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Python数据分析基础</title>
     <link href="https://xxsqlll.github.io/posts/815dc570/"/>
     <id>https://xxsqlll.github.io/posts/815dc570/</id>
     <published>2023-08-07T05:01:45.000Z</published>
-    <updated>2023-08-07T05:01:23.290Z</updated>
+    <updated>2023-08-07T05:01:44.533Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;1-基础回顾&quot;&gt;&lt;a href=&quot;#1-基础回顾&quot; class=&quot;headerlink&quot; title=&quot;1. 基础回顾&quot;&gt;&lt;/a&gt;1. 基础回顾&lt;/h1&gt;&lt;h2 id=&quot;1-1-数据分析流程&quot;&gt;&lt;a href=&quot;#1-1-数据分析流程&quot; class=&quot;headerlink&quot; title=&quot;1.1 数据分析流程&quot;&gt;&lt;/a&gt;1.1 数据分析流程&lt;/h2&gt;&lt;p&gt;STEP 1 提出问题&lt;br&gt;STEP 2 收集数据&lt;br&gt;STEP 3 数据处理与清洗&lt;br&gt;STEP 4 数据分析&lt;br&gt;STEP 5 可视化，得出结论&lt;/p&gt;
@@ -453,29 +474,6 @@ Anaconda将自动将环境变量添加到PATH中&lt;br&gt;&lt;strong&gt;注意�
     
     
     <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hexo博客创建步骤</title>
-    <link href="https://xxsqlll.github.io/posts/f584b6f/"/>
-    <id>https://xxsqlll.github.io/posts/f584b6f/</id>
-    <published>2023-07-18T11:53:45.000Z</published>
-    <updated>2023-07-28T05:52:57.869Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;创建新的博客&quot;&gt;&lt;a href=&quot;#创建新的博客&quot; class=&quot;headerlink&quot; title=&quot;创建新的博客&quot;&gt;&lt;/a&gt;创建新的博客&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;hexo n &lt;span class=&quot;string&quot;&gt;&amp;quot;filename&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;编辑博客&quot;&gt;&lt;a href=&quot;#编辑博客&quot; class=&quot;headerlink&quot; title=&quot;编辑博客&quot;&gt;&lt;/a&gt;编辑博客&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;source&lt;/span&gt;/_posts&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;vim filename&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;清理并生成博客&quot;&gt;&lt;a href=&quot;#清理并生成博客&quot; class=&quot;headerlink&quot; title=&quot;清理并生成博客&quot;&gt;&lt;/a&gt;清理并生成博客&lt;/h2&gt;</summary>
-    
-    
-    
-    <category term="Hexo" scheme="https://xxsqlll.github.io/categories/Hexo/"/>
-    
-    
-    <category term="技能" scheme="https://xxsqlll.github.io/tags/%E6%8A%80%E8%83%BD/"/>
     
   </entry>
   
