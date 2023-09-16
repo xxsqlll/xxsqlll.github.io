@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xxsqlll.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"always","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Apriori的算法步骤 STEP 1 设定最小支持度和最小置信度 STEP 2 根据最小支持度找到频繁项集 STEP 3 根据最小置信度发现强关联规则 再由STEP 3调整STEP 1设置值     使用Apriori算法前需对数据进行处理，将其转化为双重列表 字符串转列表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关联分析和Apriori算法">
+<meta property="og:url" content="https://xxsqlll.github.io/posts/16d6d1f6/index.html">
+<meta property="og:site_name" content="小刑的博客">
+<meta property="og:description" content="Apriori的算法步骤 STEP 1 设定最小支持度和最小置信度 STEP 2 根据最小支持度找到频繁项集 STEP 3 根据最小置信度发现强关联规则 再由STEP 3调整STEP 1设置值     使用Apriori算法前需对数据进行处理，将其转化为双重列表 字符串转列表">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1649659357970_37954/7-30.2.png">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1649663698329_30752/7-54.png">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1649837813863_82261/9-48.1.png">
+<meta property="article:published_time" content="2023-09-12T02:55:45.000Z">
+<meta property="article:modified_time" content="2023-09-16T10:18:50.742Z">
+<meta property="article:author" content="小刑">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://nocturne.bczcdn.com/img/1649659357970_37954/7-30.2.png">
+
+<link rel="canonical" href="https://xxsqlll.github.io/posts/16d6d1f6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>关联分析和Apriori算法 | 小刑的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小刑的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小刑的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">五马六猴，解衣磅礴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-film fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/xxsqlll" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxsqlll.github.io/posts/16d6d1f6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.JPG">
+      <meta itemprop="name" content="小刑">
+      <meta itemprop="description" content="这个人很懒，什么也不想写">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小刑的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关联分析和Apriori算法
+        </h1>
+
+        <div class="post-meta">
+          <span class="post-time">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-09-12 10:55:45" itemprop="dateCreated datePublished" datetime="2023-09-12T10:55:45+08:00">2023-09-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-09-16 18:18:50" itemprop="dateModified" datetime="2023-09-16T18:18:50+08:00">2023-09-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/16d6d1f6/" class="post-meta-item leancloud_visitors" data-flag-title="关联分析和Apriori算法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+              <i class="fa fa-fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+          </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/16d6d1f6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/16d6d1f6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>16k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>29 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Apriori的算法步骤"><a href="#Apriori的算法步骤" class="headerlink" title="Apriori的算法步骤"></a>Apriori的算法步骤</h1><ul>
+<li>STEP 1 设定最小支持度和最小置信度</li>
+<li>STEP 2 根据最小支持度找到频繁项集</li>
+<li>STEP 3 根据最小置信度发现强关联规则<blockquote>
+<p>再由STEP 3调整STEP 1设置值</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<p>使用Apriori算法前需对数据进行处理，将其转化为双重列表</p>
+<h1 id="字符串转列表"><a href="#字符串转列表" class="headerlink" title="字符串转列表"></a>字符串转列表</h1><img src="http://nocturne.bczcdn.com/img/1649659357970_37954/7-30.2.png" style="max-width: 50%">
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_data/用户浏览数据.csv&quot;</span>)</span><br><span class="line">articles = <span class="selector-attr">[]</span></span><br><span class="line"><span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> df<span class="selector-attr">[<span class="string">&quot;文章类型&quot;</span>]</span>:</span><br><span class="line">  <span class="selector-tag">article</span> = <span class="selector-tag">i</span><span class="selector-class">.split</span>(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">  articles<span class="selector-class">.append</span>(article)</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(articles)</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>output:</strong></p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;], [<span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;SQL</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;, <span class="symbol">&#x27;人工智能</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;, <span class="symbol">&#x27;人工智能</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;, <span class="symbol">&#x27;人工智能</span>&#x27;], [<span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;SQL</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;SQL</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;SQL</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;, <span class="symbol">&#x27;人工智能</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;, <span class="symbol">&#x27;人工智能</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;, <span class="symbol">&#x27;人工智能</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;SQL</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;, <span class="symbol">&#x27;人工智能</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;SQL</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;, <span class="symbol">&#x27;人工智能</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;SQL</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;, <span class="symbol">&#x27;人工智能</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;SQL</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;, <span class="symbol">&#x27;数分基础</span>&#x27;], [<span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;数分进阶</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;SQL</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;], [<span class="symbol">&#x27;python</span>&#x27;, <span class="symbol">&#x27;SQL</span>&#x27;]]</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="Apriori函数"><a href="#Apriori函数" class="headerlink" title="Apriori函数"></a>Apriori函数</h1><p>在终端</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> apyori</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_data/用户浏览数据.csv&quot;</span>)</span><br><span class="line">articles = <span class="selector-attr">[]</span></span><br><span class="line"><span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> df<span class="selector-attr">[<span class="string">&quot;文章类型&quot;</span>]</span>:</span><br><span class="line">  <span class="selector-tag">article</span> = <span class="selector-tag">i</span><span class="selector-class">.split</span>(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">  articles<span class="selector-class">.append</span>(article)</span><br><span class="line">from apyori import apriori</span><br><span class="line">rules = <span class="built_in">apriori</span>(articles,min_support=<span class="number">0.1</span>,min_confidence=<span class="number">0.6</span>)</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(rules)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;generator object apriori <span class="meta">at</span> <span class="number">0x7feb097412d0</span>&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意，0x7feb097412d0是一串地址，每次均不相同。也就是说，rules输出后是一串对象。我们需要通过循环遍历出对象中的数据。</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_data/用户浏览数据.csv&quot;</span>)</span><br><span class="line">articles = <span class="selector-attr">[]</span></span><br><span class="line"><span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> df<span class="selector-attr">[<span class="string">&quot;文章类型&quot;</span>]</span>:</span><br><span class="line">  <span class="selector-tag">article</span> = <span class="selector-tag">i</span><span class="selector-class">.split</span>(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">  articles<span class="selector-class">.append</span>(article)</span><br><span class="line">from apyori import apriori</span><br><span class="line">rules = <span class="built_in">apriori</span>(articles,min_support=<span class="number">0.1</span>,min_confidence=<span class="number">0.6</span>)</span><br><span class="line"><span class="keyword">for</span> rule <span class="keyword">in</span> rules:</span><br><span class="line">  <span class="built_in">print</span>(rule)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">RelationRecord(<span class="attribute">items</span>=frozenset(&#123;<span class="string">&#x27;数分进阶&#x27;</span>&#125;), <span class="attribute">support</span>=0.8181818181818182, ordered_statistics=[OrderedStatistic(<span class="attribute">items_base</span>=frozenset(), <span class="attribute">items_add</span>=frozenset(&#123;<span class="string">&#x27;数分进阶&#x27;</span>&#125;), <span class="attribute">confidence</span>=0.8181818181818182, <span class="attribute">lift</span>=1.0)])</span><br><span class="line">RelationRecord(<span class="attribute">items</span>=frozenset(&#123;<span class="string">&#x27;SQL&#x27;</span>, <span class="string">&#x27;python&#x27;</span>&#125;), <span class="attribute">support</span>=0.10101010101010101, ordered_statistics=[OrderedStatistic(<span class="attribute">items_base</span>=frozenset(&#123;<span class="string">&#x27;SQL&#x27;</span>&#125;), <span class="attribute">items_add</span>=frozenset(&#123;<span class="string">&#x27;python&#x27;</span>&#125;), <span class="attribute">confidence</span>=1.0, <span class="attribute">lift</span>=2.302325581395349)])</span><br><span class="line">RelationRecord(<span class="attribute">items</span>=frozenset(&#123;<span class="string">&#x27;数分进阶&#x27;</span>, <span class="string">&#x27;python&#x27;</span>&#125;), <span class="attribute">support</span>=0.32323232323232326, ordered_statistics=[OrderedStatistic(<span class="attribute">items_base</span>=frozenset(&#123;<span class="string">&#x27;python&#x27;</span>&#125;), <span class="attribute">items_add</span>=frozenset(&#123;<span class="string">&#x27;数分进阶&#x27;</span>&#125;), <span class="attribute">confidence</span>=0.7441860465116279, <span class="attribute">lift</span>=0.9095607235142118)])</span><br><span class="line">RelationRecord(<span class="attribute">items</span>=frozenset(&#123;<span class="string">&#x27;数分基础&#x27;</span>, <span class="string">&#x27;数分进阶&#x27;</span>&#125;), <span class="attribute">support</span>=0.20202020202020202, ordered_statistics=[OrderedStatistic(<span class="attribute">items_base</span>=frozenset(&#123;<span class="string">&#x27;数分基础&#x27;</span>&#125;), <span class="attribute">items_add</span>=frozenset(&#123;<span class="string">&#x27;数分进阶&#x27;</span>&#125;), <span class="attribute">confidence</span>=1.0, <span class="attribute">lift</span>=1.222222222222222)])</span><br><span class="line">RelationRecord(<span class="attribute">items</span>=frozenset(&#123;<span class="string">&#x27;数分进阶&#x27;</span>, <span class="string">&#x27;爬虫&#x27;</span>&#125;), <span class="attribute">support</span>=0.21212121212121213, ordered_statistics=[OrderedStatistic(<span class="attribute">items_base</span>=frozenset(&#123;<span class="string">&#x27;爬虫&#x27;</span>&#125;), <span class="attribute">items_add</span>=frozenset(&#123;<span class="string">&#x27;数分进阶&#x27;</span>&#125;), <span class="attribute">confidence</span>=0.6363636363636365, <span class="attribute">lift</span>=0.7777777777777779)])</span><br><span class="line">RelationRecord(<span class="attribute">items</span>=frozenset(&#123;<span class="string">&#x27;爬虫&#x27;</span>, <span class="string">&#x27;数分进阶&#x27;</span>, <span class="string">&#x27;python&#x27;</span>&#125;), <span class="attribute">support</span>=0.10101010101010101, ordered_statistics=[OrderedStatistic(<span class="attribute">items_base</span>=frozenset(&#123;<span class="string">&#x27;爬虫&#x27;</span>, <span class="string">&#x27;python&#x27;</span>&#125;), <span class="attribute">items_add</span>=frozenset(&#123;<span class="string">&#x27;数分进阶&#x27;</span>&#125;), <span class="attribute">confidence</span>=0.6666666666666666, <span class="attribute">lift</span>=0.8148148148148148)])</span><br></pre></td></tr></table></figure>
+<img src="http://nocturne.bczcdn.com/img/1649663698329_30752/7-54.png" style="max-width: 70%">
+
+<h1 id="关系记录的提取"><a href="#关系记录的提取" class="headerlink" title="关系记录的提取"></a>关系记录的提取</h1><h2 id="1-提取支持度"><a href="#1-提取支持度" class="headerlink" title="1. 提取支持度"></a>1. 提取支持度</h2><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="title">df</span> = pd.read_csv(<span class="string">&quot;/Users/user_data/用户浏览数据.csv&quot;</span>)</span><br><span class="line"><span class="title">articles</span> = []</span><br><span class="line"><span class="title">for</span> i <span class="keyword">in</span> df[<span class="string">&quot;文章类型&quot;</span>]:</span><br><span class="line">  article = i.split(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">  articles.append(article)</span><br><span class="line"><span class="title">from</span> apyori <span class="keyword">import</span> apriori</span><br><span class="line"><span class="title">rules</span> = apriori(articles,min_sup<span class="keyword">port</span>=0.1,min_confidence=0.6)</span><br><span class="line"><span class="title">for</span> rule <span class="keyword">in</span> rules:</span><br><span class="line">  sup<span class="keyword">port</span> = rule.support</span><br><span class="line">  print(sup<span class="keyword">port</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">0</span>.<span class="number">8181818181818182</span></span><br><span class="line"><span class="attribute">0</span>.<span class="number">10101010101010101</span></span><br><span class="line"><span class="attribute">0</span>.<span class="number">32323232323232326</span></span><br><span class="line"><span class="attribute">0</span>.<span class="number">20202020202020202</span></span><br><span class="line"><span class="attribute">0</span>.<span class="number">21212121212121213</span></span><br><span class="line"><span class="attribute">0</span>.<span class="number">10101010101010101</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-提取前后件"><a href="#2-提取前后件" class="headerlink" title="2.提取前后件"></a>2.提取前后件</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_data/用户浏览数据.csv&quot;</span>)</span><br><span class="line">articles = <span class="selector-attr">[]</span></span><br><span class="line"><span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> df<span class="selector-attr">[<span class="string">&quot;文章类型&quot;</span>]</span>:</span><br><span class="line">  <span class="selector-tag">article</span> = <span class="selector-tag">i</span><span class="selector-class">.split</span>(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">  articles<span class="selector-class">.append</span>(article)</span><br><span class="line">from apyori import apriori</span><br><span class="line">rules = <span class="built_in">apriori</span>(articles,min_support=<span class="number">0.1</span>,min_confidence=<span class="number">0.6</span>)</span><br><span class="line"><span class="keyword">for</span> rule <span class="keyword">in</span> rules:</span><br><span class="line">  support = rule<span class="selector-class">.support</span></span><br><span class="line">  <span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> rule<span class="selector-class">.orderd_statistics</span>:</span><br><span class="line">    head_set = <span class="selector-tag">i</span><span class="selector-class">.items_base</span></span><br><span class="line">    tail_set = <span class="selector-tag">i</span><span class="selector-class">.items_add</span></span><br><span class="line">    confidence = <span class="selector-tag">i</span><span class="selector-class">.confidence</span></span><br><span class="line">    lift = <span class="selector-tag">i</span><span class="selector-class">.lift</span></span><br><span class="line">    <span class="built_in">print</span>(head_set,tail_set,support,confidence,lift)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">frozenset</span>() frozenset(&#123;&#x27;数分进阶&#x27;&#125;) <span class="number">0</span>.<span class="number">8181818181818182</span> <span class="number">0</span>.<span class="number">8181818181818182</span> <span class="number">1</span>.<span class="number">0</span></span><br><span class="line"><span class="attribute">frozenset</span>(&#123;&#x27;SQL&#x27;&#125;) frozenset(&#123;&#x27;python&#x27;&#125;) <span class="number">0</span>.<span class="number">10101010101010101</span> <span class="number">1</span>.<span class="number">0</span> <span class="number">2</span>.<span class="number">302325581395349</span></span><br><span class="line"><span class="attribute">frozenset</span>(&#123;&#x27;python&#x27;&#125;) frozenset(&#123;&#x27;数分进阶&#x27;&#125;) <span class="number">0</span>.<span class="number">32323232323232326</span> <span class="number">0</span>.<span class="number">7441860465116279</span> <span class="number">0</span>.<span class="number">9095607235142118</span></span><br><span class="line"><span class="attribute">frozenset</span>(&#123;&#x27;数分基础&#x27;&#125;) frozenset(&#123;&#x27;数分进阶&#x27;&#125;) <span class="number">0</span>.<span class="number">20202020202020202</span> <span class="number">1</span>.<span class="number">0</span> <span class="number">1</span>.<span class="number">222222222222222</span></span><br><span class="line"><span class="attribute">frozenset</span>(&#123;&#x27;爬虫&#x27;&#125;) frozenset(&#123;&#x27;数分进阶&#x27;&#125;) <span class="number">0</span>.<span class="number">21212121212121213</span> <span class="number">0</span>.<span class="number">6363636363636365</span> <span class="number">0</span>.<span class="number">7777777777777779</span></span><br><span class="line"><span class="attribute">frozenset</span>(&#123;&#x27;爬虫&#x27;, &#x27;python&#x27;&#125;) frozenset(&#123;&#x27;数分进阶&#x27;&#125;) <span class="number">0</span>.<span class="number">10101010101010101</span> <span class="number">0</span>.<span class="number">6666666666666666</span> <span class="number">0</span>.<span class="number">8148148148148148</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出结果所表示的数据含义仍然不明确</p>
+</blockquote>
+<h1 id="提取信息的加工和可视化"><a href="#提取信息的加工和可视化" class="headerlink" title="提取信息的加工和可视化"></a>提取信息的加工和可视化</h1><h2 id="1-四舍五入"><a href="#1-四舍五入" class="headerlink" title="1. 四舍五入"></a>1. 四舍五入</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_data/用户浏览数据.csv&quot;</span>)</span><br><span class="line">articles = <span class="selector-attr">[]</span></span><br><span class="line"><span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> df<span class="selector-attr">[<span class="string">&quot;文章类型&quot;</span>]</span>:</span><br><span class="line">  <span class="selector-tag">article</span> = <span class="selector-tag">i</span><span class="selector-class">.split</span>(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">  articles<span class="selector-class">.append</span>(article)</span><br><span class="line">from apyori import apriori</span><br><span class="line">rules = <span class="built_in">apriori</span>(articles,min_support=<span class="number">0.1</span>,min_confidence=<span class="number">0.6</span>)</span><br><span class="line"><span class="keyword">for</span> rule <span class="keyword">in</span> rules:</span><br><span class="line">  support = <span class="built_in">round</span>(rule<span class="selector-class">.support</span>,<span class="number">3</span>)</span><br><span class="line">  <span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> rule<span class="selector-class">.orderd_statistics</span>:</span><br><span class="line">    head_set = <span class="selector-tag">i</span><span class="selector-class">.items_base</span></span><br><span class="line">    tail_set = <span class="selector-tag">i</span><span class="selector-class">.items_add</span></span><br><span class="line">    confidence = <span class="built_in">round</span>(<span class="selector-tag">i</span><span class="selector-class">.confidence</span>,<span class="number">3</span>)</span><br><span class="line">    lift = <span class="built_in">round</span>(<span class="selector-tag">i</span><span class="selector-class">.lift</span>,<span class="number">3</span>)</span><br><span class="line">    <span class="built_in">print</span>(head_set,tail_set,support,confidence,lift)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">frozenset</span>() frozenset(&#123;&#x27;数分进阶&#x27;&#125;) <span class="number">0</span>.<span class="number">818</span> <span class="number">0</span>.<span class="number">818</span> <span class="number">1</span>.<span class="number">0</span></span><br><span class="line"><span class="attribute">frozenset</span>(&#123;&#x27;SQL&#x27;&#125;) frozenset(&#123;&#x27;python&#x27;&#125;) <span class="number">0</span>.<span class="number">101</span> <span class="number">1</span>.<span class="number">0</span> <span class="number">2</span>.<span class="number">302</span></span><br><span class="line"><span class="attribute">frozenset</span>(&#123;&#x27;python&#x27;&#125;) frozenset(&#123;&#x27;数分进阶&#x27;&#125;) <span class="number">0</span>.<span class="number">323</span> <span class="number">0</span>.<span class="number">744</span> <span class="number">0</span>.<span class="number">91</span></span><br><span class="line"><span class="attribute">frozenset</span>(&#123;&#x27;数分基础&#x27;&#125;) frozenset(&#123;&#x27;数分进阶&#x27;&#125;) <span class="number">0</span>.<span class="number">202</span> <span class="number">1</span>.<span class="number">0</span> <span class="number">1</span>.<span class="number">222</span></span><br><span class="line"><span class="attribute">frozenset</span>(&#123;&#x27;爬虫&#x27;&#125;) frozenset(&#123;&#x27;数分进阶&#x27;&#125;) <span class="number">0</span>.<span class="number">212</span> <span class="number">0</span>.<span class="number">636</span> <span class="number">0</span>.<span class="number">778</span></span><br><span class="line"><span class="attribute">frozenset</span>(&#123;&#x27;python&#x27;, &#x27;爬虫&#x27;&#125;) frozenset(&#123;&#x27;数分进阶&#x27;&#125;) <span class="number">0</span>.<span class="number">101</span> <span class="number">0</span>.<span class="number">667</span> <span class="number">0</span>.<span class="number">815</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-连接前后件"><a href="#2-连接前后件" class="headerlink" title="2. 连接前后件"></a>2. 连接前后件</h2><h3 id="2-1-前后件转为列表"><a href="#2-1-前后件转为列表" class="headerlink" title="2.1 前后件转为列表"></a>2.1 前后件转为列表</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_data/用户浏览数据.csv&quot;</span>)</span><br><span class="line">articles = <span class="selector-attr">[]</span></span><br><span class="line"><span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> df<span class="selector-attr">[<span class="string">&quot;文章类型&quot;</span>]</span>:</span><br><span class="line">  <span class="selector-tag">article</span> = <span class="selector-tag">i</span><span class="selector-class">.split</span>(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">  articles<span class="selector-class">.append</span>(article)</span><br><span class="line">from apyori import apriori</span><br><span class="line">rules = <span class="built_in">apriori</span>(articles,min_support=<span class="number">0.1</span>,min_confidence=<span class="number">0.6</span>)</span><br><span class="line"><span class="keyword">for</span> rule <span class="keyword">in</span> rules:</span><br><span class="line">  support = <span class="built_in">round</span>(rule<span class="selector-class">.support</span>,<span class="number">3</span>)</span><br><span class="line">  <span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> rule<span class="selector-class">.orderd_statistics</span>:</span><br><span class="line">    head_set = <span class="built_in">list</span>(<span class="selector-tag">i</span>.items_base)</span><br><span class="line">    tail_set = <span class="built_in">list</span>(<span class="selector-tag">i</span>.items_add)</span><br><span class="line">    confidence = <span class="built_in">round</span>(<span class="selector-tag">i</span><span class="selector-class">.confidence</span>,<span class="number">3</span>)</span><br><span class="line">    lift = <span class="built_in">round</span>(<span class="selector-tag">i</span><span class="selector-class">.lift</span>,<span class="number">3</span>)</span><br><span class="line">    <span class="built_in">print</span>(head_set,tail_set,support,confidence,lift)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[] [<span class="symbol">&#x27;数分进阶</span>&#x27;] <span class="number">0.818</span> <span class="number">0.818</span> <span class="number">1.0</span></span><br><span class="line">[<span class="symbol">&#x27;SQL</span>&#x27;] [<span class="symbol">&#x27;python</span>&#x27;] <span class="number">0.101</span> <span class="number">1.0</span> <span class="number">2.302</span></span><br><span class="line">[<span class="symbol">&#x27;python</span>&#x27;] [<span class="symbol">&#x27;数分进阶</span>&#x27;] <span class="number">0.323</span> <span class="number">0.744</span> <span class="number">0.91</span></span><br><span class="line">[<span class="symbol">&#x27;数分基础</span>&#x27;] [<span class="symbol">&#x27;数分进阶</span>&#x27;] <span class="number">0.202</span> <span class="number">1.0</span> <span class="number">1.222</span></span><br><span class="line">[<span class="symbol">&#x27;爬虫</span>&#x27;] [<span class="symbol">&#x27;数分进阶</span>&#x27;] <span class="number">0.212</span> <span class="number">0.636</span> <span class="number">0.778</span></span><br><span class="line">[<span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;python</span>&#x27;] [<span class="symbol">&#x27;数分进阶</span>&#x27;] <span class="number">0.101</span> <span class="number">0.667</span> <span class="number">0.815</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>将前后件转成了列表后，然后只需要通过判断语句筛选掉前件为空的数据即可。</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_data/用户浏览数据.csv&quot;</span>)</span><br><span class="line">articles = <span class="selector-attr">[]</span></span><br><span class="line"><span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> df<span class="selector-attr">[<span class="string">&quot;文章类型&quot;</span>]</span>:</span><br><span class="line">  <span class="selector-tag">article</span> = <span class="selector-tag">i</span><span class="selector-class">.split</span>(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">  articles<span class="selector-class">.append</span>(article)</span><br><span class="line">from apyori import apriori</span><br><span class="line">rules = <span class="built_in">apriori</span>(articles,min_support=<span class="number">0.1</span>,min_confidence=<span class="number">0.6</span>)</span><br><span class="line"><span class="keyword">for</span> rule <span class="keyword">in</span> rules:</span><br><span class="line">  support = <span class="built_in">round</span>(rule<span class="selector-class">.support</span>,<span class="number">3</span>)</span><br><span class="line">  <span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> rule<span class="selector-class">.orderd_statistics</span>:</span><br><span class="line">    head_set = <span class="built_in">list</span>(<span class="selector-tag">i</span>.items_base)</span><br><span class="line">    tail_set = <span class="built_in">list</span>(<span class="selector-tag">i</span>.items_add)</span><br><span class="line">    <span class="keyword">if</span> head_set == <span class="selector-attr">[]</span>:</span><br><span class="line">      continue</span><br><span class="line">    confidence = <span class="built_in">round</span>(<span class="selector-tag">i</span><span class="selector-class">.confidence</span>,<span class="number">3</span>)</span><br><span class="line">    lift = <span class="built_in">round</span>(<span class="selector-tag">i</span><span class="selector-class">.lift</span>,<span class="number">3</span>)</span><br><span class="line">    <span class="built_in">print</span>(head_set,tail_set,support,confidence,lift)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[<span class="symbol">&#x27;SQL</span>&#x27;] [<span class="symbol">&#x27;python</span>&#x27;] <span class="number">0.101</span> <span class="number">1.0</span> <span class="number">2.302</span></span><br><span class="line">[<span class="symbol">&#x27;python</span>&#x27;] [<span class="symbol">&#x27;数分进阶</span>&#x27;] <span class="number">0.323</span> <span class="number">0.744</span> <span class="number">0.91</span></span><br><span class="line">[<span class="symbol">&#x27;数分基础</span>&#x27;] [<span class="symbol">&#x27;数分进阶</span>&#x27;] <span class="number">0.202</span> <span class="number">1.0</span> <span class="number">1.222</span></span><br><span class="line">[<span class="symbol">&#x27;爬虫</span>&#x27;] [<span class="symbol">&#x27;数分进阶</span>&#x27;] <span class="number">0.212</span> <span class="number">0.636</span> <span class="number">0.778</span></span><br><span class="line">[<span class="symbol">&#x27;爬虫</span>&#x27;, <span class="symbol">&#x27;python</span>&#x27;] [<span class="symbol">&#x27;数分进阶</span>&#x27;] <span class="number">0.101</span> <span class="number">0.667</span> <span class="number">0.815</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-字符串拼接"><a href="#2-2-字符串拼接" class="headerlink" title="2.2 字符串拼接"></a>2.2 字符串拼接</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_data/用户浏览数据.csv&quot;</span>)</span><br><span class="line">articles = <span class="selector-attr">[]</span></span><br><span class="line"><span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> df<span class="selector-attr">[<span class="string">&quot;文章类型&quot;</span>]</span>:</span><br><span class="line">  <span class="selector-tag">article</span> = <span class="selector-tag">i</span><span class="selector-class">.split</span>(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">  articles<span class="selector-class">.append</span>(article)</span><br><span class="line">from apyori import apriori</span><br><span class="line">rules = <span class="built_in">apriori</span>(articles,min_support=<span class="number">0.1</span>,min_confidence=<span class="number">0.6</span>)</span><br><span class="line"><span class="keyword">for</span> rule <span class="keyword">in</span> rules:</span><br><span class="line">  support = <span class="built_in">round</span>(rule<span class="selector-class">.support</span>,<span class="number">3</span>)</span><br><span class="line">  <span class="keyword">for</span> <span class="selector-tag">i</span> <span class="keyword">in</span> rule<span class="selector-class">.orderd_statistics</span>:</span><br><span class="line">      head_set = <span class="built_in">list</span>(<span class="selector-tag">i</span>.items_base)</span><br><span class="line">      tail_set = <span class="built_in">list</span>(<span class="selector-tag">i</span>.items_add)</span><br><span class="line">      <span class="keyword">if</span> head_set == <span class="selector-attr">[]</span>:</span><br><span class="line">          continue</span><br><span class="line">      related_category = <span class="built_in">str</span>(head_set) + <span class="string">&quot;→&quot;</span> + <span class="built_in">str</span>(tail_set)</span><br><span class="line">      confidence = <span class="built_in">round</span>(<span class="selector-tag">i</span><span class="selector-class">.confidence</span>,<span class="number">3</span>)</span><br><span class="line">      lift = <span class="built_in">round</span>(<span class="selector-tag">i</span><span class="selector-class">.lift</span>,<span class="number">3</span>)</span><br><span class="line">      <span class="built_in">print</span>(related_category,support,confidence,lift)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[<span class="string">&#x27;SQL&#x27;</span>]</span>→<span class="selector-attr">[<span class="string">&#x27;python&#x27;</span>]</span> <span class="number">0.101</span> <span class="number">1.0</span> <span class="number">2.302</span></span><br><span class="line"><span class="selector-attr">[<span class="string">&#x27;python&#x27;</span>]</span>→<span class="selector-attr">[<span class="string">&#x27;数分进阶&#x27;</span>]</span> <span class="number">0.323</span> <span class="number">0.744</span> <span class="number">0.91</span></span><br><span class="line"><span class="selector-attr">[<span class="string">&#x27;数分基础&#x27;</span>]</span>→<span class="selector-attr">[<span class="string">&#x27;数分进阶&#x27;</span>]</span> <span class="number">0.202</span> <span class="number">1.0</span> <span class="number">1.222</span></span><br><span class="line"><span class="selector-attr">[<span class="string">&#x27;爬虫&#x27;</span>]</span>→<span class="selector-attr">[<span class="string">&#x27;数分进阶&#x27;</span>]</span> <span class="number">0.212</span> <span class="number">0.636</span> <span class="number">0.778</span></span><br><span class="line"><span class="selector-attr">[<span class="string">&#x27;python&#x27;</span>, <span class="string">&#x27;爬虫&#x27;</span>]</span>→<span class="selector-attr">[<span class="string">&#x27;数分进阶&#x27;</span>]</span> <span class="number">0.101</span> <span class="number">0.667</span> <span class="number">0.815</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-数据标准化"><a href="#3-数据标准化" class="headerlink" title="3. 数据标准化"></a>3. 数据标准化</h2><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas as pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/user_data/用户浏览数据.csv&quot;</span>)</span><br><span class="line">articles = []</span><br><span class="line"><span class="keyword">for</span> i in df[<span class="string">&quot;文章类型&quot;</span>]:</span><br><span class="line">  article = i.split(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">  articles.<span class="keyword">append</span>(article)</span><br><span class="line"><span class="keyword">from</span> apyori <span class="keyword">import</span> apriori</span><br><span class="line">rules = apriori(articles,min_support=<span class="number">0.1</span>,min_confidence=<span class="number">0.6</span>)</span><br><span class="line">extract_result = []</span><br><span class="line"><span class="keyword">for</span> rule in rules:</span><br><span class="line">  support = <span class="keyword">round</span>(rule.support,<span class="number">3</span>)</span><br><span class="line">  <span class="keyword">for</span> i in rule.orderd_statistics:</span><br><span class="line">      head_set = list(i.items_base)</span><br><span class="line">      tail_set = list(i.items_add)</span><br><span class="line">      <span class="keyword">if</span> head_set == []:</span><br><span class="line">          <span class="keyword">continue</span></span><br><span class="line">      related_category = str(head_set) + <span class="string">&quot;→&quot;</span> + str(tail_set)</span><br><span class="line">      confidence = <span class="keyword">round</span>(i.confidence,<span class="number">3</span>)</span><br><span class="line">      lift = <span class="keyword">round</span>(i.lift,<span class="number">3</span>)</span><br><span class="line">      extract_result.<span class="keyword">append</span>([related_category,support,confidence,lift])</span><br><span class="line"># 将数据转成DataFrame的形式，设置列名为<span class="string">&#x27;关联规则&#x27;</span>, <span class="string">&#x27;支持度&#x27;</span>, <span class="string">&#x27;置信度&#x27;</span>, <span class="string">&#x27;提升度&#x27;</span>，并赋值给rule_data</span><br><span class="line">rule_data = pd.DataFrame(extract_result,columns=[<span class="string">&#x27;关联规则&#x27;</span>,<span class="string">&#x27;支持度&#x27;</span>,<span class="string">&#x27;置信度&#x27;</span>,<span class="string">&#x27;提升度&#x27;</span>])</span><br><span class="line"><span class="keyword">print</span>(rule_data)</span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">                           关联规则  支持度  置信度  提升度</span><br><span class="line"><span class="number">0</span>               <span class="selector-attr">[<span class="string">&#x27;SQL&#x27;</span>]</span>→<span class="selector-attr">[<span class="string">&#x27;python&#x27;</span>]</span>   <span class="number">0.101</span>   <span class="number">1.000</span>   <span class="number">2.302</span></span><br><span class="line"><span class="number">1</span>          <span class="selector-attr">[<span class="string">&#x27;python&#x27;</span>]</span>→<span class="selector-attr">[<span class="string">&#x27;数分进阶&#x27;</span>]</span>   <span class="number">0.323</span>   <span class="number">0.744</span>   <span class="number">0.910</span></span><br><span class="line"><span class="number">2</span>        <span class="selector-attr">[<span class="string">&#x27;数分基础&#x27;</span>]</span>→<span class="selector-attr">[<span class="string">&#x27;数分进阶&#x27;</span>]</span>   <span class="number">0.202</span>   <span class="number">1.000</span>   <span class="number">1.222</span></span><br><span class="line"><span class="number">3</span>            <span class="selector-attr">[<span class="string">&#x27;爬虫&#x27;</span>]</span>→<span class="selector-attr">[<span class="string">&#x27;数分进阶&#x27;</span>]</span>   <span class="number">0.212</span>   <span class="number">0.636</span>   <span class="number">0.778</span></span><br><span class="line"><span class="number">4</span>  <span class="selector-attr">[<span class="string">&#x27;python&#x27;</span>, <span class="string">&#x27;爬虫&#x27;</span>]</span>→<span class="selector-attr">[<span class="string">&#x27;数分进阶&#x27;</span>]</span>   <span class="number">0.101</span>   <span class="number">0.667</span>   <span class="number">0.815</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-提取提升度大于1的数据"><a href="#3-1-提取提升度大于1的数据" class="headerlink" title="3.1 提取提升度大于1的数据"></a>3.1 提取提升度大于1的数据</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas as pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/user_data/用户浏览数据.csv&quot;</span>)</span><br><span class="line">articles = []</span><br><span class="line"><span class="keyword">for</span> i in df[<span class="string">&quot;文章类型&quot;</span>]:</span><br><span class="line">    article = i.split(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">    articles.<span class="keyword">append</span>(article)</span><br><span class="line"><span class="keyword">from</span> apyori <span class="keyword">import</span> apriori</span><br><span class="line">rules = apriori(articles,min_support=<span class="number">0.1</span>,min_confidence=<span class="number">0.6</span>)</span><br><span class="line">extract_result = []</span><br><span class="line"><span class="keyword">for</span> rule in rules:</span><br><span class="line">  support = <span class="keyword">round</span>(rule.support,<span class="number">3</span>)</span><br><span class="line">  <span class="keyword">for</span> i in rule.orderd_statistics:</span><br><span class="line">      head_set = list(i.items_base)</span><br><span class="line">      tail_set = list(i.items_add)</span><br><span class="line">      <span class="keyword">if</span> head_set == []:</span><br><span class="line">          <span class="keyword">continue</span></span><br><span class="line">      related_category = str(head_set) + <span class="string">&quot;→&quot;</span> + str(tail_set)</span><br><span class="line">      confidence = <span class="keyword">round</span>(i.confidence,<span class="number">3</span>)</span><br><span class="line">      lift = <span class="keyword">round</span>(i.lift,<span class="number">3</span>)</span><br><span class="line">      extract_result.<span class="keyword">append</span>([related_category,support,confidence,lift])</span><br><span class="line"># 将数据转成DataFrame的形式，设置列名为<span class="string">&#x27;关联规则&#x27;</span>, <span class="string">&#x27;支持度&#x27;</span>, <span class="string">&#x27;置信度&#x27;</span>, <span class="string">&#x27;提升度&#x27;</span>，并赋值给rule_data</span><br><span class="line">rule_data = pd.DataFrame(extract_result,columns=[<span class="string">&#x27;关联规则&#x27;</span>,<span class="string">&#x27;支持度&#x27;</span>,<span class="string">&#x27;置信度&#x27;</span>,<span class="string">&#x27;提升度&#x27;</span>])</span><br><span class="line">promoted_rules = rule_data[rule_data[<span class="string">&#x27;提升度&#x27;</span>]&gt;<span class="number">1</span>]</span><br><span class="line"><span class="keyword">print</span>(promoted_rules)</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-提取提升度小于1的数据"><a href="#3-2-提取提升度小于1的数据" class="headerlink" title="3.2 提取提升度小于1的数据"></a>3.2 提取提升度小于1的数据</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas as pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/user_data/用户浏览数据.csv&quot;</span>)</span><br><span class="line">articles = []</span><br><span class="line"><span class="keyword">for</span> i in df[<span class="string">&quot;文章类型&quot;</span>]:</span><br><span class="line">    article = i.split(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">    articles.<span class="keyword">append</span>(article)</span><br><span class="line"><span class="keyword">from</span> apyori <span class="keyword">import</span> apriori</span><br><span class="line">rules = apriori(articles,min_support=<span class="number">0.1</span>,min_confidence=<span class="number">0.6</span>)</span><br><span class="line">extract_result = []</span><br><span class="line"><span class="keyword">for</span> rule in rules:</span><br><span class="line">  support = <span class="keyword">round</span>(rule.support,<span class="number">3</span>)</span><br><span class="line">  <span class="keyword">for</span> i in rule.orderd_statistics:</span><br><span class="line">      head_set = list(i.items_base)</span><br><span class="line">      tail_set = list(i.items_add)</span><br><span class="line">      <span class="keyword">if</span> head_set == []:</span><br><span class="line">          <span class="keyword">continue</span></span><br><span class="line">      related_category = str(head_set) + <span class="string">&quot;→&quot;</span> + str(tail_set)</span><br><span class="line">      confidence = <span class="keyword">round</span>(i.confidence,<span class="number">3</span>)</span><br><span class="line">      lift = <span class="keyword">round</span>(i.lift,<span class="number">3</span>)</span><br><span class="line">      extract_result.<span class="keyword">append</span>([related_category,support,confidence,lift])</span><br><span class="line"># 将数据转成DataFrame的形式，设置列名为<span class="string">&#x27;关联规则&#x27;</span>, <span class="string">&#x27;支持度&#x27;</span>, <span class="string">&#x27;置信度&#x27;</span>, <span class="string">&#x27;提升度&#x27;</span>，并赋值给rule_data</span><br><span class="line">rule_data = pd.DataFrame(extract_result,columns=[<span class="string">&#x27;关联规则&#x27;</span>,<span class="string">&#x27;支持度&#x27;</span>,<span class="string">&#x27;置信度&#x27;</span>,<span class="string">&#x27;提升度&#x27;</span>])</span><br><span class="line">restricted_rules = rule_data[rule_data[<span class="string">&#x27;提升度&#x27;</span>]&lt;<span class="number">1</span>]</span><br><span class="line"><span class="keyword">print</span>(restricted_rules)</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-可视化展示"><a href="#4-可视化展示" class="headerlink" title="4. 可视化展示"></a>4. 可视化展示</h2><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/user_data/用户浏览数据.csv&quot;</span>)</span><br><span class="line">articles = []</span><br><span class="line">for i in df[<span class="string">&quot;文章类型&quot;</span>]:</span><br><span class="line">    article = i.split(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">    articles.append(article)</span><br><span class="line">from apyori import apriori</span><br><span class="line">rules = apriori(articles,min_support=<span class="number">0.1</span>,min_confidence=<span class="number">0.6</span>)</span><br><span class="line">extract_result = []</span><br><span class="line">for rule in rules:</span><br><span class="line">  support = round(rule.support,<span class="number">3</span>)</span><br><span class="line">  for i in rule.orderd_statistics:</span><br><span class="line">      head_set = list(i.items_base)</span><br><span class="line">      tail_set = list(i.items_add)</span><br><span class="line">      if head_set == []:</span><br><span class="line">          continue</span><br><span class="line">      related_category = str(head_set) + <span class="string">&quot;→&quot;</span> + str(tail_set)</span><br><span class="line">      confidence = round(i.confidence,<span class="number">3</span>)</span><br><span class="line">      lift = round(i.lift,<span class="number">3</span>)</span><br><span class="line">      extract_result.append([related_category,support,confidence,lift])</span><br><span class="line"># 将数据转成<span class="symbol">DataFrame</span>的形式，设置列名为<span class="string">&#x27;关联规则&#x27;</span>, <span class="string">&#x27;支持度&#x27;</span>, <span class="string">&#x27;置信度&#x27;</span>, <span class="string">&#x27;提升度&#x27;</span>，并赋值给rule_data</span><br><span class="line">rule_data = pd.<span class="symbol">DataFrame</span>(extract_result,columns=[<span class="string">&#x27;关联规则&#x27;</span>,<span class="string">&#x27;支持度&#x27;</span>,<span class="string">&#x27;置信度&#x27;</span>,<span class="string">&#x27;提升度&#x27;</span>])</span><br><span class="line">promoted_rules = rule_data[rule_data[<span class="string">&quot;提升度&quot;</span>]&gt;<span class="number">1</span>]</span><br><span class="line">restricted_rules = rule_data[rule_data[<span class="string">&#x27;提升度&#x27;</span>]&lt;<span class="number">1</span>]</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = <span class="string">&quot;Arial Unicode MS&quot;</span></span><br><span class="line">promoted_rules.plot.bar(<span class="string">&quot;关联规则&quot;</span>,[<span class="string">&#x27;支持度&#x27;</span>,<span class="string">&#x27;置信度&#x27;</span>],rot=<span class="number">0</span>)</span><br><span class="line">plt.title(<span class="string">&quot;促进关系的强关联规则&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>‘关联规则’ 列作为x轴数据，’支持度’,’置信度’ 列作为y轴数据。<br>注意，参数rot表示刻度值显示的角度。<br>这里设置rot&#x3D;0保证x轴数据刚好横向展示。<br>抑制关系同理</p>
+</blockquote>
+<img src="http://nocturne.bczcdn.com/img/1649837813863_82261/9-48.1.png">
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/a1ff4487/" rel="bookmark">用户分层模型</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/24cc6ca3/" rel="bookmark">基于物品的协同过滤</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/70e3efaf/" rel="bookmark">关联分析</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小刑
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xxsqlll.github.io/posts/16d6d1f6/" title="关联分析和Apriori算法">https://xxsqlll.github.io/posts/16d6d1f6/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag"># 学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/70e3efaf/" rel="prev" title="关联分析">
+      <i class="fa fa-chevron-left"></i> 关联分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/24cc6ca3/" rel="next" title="基于物品的协同过滤">
+      基于物品的协同过滤 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  
+    <div>
+      <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-paw"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+
+    </div>
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Apriori%E7%9A%84%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">Apriori的算法步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E5%88%97%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text">字符串转列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Apriori%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">Apriori函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E8%AE%B0%E5%BD%95%E7%9A%84%E6%8F%90%E5%8F%96"><span class="nav-number">4.</span> <span class="nav-text">关系记录的提取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%8F%90%E5%8F%96%E6%94%AF%E6%8C%81%E5%BA%A6"><span class="nav-number">4.1.</span> <span class="nav-text">1. 提取支持度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%8F%90%E5%8F%96%E5%89%8D%E5%90%8E%E4%BB%B6"><span class="nav-number">4.2.</span> <span class="nav-text">2.提取前后件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E4%BF%A1%E6%81%AF%E7%9A%84%E5%8A%A0%E5%B7%A5%E5%92%8C%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">提取信息的加工和可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9B%9B%E8%88%8D%E4%BA%94%E5%85%A5"><span class="nav-number">5.1.</span> <span class="nav-text">1. 四舍五入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%BF%9E%E6%8E%A5%E5%89%8D%E5%90%8E%E4%BB%B6"><span class="nav-number">5.2.</span> <span class="nav-text">2. 连接前后件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%89%8D%E5%90%8E%E4%BB%B6%E8%BD%AC%E4%B8%BA%E5%88%97%E8%A1%A8"><span class="nav-number">5.2.1.</span> <span class="nav-text">2.1 前后件转为列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5"><span class="nav-number">5.2.2.</span> <span class="nav-text">2.2 字符串拼接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E6%A0%87%E5%87%86%E5%8C%96"><span class="nav-number">5.3.</span> <span class="nav-text">3. 数据标准化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%8F%90%E5%8F%96%E6%8F%90%E5%8D%87%E5%BA%A6%E5%A4%A7%E4%BA%8E1%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">5.3.1.</span> <span class="nav-text">3.1 提取提升度大于1的数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%8F%90%E5%8F%96%E6%8F%90%E5%8D%87%E5%BA%A6%E5%B0%8F%E4%BA%8E1%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">5.3.2.</span> <span class="nav-text">3.2 提取提升度小于1的数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B1%95%E7%A4%BA"><span class="nav-number">5.4.</span> <span class="nav-text">4. 可视化展示</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小刑"
+      src="/images/avatar.JPG">
+  <p class="site-author-name" itemprop="name">小刑</p>
+  <div class="site-description" itemprop="description">这个人很懒，什么也不想写</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxsqlll" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xxsqlll" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xxsqlll@gmail.com" title="E-Mail → mailto:xxsqlll@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/a1ff4487/" title="posts&#x2F;a1ff4487&#x2F;">用户分层模型</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/24cc6ca3/" title="posts&#x2F;24cc6ca3&#x2F;">基于物品的协同过滤</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/16d6d1f6/" title="posts&#x2F;16d6d1f6&#x2F;">关联分析和Apriori算法</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/70e3efaf/" title="posts&#x2F;70e3efaf&#x2F;">关联分析</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/f16c50c8/" title="posts&#x2F;f16c50c8&#x2F;">智能推荐算法</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1831469103&auto=0&height=66">
+      </iframe>
+  </div>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小刑</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">147k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:27</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>--><div>
+  <span id="sitetime"></span>
+  <script language=javascript>
+      function siteTime(){
+          window.setTimeout("siteTime()", 1000);
+          var seconds = 1000;
+          var minutes = seconds * 60;
+          var hours = minutes * 60;
+          var days = hours * 24;
+          var years = days * 365;
+          var today = new Date();
+          var todayYear = today.getFullYear();
+          var todayMonth = today.getMonth()+1;
+          var todayDate = today.getDate();
+          var todayHour = today.getHours();
+          var todayMinute = today.getMinutes();
+          var todaySecond = today.getSeconds();
+          /* 
+          Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+          year - 作为date对象的年份，为4位年份值
+          month - 0-11之间的整数，做为date对象的月份
+          day - 1-31之间的整数，做为date对象的天数
+          hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+          minutes - 0-59之间的整数，做为date对象的分钟数
+          seconds - 0-59之间的整数，做为date对象的秒数
+          microseconds - 0-999之间的整数，做为date对象的毫秒数
+      */
+          var t1 = Date.UTC(2023,7,18,11,40,00); //北京时间2018-2-13 00:00:00
+          var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+          var diff = t2-t1;
+      var diffYears = Math.floor(diff/years);
+      var diffDays = Math.floor((diff/days)-diffYears*365);
+      var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+      var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+      var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+      document.getElementById("sitetime").innerHTML=" 小破站已平稳运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+    }
+      siteTime();
+  </script>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span class="site-uv" title="总访客量">
+    我的第<span id="busuanzi_value_site_uv"></span>位朋友, 
+  </span>
+
+  <span class="site-pv" title="总访问量">
+    经过<span id="busuanzi_value_site_pv"></span>次回眸与你相遇
+  </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '0VHq4jqwE0zTWM6rJFbms2tJ-gzGzoHsz',
+      appKey     : '1QAGv9wIN4teXzpcIV8p6NyJ',
+      placeholder: "欢迎交流",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+    </div>
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+  
+  
+     <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+     <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+     <script type="text/javascript" src="/js/src/fireworks.js"></script>
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
+

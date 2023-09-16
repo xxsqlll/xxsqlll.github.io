@@ -6,7 +6,7 @@
   <link href="https://xxsqlll.github.io/atom.xml" rel="self"/>
   
   <link href="https://xxsqlll.github.io/"/>
-  <updated>2023-08-28T08:46:58.212Z</updated>
+  <updated>2023-09-16T10:14:31.415Z</updated>
   <id>https://xxsqlll.github.io/</id>
   
   <author>
@@ -17,11 +17,84 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>用户分层模型</title>
+    <link href="https://xxsqlll.github.io/posts/a1ff4487/"/>
+    <id>https://xxsqlll.github.io/posts/a1ff4487/</id>
+    <published>2023-09-16T10:09:45.000Z</published>
+    <updated>2023-09-16T10:14:31.415Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;RFM模型&quot;&gt;&lt;a href=&quot;#RFM模型&quot; class=&quot;headerlink&quot; title=&quot;RFM模型&quot;&gt;&lt;/a&gt;RFM模型&lt;/h1&gt;&lt;h2 id=&quot;1-定义：&quot;&gt;&lt;a href=&quot;#1-定义：&quot; class=&quot;headerlink&quot; title=&quot;1. 定义：&quot;&gt;&lt;/a&gt;1. 定义：&lt;/h2&gt;&lt;p&gt;RFM，是应用最广泛的用户分层模型，从1961年开始沿用至今。&lt;/p&gt;
+&lt;p&gt;该模型会通过三个维度的重要指标，对用户的价值做识别，并据此将用户分为8个组，进行精细化的管理。&lt;br&gt;&lt;img src=&quot;http://nocturne.bczcdn.com/img/1603786793971_95223/page45.png&quot; style=&quot;max-width: 70%&quot;&gt;&lt;br&gt;&lt;strong&gt;R &amp;#x3D; Recency(最近一次消费的时间间隔)&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;F &amp;#x3D; Frequency(消费频率)&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;M &amp;#x3D; Monetary(消费金额)&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;2-构建过程&quot;&gt;&lt;a href=&quot;#2-构建过程&quot; class=&quot;headerlink&quot; title=&quot;2. 构建过程&quot;&gt;&lt;/a&gt;2. 构建过程&lt;/h2&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于物品的协同过滤</title>
+    <link href="https://xxsqlll.github.io/posts/24cc6ca3/"/>
+    <id>https://xxsqlll.github.io/posts/24cc6ca3/</id>
+    <published>2023-09-12T02:57:45.000Z</published>
+    <updated>2023-09-16T10:16:41.735Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;基于物品的协同过滤&quot;&gt;&lt;a href=&quot;#基于物品的协同过滤&quot; class=&quot;headerlink&quot; title=&quot;基于物品的协同过滤&quot;&gt;&lt;/a&gt;基于物品的协同过滤&lt;/h1&gt;&lt;h2 id=&quot;1-定义&quot;&gt;&lt;a href=&quot;#1-定义&quot; class=&quot;headerlink&quot; title=&quot;1. 定义&quot;&gt;&lt;/a&gt;1. 定义&lt;/h2&gt;&lt;p&gt;基于物品的协同过滤算法，简称&lt;strong&gt;itemCF&lt;/strong&gt;，就是根据目标用户的历史偏好，给他推荐与他喜欢的物品相关性高的物品。&lt;/p&gt;
+&lt;h2 id=&quot;2-itemCF处理流程&quot;&gt;&lt;a href=&quot;#2-itemCF处理流程&quot; class=&quot;headerlink&quot; title=&quot;2. itemCF处理流程&quot;&gt;&lt;/a&gt;2. itemCF处理流程&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;STEP 1 分析数据集找到相似的物品&lt;/li&gt;
+&lt;li&gt;STEP 2 根据目标用户的历史喜好，将相似的物品推荐给他&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关联分析和Apriori算法</title>
+    <link href="https://xxsqlll.github.io/posts/16d6d1f6/"/>
+    <id>https://xxsqlll.github.io/posts/16d6d1f6/</id>
+    <published>2023-09-12T02:55:45.000Z</published>
+    <updated>2023-09-16T10:18:50.742Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;Apriori的算法步骤&quot;&gt;&lt;a href=&quot;#Apriori的算法步骤&quot; class=&quot;headerlink&quot; title=&quot;Apriori的算法步骤&quot;&gt;&lt;/a&gt;Apriori的算法步骤&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;STEP 1 设定最小支持度和最小置信度&lt;/li&gt;
+&lt;li&gt;STEP 2 根据最小支持度找到频繁项集&lt;/li&gt;
+&lt;li&gt;STEP 3 根据最小置信度发现强关联规则&lt;blockquote&gt;
+&lt;p&gt;再由STEP 3调整STEP 1设置值&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;使用Apriori算法前需对数据进行处理，将其转化为双重列表&lt;/p&gt;
+&lt;h1 id=&quot;字符串转列表&quot;&gt;&lt;a href=&quot;#字符串转列表&quot; class=&quot;headerlink&quot; title=&quot;字符串转列表&quot;&gt;&lt;/a&gt;字符串转列表&lt;/h1&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>关联分析</title>
     <link href="https://xxsqlll.github.io/posts/70e3efaf/"/>
     <id>https://xxsqlll.github.io/posts/70e3efaf/</id>
     <published>2023-08-28T08:46:45.000Z</published>
-    <updated>2023-08-28T08:46:58.212Z</updated>
+    <updated>2023-08-28T08:53:15.334Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;关联分析&quot;&gt;&lt;a href=&quot;#关联分析&quot; class=&quot;headerlink&quot; title=&quot;关联分析&quot;&gt;&lt;/a&gt;关联分析&lt;/h1&gt;&lt;h2 id=&quot;1-定义&quot;&gt;&lt;a href=&quot;#1-定义&quot; class=&quot;headerlink&quot; title=&quot;1. 定义&quot;&gt;&lt;/a&gt;1. 定义&lt;/h2&gt;&lt;p&gt;关联分析是一门用于发现数据之间联系的分析技术。&lt;/p&gt;
@@ -401,81 +474,6 @@ Anaconda将自动将环境变量添加到PATH中&lt;br&gt;&lt;strong&gt;注意�
     
     
     <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>语音端点检测python</title>
-    <link href="https://xxsqlll.github.io/posts/46028808/"/>
-    <id>https://xxsqlll.github.io/posts/46028808/</id>
-    <published>2023-07-28T09:06:45.000Z</published>
-    <updated>2023-07-28T09:22:16.307Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;Voice-Activity-Detection-VAD）&quot;&gt;&lt;a href=&quot;#Voice-Activity-Detection-VAD）&quot; class=&quot;headerlink&quot; title=&quot;(Voice Activity Detection,VAD）&quot;&gt;&lt;/a&gt;(Voice Activity Detection,VAD）&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;目的&lt;/strong&gt;：从声音信号流里识别并消除静音段，以防出现音画不同步现象&lt;/p&gt;
-&lt;h2 id=&quot;识别静音段&quot;&gt;&lt;a href=&quot;#识别静音段&quot; class=&quot;headerlink&quot; title=&quot;识别静音段&quot;&gt;&lt;/a&gt;识别静音段&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;标准&lt;/strong&gt;：当一个输入的数值序列中出现持续低于基准数值的声音&lt;/p&gt;
-&lt;p&gt;#导入模块&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
-    
-    
-    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>自主导航小车操作流程</title>
-    <link href="https://xxsqlll.github.io/posts/4002aeb8/"/>
-    <id>https://xxsqlll.github.io/posts/4002aeb8/</id>
-    <published>2023-07-27T06:18:50.000Z</published>
-    <updated>2023-07-28T05:52:57.870Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;1-配置环境&quot;&gt;&lt;a href=&quot;#1-配置环境&quot; class=&quot;headerlink&quot; title=&quot;1. 配置环境&quot;&gt;&lt;/a&gt;1. 配置环境&lt;/h1&gt;&lt;h2 id=&quot;1-1-在虚拟机安装Ubuntu操作系统&quot;&gt;&lt;a href=&quot;#1-1-在虚拟机安装Ubuntu操作系统&quot; class=&quot;headerlink&quot; title=&quot;1.1 在虚拟机安装Ubuntu操作系统&quot;&gt;&lt;/a&gt;1.1 在虚拟机安装Ubuntu操作系统&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;P2 0:38:50&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1bE41147q9?p=2&amp;vd_source=45362572b7d5ba92cee5884f674bc9eb&quot;&gt;P2-项目准备&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;1-2-在Ubuntu安装ROS操作系统&quot;&gt;&lt;a href=&quot;#1-2-在Ubuntu安装ROS操作系统&quot; class=&quot;headerlink&quot; title=&quot;1.2 在Ubuntu安装ROS操作系统&quot;&gt;&lt;/a&gt;1.2 在Ubuntu安装ROS操作系统&lt;/h2&gt;</summary>
-    
-    
-    
-    <category term="小车" scheme="https://xxsqlll.github.io/categories/%E5%B0%8F%E8%BD%A6/"/>
-    
-    
-    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git基础</title>
-    <link href="https://xxsqlll.github.io/posts/1a60696b/"/>
-    <id>https://xxsqlll.github.io/posts/1a60696b/</id>
-    <published>2023-07-27T06:18:30.000Z</published>
-    <updated>2023-07-28T09:37:42.172Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;1-版本控制&quot;&gt;&lt;a href=&quot;#1-版本控制&quot; class=&quot;headerlink&quot; title=&quot;1. 版本控制&quot;&gt;&lt;/a&gt;1. 版本控制&lt;/h1&gt;&lt;p&gt; 版本迭代，版本管理器，不会删除最初的版本&lt;/p&gt;
-&lt;p&gt;管理文件、目录、工程的修改历史&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;常见版本控制管理器&lt;/strong&gt;&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Git&lt;/th&gt;
-&lt;th&gt;SVN&lt;/th&gt;
-&lt;th&gt;CVS&lt;/th&gt;
-&lt;th&gt;VSS&lt;/th&gt;
-&lt;th&gt;TFS&lt;/th&gt;
-&lt;th&gt;Visual Studio Online&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;/table&gt;</summary>
-    
-    
-    
-    <category term="Git" scheme="https://xxsqlll.github.io/categories/Git/"/>
-    
-    
-    <category term="技能" scheme="https://xxsqlll.github.io/tags/%E6%8A%80%E8%83%BD/"/>
     
   </entry>
   

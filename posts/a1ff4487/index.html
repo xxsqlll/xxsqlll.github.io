@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xxsqlll.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"always","padding":18,"offset":12,"onmobile":false,"b2t":true,"scrollpercent":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="RFM模型1. 定义：RFM，是应用最广泛的用户分层模型，从1961年开始沿用至今。 该模型会通过三个维度的重要指标，对用户的价值做识别，并据此将用户分为8个组，进行精细化的管理。R &#x3D; Recency(最近一次消费的时间间隔)F &#x3D; Frequency(消费频率)M &#x3D; Monetary(消费金额) 2. 构建过程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用户分层模型">
+<meta property="og:url" content="https://xxsqlll.github.io/posts/a1ff4487/index.html">
+<meta property="og:site_name" content="小刑的博客">
+<meta property="og:description" content="RFM模型1. 定义：RFM，是应用最广泛的用户分层模型，从1961年开始沿用至今。 该模型会通过三个维度的重要指标，对用户的价值做识别，并据此将用户分为8个组，进行精细化的管理。R &#x3D; Recency(最近一次消费的时间间隔)F &#x3D; Frequency(消费频率)M &#x3D; Monetary(消费金额) 2. 构建过程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1603786793971_95223/page45.png">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1604562384661_8000/57%204.png">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1649660486688_98376/figure_1%20(5).png">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1649661871988_23195/figure_1%20(6).png">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1649664908696_20352/figure_1%20(7).png">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1649918145506_47144/figure_1%20(15).png">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1649661192030_9272/10-15%20(1).png">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1605171264393_47052/101.png">
+<meta property="og:image" content="http://nocturne.bczcdn.com/img/1665394499142_86506/8-46.jpg">
+<meta property="og:image" content="https://nocturne.bczcdn.com/5bd8a894-5468-11ee-ae70-0242ac110012/figure_1.png">
+<meta property="article:published_time" content="2023-09-16T10:09:45.000Z">
+<meta property="article:modified_time" content="2023-09-16T10:14:31.415Z">
+<meta property="article:author" content="小刑">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://nocturne.bczcdn.com/img/1603786793971_95223/page45.png">
+
+<link rel="canonical" href="https://xxsqlll.github.io/posts/a1ff4487/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>用户分层模型 | 小刑的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="小刑的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">小刑的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">五马六猴，解衣磅礴</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-film fa-fw"></i>电影</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/xxsqlll" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxsqlll.github.io/posts/a1ff4487/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.JPG">
+      <meta itemprop="name" content="小刑">
+      <meta itemprop="description" content="这个人很懒，什么也不想写">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小刑的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用户分层模型
+        </h1>
+
+        <div class="post-meta">
+          <span class="post-time">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-09-16 18:09:45 / 修改时间：18:14:31" itemprop="dateCreated datePublished" datetime="2023-09-16T18:09:45+08:00">2023-09-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/posts/a1ff4487/" class="post-meta-item leancloud_visitors" data-flag-title="用户分层模型" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+          <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+              <i class="fa fa-fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+          </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/posts/a1ff4487/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/posts/a1ff4487/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>16 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="RFM模型"><a href="#RFM模型" class="headerlink" title="RFM模型"></a>RFM模型</h1><h2 id="1-定义："><a href="#1-定义：" class="headerlink" title="1. 定义："></a>1. 定义：</h2><p>RFM，是应用最广泛的用户分层模型，从1961年开始沿用至今。</p>
+<p>该模型会通过三个维度的重要指标，对用户的价值做识别，并据此将用户分为8个组，进行精细化的管理。<br><img src="http://nocturne.bczcdn.com/img/1603786793971_95223/page45.png" style="max-width: 70%"><br><strong>R &#x3D; Recency(最近一次消费的时间间隔)</strong><br><strong>F &#x3D; Frequency(消费频率)</strong><br><strong>M &#x3D; Monetary(消费金额)</strong></p>
+<h2 id="2-构建过程"><a href="#2-构建过程" class="headerlink" title="2. 构建过程"></a>2. 构建过程</h2><p>STEP1. 从数据集中，分别获取描绘R、F、M的数据；<br>STEP2. 对R、F、M进行描述性分析，以便了解数据的分布趋势，从而可以更科学地对三个指标进行划分；<br>STEP3. 依次对R、F、M进行划分，并标记为1～5分；<br>STEP4. 对用户标记分层结果：根据R、F、M的分值，获取对应的评价，再根据评价定位到8大用户层级中。</p>
+<hr>
+<h1 id="获取能描绘R、F、M三个指标的数据"><a href="#获取能描绘R、F、M三个指标的数据" class="headerlink" title="获取能描绘R、F、M三个指标的数据"></a>获取能描绘R、F、M三个指标的数据</h1><img src="http://nocturne.bczcdn.com/img/1604562384661_8000/57%204.png">
+
+<blockquote>
+<p>根据这份数据集<br>R：2019&#x2F;04&#x2F;01 - “last_order_date”<br>F：”order_count”<br>M：”total_amount”</p>
+</blockquote>
+<h2 id="1-读取并处理数据集"><a href="#1-读取并处理数据集" class="headerlink" title="1. 读取并处理数据集"></a>1. 读取并处理数据集</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">print</span><span class="params">(df)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">         uid register_date first_order_date gender         city province country  order_count  total_amount last_order_date</span><br><span class="line">0      54993    2011<span class="string">-11</span><span class="string">-02</span>       2013<span class="string">-12</span><span class="string">-24</span>     男            .     北京      CN          210        580717      2019<span class="string">-03</span><span class="string">-31</span></span><br><span class="line">1      28065    2012<span class="string">-02</span><span class="string">-19</span>       2012<span class="string">-08</span><span class="string">-02</span>     男          NaN     北京      CN          140        293678      2019<span class="string">-03</span><span class="string">-25</span></span><br><span class="line">2      55106    2012<span class="string">-02</span><span class="string">-01</span>       2012<span class="string">-08</span><span class="string">-29</span>     男            .     北京      CN          135        283712      2019<span class="string">-03</span><span class="string">-21</span></span><br><span class="line">3      21189    2013<span class="string">-08</span><span class="string">-22</span>       2013<span class="string">-08</span><span class="string">-23</span>     男  Los Angeles       CA      US           23        281336      2018<span class="string">-12</span><span class="string">-26</span></span><br><span class="line">4      39546    2014<span class="string">-04</span><span class="string">-10</span>       2014<span class="string">-04</span><span class="string">-15</span>     男         贵阳     贵州      CN          152        309928      2019<span class="string">-03</span><span class="string">-27</span></span><br><span class="line">...      ...           ...              ...    ...          ...      ...     ...          ...           ...             ...</span><br><span class="line">51389   7445    2018<span class="string">-03</span><span class="string">-29</span>       2018<span class="string">-04</span><span class="string">-06</span>     男         广州     广东      CN            2           760      2018<span class="string">-04</span><span class="string">-10</span></span><br><span class="line">51390  11163    2010<span class="string">-05</span><span class="string">-08</span>       2010<span class="string">-08</span><span class="string">-26</span>     男          NaN      NaN      CN            2           368      2019<span class="string">-01</span><span class="string">-03</span></span><br><span class="line">51391  30765    2013<span class="string">-11</span><span class="string">-16</span>       2018<span class="string">-11</span><span class="string">-30</span>     男       TAIPEI      NaN      TW            2           368      2018<span class="string">-12</span><span class="string">-02</span></span><br><span class="line">51392  10380    2015<span class="string">-07</span><span class="string">-08</span>       2016<span class="string">-06</span><span class="string">-20</span>     男       贵阳市   贵州省      CN            2          1062      2019<span class="string">-02</span><span class="string">-22</span></span><br><span class="line">51393  22761    2016<span class="string">-04</span><span class="string">-13</span>       2016<span class="string">-04</span><span class="string">-13</span>     男         汕头   广东省      CN            2           760      2018<span class="string">-06</span><span class="string">-24</span></span><br><span class="line"></span><br><span class="line">[51394 rows x 10 columns]</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-计算时间间隔"><a href="#2-计算时间间隔" class="headerlink" title="2. 计算时间间隔"></a>2. 计算时间间隔</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_info/user_info.csv&quot;</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span> = pd<span class="selector-class">.to_datetime</span>(df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span>)</span><br><span class="line">from datetime import datetime</span><br><span class="line">endTime = <span class="built_in">datetime</span>(<span class="number">2019</span>,<span class="number">4</span>,<span class="number">1</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span> = endTime - df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span></span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span> = df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span><span class="selector-class">.dt</span><span class="selector-class">.days</span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(df[<span class="string">&quot;time_gap&quot;</span>])</span></span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="对R、M、F进行描述性分析"><a href="#对R、M、F进行描述性分析" class="headerlink" title="对R、M、F进行描述性分析"></a>对R、M、F进行描述性分析</h1><h2 id="1-对R进行描述性分析"><a href="#1-对R进行描述性分析" class="headerlink" title="1. 对R进行描述性分析"></a>1. 对R进行描述性分析</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_info/user_info.csv&quot;</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span> = pd<span class="selector-class">.to_datetime</span>(df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span>)</span><br><span class="line">from datetime import datetime</span><br><span class="line">endTime = <span class="built_in">datetime</span>(<span class="number">2019</span>,<span class="number">4</span>,<span class="number">1</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span> = endTime - df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span></span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span> = df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span><span class="selector-class">.dt</span><span class="selector-class">.days</span></span><br><span class="line">R = df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span><span class="selector-class">.groupby</span>(df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span>)<span class="selector-class">.count</span>()</span><br><span class="line">R_precent = R/<span class="number">51394</span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(R_percent)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">time_gap</span><br><span class="line"><span class="number">1</span>      <span class="number">0.018660</span></span><br><span class="line"><span class="number">2</span>      <span class="number">0.018154</span></span><br><span class="line"><span class="number">3</span>      <span class="number">0.015157</span></span><br><span class="line"><span class="number">4</span>      <span class="number">0.017979</span></span><br><span class="line"><span class="number">5</span>      <span class="number">0.014924</span></span><br><span class="line">         ...   </span><br><span class="line"><span class="number">361</span>    <span class="number">0.000642</span></span><br><span class="line"><span class="number">362</span>    <span class="number">0.000856</span></span><br><span class="line"><span class="number">363</span>    <span class="number">0.000837</span></span><br><span class="line"><span class="number">364</span>    <span class="number">0.000506</span></span><br><span class="line"><span class="number">365</span>    <span class="number">0.000798</span></span><br><span class="line">Name: time_gap, Length: <span class="number">365</span>, dtype: float64</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>直接看R_percent中，各个值对应的比例，其实很难直观地看出分布状态。可以借助可视化工具查看。</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_info/user_info.csv&quot;</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span> = pd<span class="selector-class">.to_datetime</span>(df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span>)</span><br><span class="line">from datetime import datetime</span><br><span class="line">endTime = <span class="built_in">datetime</span>(<span class="number">2019</span>,<span class="number">4</span>,<span class="number">1</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span> = endTime - df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span></span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span> = df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span><span class="selector-class">.dt</span><span class="selector-class">.days</span></span><br><span class="line">R = df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span><span class="selector-class">.groupby</span>(df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span>)<span class="selector-class">.count</span>()</span><br><span class="line">R_precent = R/<span class="number">51394</span></span><br><span class="line">import matplotlib<span class="selector-class">.pyplot</span> as plt</span><br><span class="line">plt<span class="selector-class">.rcParams</span><span class="selector-attr">[<span class="string">&quot;font.sans-serif&quot;</span>]</span> = <span class="string">&quot;Arial Unicode MS&quot;</span></span><br><span class="line">plt<span class="selector-class">.bar</span>(R_percent<span class="selector-class">.index</span>,R_percent.values)</span><br><span class="line">plt<span class="selector-class">.show</span>() </span><br></pre></td></tr></table></figure>
+<img src="http://nocturne.bczcdn.com/img/1649660486688_98376/figure_1%20(5).png">
+
+<h2 id="2-对F进行描述性分析"><a href="#2-对F进行描述性分析" class="headerlink" title="2. 对F进行描述性分析"></a>2. 对F进行描述性分析</h2><p>与R同理</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_info/user_info.csv&quot;</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span> = pd<span class="selector-class">.to_datetime</span>(df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span>)</span><br><span class="line">from datetime import datetime</span><br><span class="line">endTime = <span class="built_in">datetime</span>(<span class="number">2019</span>,<span class="number">4</span>,<span class="number">1</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span> = endTime - df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span></span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span> = df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span><span class="selector-class">.dt</span><span class="selector-class">.days</span></span><br><span class="line">F = df<span class="selector-attr">[<span class="string">&quot;order_count&quot;</span>]</span><span class="selector-class">.groupby</span>(df<span class="selector-attr">[<span class="string">&quot;order_count&quot;</span>]</span>)<span class="selector-class">.count</span>()</span><br><span class="line">F_precent = F/<span class="number">51394</span></span><br><span class="line">import matplotlib<span class="selector-class">.pyplot</span> as plt</span><br><span class="line">plt<span class="selector-class">.rcParams</span><span class="selector-attr">[<span class="string">&quot;font.sans-serif&quot;</span>]</span> = <span class="string">&quot;Arial Unicode MS&quot;</span></span><br><span class="line">plt<span class="selector-class">.bar</span>(F_percent<span class="selector-class">.index</span>,F_percent.values)</span><br><span class="line">plt<span class="selector-class">.show</span>() </span><br></pre></td></tr></table></figure>
+<img src="http://nocturne.bczcdn.com/img/1649661871988_23195/figure_1%20(6).png">
+
+<h2 id="3-对M进行描述性分析"><a href="#3-对M进行描述性分析" class="headerlink" title="3. 对M进行描述性分析"></a>3. 对M进行描述性分析</h2><p>与R和F同理，不再赘述<br><img src="http://nocturne.bczcdn.com/img/1649664908696_20352/figure_1%20(7).png"></p>
+<blockquote>
+<p>由于x轴的区间跨度太大了，导致单一的值展示在图上依然非常不起眼。<br>可以考虑换一种图像和方式来观察数据的趋势。<br>使用直方图进行分析</p>
+</blockquote>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plt.hist(df[<span class="string">&quot;total_amount&quot;</span>],<span class="attribute">bins</span>=100)</span><br></pre></td></tr></table></figure>
+<img src="http://nocturne.bczcdn.com/img/1649918145506_47144/figure_1%20(15).png">
+
+<hr>
+<h1 id="依次对R、F、M进行划分"><a href="#依次对R、F、M进行划分" class="headerlink" title="依次对R、F、M进行划分"></a>依次对R、F、M进行划分</h1><h2 id="1-数据分箱"><a href="#1-数据分箱" class="headerlink" title="1. 数据分箱"></a>1. 数据分箱</h2><p>数据分箱，就是将一串数字，根据分析的需要，归类成几个连续的区间（“箱子”），从而进行统计。<br>将51394个值，按照一定要求（比如这里我们要求尽可能等分），分为5个区间</p>
+<h2 id="2-分箱区间的特点"><a href="#2-分箱区间的特点" class="headerlink" title="2. 分箱区间的特点"></a>2. 分箱区间的特点</h2><ul>
+<li><strong>左开右闭</strong></li>
+<li><strong>连续性：</strong> 相邻两个区间的边界值是一个数值</li>
+<li><strong>相同的值一定会分在一个区间中</strong></li>
+</ul>
+<h2 id="3-分箱方式"><a href="#3-分箱方式" class="headerlink" title="3. 分箱方式"></a>3. 分箱方式</h2><ul>
+<li><strong>指定数值边界(cut())：</strong> 按照数值进行分割</li>
+<li><strong>指定频率边界(qcut())：</strong> 根据数据的数量进行分割</li>
+</ul>
+<h2 id="数值边界分箱-cut"><a href="#数值边界分箱-cut" class="headerlink" title="数值边界分箱(cut())"></a>数值边界分箱(cut())</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_info/user_info.csv&quot;</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span> = pd<span class="selector-class">.to_datetime</span>(df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span>)</span><br><span class="line">from datetime import datetime</span><br><span class="line">endTime = <span class="built_in">datetime</span>(<span class="number">2019</span>,<span class="number">4</span>,<span class="number">1</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span> = endTime - df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span></span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span> = df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span><span class="selector-class">.dt</span><span class="selector-class">.days</span></span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;R&quot;</span>]</span> = pd<span class="selector-class">.cut</span>(df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span>,<span class="selector-attr">[0,50,100,200,300,365]</span>)</span><br><span class="line">R_value = df<span class="selector-attr">[<span class="string">&quot;R&quot;</span>]</span><span class="selector-class">.value_counts</span>()</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(R_value)</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">(0,</span> <span class="number">50</span><span class="string">]</span>       <span class="number">21584</span></span><br><span class="line"><span class="string">(100,</span> <span class="number">200</span><span class="string">]</span>    <span class="number">11837</span></span><br><span class="line"><span class="string">(50,</span> <span class="number">100</span><span class="string">]</span>      <span class="number">8446</span></span><br><span class="line"><span class="string">(200,</span> <span class="number">300</span><span class="string">]</span>     <span class="number">6465</span></span><br><span class="line"><span class="string">(300,</span> <span class="number">365</span><span class="string">]</span>     <span class="number">3062</span></span><br><span class="line"><span class="attr">Name:</span> <span class="string">R,</span> <span class="attr">dtype:</span> <span class="string">int64</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如何设置边界才能保证将51394个值尽可能按人数等分为5个区间<br>这样”尽可能保证每个分组里数据的个数相同”的场景，其实是一个 <strong>“指定频率边界分箱”</strong> 的场景</p>
+</blockquote>
+<h2 id="频率边界分箱-qcut"><a href="#频率边界分箱-qcut" class="headerlink" title="频率边界分箱(qcut())"></a>频率边界分箱(qcut())</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"><span class="built_in">df</span> = pd.read_csv(<span class="string">&quot;/Users/user_info/user_info.csv&quot;</span>)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&quot;last_order_date&quot;</span>] = pd.to_datetime(<span class="built_in">df</span>[<span class="string">&quot;last_order_date&quot;</span>])</span><br><span class="line">from datetime import datetime</span><br><span class="line">endTime = datetime(2019,4,1)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&quot;time_gap&quot;</span>] = endTime - <span class="built_in">df</span>[<span class="string">&quot;last_order_date&quot;</span>]</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&quot;time_gap&quot;</span>] = <span class="built_in">df</span>[<span class="string">&quot;time_gap&quot;</span>].dt.days</span><br><span class="line"><span class="comment"># 使用qcut()函数，对&quot;time_gap&quot;进行数据分箱</span></span><br><span class="line"><span class="comment"># 均分为5组，将结果添加为df的&quot;R&quot;列</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">&quot;R&quot;</span>] = pd.qcut(<span class="built_in">df</span>[<span class="string">&quot;time_gap&quot;</span>],q=5)</span><br><span class="line">R_value = <span class="built_in">df</span>[<span class="string">&quot;R&quot;</span>].value_counts()</span><br><span class="line">R_percent = R_value/51394</span><br><span class="line"><span class="built_in">print</span>(R_value)</span><br><span class="line"><span class="built_in">print</span>(R_percent)</span><br></pre></td></tr></table></figure>
+
+<p><strong>output:</strong></p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">0</span>.<span class="number">999</span>, <span class="number">16</span>.<span class="number">0</span>]     <span class="number">10717</span></span><br><span class="line">(<span class="number">192</span>.<span class="number">0</span>, <span class="number">365</span>.<span class="number">0</span>]    <span class="number">10271</span></span><br><span class="line">(<span class="number">105</span>.<span class="number">0</span>, <span class="number">192</span>.<span class="number">0</span>]    <span class="number">10242</span></span><br><span class="line">(<span class="number">46</span>.<span class="number">0</span>, <span class="number">105</span>.<span class="number">0</span>]     <span class="number">10241</span></span><br><span class="line">(<span class="number">16</span>.<span class="number">0</span>, <span class="number">46</span>.<span class="number">0</span>]       <span class="number">9923</span></span><br><span class="line">Name: R, dtype: int64</span><br><span class="line">(<span class="number">0</span>.<span class="number">999</span>, <span class="number">16</span>.<span class="number">0</span>]     <span class="number">0.208526</span></span><br><span class="line">(<span class="number">192</span>.<span class="number">0</span>, <span class="number">365</span>.<span class="number">0</span>]    <span class="number">0.199848</span></span><br><span class="line">(<span class="number">105</span>.<span class="number">0</span>, <span class="number">192</span>.<span class="number">0</span>]    <span class="number">0.199284</span></span><br><span class="line">(<span class="number">46</span>.<span class="number">0</span>, <span class="number">105</span>.<span class="number">0</span>]     <span class="number">0.199265</span></span><br><span class="line">(<span class="number">16</span>.<span class="number">0</span>, <span class="number">46</span>.<span class="number">0</span>]      <span class="number">0.193077</span></span><br><span class="line">Name: R, dtype: float64</span><br></pre></td></tr></table></figure>
+
+<h3 id="标记划分结果"><a href="#标记划分结果" class="headerlink" title="标记划分结果"></a>标记划分结果</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">df = pd<span class="selector-class">.read_csv</span>(<span class="string">&quot;/Users/user_info/user_info.csv&quot;</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span> = pd<span class="selector-class">.to_datetime</span>(df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span>)</span><br><span class="line">from datetime import datetime</span><br><span class="line">endTime = <span class="built_in">datetime</span>(<span class="number">2019</span>,<span class="number">4</span>,<span class="number">1</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span> = endTime - df<span class="selector-attr">[<span class="string">&quot;last_order_date&quot;</span>]</span></span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span> = df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span><span class="selector-class">.dt</span><span class="selector-class">.days</span></span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;R&quot;</span>]</span> = pd<span class="selector-class">.qcut</span>(df<span class="selector-attr">[<span class="string">&quot;time_gap&quot;</span>]</span>,q=<span class="number">5</span>,labels=<span class="selector-attr">[5,4,3,2,1]</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;F&quot;</span>]</span> = pd<span class="selector-class">.qcut</span>(df<span class="selector-attr">[<span class="string">&quot;order_count&quot;</span>]</span>,q=<span class="number">5</span>,labels=<span class="selector-attr">[1,2,3,4,5]</span>)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;M&quot;</span>]</span> = pd<span class="selector-class">.qcut</span>(df<span class="selector-attr">[<span class="string">&quot;total_amount&quot;</span>]</span>,q=<span class="number">5</span>,labels=<span class="selector-attr">[1,2,3,4,5]</span>)</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(df[<span class="string">&quot;R&quot;</span>])</span></span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(df[<span class="string">&quot;F&quot;</span>])</span></span></span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(df[<span class="string">&quot;M&quot;</span>])</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>output:</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>        <span class="number">5</span></span><br><span class="line"><span class="number">1</span>        <span class="number">5</span></span><br><span class="line"><span class="number">2</span>        <span class="number">5</span></span><br><span class="line"><span class="number">3</span>        <span class="number">3</span></span><br><span class="line"><span class="number">4</span>        <span class="number">5</span></span><br><span class="line">        <span class="string">..</span></span><br><span class="line"><span class="number">51389</span>    <span class="number">1</span></span><br><span class="line"><span class="number">51390</span>    <span class="number">3</span></span><br><span class="line"><span class="number">51391</span>    <span class="number">2</span></span><br><span class="line"><span class="number">51392</span>    <span class="number">4</span></span><br><span class="line"><span class="number">51393</span>    <span class="number">1</span></span><br><span class="line"><span class="attr">Name:</span> <span class="string">R,</span> <span class="attr">Length:</span> <span class="number">51394</span><span class="string">,</span> <span class="attr">dtype:</span> <span class="string">category</span></span><br><span class="line"><span class="string">Categories</span> <span class="string">(5,</span> <span class="string">int64):</span> [<span class="number">5</span> <span class="string">&lt;</span> <span class="number">4</span> <span class="string">&lt;</span> <span class="number">3</span> <span class="string">&lt;</span> <span class="number">2</span> <span class="string">&lt;</span> <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"><span class="number">0</span>        <span class="number">5</span></span><br><span class="line"><span class="number">1</span>        <span class="number">5</span></span><br><span class="line"><span class="number">2</span>        <span class="number">5</span></span><br><span class="line"><span class="number">3</span>        <span class="number">5</span></span><br><span class="line"><span class="number">4</span>        <span class="number">5</span></span><br><span class="line">        <span class="string">..</span></span><br><span class="line"><span class="number">51389</span>    <span class="number">1</span></span><br><span class="line"><span class="number">51390</span>    <span class="number">1</span></span><br><span class="line"><span class="number">51391</span>    <span class="number">1</span></span><br><span class="line"><span class="number">51392</span>    <span class="number">1</span></span><br><span class="line"><span class="number">51393</span>    <span class="number">1</span></span><br><span class="line"><span class="attr">Name:</span> <span class="string">F,</span> <span class="attr">Length:</span> <span class="number">51394</span><span class="string">,</span> <span class="attr">dtype:</span> <span class="string">category</span></span><br><span class="line"><span class="string">Categories</span> <span class="string">(5,</span> <span class="string">int64):</span> [<span class="number">1</span> <span class="string">&lt;</span> <span class="number">2</span> <span class="string">&lt;</span> <span class="number">3</span> <span class="string">&lt;</span> <span class="number">4</span> <span class="string">&lt;</span> <span class="number">5</span>]</span><br><span class="line"></span><br><span class="line"><span class="number">0</span>        <span class="number">5</span></span><br><span class="line"><span class="number">1</span>        <span class="number">5</span></span><br><span class="line"><span class="number">2</span>        <span class="number">5</span></span><br><span class="line"><span class="number">3</span>        <span class="number">5</span></span><br><span class="line"><span class="number">4</span>        <span class="number">5</span></span><br><span class="line">        <span class="string">..</span></span><br><span class="line"><span class="number">51389</span>    <span class="number">1</span></span><br><span class="line"><span class="number">51390</span>    <span class="number">1</span></span><br><span class="line"><span class="number">51391</span>    <span class="number">1</span></span><br><span class="line"><span class="number">51392</span>    <span class="number">1</span></span><br><span class="line"><span class="number">51393</span>    <span class="number">1</span></span><br><span class="line"><span class="attr">Name:</span> <span class="string">M,</span> <span class="attr">Length:</span> <span class="number">51394</span><span class="string">,</span> <span class="attr">dtype:</span> <span class="string">category</span></span><br><span class="line"><span class="string">Categories</span> <span class="string">(5,</span> <span class="string">int64):</span> [<span class="number">1</span> <span class="string">&lt;</span> <span class="number">2</span> <span class="string">&lt;</span> <span class="number">3</span> <span class="string">&lt;</span> <span class="number">4</span> <span class="string">&lt;</span> <span class="number">5</span>]</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="对用户标记分层结果"><a href="#对用户标记分层结果" class="headerlink" title="对用户标记分层结果"></a>对用户标记分层结果</h1><h2 id="通过分值获取相应评价"><a href="#通过分值获取相应评价" class="headerlink" title="通过分值获取相应评价"></a>通过分值获取相应评价</h2><p>先通过分值，获取到对应的评价；</p>
+<p>再根据评价，划分到对应的层级。<br><img src="http://nocturne.bczcdn.com/img/1649661192030_9272/10-15%20(1).png" style="max-width: 60%"></p>
+<blockquote>
+<p>我们可以把&gt;3转化为1，≤3转化为0<br>相当于：<br>1代表活跃&#x2F;忠诚&#x2F;重要<br>0代表非活跃&#x2F;非忠诚&#x2F;一般<br>此时可以使用<strong>apply</strong>应用</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先定义函数，意义为x&gt;3时转化为1，x≤3时转化为0</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">rfmTrans</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">3</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span> </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>函数定义完成后，依次对R、F、M执行apply应用</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">df<span class="selector-attr">[<span class="string">&quot;R&quot;</span>]</span> = df<span class="selector-attr">[<span class="string">&quot;R&quot;</span>]</span><span class="selector-class">.apply</span>(rfmTrans)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;F&quot;</span>]</span> = df<span class="selector-attr">[<span class="string">&quot;F&quot;</span>]</span><span class="selector-class">.apply</span>(rfmTrans)</span><br><span class="line">df<span class="selector-attr">[<span class="string">&quot;M&quot;</span>]</span> = df<span class="selector-attr">[<span class="string">&quot;M&quot;</span>]</span><span class="selector-class">.apply</span>(rfmTrans)</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(df[[<span class="string">&quot;R&quot;</span>,<span class="string">&quot;F&quot;</span>,<span class="string">&quot;M&quot;</span>]])</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">       R  F  M</span><br><span class="line">0     <span class="number"> 1 </span><span class="number"> 1 </span> 1</span><br><span class="line">1     <span class="number"> 1 </span><span class="number"> 1 </span> 1</span><br><span class="line">2     <span class="number"> 1 </span><span class="number"> 1 </span> 1</span><br><span class="line">3     <span class="number"> 0 </span><span class="number"> 1 </span> 1</span><br><span class="line">4     <span class="number"> 1 </span><span class="number"> 1 </span> 1</span><br><span class="line">...   .. .. ..</span><br><span class="line">51389 <span class="number"> 0 </span><span class="number"> 0 </span> 0</span><br><span class="line">51390 <span class="number"> 0 </span><span class="number"> 0 </span> 0</span><br><span class="line">51391 <span class="number"> 0 </span><span class="number"> 0 </span> 0</span><br><span class="line">51392 <span class="number"> 1 </span><span class="number"> 0 </span> 0</span><br><span class="line">51393 <span class="number"> 0 </span><span class="number"> 0 </span> 0</span><br><span class="line"></span><br><span class="line">[51394 rows x<span class="number"> 3 </span>columns]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到，输出结果第三行0&#x2F;1&#x2F;1代表非活跃&#x2F;忠诚&#x2F;重要</p>
+</blockquote>
+<h2 id="根据评价划分对应层级"><a href="#根据评价划分对应层级" class="headerlink" title="根据评价划分对应层级"></a>根据评价划分对应层级</h2><h3 id="获取数值标签"><a href="#获取数值标签" class="headerlink" title="获取数值标签"></a>获取数值标签</h3><p>和简化评价的思想类似，我们可以把每个用户的3个分值进行组合，生成一个数值标签，也就是”111”，”101”这样的形式，刚好对应8个用户分层类型，如图所示<br><img src="http://nocturne.bczcdn.com/img/1605171264393_47052/101.png" style="max-width: 60%"></p>
+<blockquote>
+<p>要生成数值标签，可以把R、F、M这三列，先用 <strong>astype( )</strong> 函数转化为字符串格式。<br>然后再通过符号”+”，把字符串拼接在一起，组成一个新的列”mark”即可。</p>
+</blockquote>
+<h3 id="astypy-格式转化"><a href="#astypy-格式转化" class="headerlink" title="astypy( )格式转化"></a>astypy( )格式转化</h3><img src="http://nocturne.bczcdn.com/img/1665394499142_86506/8-46.jpg" style="max-width: 60%">
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df<span class="selector-attr">[<span class="string">&quot;mark&quot;</span>]</span> = df<span class="selector-attr">[<span class="string">&quot;R&quot;</span>]</span><span class="selector-class">.astype</span>(str) + df<span class="selector-attr">[<span class="string">&quot;F&quot;</span>]</span><span class="selector-class">.astype</span>(str) + df<span class="selector-attr">[<span class="string">&quot;M&quot;</span>]</span><span class="selector-class">.astype</span>(str)</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(df[<span class="string">&quot;mark&quot;</span>])</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>output:</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>        <span class="number">111</span></span><br><span class="line"><span class="number">1</span>        <span class="number">111</span></span><br><span class="line"><span class="number">2</span>        <span class="number">111</span></span><br><span class="line"><span class="number">3</span>        <span class="number">011</span></span><br><span class="line"><span class="number">4</span>        <span class="number">111</span></span><br><span class="line">        <span class="string">...</span> </span><br><span class="line"><span class="number">51389</span>    <span class="number">000</span></span><br><span class="line"><span class="number">51390</span>    <span class="number">000</span></span><br><span class="line"><span class="number">51391</span>    <span class="number">000</span></span><br><span class="line"><span class="number">51392</span>    <span class="number">100</span></span><br><span class="line"><span class="number">51393</span>    <span class="number">000</span></span><br><span class="line"><span class="attr">Name:</span> <span class="string">mark,</span> <span class="attr">Length:</span> <span class="number">51394</span><span class="string">,</span> <span class="attr">dtype:</span> <span class="string">object</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>接下来再次使用apply，将”111”, “110”这样的值，转化为对应的用户分层。</p>
+</blockquote>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">def rfmType(x):</span><br><span class="line">    <span class="keyword">if</span> x = <span class="string">&quot;111&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span>(<span class="string">&quot;高价值用户&quot;</span>)       </span><br><span class="line">     <span class="keyword">if</span> x = <span class="string">&quot;101&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span>(<span class="string">&quot;重点发展用户&quot;</span>)            </span><br><span class="line">    <span class="keyword">if</span> x = <span class="string">&quot;011&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span>(<span class="string">&quot;重点唤回户&quot;</span>)     </span><br><span class="line">    <span class="keyword">if</span> x = <span class="string">&quot;001&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span>(<span class="string">&quot;重点潜力用户&quot;</span>)     </span><br><span class="line">    <span class="keyword">if</span> x = <span class="string">&quot;110&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span>(<span class="string">&quot;一般潜力用户&quot;</span>)     </span><br><span class="line">    <span class="keyword">if</span> x = <span class="string">&quot;100&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span>(<span class="string">&quot;一般发展用户&quot;</span>)     </span><br><span class="line">    <span class="keyword">if</span> x = <span class="string">&quot;010&quot;</span>:</span><br><span class="line">        <span class="keyword">return</span>(<span class="string">&quot;一般维系用户&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span>(<span class="string">&quot;低价值用户&quot;</span>)                     </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>函数定义完成后，我们就可以对df[“mark”]使用apply应用划分对应层级</p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df<span class="selector-attr">[<span class="string">&quot;customer_type&quot;</span>]</span> = df<span class="selector-attr">[<span class="string">&quot;mark&quot;</span>]</span><span class="selector-class">.apply</span>(rfmType)</span><br><span class="line"><span class="function"><span class="title">print</span><span class="params">(df[<span class="string">&quot;customer_type&quot;</span>])</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong>output:</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>          <span class="string">高价值用户</span></span><br><span class="line"><span class="number">1</span>          <span class="string">高价值用户</span></span><br><span class="line"><span class="number">2</span>          <span class="string">高价值用户</span></span><br><span class="line"><span class="number">3</span>        <span class="string">重点唤回用户</span></span><br><span class="line"><span class="number">4</span>          <span class="string">高价值用户</span></span><br><span class="line">             <span class="string">...</span>     </span><br><span class="line"><span class="number">51389</span>      <span class="string">低价值用户</span></span><br><span class="line"><span class="number">51390</span>      <span class="string">低价值用户</span></span><br><span class="line"><span class="number">51391</span>      <span class="string">低价值用户</span></span><br><span class="line"><span class="number">51392</span>    <span class="string">一般发展用户</span></span><br><span class="line"><span class="number">51393</span>      <span class="string">低价值用户</span></span><br><span class="line"><span class="attr">Name:</span> <span class="string">customer_type,</span> <span class="attr">Length:</span> <span class="number">51394</span><span class="string">,</span> <span class="attr">dtype:</span> <span class="string">object</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="可视化结果"><a href="#可视化结果" class="headerlink" title="可视化结果"></a>可视化结果</h1><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 使用groupby()函数对df[<span class="string">&quot;customer_type&quot;</span>]按照df[<span class="string">&quot;customer_type&quot;</span>]分组，然后使用count()进行聚合，赋值给df_type</span><br><span class="line">df_type = df[<span class="string">&quot;customer_type&quot;</span>].groupby(<span class="string">&quot;customer_type&quot;</span>).count()</span><br><span class="line"># 计算每个类型用户占总用户数的比例</span><br><span class="line">df_perc = df_type/<span class="number">51394</span></span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"># 通过给 plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] 赋值,将字体设置为 Arial Unicode MS</span><br><span class="line">plt.rcParams[<span class="string">&quot;font.san-serif&quot;</span>] = <span class="string">&quot;Arial Unicode MS&quot;</span></span><br><span class="line">plt.bar(df_type.index,df_type.<span class="built_in">values</span>,<span class="built_in">color</span>=<span class="string">&quot;skyblue&quot;</span>)</span><br><span class="line">plt.<span class="built_in">xlabel</span>(<span class="string">&quot;用户分层类别&quot;</span>)</span><br><span class="line">plt.<span class="built_in">ylabel</span>(<span class="string">&quot;各层级用户总数&quot;</span>)</span><br><span class="line">plt.twinx()</span><br><span class="line">plt.plot(df_perc.index,df_perc.<span class="built_in">values</span>,marker=<span class="string">&quot;o&quot;</span>,<span class="built_in">color</span>=<span class="string">&quot;lightcoral&quot;</span>)</span><br><span class="line">plt.<span class="built_in">xlabel</span>(<span class="string">&quot;用户分层类别&quot;</span>)</span><br><span class="line">plt.<span class="built_in">ylabel</span>(<span class="string">&quot;各层级用户总数占比&quot;</span>)</span><br><span class="line">plt.<span class="built_in">show</span>()</span><br></pre></td></tr></table></figure>
+<img src="https://nocturne.bczcdn.com/5bd8a894-5468-11ee-ae70-0242ac110012/figure_1.png">
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/24cc6ca3/" rel="bookmark">基于物品的协同过滤</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/16d6d1f6/" rel="bookmark">关联分析和Apriori算法</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/70e3efaf/" rel="bookmark">关联分析</a></div>
+    </li>
+  </ul>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>小刑
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://xxsqlll.github.io/posts/a1ff4487/" title="用户分层模型">https://xxsqlll.github.io/posts/a1ff4487/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag"># 学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/24cc6ca3/" rel="prev" title="基于物品的协同过滤">
+      <i class="fa fa-chevron-left"></i> 基于物品的协同过滤
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  
+    <div>
+      <div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 </span>
+      <i class="fa fa-paw"></i>
+      <span> 感谢阅读 --------</span>
+    </div>
+  
+</div>
+
+    </div>
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RFM%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">RFM模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AE%9A%E4%B9%89%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">1. 定义：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">2. 构建过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%83%BD%E6%8F%8F%E7%BB%98R%E3%80%81F%E3%80%81M%E4%B8%89%E4%B8%AA%E6%8C%87%E6%A0%87%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">2.</span> <span class="nav-text">获取能描绘R、F、M三个指标的数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%AF%BB%E5%8F%96%E5%B9%B6%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">2.1.</span> <span class="nav-text">1. 读取并处理数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%AE%A1%E7%AE%97%E6%97%B6%E9%97%B4%E9%97%B4%E9%9A%94"><span class="nav-number">2.2.</span> <span class="nav-text">2. 计算时间间隔</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9R%E3%80%81M%E3%80%81F%E8%BF%9B%E8%A1%8C%E6%8F%8F%E8%BF%B0%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">对R、M、F进行描述性分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AF%B9R%E8%BF%9B%E8%A1%8C%E6%8F%8F%E8%BF%B0%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-number">3.1.</span> <span class="nav-text">1. 对R进行描述性分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AF%B9F%E8%BF%9B%E8%A1%8C%E6%8F%8F%E8%BF%B0%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-number">3.2.</span> <span class="nav-text">2. 对F进行描述性分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AF%B9M%E8%BF%9B%E8%A1%8C%E6%8F%8F%E8%BF%B0%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-number">3.3.</span> <span class="nav-text">3. 对M进行描述性分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%9D%E6%AC%A1%E5%AF%B9R%E3%80%81F%E3%80%81M%E8%BF%9B%E8%A1%8C%E5%88%92%E5%88%86"><span class="nav-number">4.</span> <span class="nav-text">依次对R、F、M进行划分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E5%88%86%E7%AE%B1"><span class="nav-number">4.1.</span> <span class="nav-text">1. 数据分箱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%88%86%E7%AE%B1%E5%8C%BA%E9%97%B4%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">4.2.</span> <span class="nav-text">2. 分箱区间的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%88%86%E7%AE%B1%E6%96%B9%E5%BC%8F"><span class="nav-number">4.3.</span> <span class="nav-text">3. 分箱方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E8%BE%B9%E7%95%8C%E5%88%86%E7%AE%B1-cut"><span class="nav-number">4.4.</span> <span class="nav-text">数值边界分箱(cut())</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%91%E7%8E%87%E8%BE%B9%E7%95%8C%E5%88%86%E7%AE%B1-qcut"><span class="nav-number">4.5.</span> <span class="nav-text">频率边界分箱(qcut())</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0%E5%88%92%E5%88%86%E7%BB%93%E6%9E%9C"><span class="nav-number">4.5.1.</span> <span class="nav-text">标记划分结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E7%94%A8%E6%88%B7%E6%A0%87%E8%AE%B0%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%9C"><span class="nav-number">5.</span> <span class="nav-text">对用户标记分层结果</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%88%86%E5%80%BC%E8%8E%B7%E5%8F%96%E7%9B%B8%E5%BA%94%E8%AF%84%E4%BB%B7"><span class="nav-number">5.1.</span> <span class="nav-text">通过分值获取相应评价</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E8%AF%84%E4%BB%B7%E5%88%92%E5%88%86%E5%AF%B9%E5%BA%94%E5%B1%82%E7%BA%A7"><span class="nav-number">5.2.</span> <span class="nav-text">根据评价划分对应层级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%95%B0%E5%80%BC%E6%A0%87%E7%AD%BE"><span class="nav-number">5.2.1.</span> <span class="nav-text">获取数值标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#astypy-%E6%A0%BC%E5%BC%8F%E8%BD%AC%E5%8C%96"><span class="nav-number">5.2.2.</span> <span class="nav-text">astypy( )格式转化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96%E7%BB%93%E6%9E%9C"><span class="nav-number">6.</span> <span class="nav-text">可视化结果</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小刑"
+      src="/images/avatar.JPG">
+  <p class="site-author-name" itemprop="name">小刑</p>
+  <div class="site-description" itemprop="description">这个人很懒，什么也不想写</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxsqlll" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;xxsqlll" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xxsqlll@gmail.com" title="E-Mail → mailto:xxsqlll@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/a1ff4487/" title="posts&#x2F;a1ff4487&#x2F;">用户分层模型</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/24cc6ca3/" title="posts&#x2F;24cc6ca3&#x2F;">基于物品的协同过滤</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/16d6d1f6/" title="posts&#x2F;16d6d1f6&#x2F;">关联分析和Apriori算法</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/70e3efaf/" title="posts&#x2F;70e3efaf&#x2F;">关联分析</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/posts/f16c50c8/" title="posts&#x2F;f16c50c8&#x2F;">智能推荐算法</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1831469103&auto=0&height=66">
+      </iframe>
+  </div>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小刑</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">147k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:27</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>--><div>
+  <span id="sitetime"></span>
+  <script language=javascript>
+      function siteTime(){
+          window.setTimeout("siteTime()", 1000);
+          var seconds = 1000;
+          var minutes = seconds * 60;
+          var hours = minutes * 60;
+          var days = hours * 24;
+          var years = days * 365;
+          var today = new Date();
+          var todayYear = today.getFullYear();
+          var todayMonth = today.getMonth()+1;
+          var todayDate = today.getDate();
+          var todayHour = today.getHours();
+          var todayMinute = today.getMinutes();
+          var todaySecond = today.getSeconds();
+          /* 
+          Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+          year - 作为date对象的年份，为4位年份值
+          month - 0-11之间的整数，做为date对象的月份
+          day - 1-31之间的整数，做为date对象的天数
+          hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+          minutes - 0-59之间的整数，做为date对象的分钟数
+          seconds - 0-59之间的整数，做为date对象的秒数
+          microseconds - 0-999之间的整数，做为date对象的毫秒数
+      */
+          var t1 = Date.UTC(2023,7,18,11,40,00); //北京时间2018-2-13 00:00:00
+          var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+          var diff = t2-t1;
+      var diffYears = Math.floor(diff/years);
+      var diffDays = Math.floor((diff/days)-diffYears*365);
+      var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+      var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+      var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+      document.getElementById("sitetime").innerHTML=" 小破站已平稳运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+    }
+      siteTime();
+  </script>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+  <span class="site-uv" title="总访客量">
+    我的第<span id="busuanzi_value_site_uv"></span>位朋友, 
+  </span>
+
+  <span class="site-pv" title="总访问量">
+    经过<span id="busuanzi_value_site_pv"></span>次回眸与你相遇
+  </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : true,
+      appId      : '0VHq4jqwE0zTWM6rJFbms2tJ-gzGzoHsz',
+      appKey     : '1QAGv9wIN4teXzpcIV8p6NyJ',
+      placeholder: "欢迎交流",
+      avatar     : 'monsterid',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+    </div>
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+
+  <canvas id="evanyou"></canvas>
+  <style>
+    #evanyou {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+  <script src="/js/evan-you.js"></script>
+
+
+
+  
+  
+     <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+     <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+     <script type="text/javascript" src="/js/src/fireworks.js"></script>
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
+
