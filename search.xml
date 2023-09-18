@@ -1,6 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>多重线性回归</title>
+    <url>/posts/23702362/</url>
+    <content><![CDATA[<h1 id="多重线性回归"><a href="#多重线性回归" class="headerlink" title="多重线性回归"></a>多重线性回归</h1><h2 id="1-应用场景"><a href="#1-应用场景" class="headerlink" title="1. 应用场景"></a>1. 应用场景</h2><p>在日常生活中，通常是多个因素导致了结果。像这种，多个自变量共同影响一个因变量的情况，我们会应用多重线性回归。</p>
+<h2 id="2-STEP-1-绘制散点图，确定相关系数"><a href="#2-STEP-1-绘制散点图，确定相关系数" class="headerlink" title="2. STEP 1 绘制散点图，确定相关系数"></a>2. STEP 1 绘制散点图，确定相关系数</h2><blockquote>
+<p>matplotlib中的<code>scatter()</code>函数，可以实现绘制单个散点图，但绘制多个太过麻烦。</p>
+<p>而Python中的另一个模块<code>seaborn</code>，可以非常简便的绘制多组图像，在回归模型中应用很多。</p>
+</blockquote>
+<h3 id="多变量散点图"><a href="#多变量散点图" class="headerlink" title="多变量散点图"></a>多变量散点图</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装seaborn模块</span></span><br><span class="line">pip install seaborn</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 导入seaborn模块，简称为sns</span></span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="comment"># 通过调用seaborn模块里的pairplot()函数，可以画出数据两两之间的特征图像。</span></span><br><span class="line">sns.pairplot(df)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<img src="https://nocturne.bczcdn.com/9a7cf248-55d6-11ee-98d2-0242ac11002f/figure_1.png" style="zoom: 40%;" />
+
+<blockquote>
+<p>这张5*5的多变量散点图，描绘的就是数据集中的5个字段两两之间的关系</p>
+</blockquote>
+<h3 id="相关系数热力图"><a href="#相关系数热力图" class="headerlink" title="相关系数热力图"></a>相关系数热力图</h3><p>通过<code>corr()</code>函数得到相关系数矩阵后。</p>
+<p>使用seaborn模块中<code>heatmap()</code>函数对相关系数矩阵进行可视化，绘制相关系数热力图。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">corr = df.corr()</span><br><span class="line"><span class="comment"># 使用sns的heatmap函数，绘制相关系数热力图</span></span><br><span class="line"><span class="comment"># 参数一：用于指定绘图的数据</span></span><br><span class="line"><span class="comment"># 参数二：用于设置颜色，&quot;RdBn&quot;表示红蓝色</span></span><br><span class="line"><span class="comment"># 参数三：表示是否是热力图的每个单元格为正方形，默认为False</span></span><br><span class="line"><span class="comment"># 参数四：表示是否在每个单元格上显示数据</span></span><br><span class="line">sns.heatmap(corr,cmap=<span class="string">&quot;RdBu&quot;</span>,square=<span class="literal">True</span>,annot=<span class="literal">True</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<img src="https://nocturne.bczcdn.com/437a9d54-55d8-11ee-abc7-0242ac110012/figure_1.png" style="zoom:70%;" />
+
+<blockquote>
+<p>最右边的图例，表示不同数值所对应的颜色。</p>
+<p>图表中，相应的计算结果，都会展示所对应的颜色。</p>
+<p>蓝色，表示两个值是正相关；</p>
+<p>红色，表示两个值是负相关。</p>
+<p>颜色的深浅表示相关程度，颜色<strong>越深越相关</strong>，颜色越浅越不相关。</p>
+</blockquote>
+<hr>
+<h2 id="STEP-2-确定自变量和因变量"><a href="#STEP-2-确定自变量和因变量" class="headerlink" title="STEP 2 确定自变量和因变量"></a>STEP 2 确定自变量和因变量</h2><p>可以从上述热力图看出，”new_user”与”exposure”，”hot”，”search”三个变量呈正相关，所以可以确定自变量</p>
+<hr>
+<h2 id="STEP-3-建立回归模型"><a href="#STEP-3-建立回归模型" class="headerlink" title="STEP 3 建立回归模型"></a>STEP 3 建立回归模型</h2><p>一元线性回归和多重线性回归，在建模上的不同只是自变量从一个维度变成了多个维度，其他几乎一样。</p>
+<p>类比一元线性回归。</p>
+<p>这里有3个自变量，故多重线性回归模型可以表示为：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">Y</span> = a + bX1 + cX2 + dX3</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>X1,X2,X3</code>为不同的自变量，<code>b,c,d</code>是对应的系数，a是截距。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>,<span class="string">&quot;hot&quot;</span>,<span class="string">&quot;search&quot;</span>]]</span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="built_in">print</span>(x)</span><br><span class="line"><span class="built_in">print</span>(y)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>output:</strong></p>
+<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">     exposure   hot  search</span><br><span class="line">0     <span class="number"> 150538 </span><span class="number"> 8370 </span>  16358</span><br><span class="line">1     <span class="number"> 198625 </span><span class="number"> 8561 </span>  21785</span><br><span class="line">2     <span class="number"> 189144 </span><span class="number"> 8464 </span>  18835</span><br><span class="line">3     <span class="number"> 157297 </span><span class="number"> 8352 </span>  15922</span><br><span class="line">4     <span class="number"> 143070 </span><span class="number"> 8370 </span>  16358</span><br><span class="line">..        ...   ...     ...</span><br><span class="line">116   <span class="number"> 117659 </span><span class="number"> 8483 </span>  19380</span><br><span class="line">117   <span class="number"> 119056 </span><span class="number"> 8363 </span>  16187</span><br><span class="line">118    <span class="number"> 94557 </span><span class="number"> 8419 </span>  17606</span><br><span class="line">119    <span class="number"> 99117 </span><span class="number"> 8349 </span>  15851</span><br><span class="line">120   <span class="number"> 108501 </span><span class="number"> 8350 </span>  15875</span><br><span class="line"></span><br><span class="line">[121 rows x<span class="number"> 3 </span>columns]</span><br><span class="line">     new_user</span><br><span class="line">0        2407</span><br><span class="line">1        2938</span><br><span class="line">2        2733</span><br><span class="line">3        2417</span><br><span class="line">4        2370</span><br><span class="line">..        ...</span><br><span class="line">116      2309</span><br><span class="line">117      2151</span><br><span class="line">118      2107</span><br><span class="line">119      2038</span><br><span class="line">120      2084</span><br><span class="line"></span><br><span class="line">[121 rows x<span class="number"> 1 </span>columns]</span><br></pre></td></tr></table></figure>
+
+<h3 id="模型的初始化和训练"><a href="#模型的初始化和训练" class="headerlink" title="模型的初始化和训练"></a>模型的初始化和训练</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>,<span class="string">&quot;hot&quot;</span>,<span class="string">&quot;search&quot;</span>]]</span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line">lr_model = LinearRegression()</span><br><span class="line">b = lr_model.coef_[<span class="number">0</span>][<span class="number">0</span>].<span class="built_in">round</span>(<span class="number">4</span>)</span><br><span class="line">c = lr_model.coef_[<span class="number">0</span>][<span class="number">1</span>].<span class="built_in">round</span>(<span class="number">4</span>)</span><br><span class="line">d = lr_model.coef_[<span class="number">0</span>][<span class="number">2</span>].<span class="built_in">round</span>(<span class="number">4</span>)</span><br><span class="line">a = lr_model.intercept_[<span class="number">0</span>].<span class="built_in">round</span>(<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;该线性回归模型：Y=a+<span class="subst">&#123;b&#125;</span>X1+<span class="subst">&#123;c&#125;</span>X2+<span class="subst">&#123;d&#125;</span>X3&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>output:</strong></p>
+<figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line">该线性回归模型为：Y=<span class="string">-7004</span>.53<span class="string">+0</span>.0049X1<span class="string">+1</span>.0058X2<span class="string">+0</span>.0132X3</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="STEP-4-检验回归模型"><a href="#STEP-4-检验回归模型" class="headerlink" title="STEP 4 检验回归模型"></a>STEP 4 检验回归模型</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以二维结构读取&quot;exposure&quot;,&quot;hot&quot;,&quot;search&quot;这三列，作为自变量x</span></span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>, <span class="string">&quot;hot&quot;</span>, <span class="string">&quot;search&quot;</span>]]</span><br><span class="line"><span class="comment"># 以二维结构读取&quot;new_user&quot;，作为因变量y</span></span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入sklearn.linear_model模块中的LinearRegression函数</span></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用LinearRegression()初始化模型，赋值给lr_model</span></span><br><span class="line">lr_model = LinearRegression()</span><br><span class="line"><span class="comment"># 使用lr_model模型的fit()函数，训练模型</span></span><br><span class="line">lr_model.fit(x,y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将x,y传入score( )函数，对模型打分,获取判定系数r2</span></span><br><span class="line">r2 = lr_model.score(x,y)</span><br><span class="line"><span class="built_in">print</span>(r2)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>output:</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">0.9437117881084567</span></span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>判定系数为<code>0.94</code>，非常接近1，模型精度足够高，我们可以用它进行简单的预测。</p>
+</blockquote>
+<hr>
+<h2 id="STEP-5-利用模型预测"><a href="#STEP-5-利用模型预测" class="headerlink" title="STEP 5 利用模型预测"></a>STEP 5 利用模型预测</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以二维结构读取&quot;exposure&quot;,&quot;hot&quot;,&quot;search&quot;这三列，作为自变量x</span></span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>, <span class="string">&quot;hot&quot;</span>, <span class="string">&quot;search&quot;</span>]]</span><br><span class="line"><span class="comment"># 以二维结构读取&quot;new_user&quot;，作为因变量y</span></span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入sklearn.linear_model模块中的LinearRegression函数</span></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用LinearRegression()初始化模型，赋值给lr_model</span></span><br><span class="line">lr_model = LinearRegression()</span><br><span class="line"><span class="comment"># 使用lr_model模型的fit()函数，训练模型</span></span><br><span class="line">lr_model.fit(x,y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 曝光量，搜索热度，关键词搜索量依次为300000,10000,30000</span></span><br><span class="line"><span class="comment"># 将300000,10000,30000以二维结构传入传入predict()函数进行预测，并赋值给 y_predict</span></span><br><span class="line">y_predict = lr_model.predict([[<span class="number">300000</span>,<span class="number">10000</span>,<span class="number">30000</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出预测结果y_predict</span></span><br><span class="line"><span class="built_in">print</span>(y_predict)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>output:</strong></p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="string">[[4907.73763213]]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="多重共线性的判断"><a href="#多重共线性的判断" class="headerlink" title="多重共线性的判断"></a>多重共线性的判断</h1><p>简单来说，不同自变量之间存在高度的线性相关关系，就会导致多重共线性问题。</p>
+<p>关于多重共线性有两种判别方法： <strong>相关系数判断</strong> 、 <strong>方差膨胀系数法</strong> 。</p>
+<h2 id="1-相关系数判断"><a href="#1-相关系数判断" class="headerlink" title="1. 相关系数判断"></a>1. 相关系数判断</h2><p>对 exposure、hot、search这几个变量之间进行corr查看相关系数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>,<span class="string">&quot;hot&quot;</span>,<span class="string">&quot;search&quot;</span>]]</span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="built_in">print</span>(x.corr()) </span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>ouput:</strong></p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line">         <span class="attribute">exposure</span>       hot    search</span><br><span class="line"><span class="attribute">exposure</span>  <span class="number">1</span>.<span class="number">000000</span>  <span class="number">0</span>.<span class="number">516877</span>  <span class="number">0</span>.<span class="number">507091</span></span><br><span class="line"><span class="attribute">hot</span>       <span class="number">0</span>.<span class="number">516877</span>  <span class="number">1</span>.<span class="number">000000</span>  <span class="number">0</span>.<span class="number">993623</span></span><br><span class="line"><span class="attribute">search</span>    <span class="number">0</span>.<span class="number">507091</span>  <span class="number">0</span>.<span class="number">993623</span>  <span class="number">1</span>.<span class="number">000000</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可以看到，search和hot之间有严重的多重共线性。</p>
+<p>不过相关系数只是多重线性的充分条件不是必要条件。</p>
+<p>但是相关系数太小时，也可能存在较为严重的多重共线性。比如exposure和hot以及exposure和search。</p>
+<p>此时可以使用方差膨胀系数来进一步确定多重共线性的关系。</p>
+</blockquote>
+<h2 id="2-方差膨胀系数"><a href="#2-方差膨胀系数" class="headerlink" title="2. 方差膨胀系数"></a>2. 方差膨胀系数</h2><p>方差膨胀系数法，简称VIF检验<br><strong>VIF检验</strong>是﻿用于衡量多重线性回归模型中，多重共线性严重程度的一种度量</p>
+<p>Python中的<code>Statsmodels</code>库提供了计算VIF值的函数，我们可以直接导入使用。</p>
+<h3 id="2-1-导入variance-inflation-factor函数"><a href="#2-1-导入variance-inflation-factor函数" class="headerlink" title="2.1 导入variance_inflation_factor函数"></a>2.1 导入variance_inflation_factor函数</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>,<span class="string">&quot;hot&quot;</span>,<span class="string">&quot;search&quot;</span>]]</span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="keyword">from</span> statsmodels.stats.outliers_influence <span class="keyword">import</span> variance_inflation_factor</span><br><span class="line"><span class="comment"># 通过variance_inflation_factor()函数，结合for循环依次求得自变量间的方差膨胀系数，并将结果放入列表中，赋值给变量vif。</span></span><br><span class="line"><span class="comment"># x.values作为自变量传入</span></span><br><span class="line"><span class="comment"># x.columns.get_loc(i)表示返回i所在列的索引。如，第1列，返回数字0；第2列，返回数字1，以此类推。</span></span><br><span class="line"><span class="comment"># 这里的i所在列，即自变量&quot;exposure&quot;, &quot;hot&quot;, &quot;search&quot;所在的列，依次返回0,1,2。</span></span><br><span class="line"><span class="comment"># 中括号表示将求得的方差膨胀系数的结果放入列表</span></span><br><span class="line">vif = [variance_inflation_factor(x.values,x.columns.get_loc(i)) <span class="keyword">for</span> i <span class="keyword">in</span> x.columns]</span><br><span class="line"><span class="built_in">print</span>(vif)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>output:</strong></p>
+<figure class="highlight accesslog"><table><tr><td class="code"><pre><span class="line"><span class="string">[32.31907643878631, 136.9115541589221, 176.7628569694301]</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>VIF值的大小表示一个自变量与其余自变量之间，共线的严重程度</p>
+</blockquote>
+<img src="http://nocturne.bczcdn.com/img/1644974366086_98003/%E5%85%B1%E7%BA%BF%E6%80%A7.png" style="zoom:25%;" />
+
+<blockquote>
+<p>也就是说，自变量<code>hot, search</code>的VIF值均大于100，说明多重共线性十分严重，需要进行处理。</p>
+<p>如果还是利用全部数据集，来处理多重共线性，模型很容易出现：过拟合（模型对数据集的拟合程度过高，但是对数据集外的数据达不到较好的效果）。我们可以先通过把数据集划分的方式，来处理过拟合的问题</p>
+</blockquote>
+<hr>
+<h1 id="划分训练集和测试集"><a href="#划分训练集和测试集" class="headerlink" title="划分训练集和测试集"></a>划分训练集和测试集</h1><h2 id="1-导入train-test-split-函数"><a href="#1-导入train-test-split-函数" class="headerlink" title="1. 导入train_test_split()函数"></a>1. 导入train_test_split()函数</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>, <span class="string">&quot;hot&quot;</span>, <span class="string">&quot;search&quot;</span>]]</span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"><span class="comment"># 导入train_test_split()函数</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="comment"># 使用train_test_split()函数划分训练集和测试集，设置参数test_size=0.2，random_state=1</span></span><br><span class="line"><span class="comment"># 依次赋值给x_train,x_test,y_train,y_test</span></span><br><span class="line"><span class="comment"># x,y作为自变量和因变量传入，等待被划分</span></span><br><span class="line"><span class="comment"># test_size用于设置测试集所占的比例，这里选择0.2，即20%</span></span><br><span class="line">x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=<span class="number">0.2</span>,random_state=<span class="number">1</span>)</span><br><span class="line">lr_model = LinearRegression()</span><br><span class="line">lr_model.fit(x_train,y_train)</span><br><span class="line"><span class="built_in">print</span>(lr_model.score(x_test,y_test))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>通过设置参数<code>random_state</code>可以保证程序每次运行都分割一样的训练集和测试集。</p>
+<p><code>random_state=1</code>的数<code>1</code>没有特殊含义，可以是其他数字。</p>
+<p>也就是说<code>random_state=2</code>和<code>random_state=1</code>划分的训练集和测试集是不一样的。</p>
+</blockquote>
+<p><strong>output:</strong></p>
+<figure class="highlight tap"><table><tr><td class="code"><pre><span class="line">     exposure   hot  search</span><br><span class="line">97    <span class="number"> 164539 </span><span class="number"> 8342 </span>  15685</span><br><span class="line">35    <span class="number"> 143070 </span><span class="number"> 8370 </span>  16358</span><br><span class="line">44    <span class="number"> 116186 </span><span class="number"> 8296 </span>  15639</span><br><span class="line">93    <span class="number"> 189144 </span><span class="number"> 8464 </span>  18835</span><br><span class="line">115   <span class="number"> 149406 </span><span class="number"> 8497 </span>  19791</span><br><span class="line">..        ...   ...     ...</span><br><span class="line">9     <span class="number"> 167707 </span><span class="number"> 8418 </span>  17579</span><br><span class="line">72     <span class="number"> 89742 </span><span class="number"> 8316 </span>  15285</span><br><span class="line">12     <span class="number"> 89742 </span><span class="number"> 8316 </span>  15085</span><br><span class="line">107   <span class="number"> 169099 </span><span class="number"> 8398 </span>  17060</span><br><span class="line">37    <span class="number"> 164539 </span><span class="number"> 8342 </span>  15685</span><br><span class="line"></span><br><span class="line">[96 rows x<span class="number"> 3 </span>columns]</span><br><span class="line">     new_user</span><br><span class="line">97       2343</span><br><span class="line">35       2275</span><br><span class="line">44       2056</span><br><span class="line">93       2624</span><br><span class="line">115      2482</span><br><span class="line">..        ...</span><br><span class="line">9        2559</span><br><span class="line">72       2036</span><br><span class="line">12       2034</span><br><span class="line">107      2436</span><br><span class="line">37       2343</span><br><span class="line"></span><br><span class="line">[96 rows x<span class="number"> 1 </span>columns]</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-建立新的模型"><a href="#2-建立新的模型" class="headerlink" title="2. 建立新的模型"></a>2. 建立新的模型</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>, <span class="string">&quot;hot&quot;</span>, <span class="string">&quot;search&quot;</span>]]</span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="comment"># 使用train_test_split()函数划分训练集和测试集，设置参数test_size=0.2，random_state=1</span></span><br><span class="line"><span class="comment"># 依次赋值给x_train,x_test,y_train,y_test</span></span><br><span class="line">x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=<span class="number">0.2</span>,random_state=<span class="number">1</span>)</span><br><span class="line">lr_model = LinearRegression()</span><br><span class="line">lr_model.fit(x_train,y_train)</span><br><span class="line">b = lr_model.coef_[<span class="number">0</span>][<span class="number">0</span>].<span class="built_in">round</span>(<span class="number">4</span>)</span><br><span class="line">c = lr_model.coef_[<span class="number">0</span>][<span class="number">1</span>].<span class="built_in">round</span>(<span class="number">4</span>)</span><br><span class="line">d = lr_model.coef_[<span class="number">0</span>][<span class="number">2</span>].<span class="built_in">round</span>(<span class="number">4</span>)</span><br><span class="line">a = lr_model.intercept_[<span class="number">0</span>].<span class="built_in">round</span>(<span class="number">2</span>)</span><br><span class="line"><span class="comment"># 格式化输出，f&quot;线性回归模型为：Y=&#123;a&#125;+&#123;b&#125;X1+&#123;c&#125;X2+&#123;d&#125;X3&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;线性回归模型为：Y=<span class="subst">&#123;a&#125;</span>+<span class="subst">&#123;b&#125;</span>X1+<span class="subst">&#123;c&#125;</span>X2+<span class="subst">&#123;d&#125;</span>X3&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>output:</strong></p>
+<figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line">线性回归模型为：Y=<span class="string">-7723</span>.97<span class="string">+0</span>.0047X1<span class="string">+1</span>.0984X2<span class="string">+0</span>.0114X3</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-测试集来对模型打分"><a href="#3-测试集来对模型打分" class="headerlink" title="3.测试集来对模型打分"></a>3.测试集来对模型打分</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>, <span class="string">&quot;hot&quot;</span>, <span class="string">&quot;search&quot;</span>]]</span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line">x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=<span class="number">0.2</span>,random_state=<span class="number">1</span>)</span><br><span class="line">lr_model = LinearRegression()</span><br><span class="line"><span class="comment"># 使用score函数对模型进行打分</span></span><br><span class="line">r2 = lr_model.score(x_test,y_test)</span><br><span class="line"><span class="built_in">print</span>(r2)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>output:</strong></p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">0</span>.<span class="number">9440294294613383</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>划分训练集和测试集，在某种程度上避免了模型的过拟合问题，加强了模型的泛化能力。</p>
+<p>并且新模型的判定系数R方为0.94，精度依然很高</p>
+<p>接着，处理多重线性回归问题</p>
+</blockquote>
+<hr>
+<h1 id="手动移除自变量（处理多重线性回归）"><a href="#手动移除自变量（处理多重线性回归）" class="headerlink" title="手动移除自变量（处理多重线性回归）"></a>手动移除自变量（处理多重线性回归）</h1><p>由上述代码结果显示，hot和search的VIF都很大，不能单纯通过数值的大小移除其中的某个自变量，可以尝试分别移除两个变量</p>
+<h2 id="1-移除hot"><a href="#1-移除hot" class="headerlink" title="1. 移除hot"></a>1. 移除hot</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>,<span class="string">&quot;hot&quot;</span>,<span class="string">&quot;search&quot;</span>]]</span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="keyword">from</span> statsmodel.stats.outliers_influence <span class="keyword">import</span> variance_inflating_factor</span><br><span class="line">x = x.drop(columns=<span class="string">&quot;hot&quot;</span>)</span><br><span class="line">vif = [variance_inflating_factor(x.values,x.columns.get_loc(i)) <span class="keyword">for</span> i <span class="keyword">in</span> x.columns]</span><br><span class="line"><span class="built_in">print</span>(vif)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>output:</strong></p>
+<figure class="highlight accesslog"><table><tr><td class="code"><pre><span class="line"><span class="string">[32.18058990784746, 32.18058990784746]</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>移除<code>hot</code>后，剩下<code>exposure，search</code>2个自变量的VIF值都是32，没有超过100。</p>
+<p>由于自变量太少，可以暂时不处理较强的多重共线性了。</p>
+</blockquote>
+<h2 id="2-移除search"><a href="#2-移除search" class="headerlink" title="2. 移除search"></a>2. 移除search</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>,<span class="string">&quot;hot&quot;</span>,<span class="string">&quot;search&quot;</span>]]</span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="keyword">from</span> statsmodel.stats.outliers_influence <span class="keyword">import</span> variance_inflating_factor</span><br><span class="line">x = x.drop(columns=<span class="string">&quot;search&quot;</span>)</span><br><span class="line">vif = [variance_inflating_factor(x.values,x.columns.get_loc(i)) <span class="keyword">for</span> i <span class="keyword">in</span> x.columns]</span><br><span class="line"><span class="built_in">print</span>(vif)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>output:</strong></p>
+<figure class="highlight accesslog"><table><tr><td class="code"><pre><span class="line"><span class="string">[24.92545466605748, 24.92545466605748]</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>移除<code>search</code>后，剩下<code>exposure，hot</code>2个自变量的VIF值都是24，也没有超过100。</p>
+<p>同样地，暂时不用继续处理。</p>
+</blockquote>
+<hr>
+<h1 id="多重共线性的影响"><a href="#多重共线性的影响" class="headerlink" title="多重共线性的影响"></a>多重共线性的影响</h1><h2 id="1-判定系数的影响"><a href="#1-判定系数的影响" class="headerlink" title="1. 判定系数的影响"></a>1. 判定系数的影响</h2><p>严重的多重共线性，通常会对<strong>判定系数</strong>、系数或<strong>截距</strong>两个方面产生影响。</p>
+<p>只需要查看，处理模型前后，这2个维度是否有较好的改变。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>,<span class="string">&quot;hot&quot;</span>,<span class="string">&quot;search&quot;</span>]]</span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="string">&quot;hot&quot;</span>,<span class="string">&quot;search&quot;</span>]:</span><br><span class="line">    xi = x.drop(columns=i)</span><br><span class="line">    <span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line">    x_train,x_test,y_train,y_test = train_test_split(xi.values,y,test_size=<span class="number">0.2</span>,random_state=<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line">    lr_model = LinearRgression()</span><br><span class="line">    lr_model.fit(x_train,y_train)</span><br><span class="line">    <span class="built_in">print</span>(lr_model.score(x_test,y_test))</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>output:</strong></p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">0</span>.<span class="number">9448092382534743</span></span><br><span class="line"><span class="attribute">0</span>.<span class="number">943877187389806</span></span><br></pre></td></tr></table></figure>
+
+
+
+<img src="http://nocturne.bczcdn.com/img/1645091260276_67608/hot-42.png" style="zoom:30%;" />
+
+<blockquote>
+<p>我们在前面计算了原始自变量时，模型的判定系数R方为<code>0.9440</code>，精度很高。</p>
+<p>如图，当我们移除<code>hot</code>这个自变量时，判定系数有小幅<strong>上升</strong>。</p>
+<p>当我们移除<code>search</code>这个自变量时，判定系数有小幅<strong>下降</strong>。</p>
+</blockquote>
+<p>也就是说，从判定系数这个维度，多重共线性对模型的影响不大，就算我们不移除自变量，模型也能够进行准确的预测。</p>
+<h2 id="2-截距的影响"><a href="#2-截距的影响" class="headerlink" title="2. 截距的影响"></a>2. 截距的影响</h2><p>在上文中，使用原始自变量建立的模型是Y&#x3D;-7723.97+0.0047X1+1.0984X2+0.0114X3，而此时当三个自变量均为0时，new_user&#x3D;-7723.97，这明显与实际不符。</p>
+<p>接下来查看移除自变量后对截距的影响。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/mul/multiple_to_new.csv&quot;</span>)</span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>,<span class="string">&quot;hot&quot;</span>,<span class="string">&quot;search&quot;</span>]]</span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="string">&quot;hot&quot;</span>,<span class="string">&quot;search&quot;</span>]:</span><br><span class="line">    xi = x.drop(columns=i)</span><br><span class="line">    <span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line">    x_train,x_test,y_train,y_test = train_test_split(xi.values,y,test_size=<span class="number">0.2</span>,random_state=<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line">    lr_model = LinearRgression()</span><br><span class="line">    lr_model.fit(x_train,y_train)</span><br><span class="line">    b = lr_model.coef_[<span class="number">0</span>][<span class="number">0</span>].<span class="built_in">round</span>(<span class="number">4</span>)</span><br><span class="line">    c = lr_model.coef_[<span class="number">0</span>][<span class="number">1</span>].<span class="built_in">round</span>(<span class="number">4</span>)</span><br><span class="line">    a = lr_model.intercept_[<span class="number">0</span>].<span class="built_in">round</span>(<span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;当自变量为<span class="subst">&#123;xi.columns.values&#125;</span>时:&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;对应的线性回归模型为：<span class="subst">&#123;Y=a+&#123;b&#125;</span>X1+<span class="subst">&#123;c&#125;</span>X2&#125;&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>output:</strong></p>
+<figure class="highlight tp"><table><tr><td class="code"><pre><span class="line">自变量为[<span class="string">&#x27;exposure&#x27;</span> <span class="string">&#x27;search&#x27;</span>]时:</span><br><span class="line">对应的线性回归模型为：<span class="keyword">Y</span>=<span class="number">741</span><span class="number">.84</span>+<span class="number">0</span><span class="number">.0047</span><span class="keyword">X</span><span class="number">1</span>+<span class="number">0</span><span class="number">.0553</span><span class="keyword">X</span><span class="number">2</span></span><br><span class="line">自变量为[<span class="string">&#x27;exposure&#x27;</span> <span class="string">&#x27;hot&#x27;</span>]时:</span><br><span class="line">对应的线性回归模型为：<span class="keyword">Y</span>=<span class="number">-9877.68</span>+<span class="number">0</span><span class="number">.0047</span><span class="keyword">X</span><span class="number">1</span>+<span class="number">1</span><span class="number">.3783</span><span class="keyword">X</span><span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>当移除hot时，模型的系数或截距的正负情况，比较符合实际情况。</p>
+<p>但是，当移除search时，又出现截距异常的情况。</p>
+<p>说明，search列的数据对因变量的价值较大，贸然删除会导致模型失真。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一元线性回归</title>
     <url>/posts/28281e4/</url>
     <content><![CDATA[<h1 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h1><h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h2><p>机器学习是一门多领域交叉学科。</p>

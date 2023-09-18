@@ -6,7 +6,7 @@
   <link href="https://xxsqlll.github.io/atom.xml" rel="self"/>
   
   <link href="https://xxsqlll.github.io/"/>
-  <updated>2023-09-18T03:16:49.435Z</updated>
+  <updated>2023-09-18T12:29:47.625Z</updated>
   <id>https://xxsqlll.github.io/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>多重线性回归</title>
+    <link href="https://xxsqlll.github.io/posts/23702362/"/>
+    <id>https://xxsqlll.github.io/posts/23702362/</id>
+    <published>2023-09-18T12:29:45.000Z</published>
+    <updated>2023-09-18T12:29:47.625Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;多重线性回归&quot;&gt;&lt;a href=&quot;#多重线性回归&quot; class=&quot;headerlink&quot; title=&quot;多重线性回归&quot;&gt;&lt;/a&gt;多重线性回归&lt;/h1&gt;&lt;h2 id=&quot;1-应用场景&quot;&gt;&lt;a href=&quot;#1-应用场景&quot; class=&quot;headerlink&quot; title=&quot;1. 应用场景&quot;&gt;&lt;/a&gt;1. 应用场景&lt;/h2&gt;&lt;p&gt;在日常生活中，通常是多个因素导致了结果。像这种，多个自变量共同影响一个因变量的情况，我们会应用多重线性回归。&lt;/p&gt;
+&lt;h2 id=&quot;2-STEP-1-绘制散点图，确定相关系数&quot;&gt;&lt;a href=&quot;#2-STEP-1-绘制散点图，确定相关系数&quot; class=&quot;headerlink&quot; title=&quot;2. STEP 1 绘制散点图，确定相关系数&quot;&gt;&lt;/a&gt;2. STEP 1 绘制散点图，确定相关系数&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;matplotlib中的&lt;code&gt;scatter()&lt;/code&gt;函数，可以实现绘制单个散点图，但绘制多个太过麻烦。&lt;/p&gt;
+&lt;p&gt;而Python中的另一个模块&lt;code&gt;seaborn&lt;/code&gt;，可以非常简便的绘制多组图像，在回归模型中应用很多。&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>一元线性回归</title>
     <link href="https://xxsqlll.github.io/posts/28281e4/"/>
     <id>https://xxsqlll.github.io/posts/28281e4/</id>
     <published>2023-09-18T03:16:45.000Z</published>
-    <updated>2023-09-18T03:16:49.435Z</updated>
+    <updated>2023-09-18T03:17:02.701Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;机器学习&quot;&gt;&lt;a href=&quot;#机器学习&quot; class=&quot;headerlink&quot; title=&quot;机器学习&quot;&gt;&lt;/a&gt;机器学习&lt;/h1&gt;&lt;h2 id=&quot;1-定义&quot;&gt;&lt;a href=&quot;#1-定义&quot; class=&quot;headerlink&quot; title=&quot;1. 定义&quot;&gt;&lt;/a&gt;1. 定义&lt;/h2&gt;&lt;p&gt;机器学习是一门多领域交叉学科。&lt;/p&gt;
@@ -447,28 +470,6 @@ Anaconda将自动将环境变量添加到PATH中&lt;br&gt;&lt;strong&gt;注意�
     
     <summary type="html">&lt;h1 id=&quot;模型与接口调用&quot;&gt;&lt;a href=&quot;#模型与接口调用&quot; class=&quot;headerlink&quot; title=&quot;模型与接口调用&quot;&gt;&lt;/a&gt;模型与接口调用&lt;/h1&gt;&lt;h2 id=&quot;1-语音识别系统&quot;&gt;&lt;a href=&quot;#1-语音识别系统&quot; class=&quot;headerlink&quot; title=&quot;1.语音识别系统&quot;&gt;&lt;/a&gt;1.语音识别系统&lt;/h2&gt;&lt;h3 id=&quot;1-1-编码器&quot;&gt;&lt;a href=&quot;#1-1-编码器&quot; class=&quot;headerlink&quot; title=&quot;1.1 编码器&quot;&gt;&lt;/a&gt;1.1 编码器&lt;/h3&gt;&lt;p&gt;对输入数据进行分析并编写成机器能够处理的信息&lt;/p&gt;
 &lt;h3 id=&quot;1-2-解码器&quot;&gt;&lt;a href=&quot;#1-2-解码器&quot; class=&quot;headerlink&quot; title=&quot;1.2 解码器&quot;&gt;&lt;/a&gt;1.2 解码器&lt;/h3&gt;</summary>
-    
-    
-    
-    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
-    
-    
-    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用Python生成标准字幕文件</title>
-    <link href="https://xxsqlll.github.io/posts/bd65ef8f/"/>
-    <id>https://xxsqlll.github.io/posts/bd65ef8f/</id>
-    <published>2023-07-28T09:08:45.000Z</published>
-    <updated>2023-07-28T09:22:16.306Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;1-srt字幕-（SubRip-Text）&quot;&gt;&lt;a href=&quot;#1-srt字幕-（SubRip-Text）&quot; class=&quot;headerlink&quot; title=&quot;1. srt字幕 （SubRip Text）&quot;&gt;&lt;/a&gt;1. srt字幕 （SubRip Text）&lt;/h2&gt;&lt;p&gt;格式为：序号+时间+字幕&lt;/p&gt;
-&lt;h3 id=&quot;1-1-获取时间数据&quot;&gt;&lt;a href=&quot;#1-1-获取时间数据&quot; class=&quot;headerlink&quot; title=&quot;1.1 获取时间数据&quot;&gt;&lt;/a&gt;1.1 获取时间数据&lt;/h3&gt;&lt;figure class=&quot;highlight py&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; pydub.silence &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; detect_nonsilent&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;timestamp_list = detect_nonsilent(sound,min_silence_len,silence_thresh) &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;print返回一个列表，列表中每一个元素对应着12个音频片段的&lt;strong&gt;开始&lt;/strong&gt;和&lt;strong&gt;结束&lt;/strong&gt;时间&lt;/p&gt;</summary>
     
     
     
