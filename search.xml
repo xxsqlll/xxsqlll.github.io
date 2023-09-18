@@ -1,6 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>一元线性回归</title>
+    <url>/posts/28281e4/</url>
+    <content><![CDATA[<h1 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h1><h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h2><p>机器学习是一门多领域交叉学科。</p>
+<p>主要通过概率论、统计学等数学方法，让机器从已知数据中模拟或实现人类的学习行为，找出规律并自动生成规则，然后对未知的数据进行预测。</p>
+<h2 id="2-专家系统"><a href="#2-专家系统" class="headerlink" title="2. 专家系统"></a>2. 专家系统</h2><p>最早期的机器学习</p>
+<p>当时计算机科学家最早的想法是把自己的知识，包括能够表达出来的常识和经验，放到一个巨大的数据库里，再把常用的判断规则写成计算机程序。</p>
+<blockquote>
+<p>这样的结果显而易见，人们无法穷尽所有的路况和场景，这种「专家系统」遇到复杂情况时根本不会处理，因为人没教过。</p>
+</blockquote>
+<p>相较于过往直接使用数据储备，现在机器学习的目的是<strong>用计算机程序模拟人的学习能力，从已有数据中获取有价值的信息和知识，从而实现对未知的数据进行预测</strong></p>
+<h2 id="3-机器学习的基本流程"><a href="#3-机器学习的基本流程" class="headerlink" title="3. 机器学习的基本流程"></a>3. 机器学习的基本流程</h2><ul>
+<li>STEP 1 <strong>获取并处理数据</strong></li>
+<li>STEP 2 <strong>机器学习算法训练</strong></li>
+<li>STEP 3 <strong>模型评估</strong></li>
+<li>STEP 4 <strong>模型应用</strong></li>
+</ul>
+<h2 id="4-数据集的构成"><a href="#4-数据集的构成" class="headerlink" title="4. 数据集的构成"></a>4. 数据集的构成</h2><img src="http://nocturne.bczcdn.com/img/1650167056310_41687/13-16.png" style="zoom: 20%;" />
+
+<p>通常，数据集都是以表格的形式出现，由<strong>特征</strong>和<strong>样本</strong>组成。</p>
+<h2 id="5-数据集的分类"><a href="#5-数据集的分类" class="headerlink" title="5. 数据集的分类"></a>5. 数据集的分类</h2><ul>
+<li><p><strong>训练集</strong></p>
+<p>相当于学生上课学习的知识</p>
+</li>
+<li><p><strong>验证集</strong>（非必须）</p>
+<p>当模型训练好后用于了解其表现如何，相当于课后练习题</p>
+</li>
+<li><p><strong>测试集</strong></p>
+<p>通过测试集做最后的评估，相当于最终考试</p>
+</li>
+</ul>
+<h2 id="6-如何合理的划分数据集"><a href="#6-如何合理的划分数据集" class="headerlink" title="6. 如何合理的划分数据集"></a>6. 如何合理的划分数据集</h2><img src="http://nocturne.bczcdn.com/img/1650179483185_64569/13-23%20(1).png" style="zoom:50%;" />
+
+<ul>
+<li>**80%**用于训练模型的训练集</li>
+<li>**20%**用于检验模型效果的测试集</li>
+</ul>
+<blockquote>
+<p>划分标准不是一定的，可以根据实际情况进行调整</p>
+</blockquote>
+<hr>
+<h1 id="机器学习的三大类别"><a href="#机器学习的三大类别" class="headerlink" title="机器学习的三大类别"></a>机器学习的三大类别</h1><h2 id="1-监督学习"><a href="#1-监督学习" class="headerlink" title="1. 监督学习"></a>1. 监督学习</h2><p>“监督”并不是指人站在机器旁边看机器做的对不对，而是给机器一个问题和对应的答案，让机器学习其中的逻辑。</p>
+<p>也就是通过让机器去学习我们“标记好”的数据集，训练出一个模型，然后根据该模型对“未标记”的数据进行分类或预测。</p>
+<p>在监督学习中，训练集(train set)既有特征又有对应的人工打上的标签，就相当于是对应问题和正确答案。</p>
+<h3 id="监督学习的步骤"><a href="#监督学习的步骤" class="headerlink" title="监督学习的步骤"></a>监督学习的步骤</h3><p>1.选择一个适合目标任务的模型</p>
+<p>2.先把一部分已知的“问题和答案”（训练集）经过<em>加工</em>（比如数据处理）给机器去学习</p>
+<p>3.机器总结出自己的“方法论”</p>
+<p>4.人类把”新的问题”（测试集）给机器，让它去解答</p>
+<blockquote>
+<p>监督学习的典型任务包括：预测数值型数据的回归、预测分类标签的分类、预测顺序的排序等。我们一般会将这些任务归为两类：<strong>回归和分类</strong>。</p>
+</blockquote>
+<h3 id="回归（Regression）"><a href="#回归（Regression）" class="headerlink" title="回归（Regression）"></a>回归（Regression）</h3><p>回归主要用于预测连续的、具体的数值。</p>
+<h3 id="分类（classification）"><a href="#分类（classification）" class="headerlink" title="分类（classification）"></a>分类（classification）</h3><p>分类问题的目标是通过输入变量预测出这一样本所属的类别，例如对于植物品种、客户年龄和偏好等预测问题都可以被归结为分类问题。</p>
+<h2 id="2-非监督学习"><a href="#2-非监督学习" class="headerlink" title="2. 非监督学习"></a>2. 非监督学习</h2><p>非监督学习中，给定的数据集没有“正确答案”，也就是没有标签。</p>
+<p>它的任务便是从这样的数据集中挖掘出潜在的结构和信息，具有解读数据并从中寻求解决方案的能力。</p>
+<blockquote>
+<p>常见的两类非监督学习算法有2类：聚类和降维</p>
+</blockquote>
+<h3 id="聚类（Clustering）"><a href="#聚类（Clustering）" class="headerlink" title="聚类（Clustering）"></a>聚类（Clustering）</h3><p>一种自动分类的方法</p>
+<h3 id="降维（Dimension-Reduction-Generalization）"><a href="#降维（Dimension-Reduction-Generalization）" class="headerlink" title="降维（Dimension Reduction&#x2F;Generalization）"></a>降维（Dimension Reduction&#x2F;Generalization）</h3><p>在尽可能保存相关的结构的同时降低数据的复杂度。</p>
+<h2 id="3-强化学习"><a href="#3-强化学习" class="headerlink" title="3. 强化学习"></a>3. 强化学习</h2><p>我们对于大脑的工作原理其实了解不多，但我们知道大脑能通过反复尝试来学习知识。</p>
+<p>我们做出合适选择时会得到奖励，做出不恰当选择时会受到惩罚，这也是我们来适应环境的方式。</p>
+<p>如今，我们可以利用强大的计算能力，在软件中对这个具体过程进行建模，这就是「强化学习」。</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1><h1 id="一元线性回归方程"><a href="#一元线性回归方程" class="headerlink" title="一元线性回归方程"></a>一元线性回归方程</h1><h2 id="1-相关性"><a href="#1-相关性" class="headerlink" title="1. 相关性"></a>1. 相关性</h2><p>相关性，指的是两个或者多个变量之间的联系。</p>
+<p>通过散点图上的点分布情况，我们可以识别出变量之间的各种相关关系。</p>
+<p>常见的有：线性相关、非线性相关、不相关。</p>
+<img src="http://nocturne.bczcdn.com/img/1604741481131_11723/page54%202.png" style="zoom:30%;" />
+
+<p><strong>相关系数 r</strong> 的绝对值大小，可以反应线性相关的程度。</p>
+<img src="http://nocturne.bczcdn.com/img/1604902668662_44630/r.png" style="zoom:25%;" />
+
+<blockquote>
+<p>也就是，|r|越接近1，那么相关程度越高，越接近0，相关程度越低。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/ad/exposure_to_new.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用corr()，计算&quot;exposure&quot;和&quot;new_user&quot;这两列的相关系数，赋值给变量r</span></span><br><span class="line">r = df[<span class="string">&quot;exposure&quot;</span>].corr(df[<span class="string">&quot;new_user&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出此时的r</span></span><br><span class="line"><span class="built_in">print</span>(r)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-一元线性回归分析"><a href="#2-一元线性回归分析" class="headerlink" title="2. 一元线性回归分析"></a>2. 一元线性回归分析</h2><p>通常情况下，我们会凭经验，判断两个变量存在因果关系后，才能进一步进行回归分析，从而进行预测。</p>
+<p>回归分析，是用于研究有因果关系的变量之间的数量变化关系的一种分析方法。</p>
+<p>按照自变量和因变量之间的关系类型，可分为<strong>线性回归分析</strong>和<strong>非线性回归分析</strong>。</p>
+<h3 id="回归分析的步骤"><a href="#回归分析的步骤" class="headerlink" title="回归分析的步骤"></a>回归分析的步骤</h3><ul>
+<li>STEP 1 <strong>绘制散点图，确定相关系数</strong></li>
+<li>STEP 2 <strong>确定自变量和因变量</strong></li>
+<li>STEP 3 <strong>建立回归模型</strong></li>
+<li>STEP 4 <strong>检验回归模型</strong></li>
+<li>STEP 5 <strong>利用模型预测</strong></li>
+</ul>
+<h3 id="1-安装sklearn模块"><a href="#1-安装sklearn模块" class="headerlink" title="1. 安装sklearn模块"></a>1. 安装sklearn模块</h3><p>构建线性回归模型，其实是利用最小二乘法的原理，来求解最佳直线：<code>Y=a+bX</code>。</p>
+<p>这里，我们通过机器学习常用的模块：<code>sklearn</code>模块，来进行具体的计算。</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">pip <span class="keyword">install</span> sklearn</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果安装失败或安装速度过慢，尝试 pip install sklearn -i <a href="https://pypi.tuna.tsinghua.edu.cn/simple/">https://pypi.tuna.tsinghua.edu.cn/simple/</a></p>
+</blockquote>
+<h3 id="2-建立回归模型"><a href="#2-建立回归模型" class="headerlink" title="2. 建立回归模型"></a>2. 建立回归模型</h3><h4 id="2-1-初始化模型"><a href="#2-1-初始化模型" class="headerlink" title="2.1 初始化模型"></a>2.1 初始化模型</h4><p>先导入线性回归模型，然后构造一个初始的线性回归模型，把这个过程称为：初始化模型。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/ad/exposure_to_new.csv&quot;</span>)</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"><span class="comment"># 使用LinearRegression()初始化模型，赋值给lr</span></span><br><span class="line">lr = LinearRegression()</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-训练模型"><a href="#2-2-训练模型" class="headerlink" title="2.2 训练模型"></a>2.2 训练模型</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/ad/exposure_to_new.csv&quot;</span>)</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"><span class="comment"># 以二维结构读取&quot;exposure&quot;这一列，作为自变量x</span></span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>]]</span><br><span class="line"><span class="comment"># 以二维结构读取&quot;new_user&quot;这一列，作为因变量y</span></span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="comment"># 使用LinearRegression()初始化模型，赋值给lr</span></span><br><span class="line">lr = LinearRegression()</span><br><span class="line"><span class="comment"># 使用自变量x和因变量y，训练线性回归模型lr</span></span><br><span class="line">lr.fit(x,y)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意</strong>⚠️！！！！！！！：<br>自变量一定要为二维结构：<code>df[[&quot;exposure&quot;]]</code>，而因变量写成一、二维结构都可以，为了和自变量格式统一，也写成二维结构</p>
+</blockquote>
+<h4 id="2-3-查看系数和截距"><a href="#2-3-查看系数和截距" class="headerlink" title="2.3 查看系数和截距"></a>2.3 查看系数和截距</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/ad/exposure_to_new.csv&quot;</span>)</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"><span class="comment"># 以二维结构读取&quot;exposure&quot;这一列，作为自变量x</span></span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>]]</span><br><span class="line"><span class="comment"># 以二维结构读取&quot;new_user&quot;这一列，作为因变量y</span></span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="comment"># 使用LinearRegression()初始化模型，赋值给lr</span></span><br><span class="line">lr = LinearRegression()</span><br><span class="line"><span class="comment"># 使用自变量x和因变量y，训练线性回归模型lr</span></span><br><span class="line">lr.fit(x,y)</span><br><span class="line"><span class="comment"># 输出模型lr的coef_属性</span></span><br><span class="line"><span class="built_in">print</span>(lr.coef_)</span><br><span class="line"><span class="comment"># 输出模型lr的intercept_属性</span></span><br><span class="line"><span class="built_in">print</span>(lr.intercept_)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>output:</strong></p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="string">[[0.01820464]]</span></span><br><span class="line">[<span class="number">-181.57552716</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>.coef_为系数b</li>
+<li>.intercept_为截距a</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/ad/exposure_to_new.csv&quot;</span>)</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line"><span class="comment"># 以二维结构读取&quot;exposure&quot;这一列，作为自变量x</span></span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>]]</span><br><span class="line"><span class="comment"># 以二维结构读取&quot;new_user&quot;这一列，作为因变量y</span></span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line"><span class="comment"># 使用LinearRegression()初始化模型，赋值给lr</span></span><br><span class="line">lr = LinearRegression()</span><br><span class="line"><span class="comment"># 使用自变量x和因变量y，训练线性回归模型lr</span></span><br><span class="line">lr.fit(x,y)</span><br><span class="line"><span class="comment"># 使用coef_[0][0],获取系数b的值</span></span><br><span class="line">b = lr.coef_[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"><span class="comment"># 使用intercept_[0],获取截距a的值</span></span><br><span class="line">a = lr.intercept_[<span class="number">0</span>]</span><br><span class="line"><span class="comment"># 格式化输出，f&quot;该线性回归模型为：Y=&#123;a&#125;+&#123;b&#125;*X&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;该线性回归模型为：Y=<span class="subst">&#123;a&#125;</span>+<span class="subst">&#123;b&#125;</span>*X&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>output:</strong></p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">该线性回归模型为：<span class="attribute">Y</span>=-181.57552715797647+0.018204640095790838*X</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-检验回归模型"><a href="#3-检验回归模型" class="headerlink" title="3. 检验回归模型"></a>3. 检验回归模型</h3><p>通过可视化，绘制原始数据的散点图，和线性回归模型的折线图。先来简单观察模型的准确性。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.rcParams[<span class="string">&#x27;font.sans-serif&#x27;</span>] = <span class="string">&quot;Arial Unicode MS&quot;</span></span><br><span class="line"><span class="comment"># TODO 绘制散点图,df[&quot;exposure&quot;]作为x轴，df[&quot;new_user&quot;]作为y轴数据</span></span><br><span class="line"><span class="comment"># 设置图例为&quot;原始数据&quot;</span></span><br><span class="line">plt.scatter(df[<span class="string">&quot;exposure&quot;</span>],df[<span class="string">&quot;new_user&quot;</span>],label=<span class="string">&quot;原始数据&quot;</span>)</span><br><span class="line"><span class="comment"># TODO 绘制线性回归模型折线图,df[&quot;exposure&quot;]作为x轴，b*df[&quot;exposure&quot;]+a作为y轴数据</span></span><br><span class="line"><span class="comment"># 设置颜色为&quot;orange&quot;，设置图例为&quot;线性回归模型&quot;</span></span><br><span class="line">plt.plot(df[<span class="string">&quot;exposure&quot;</span>],b*df[<span class="string">&quot;exposure&quot;</span>]+a,color=<span class="string">&quot;orange&quot;</span>,label=<span class="string">&quot;线性回归模型&quot;</span>)</span><br><span class="line"><span class="comment"># 使用plt.xlabel()函数，将x轴标题设置为&quot;曝光量&quot;</span></span><br><span class="line">plt.xlabel(<span class="string">&quot;曝光量&quot;</span>)</span><br><span class="line"><span class="comment"># 使用plt.ylabel()函数，将y轴标题设置为&quot;新增用户量&quot;</span></span><br><span class="line">plt.ylabel(<span class="string">&quot;新增用户量&quot;</span>)</span><br><span class="line"><span class="comment"># TODO 使用plt.legend()函数显示图例</span></span><br><span class="line">plt.legend()</span><br><span class="line"><span class="comment"># TODO 使用plt.show()函数显示图像</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<img src="https://nocturne.bczcdn.com/c060e622-555e-11ee-a1e3-0242ac110004/figure_1.png" style="zoom:50%;" />
+
+<blockquote>
+<p>如图，模型已经找出了最佳直线，能够看出模型的效果还是不错的。但是，为了能更加准确地判断模型的拟合能力，可以通过模型的<code>score</code>函数对其打分，得到模型的判定系数。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/ad/exposure_to_new.csv&quot;</span>)</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>]]</span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line">lr = LinearRegression()</span><br><span class="line">lr.fit(x,y)</span><br><span class="line">r2 = lr.score(x,y)</span><br><span class="line"><span class="built_in">print</span>(r2)</span><br></pre></td></tr></table></figure>
+
+<p><strong>output:</strong></p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">0</span>.<span class="number">9848132298067719</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-利用模型预测"><a href="#4-利用模型预测" class="headerlink" title="4. 利用模型预测"></a>4. 利用模型预测</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line">df = pd.read_csv(<span class="string">&quot;/Users/ad/exposure_to_new.csv&quot;</span>)</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line">x = df[[<span class="string">&quot;exposure&quot;</span>]]</span><br><span class="line">y = df[[<span class="string">&quot;new_user&quot;</span>]]</span><br><span class="line">lr = LinearRegression()</span><br><span class="line">lr.fit(x,y)</span><br><span class="line">y_predict = lr.predict([[<span class="number">200000</span>]])</span><br><span class="line"><span class="built_in">print</span>(y_predict)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>回归模型，不仅可以预测单个自变量。利用回归模型，还可以预测自变量分别取多个值的情况。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">y_predict = lr.predict([[<span class="number">200000</span>],[<span class="number">250000</span>],[<span class="number">300000</span>]])</span><br><span class="line"><span class="built_in">print</span>(y_predict)</span><br></pre></td></tr></table></figure>
+
+<p><strong>output:</strong></p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="string">[[3459.352492  ]</span></span><br><span class="line"><span class="string"> [4369.58449679]</span></span><br><span class="line"><span class="string"> [5279.81650158]]</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>用户分层模型</title>
     <url>/posts/a1ff4487/</url>
     <content><![CDATA[<h1 id="RFM模型"><a href="#RFM模型" class="headerlink" title="RFM模型"></a>RFM模型</h1><h2 id="1-定义："><a href="#1-定义：" class="headerlink" title="1. 定义："></a>1. 定义：</h2><p>RFM，是应用最广泛的用户分层模型，从1961年开始沿用至今。</p>

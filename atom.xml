@@ -6,7 +6,7 @@
   <link href="https://xxsqlll.github.io/atom.xml" rel="self"/>
   
   <link href="https://xxsqlll.github.io/"/>
-  <updated>2023-09-16T10:14:31.415Z</updated>
+  <updated>2023-09-18T03:16:49.435Z</updated>
   <id>https://xxsqlll.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>一元线性回归</title>
+    <link href="https://xxsqlll.github.io/posts/28281e4/"/>
+    <id>https://xxsqlll.github.io/posts/28281e4/</id>
+    <published>2023-09-18T03:16:45.000Z</published>
+    <updated>2023-09-18T03:16:49.435Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;机器学习&quot;&gt;&lt;a href=&quot;#机器学习&quot; class=&quot;headerlink&quot; title=&quot;机器学习&quot;&gt;&lt;/a&gt;机器学习&lt;/h1&gt;&lt;h2 id=&quot;1-定义&quot;&gt;&lt;a href=&quot;#1-定义&quot; class=&quot;headerlink&quot; title=&quot;1. 定义&quot;&gt;&lt;/a&gt;1. 定义&lt;/h2&gt;&lt;p&gt;机器学习是一门多领域交叉学科。&lt;/p&gt;
+&lt;p&gt;主要通过概率论、统计学等数学方法，让机器从已知数据中模拟或实现人类的学习行为，找出规律并自动生成规则，然后对未知的数据进行预测。&lt;/p&gt;
+&lt;h2 id=&quot;2-专家系统&quot;&gt;&lt;a href=&quot;#2-专家系统&quot; class=&quot;headerlink&quot; title=&quot;2. 专家系统&quot;&gt;&lt;/a&gt;2. 专家系统&lt;/h2&gt;</summary>
+    
+    
+    
+    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
+    
+    <category term="机器学习" scheme="https://xxsqlll.github.io/categories/Python/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>用户分层模型</title>
@@ -446,27 +469,6 @@ Anaconda将自动将环境变量添加到PATH中&lt;br&gt;&lt;strong&gt;注意�
 &lt;h3 id=&quot;1-1-获取时间数据&quot;&gt;&lt;a href=&quot;#1-1-获取时间数据&quot; class=&quot;headerlink&quot; title=&quot;1.1 获取时间数据&quot;&gt;&lt;/a&gt;1.1 获取时间数据&lt;/h3&gt;&lt;figure class=&quot;highlight py&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; pydub.silence &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; detect_nonsilent&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;timestamp_list = detect_nonsilent(sound,min_silence_len,silence_thresh) &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 
 &lt;p&gt;print返回一个列表，列表中每一个元素对应着12个音频片段的&lt;strong&gt;开始&lt;/strong&gt;和&lt;strong&gt;结束&lt;/strong&gt;时间&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Python" scheme="https://xxsqlll.github.io/categories/Python/"/>
-    
-    
-    <category term="学习" scheme="https://xxsqlll.github.io/tags/%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python实现批量整理文件</title>
-    <link href="https://xxsqlll.github.io/posts/a36267ca/"/>
-    <id>https://xxsqlll.github.io/posts/a36267ca/</id>
-    <published>2023-07-28T09:07:45.000Z</published>
-    <updated>2023-07-28T09:22:16.304Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;判断文件类型&quot;&gt;&lt;a href=&quot;#判断文件类型&quot; class=&quot;headerlink&quot; title=&quot;判断文件类型&quot;&gt;&lt;/a&gt;判断文件类型&lt;/h1&gt;&lt;h2 id=&quot;分隔文件后缀名&quot;&gt;&lt;a href=&quot;#分隔文件后缀名&quot; class=&quot;headerlink&quot; title=&quot;分隔文件后缀名&quot;&gt;&lt;/a&gt;分隔文件后缀名&lt;/h2&gt;&lt;figure class=&quot;highlight py&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; os&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;fileName = &lt;span class=&quot;string&quot;&gt;&amp;quot;主持人_试音.mp3&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;target = os.path.splitext(fileName)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;print&lt;/span&gt;(target)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# outputs = (&amp;quot;主持人_试音&amp;quot;,&amp;quot;.mp3&amp;quot;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;in判断&quot;&gt;&lt;a href=&quot;#in判断&quot; class=&quot;headerlink&quot; title=&quot;in判断&quot;&gt;&lt;/a&gt;in判断&lt;/h2&gt;&lt;figure class=&quot;highlight py&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;samplExt = &lt;span class=&quot;string&quot;&gt;&amp;quot;.mp3&amp;quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; sampleExt &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; [&lt;span class=&quot;string&quot;&gt;&amp;quot;.wav&amp;quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&amp;quot;.mp3&amp;quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&amp;quot;.mid&amp;quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&amp;quot;.ape&amp;quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&amp;quot;.flac&amp;quot;&lt;/span&gt;]:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;print&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&amp;quot;该文件是音频文件&amp;quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
     
     
     
